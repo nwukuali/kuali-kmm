@@ -1,0 +1,228 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="ShoppingFrontPage" parent="ShoppingFrontPage-parentBean" />
+
+  <bean id="ShoppingFrontPage-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.ShoppingFrontPage"
+        p:titleAttribute="frontPageName"
+        p:objectLabel="Shopping Front Page"
+        p:inquiryDefinition-ref="ShoppingFrontPage-inquiryDefinition"
+        p:lookupDefinition-ref="ShoppingFrontPage-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="ShoppingFrontPage-frontPageId" />
+        <ref bean="ShoppingFrontPage-frontPageName" />
+        <ref bean="ShoppingFrontPage-frontPageDescription" />
+        <ref bean="ShoppingFrontPage-frontPageHTML" />
+        <ref bean="ShoppingFrontPage-frontPageURL" />
+        <ref bean="ShoppingFrontPage-displayHeight" />
+        <ref bean="ShoppingFrontPage-current" />
+        <ref bean="ShoppingFrontPage-active" />
+        <ref bean="ShoppingFrontPage-lastUpdateDate" />
+        <ref bean="ShoppingFrontPage-versionNumber" />
+      </list>
+    </property>
+  </bean>
+
+  <bean id="ShoppingFrontPage-active" parent="ShoppingFrontPage-active-parentBean" />
+  <bean id="ShoppingFrontPage-active-parentBean" abstract="true" parent="GenericAttributes-activeIndicator" p:name="active" />
+
+
+  <bean id="ShoppingFrontPage-frontPageId" parent="ShoppingFrontPage-frontPageId-parentBean" />
+  <bean id="ShoppingFrontPage-frontPageId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="frontPageId"
+        p:forceUppercase="true"
+        p:label="Front Page Id"
+        p:shortLabel="Front Page Id"
+        p:maxLength="18"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="NumericValidationPattern"/>
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  
+  <bean id="ShoppingFrontPage-frontPageName" parent="ShoppingFrontPage-frontPageName-parentBean" />
+  <bean id="ShoppingFrontPage-frontPageName-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="frontPageName"
+        p:forceUppercase="false"
+        p:label="Name"
+        p:shortLabel="Name"
+        p:maxLength="50"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AlphaNumericValidationPattern"/>
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="25" />
+    </property>
+  </bean>
+  
+  <bean id="ShoppingFrontPage-frontPageDescription" parent="ShoppingFrontPage-frontPageDescription-parentBean" />
+  <bean id="ShoppingFrontPage-frontPageDescription-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="frontPageDescription"
+        p:forceUppercase="false"
+        p:label="Description"
+        p:shortLabel="Description"
+        p:maxLength="200"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextareaControlDefinition"
+            p:rows="2"
+            p:cols="40" />
+    </property>    
+  </bean>
+  
+  <bean id="ShoppingFrontPage-frontPageHTML" parent="ShoppingFrontPage-frontPageHTML-parentBean" />
+  <bean id="ShoppingFrontPage-frontPageHTML-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="frontPageHTML"
+        p:forceUppercase="false"
+        p:label="Html"
+        p:shortLabel="Html"
+        p:maxLength="100000"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+<!--       <bean parent="FileControlDefinition" /> -->
+		<bean parent="TextareaControlDefinition"
+            p:rows="20"
+            p:cols="110" />
+    </property>    
+  </bean>
+  
+  <bean id="ShoppingFrontPage-frontPageURL" parent="ShoppingFrontPage-frontPageURL-parentBean" />
+  <bean id="ShoppingFrontPage-frontPageURL-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="frontPageURL"
+        p:forceUppercase="false"
+        p:label="Url"
+        p:shortLabel="Url"
+        p:maxLength="500"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"/>
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="100" />
+    </property>
+  </bean>
+  
+  <bean id="ShoppingFrontPage-displayHeight" parent="ShoppingFrontPage-displayHeight-parentBean" />
+  <bean id="ShoppingFrontPage-displayHeight-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="displayHeight"
+        p:forceUppercase="true"
+        p:label="Display Height"
+        p:shortLabel="Height"
+        p:maxLength="8"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="NumericValidationPattern"/>
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="8" />
+    </property>
+  </bean>
+  
+  <bean id="ShoppingFrontPage-current" parent="ShoppingFrontPage-current-parentBean" />
+  <bean id="ShoppingFrontPage-current-parentBean" parent="GenericAttributes-genericBoolean" abstract="true"
+        p:name="current"
+        p:forceUppercase="false"
+        p:label="Current Indicator"
+        p:shortLabel="Current"
+        p:required="false" >
+  </bean>
+
+  <bean id="ShoppingFrontPage-lastUpdateDate" parent="ShoppingFrontPage-lastUpdateDate-parentBean" />
+  <bean id="ShoppingFrontPage-lastUpdateDate-parentBean" parent="GenericAttributes-genericTimestamp" abstract="true"
+        p:name="lastUpdateDate"
+        p:forceUppercase="false"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:maxLength="10"
+        p:required="false" >   
+  </bean>
+
+  <bean id="ShoppingFrontPage-versionNumber" parent="ShoppingFrontPage-versionNumber-parentBean" />
+  <bean id="ShoppingFrontPage-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="ShoppingFrontPage-inquiryDefinition" parent="ShoppingFrontPage-inquiryDefinition-parentBean" />
+
+  <bean id="ShoppingFrontPage-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Shopping Front Page Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Pack List Announcement Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+        		<bean parent="FieldDefinition" p:attributeName="frontPageName" />
+        		<bean parent="FieldDefinition" p:attributeName="frontPageDescription" />
+        		<bean parent="FieldDefinition" p:attributeName="frontPageURL" />
+        		<bean parent="FieldDefinition" p:attributeName="frontPageHTML" />
+        		<bean parent="FieldDefinition" p:attributeName="displayHeight" />
+        		<bean parent="FieldDefinition" p:attributeName="current" />
+        		<bean parent="FieldDefinition" p:attributeName="active" />
+        		<bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="ShoppingFrontPage-lookupDefinition" parent="ShoppingFrontPage-lookupDefinition-parentBean" />
+
+  <bean id="ShoppingFrontPage-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Shopping Front Page Lookup" >
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>frontPageName</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>        
+        <bean parent="FieldDefinition" p:attributeName="frontPageName" />
+        <bean parent="FieldDefinition" p:attributeName="frontPageDescription" />
+        <bean parent="FieldDefinition" p:attributeName="current" />
+        <bean parent="FieldDefinition" p:attributeName="active" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="frontPageName" />
+        <bean parent="FieldDefinition" p:attributeName="frontPageDescription" />
+        <bean parent="FieldDefinition" p:attributeName="current" />
+        <bean parent="FieldDefinition" p:attributeName="active" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+      </list>
+    </property>
+  </bean>
+
+</beans>

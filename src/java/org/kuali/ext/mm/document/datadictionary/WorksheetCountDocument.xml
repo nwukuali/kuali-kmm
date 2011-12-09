@@ -1,0 +1,216 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+
+  <bean id="WorksheetCountDoc" parent="WorksheetCountDoc-parentBean"/>
+
+  <bean id="WorksheetCountDoc-parentBean" abstract="true" parent="TransactionalDocumentEntry">  
+    <property name="documentTypeName" value="SWKC"/>
+    <property name="documentClass" value="org.kuali.ext.mm.document.WorksheetCountDocument"/>
+    <property name="businessRulesClass" value="org.kuali.ext.mm.document.validation.impl.WorksheetCountDocumentRule"/>
+    <property name="documentAuthorizerClass" value="org.kuali.ext.mm.document.authorization.WorksheetDocumentAuthorizerBase"/>
+    <property name="documentPresentationControllerClass" value="org.kuali.ext.mm.document.authorization.WorksheetCountDocumentController"/>
+    <property name="sessionDocument" value="true"/>    
+    <property name="allowsCopy" value="false"/>
+	<property name="attributes" >
+	<list>
+        <ref bean="WorksheetCountDoc-documentNumber" />
+        <ref bean="WorksheetCountDoc-warehouseCd" />
+        <ref bean="WorksheetCountDoc-balanced" />
+        <ref bean="WorksheetCountDoc-countPercentage" />
+        <ref bean="WorksheetCountDoc-worksheetCnt" />
+        <ref bean="WorksheetCountDoc-worksheetCntLength" />
+        <ref bean="WorksheetCountDoc-worksheetCntText" />
+        <ref bean="WorksheetCountDoc-worksheetCompletionDt" />
+        <ref bean="WorksheetCountDoc-worksheetOriginalDt" />
+        <ref bean="WorksheetCountDoc-worksheetStatusCode" />
+        
+        </list>
+    </property>
+    <property name="workflowAttributes">
+    <ref bean="WorksheetCountDoc-workflowAttributes" />
+    </property>
+  </bean>
+
+  <bean id="WorksheetCountDoc-documentNumber" parent="WorksheetCountDoc-documentNumber-parentBean" />
+  <bean id="WorksheetCountDoc-documentNumber-parentBean" abstract="true" parent="DocumentHeader-documentNumber">
+  	<property name="forceUppercase" value="true" />
+  </bean>
+
+
+  <bean id="WorksheetCountDoc-balanced" parent="WorksheetCountDoc-balanced-parentBean" />
+  <bean id="WorksheetCountDoc-balanced-parentBean" abstract="true" parent="GenericAttributes-genericBoolean" 
+        p:name="balanced"
+        p:required="false" />
+
+  <bean id="WorksheetCountDoc-countPercentage" parent="WorksheetCountDoc-countPercentage-parentBean" />
+  <bean id="WorksheetCountDoc-countPercentage-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="countPercentage"
+        p:forceUppercase="false"
+        p:label="Count Percentage"
+        p:shortLabel="Count Percentage"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  
+  <bean id="WorksheetCountDoc-worksheetCnt" parent="WorksheetCountDoc-worksheetCnt-parentBean" />
+  <bean id="WorksheetCountDoc-worksheetCnt-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="worksheetCnt"
+        p:forceUppercase="false"
+        p:label="Worksheet Count"
+        p:shortLabel="Worksheet Count"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="NumericValidationPattern" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="WorksheetCountDoc-warehouseCd" parent="WorksheetCountDoc-warehouseCd-parentBean" />
+  <bean id="WorksheetCountDoc-warehouseCd-parentBean" parent="Warehouse-warehouseCd" abstract="true"
+        p:name="warehouseCd" />
+
+
+  <bean id="WorksheetCountDoc-worksheetCntLength" parent="WorksheetCountDoc-worksheetCntLength-parentBean" />
+  <bean id="WorksheetCountDoc-worksheetCntLength-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="worksheetCntLength"
+        p:forceUppercase="false"
+        p:label="Worksheet Cnt Length"
+        p:shortLabel="Worksheet Cnt Length"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="WorksheetCountDoc-worksheetCntText" parent="WorksheetCountDoc-worksheetCntText-parentBean" />
+  <bean id="WorksheetCountDoc-worksheetCntText-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="worksheetCntText"
+        p:forceUppercase="false"
+        p:label="Worksheet Cnt Text"
+        p:shortLabel="Worksheet Cnt Text"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="WorksheetCountDoc-worksheetCompletionDt" parent="WorksheetCountDoc-worksheetCompletionDt-parentBean" />
+  <bean id="WorksheetCountDoc-worksheetCompletionDt-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="worksheetCompletionDt"
+        p:forceUppercase="false"
+        p:label="Worksheet Completion Dt"
+        p:shortLabel="Worksheet Completion Dt"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="WorksheetCountDoc-worksheetOriginalDt" parent="WorksheetCountDoc-worksheetOriginalDt-parentBean" />
+  <bean id="WorksheetCountDoc-worksheetOriginalDt-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="worksheetOriginalDt"
+        p:forceUppercase="false"
+        p:label="Worksheet Original Dt"
+        p:shortLabel="Worksheet Original Dt"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+    
+  <bean id="RoutingType-RoutingAttribute-WorksheetStatusCode" class="org.kuali.rice.kns.datadictionary.RoutingTypeDefinition">
+    	<property name="routingAttributes">
+    		<list>
+		        <ref bean="WorksheetCountDocument-RoutingAttribute-WorksheetStatusCode"/>
+    		</list>
+    	</property>
+    	    	<property name="documentValuePathGroups">
+    		<list>
+    			<ref bean="RoutingType-RoutingAttribute-WorksheetStatusCode-1111"/>
+    		</list>
+    	</property>
+    	
+    </bean>
+
+	<bean id="RoutingType-RoutingAttribute-WorksheetStatusCode-1111" class="org.kuali.rice.kns.datadictionary.DocumentValuePathGroup">
+    	<property name="documentValues">
+	   		<list>
+	   			<value>documentNumber</value>
+	   		</list>
+   		</property>
+   	</bean>
+
+	<bean id="WorksheetCountDocument-RoutingAttribute-WorksheetStatusCode" class="org.kuali.rice.kns.datadictionary.RoutingAttribute">
+    	<property name="qualificationAttributeName" value="documentNumber"/>
+	</bean>
+	
+  <bean id="WorksheetCountDoc-worksheetStatusCode" parent="WorksheetCountDoc-worksheetStatusCode-parentBean" />
+  <bean id="WorksheetCountDoc-worksheetStatusCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="worksheetStatusCode"
+        p:forceUppercase="false"
+        p:label="Worksheet Status Code"
+        p:shortLabel="Worksheet Status Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>  	
+    
+	<bean id="WorksheetCountDoc-workflowAttributes" parent="WorksheetCountDoc-workflowAttributes-parentBean"/>
+	
+	<bean id="WorksheetCountDoc-workflowAttributes-parentBean" abstract="true" parent="WorkflowAttributes">
+	   	<property name="routingTypeDefinitions">
+   		<map>
+   			<entry key="CycleCountWorksheetReview" value-ref="RoutingType-RoutingAttribute-WorksheetStatusCode"/>
+   		</map>
+   	</property>	
+	</bean>
+
+</beans>

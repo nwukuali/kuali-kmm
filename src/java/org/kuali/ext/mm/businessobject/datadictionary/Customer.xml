@@ -1,0 +1,210 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="Customer" parent="Customer-parentBean" />
+
+  <bean id="Customer-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.Customer"
+        p:titleAttribute="principalName"
+        p:objectLabel="Customer"
+        p:inquiryDefinition-ref="Customer-inquiryDefinition"
+        p:lookupDefinition-ref="Customer-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="Customer-active" />
+        <ref bean="Customer-lastUpdateDate" />
+        <ref bean="Customer-firstName" />
+        <ref bean="Customer-lastName" />
+        <ref bean="Customer-customerPassword" />
+        <ref bean="Customer-confirmPassword" />
+        <ref bean="Customer-principalName" />
+        <ref bean="Customer-versionNumber" />
+      </list>
+    </property>
+  </bean>
+
+  <bean id="Customer-active" parent="Customer-active-parentBean" />
+  <bean id="Customer-active-parentBean" abstract="true" parent="GenericAttributes-activeIndicator" 
+        p:name="active"
+        p:label="Active Indicator"
+        p:shortLabel="Active Indicator"
+        p:required="false" />
+
+
+  <bean id="Customer-lastUpdateDate" parent="Customer-lastUpdateDate-parentBean" />
+  <bean id="Customer-lastUpdateDate-parentBean" parent="GenericAttributes-genericTimestamp" abstract="true"
+        p:name="lastUpdateDate"
+        p:forceUppercase="false"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:maxLength="10"
+        p:required="false" >   
+  </bean>
+
+  <bean id="Customer-principalName" parent="Customer-principalName-parentBean" />
+  <bean id="Customer-principalName-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="principalName"
+        p:forceUppercase="false"
+        p:label="Principal Name"
+        p:shortLabel="User ID"
+        p:maxLength="50"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="20" />
+    </property>
+  </bean>
+  
+  <bean id="Customer-customerName" parent="Customer-customerName-parentBean" />
+  <bean id="Customer-customerName-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="customerName"
+        p:forceUppercase="false"
+        p:label="Customer Name"
+        p:shortLabel="Customer"
+        p:maxLength="90"
+        p:required="false" >
+     <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  
+  <bean id="Customer-firstName" parent="Customer-firstName-parentBean" />
+  <bean id="Customer-firstName-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="firstName"
+        p:forceUppercase="false"
+        p:label="First Name"
+        p:shortLabel="First Name"
+        p:maxLength="45"
+        p:required="true" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="15" />
+    </property>
+  </bean>
+  
+    <bean id="Customer-lastName" parent="Customer-lastName-parentBean" />
+  <bean id="Customer-lastName-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="lastName"
+        p:forceUppercase="false"
+        p:label="Last Name"
+        p:shortLabel="Last Name"
+        p:maxLength="45"
+        p:required="true" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="15" />
+    </property>
+  </bean>
+  
+  <bean id="Customer-customerPassword" parent="Customer-customerPassword-parentBean" />
+  <bean id="Customer-customerPassword-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="customerPassword"
+        p:forceUppercase="false"
+        p:label="Password"
+        p:shortLabel="Password"
+        p:maxLength="45"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="15" />
+    </property>
+    
+  </bean>
+  
+  <bean id="Customer-confirmPassword" parent="Customer-confirmPassword-parentBean" />
+  <bean id="Customer-confirmPassword-parentBean" parent="Customer-customerPassword" abstract="true"
+        p:name="confirmPassword"      
+        p:label="Confirm Password"
+        p:shortLabel="Confirm Password" >  
+  </bean>
+
+  <bean id="Customer-versionNumber" parent="Customer-versionNumber-parentBean" />
+  <bean id="Customer-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="Customer-inquiryDefinition" parent="Customer-inquiryDefinition-parentBean" />
+
+  <bean id="Customer-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Customer Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Customer Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="active" />
+              <bean parent="FieldDefinition" p:attributeName="principalName" />              
+	          <bean parent="FieldDefinition" p:attributeName="firstName" />
+	          <bean parent="FieldDefinition" p:attributeName="lastName" />
+              <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+              <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="Customer-lookupDefinition" parent="Customer-lookupDefinition-parentBean" />
+
+  <bean id="Customer-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Customer Lookup">
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>principalName</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>      
+        <bean parent="FieldDefinition" p:attributeName="principalName" />
+        <bean parent="FieldDefinition" p:attributeName="firstName" />
+        <bean parent="FieldDefinition" p:attributeName="lastName" />
+      <bean parent="FieldDefinition" p:attributeName="active" />      
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="principalName" />
+        <bean parent="FieldDefinition" p:attributeName="firstName" />
+        <bean parent="FieldDefinition" p:attributeName="lastName" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />   
+        <bean parent="FieldDefinition" p:attributeName="active" />     
+      </list>
+    </property>
+  </bean>
+
+</beans>

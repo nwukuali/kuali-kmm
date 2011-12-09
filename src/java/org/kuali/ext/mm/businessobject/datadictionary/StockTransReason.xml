@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="StockTransReason" parent="StockTransReason-parentBean" />
+
+  <bean id="StockTransReason-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.StockTransReason"
+        p:titleAttribute="stockTransReasonCd"
+        p:objectLabel="StockTransReason"
+        p:inquiryDefinition-ref="StockTransReason-inquiryDefinition"
+        p:lookupDefinition-ref="StockTransReason-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="StockTransReason-active" />
+        <ref bean="StockTransReason-stockTransReasonCd" />
+        <ref bean="StockTransReason-stockTransReasonDesc" />
+        <ref bean="StockTransReason-incrementDecrementInd" />
+        <ref bean="StockTransReason-objectTypeCode"/>
+        <ref bean="StockTransReason-lastUpdateDate" />
+        <ref bean="StockTransReason-versionNumber" />
+      </list>
+    </property>
+  </bean>
+
+  <bean id="StockTransReason-active" parent="StockTransReason-active-parentBean" />
+  <bean id="StockTransReason-active-parentBean" abstract="true" parent="GenericAttributes-activeIndicator" 
+        p:name="active"
+        p:label="Active Indicator"
+        p:shortLabel="Active"
+        p:required="false" />
+
+  <bean id="StockTransReason-stockTransReasonCd" parent="StockTransReason-stockTransReasonCd-parentBean" />
+  <bean id="StockTransReason-stockTransReasonCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="stockTransReasonCd"
+        p:forceUppercase="true"
+        p:label="Stock Transaction Reason Code"
+        p:shortLabel="Stock Transaction Reason Code"
+        p:maxLength="8"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AlphaNumericValidationPattern">
+      	<property name="allowUnderscore" value="true" />
+      </bean>
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="8" />
+    </property>
+
+  </bean>
+  
+  <bean id="StockTransReason-objectTypeCode" parent="StockTransReason-objectTypeCode-parentBean" />
+  <bean id="StockTransReason-objectTypeCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="objectTypeCode"
+        p:forceUppercase="true"
+        p:label="Object Type Code"
+        p:shortLabel="Object Type Code"
+        p:maxLength="4"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AlphaNumericValidationPattern"/>
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="4" />
+    </property>
+
+  </bean>
+
+  <bean id="StockTransReason-stockTransReasonDesc" parent="StockTransReason-stockTransReasonDesc-parentBean" />
+  <bean id="StockTransReason-stockTransReasonDesc-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="stockTransReasonDesc"
+        p:forceUppercase="true"
+        p:label="Stock Transaction Reason Description"
+        p:shortLabel="Stock Transaction Reason Description"
+        p:maxLength="45"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="45" />
+    </property>
+  </bean>
+
+  <bean id="StockTransReason-incrementDecrementInd" parent="StockTransReason-incrementDecrementInd-parentBean" />
+  <bean id="StockTransReason-incrementDecrementInd-parentBean" abstract="true" parent="AttributeDefinition" 
+        p:name="incrementDecrementInd"
+        p:label="Increment Decrement Indicator"
+        p:forceUppercase="true"
+        p:maxLength="1"
+        p:required="true">
+        <property name="validationPattern" >
+      	<bean parent="AnyCharacterValidationPattern"/>
+    	</property>
+    	<property name="control">
+      		<bean parent="SelectControlDefinition" p:valuesFinderClass="org.kuali.ext.mm.businessobject.options.StockTransReasonIncDec" />
+    	</property>
+  </bean>
+
+  <bean id="StockTransReason-lastUpdateDate" parent="StockTransReason-lastUpdateDate-parentBean" />
+  <bean id="StockTransReason-lastUpdateDate-parentBean" parent="GenericAttributes-genericTimestamp" abstract="true"
+        p:name="lastUpdateDate"
+        p:forceUppercase="false"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:maxLength="10"
+        p:required="false" >
+  </bean>
+
+  <bean id="StockTransReason-versionNumber" parent="StockTransReason-versionNumber-parentBean" />
+  <bean id="StockTransReason-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="StockTransReason-inquiryDefinition" parent="StockTransReason-inquiryDefinition-parentBean" />
+
+  <bean id="StockTransReason-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Service Type Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Stock Transaction Reason Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="active" />
+              <bean parent="FieldDefinition" p:attributeName="stockTransReasonCd" />
+              <bean parent="FieldDefinition" p:attributeName="stockTransReasonDesc" />
+              <bean parent="FieldDefinition" p:attributeName="objectTypeCode" />
+              <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+              <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="StockTransReason-lookupDefinition" parent="StockTransReason-lookupDefinition-parentBean" />
+
+  <bean id="StockTransReason-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Stock Transaction Reason Lookup" >
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>stockTransReasonCd</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>        
+        <bean parent="FieldDefinition" p:attributeName="stockTransReasonCd" />
+        <bean parent="FieldDefinition" p:attributeName="stockTransReasonDesc" />
+        <bean parent="FieldDefinition" p:attributeName="active" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="stockTransReasonCd" />
+        <bean parent="FieldDefinition" p:attributeName="stockTransReasonDesc" />
+        <bean parent="FieldDefinition" p:attributeName="objectTypeCode" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+        <bean parent="FieldDefinition" p:attributeName="active" />        
+      </list>
+    </property>
+  </bean>
+
+</beans>

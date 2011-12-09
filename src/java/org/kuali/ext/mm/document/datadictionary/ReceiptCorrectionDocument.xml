@@ -1,0 +1,159 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="ReceiptCorrectionDocument" parent="ReceiptCorrectionDocument-parentBean" />
+
+  <bean id="ReceiptCorrectionDocument-parentBean" abstract="true" parent="TransactionalDocumentEntry">
+		<property name="documentTypeName" value="SRCN" />
+		<property name="sessionDocument" value="true" />
+		<property name="documentClass" value="org.kuali.ext.mm.document.ReceiptCorrectionDocument" />
+		<property name="businessRulesClass" value="org.kuali.ext.mm.document.validation.impl.ReceiptCorrectionDocumentRule"/>
+		<property name="documentPresentationControllerClass" value="org.kuali.ext.mm.document.authorization.ReceiptCorrectionDocumentPresentationController"/>
+		<property name="workflowAttributes">
+    	<ref bean="ReceiptCorrectionDocument-workflowAttributes"/>
+     </property>
+		<property name="allowsCopy" value="true" />
+    <property name="attributes" >
+      <list>
+        <ref bean="ReceiptCorrectionDocument-checkinDetails" />
+        <ref bean="ReceiptCorrectionDocument-fdocNbr" />
+        <ref bean="ReceiptCorrectionDocument-lastUpdateDate" />
+        <ref bean="ReceiptCorrectionDocument-orderDocNumber" />
+        <ref bean="ReceiptCorrectionDocument-vendorRefNbr" />
+        <ref bean="ReceiptCorrectionDocument-vendorShipmentNbr" />
+        <ref bean="ReceiptCorrectionDocument-warehouseCode" />
+        <ref bean="ReceiptCorrectionDocument-versionNumber" />
+        <ref bean="ReceiptCorrectionDocument-orderDocument.vendorNm" />
+        <ref bean="ReceiptCorrectionDocument-orderDocument.reqsId" />        
+      </list>
+    </property>
+
+  </bean>
+
+  <bean id="ReceiptCorrectionDocument-orderDocument.vendorNm" parent="ReceiptCorrectionDocument-orderDocument.vendorNm-parentBean" />
+  <bean id="ReceiptCorrectionDocument-orderDocument.vendorNm-parentBean" parent="OrderDocument-vendorNm" abstract="true"
+        p:name="orderDocument.vendorNm"
+        p:label="Vendor Name"
+        p:shortLabel="Vendor Name">
+  </bean>
+
+  <bean id="ReceiptCorrectionDocument-orderDocument.reqsId" parent="ReceiptCorrectionDocument-orderDocument.reqsId-parentBean" />
+  <bean id="ReceiptCorrectionDocument-orderDocument.reqsId-parentBean" parent="OrderDocument-reqsId" abstract="true"
+        p:name="orderDocument.reqsId"
+		>
+  </bean>
+
+  <bean id="ReceiptCorrectionDocument-checkinDetails" parent="ReceiptCorrectionDocument-checkinDetails-parentBean" />
+  <bean id="ReceiptCorrectionDocument-checkinDetails-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="checkinDetails"
+        p:forceUppercase="false"
+        p:label="Checkin Details"
+        p:shortLabel="Checkin Details"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ReceiptCorrectionDocument-fdocNbr" parent="ReceiptCorrectionDocument-fdocNbr-parentBean" />
+  <bean id="ReceiptCorrectionDocument-fdocNbr-parentBean" parent="DocumentHeader-documentNumber" abstract="true"
+        p:name="documentNumber"
+	>
+  </bean>
+
+  <bean id="ReceiptCorrectionDocument-warehouseCode" parent="ReceiptCorrectionDocument-warehouseCode-parentBean" />
+  <bean id="ReceiptCorrectionDocument-warehouseCode-parentBean" parent="Warehouse-warehouseCd" abstract="true"
+  		p:name="warehouseCode"
+		>
+  </bean>
+
+  <bean id="ReceiptCorrectionDocument-lastUpdateDate" parent="ReceiptCorrectionDocument-lastUpdateDate-parentBean" />
+  <bean id="ReceiptCorrectionDocument-lastUpdateDate-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="lastUpdateDate"
+        p:forceUppercase="false"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="HiddenControlDefinition" />
+    </property>
+  </bean>
+
+  <bean id="ReceiptCorrectionDocument-orderDocNumber" parent="ReceiptCorrectionDocument-orderDocNumber-parentBean" />
+  <bean id="ReceiptCorrectionDocument-orderDocNumber-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="orderDocNumber"
+        p:forceUppercase="false"
+        p:label="Order Doc Number"
+        p:shortLabel="Order Doc Number"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ReceiptCorrectionDocument-vendorRefNbr" parent="ReceiptCorrectionDocument-vendorRefNbr-parentBean" />
+  <bean id="ReceiptCorrectionDocument-vendorRefNbr-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorRefNbr"
+        p:forceUppercase="false"
+        p:label="Vendor Reference Number"
+        p:shortLabel="Vendor Reference Number"
+        p:maxLength="45"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ReceiptCorrectionDocument-vendorShipmentNbr" parent="ReceiptCorrectionDocument-vendorShipmentNbr-parentBean" />
+  <bean id="ReceiptCorrectionDocument-vendorShipmentNbr-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorShipmentNbr"
+        p:forceUppercase="false"
+        p:label="Vendor Shipment Nbr"
+        p:shortLabel="Vendor Shipment Nbr"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ReceiptCorrectionDocument-versionNumber" parent="ReceiptCorrectionDocument-versionNumber-parentBean" />
+  <bean id="ReceiptCorrectionDocument-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+	<bean id="ReceiptCorrectionDocument-workflowAttributes" parent="ReceiptCorrectionDocument-workflowAttributes-parentBean"/>
+	
+	<bean id="ReceiptCorrectionDocument-workflowAttributes-parentBean" abstract="true" parent="WorkflowAttributes"/>
+
+</beans>

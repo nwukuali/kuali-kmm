@@ -1,0 +1,56 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="StoresDriverManifestMaintenanceDocument" parent="StoresDriverManifestMaintenanceDocument-parentBean" />
+
+  <bean id="StoresDriverManifestMaintenanceDocument-parentBean" abstract="true" parent="MaintenanceDocumentEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.DriverManifest"
+        p:maintainableClass="org.kuali.rice.kns.maintenance.KualiMaintainableImpl"
+        p:documentTypeName="SDRM"
+        p:documentAuthorizerClass="org.kuali.rice.kns.document.authorization.MaintenanceDocumentAuthorizerBase" >
+    <property name="lockingKeys" >
+      <list>
+        <value>driverManifestCode</value>
+      </list>
+    </property>
+    <property name="defaultExistenceChecks" >
+      <list>
+      </list>
+    </property>
+    <property name="workflowAttributes" >
+        <ref bean="StoresDriverManifestMaintenanceDocument-workflowAttributes" />
+    </property>
+    <property name="maintainableSections" >
+      <list>
+        <ref bean="StoresDriverManifestMaintenanceDocument-MainSection" />
+      </list>
+    </property>
+  </bean>
+
+ <!-- Maintenance Section Definitions -->
+  <bean id="StoresDriverManifestMaintenanceDocument-MainSection" parent="StoresDriverManifestMaintenanceDocument-MainSection-parentBean" />
+
+  <bean id="StoresDriverManifestMaintenanceDocument-MainSection-parentBean" abstract="true" parent="MaintainableSectionDefinition"
+        p:title="Edit Driver Manifest" >
+    <property name="maintainableItems" >
+      <list>
+        <bean parent="MaintainableFieldDefinition"
+              p:name="driverManifestCode"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="driverManifestName"
+              p:required="false" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="active"
+              p:defaultValue="true" />
+      </list>
+    </property>
+  </bean>
+ <!-- workflow attributes -->
+  <bean id="StoresDriverManifestMaintenanceDocument-workflowAttributes" parent="StoresDriverManifestMaintenanceDocument-workflowAttributes-parentBean" />
+
+  <bean id="StoresDriverManifestMaintenanceDocument-workflowAttributes-parentBean" abstract="true" class="org.kuali.rice.kns.datadictionary.WorkflowAttributes" />
+</beans>

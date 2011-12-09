@@ -1,0 +1,381 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="HazardousMateriel" parent="HazardousMateriel-parentBean" />
+
+  <bean id="HazardousMateriel-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.HazardousMateriel"
+        p:titleAttribute="hazardousMaterielId"
+        p:objectLabel="Hazardous Materiel"
+        p:inquiryDefinition-ref="HazardousMateriel-inquiryDefinition"
+        p:lookupDefinition-ref="HazardousMateriel-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="HazardousMateriel-active" />
+        <ref bean="HazardousMateriel-dotHazardousCd" />
+        <ref bean="HazardousMateriel-ehsCasNbr" />
+        <ref bean="HazardousMateriel-ehsContainerCode" />
+        <ref bean="HazardousMateriel-ehsConversionUnitFactor" />
+        <ref bean="HazardousMateriel-ehsHazardousCd" />
+        <ref bean="HazardousMateriel-ehsHazardousStateCode" />
+        <ref bean="HazardousMateriel-ehsUnitOfIssueCd" />
+        <ref bean="HazardousMateriel-hazardousMaterielId" />
+        <ref bean="HazardousMateriel-hazardousPressure" />
+        <ref bean="HazardousMateriel-hazardousTemperature" />
+        <ref bean="HazardousMateriel-hazardousUnCode" />
+        <ref bean="HazardousMateriel-lastUpdateDate" />
+        <ref bean="HazardousMateriel-stockId" />
+        <ref bean="HazardousMateriel-typeOfUse" />
+        <ref bean="HazardousMateriel-versionNumber" />
+      </list>
+    </property>
+    
+  </bean>
+
+  <bean id="HazardousMateriel-active" parent="HazardousMateriel-active-parentBean" />
+  <bean id="HazardousMateriel-active-parentBean" abstract="true" parent="GenericAttributes-activeIndicator" 
+        p:name="active"
+        p:required="false" />
+
+  <bean id="HazardousMateriel-dotHazardousCd" parent="HazardousMateriel-dotHazardousCd-parentBean" />
+  <bean id="HazardousMateriel-dotHazardousCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="dotHazardousCd"
+        p:forceUppercase="false"
+        p:label="DOT Hazardous Code"
+        p:shortLabel="DOT Hazardous Code"
+        p:maxLength="5"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="5" />
+    </property>
+  </bean>
+
+  <bean id="HazardousMateriel-ehsCasNbr" parent="HazardousMateriel-ehsCasNbr-parentBean" />
+  <bean id="HazardousMateriel-ehsCasNbr-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="ehsCasNbr"
+        p:forceUppercase="false"
+        p:label="EHS CAS Number"
+        p:shortLabel="EHS CAS Number"
+        p:maxLength="20"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="20" />
+    </property>
+  </bean>
+
+  <bean id="HazardousMateriel-ehsContainerCode" parent="HazardousMateriel-ehsContainerCode-parentBean" />
+  <bean id="HazardousMateriel-ehsContainerCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="ehsContainerCode"
+        p:forceUppercase="false"
+        p:label="EHS Container Code"
+        p:shortLabel="EHS Container Code"
+        p:maxLength="6"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="6" />
+    </property>
+  </bean>
+
+  <bean id="HazardousMateriel-ehsConversionUnitFactor" parent="HazardousMateriel-ehsConversionUnitFactor-parentBean" />
+  <bean id="HazardousMateriel-ehsConversionUnitFactor-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="ehsConversionUnitFactor"
+        p:forceUppercase="false"
+        p:label="EHS Conversion Unit Factor"
+        p:shortLabel="EHS Conversion Unit Factor"        
+        p:maxLength="8"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="FixedPointValidationPattern" p:precision="8" p:allowNegative="false" p:scale="4"/>
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="4" />
+    </property>
+  </bean>
+
+  <bean id="HazardousMateriel-ehsHazardousCd" parent="HazardousMateriel-ehsHazardousCd-parentBean" />
+  <bean id="HazardousMateriel-ehsHazardousCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="ehsHazardousCd"
+        p:forceUppercase="false"
+        p:label="EHS Hazardous Code"
+        p:shortLabel="EHS Hazardous Code"
+        p:maxLength="3"
+        p:required="false" >
+    <property name="validationPattern"  >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="3" />
+    </property>
+  </bean>
+
+  <bean id="HazardousMateriel-ehsHazardousStateCode" parent="HazardousMateriel-ehsHazardousStateCode-parentBean" />
+  <bean id="HazardousMateriel-ehsHazardousStateCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="ehsHazardousStateCode"
+        p:forceUppercase="false"
+        p:label="EHS Hazardous State Code"
+        p:shortLabel="EHS Hazardous State Code"
+        p:maxLength="1"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="1" />
+    </property>
+  </bean>
+
+  <bean id="HazardousMateriel-ehsUnitOfIssueCd" parent="HazardousMateriel-ehsUnitOfIssueCd-parentBean" />
+  <bean id="HazardousMateriel-ehsUnitOfIssueCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="ehsUnitOfIssueCd"
+        p:forceUppercase="false"
+        p:label="EHS Unit Of Issue Code"
+        p:shortLabel="EHS Unit Of Issue Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="HazardousMateriel-hazardousMaterielId" parent="HazardousMateriel-hazardousMaterielId-parentBean" />
+  <bean id="HazardousMateriel-hazardousMaterielId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="hazardousMaterielId"
+        p:forceUppercase="false"
+        p:label="Hazardous Material Id"
+        p:shortLabel="Hazardous Material Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="HazardousMateriel-hazardousPressure" parent="HazardousMateriel-hazardousPressure-parentBean" />
+  <bean id="HazardousMateriel-hazardousPressure-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="hazardousPressure"
+        p:forceUppercase="false"
+        p:label="Hazardous Pressure"
+        p:shortLabel="Hazardous Pressure"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="HazardousMateriel-hazardousTemperature" parent="HazardousMateriel-hazardousTemperature-parentBean" />
+  <bean id="HazardousMateriel-hazardousTemperature-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="hazardousTemperature"
+        p:forceUppercase="false"
+        p:label="Hazardous Temperature"
+        p:shortLabel="Hazardous Temperature"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="HazardousMateriel-hazardousUnCode" parent="HazardousMateriel-hazardousUnCode-parentBean" />
+  <bean id="HazardousMateriel-hazardousUnCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="hazardousUnCode"
+        p:forceUppercase="false"
+        p:label="Hazardous UN Code"
+        p:shortLabel="Hazardous UN Code"
+        p:maxLength="12"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="12" />
+    </property>
+  </bean>
+
+  <bean id="HazardousMateriel-lastUpdateDate" parent="HazardousMateriel-lastUpdateDate-parentBean" />
+  <bean id="HazardousMateriel-lastUpdateDate-parentBean" abstract="true" parent="GenericAttributes-genericTimestamp" 
+        p:name="lastUpdateDate"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:required="false" />
+
+  <bean id="HazardousMateriel-stockId" parent="HazardousMateriel-stockId-parentBean" />
+  <bean id="HazardousMateriel-stockId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="stockId"
+        p:forceUppercase="false"
+        p:label="Stock ID"
+        p:shortLabel="Stock ID"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="HazardousMateriel-typeOfUse" parent="HazardousMateriel-typeOfUse-parentBean" />
+  <bean id="HazardousMateriel-typeOfUse-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="typeOfUse"
+        p:forceUppercase="false"
+        p:label="Type Of Use"
+        p:shortLabel="Type Of Use"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="HazardousMateriel-versionNumber" parent="HazardousMateriel-versionNumber-parentBean" />
+  <bean id="HazardousMateriel-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="HazardousMateriel-inquiryDefinition" parent="HazardousMateriel-inquiryDefinition-parentBean" />
+
+  <bean id="HazardousMateriel-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Hazardous Materiel Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Hazardous Materiel Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="active" />
+              <bean parent="FieldDefinition" p:attributeName="dotHazardousCd" />
+              <bean parent="FieldDefinition" p:attributeName="ehsCasNbr" />
+              <bean parent="FieldDefinition" p:attributeName="ehsContainerCode" />
+              <bean parent="FieldDefinition" p:attributeName="ehsConversionUnitFactor" />
+              <bean parent="FieldDefinition" p:attributeName="ehsHazardousCd" />
+              <bean parent="FieldDefinition" p:attributeName="ehsHazardousStateCode" />
+              <bean parent="FieldDefinition" p:attributeName="ehsUnitOfIssueCd" />
+              <bean parent="FieldDefinition" p:attributeName="hazardousMaterielId" />     
+              <bean parent="FieldDefinition" p:attributeName="hazardousPressure" />
+              <bean parent="FieldDefinition" p:attributeName="hazardousTemperature" />
+              <bean parent="FieldDefinition" p:attributeName="hazardousUnCode" />
+              <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+              <bean parent="FieldDefinition" p:attributeName="stockId" />
+              <bean parent="FieldDefinition" p:attributeName="typeOfUse" />
+              <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="HazardousMateriel-lookupDefinition" parent="HazardousMateriel-lookupDefinition-parentBean" />
+
+  <bean id="HazardousMateriel-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Hazardous Materiel Lookup" >
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>hazardousMaterielId</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="active" />
+        <bean parent="FieldDefinition" p:attributeName="dotHazardousCd" />
+        <bean parent="FieldDefinition" p:attributeName="ehsCasNbr" />
+        <bean parent="FieldDefinition" p:attributeName="ehsContainerCode" />
+        <bean parent="FieldDefinition" p:attributeName="ehsConversionUnitFactor" />
+        <bean parent="FieldDefinition" p:attributeName="ehsHazardousCd" />
+        <bean parent="FieldDefinition" p:attributeName="ehsHazardousStateCode" />
+        <bean parent="FieldDefinition" p:attributeName="ehsUnitOfIssueCd" />
+        <bean parent="FieldDefinition" p:attributeName="hazardousMaterielId" />
+        <bean parent="FieldDefinition" p:attributeName="hazardousPressure" />
+        <bean parent="FieldDefinition" p:attributeName="hazardousTemperature" />
+        <bean parent="FieldDefinition" p:attributeName="hazardousUnCode" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+        <bean parent="FieldDefinition" p:attributeName="stockId" />
+        <bean parent="FieldDefinition" p:attributeName="typeOfUse" />
+        <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="active" />
+        <bean parent="FieldDefinition" p:attributeName="dotHazardousCd" />
+        <bean parent="FieldDefinition" p:attributeName="ehsCasNbr" />
+        <bean parent="FieldDefinition" p:attributeName="ehsContainerCode" />
+        <bean parent="FieldDefinition" p:attributeName="ehsConversionUnitFactor" />
+        <bean parent="FieldDefinition" p:attributeName="ehsHazardousCd" />
+        <bean parent="FieldDefinition" p:attributeName="ehsHazardousStateCode" />
+        <bean parent="FieldDefinition" p:attributeName="ehsUnitOfIssueCd" />
+        <bean parent="FieldDefinition" p:attributeName="hazardousMaterielId" />
+        <bean parent="FieldDefinition" p:attributeName="hazardousPressure" />
+        <bean parent="FieldDefinition" p:attributeName="hazardousTemperature" />
+        <bean parent="FieldDefinition" p:attributeName="hazardousUnCode" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+        <bean parent="FieldDefinition" p:attributeName="stockId" />
+        <bean parent="FieldDefinition" p:attributeName="typeOfUse" />
+        <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+      </list>
+    </property>
+  </bean>
+
+</beans>

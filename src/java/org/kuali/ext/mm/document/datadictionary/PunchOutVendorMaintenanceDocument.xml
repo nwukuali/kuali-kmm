@@ -1,0 +1,113 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="PunchOutVendorMaintenanceDocument" parent="PunchOutVendorMaintenanceDocument-parentBean" />
+
+  <bean id="PunchOutVendorMaintenanceDocument-parentBean" abstract="true" parent="MaintenanceDocumentEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.PunchOutVendor"
+        p:maintainableClass="org.kuali.rice.kns.maintenance.KualiMaintainableImpl"
+        p:documentTypeName="SPOV"
+        p:documentAuthorizerClass="org.kuali.rice.kns.document.authorization.MaintenanceDocumentAuthorizerBase"
+        p:documentPresentationControllerClass="org.kuali.ext.mm.document.authorization.PunchOutVendorPresentationController"
+        p:businessRulesClass="org.kuali.ext.mm.document.validation.impl.PunchOutVendorRule" >
+    <property name="lockingKeys" >
+      <list>
+        <value>punchOutVendorId</value>
+      </list>
+    </property>
+    <property name="defaultExistenceChecks" >
+      <list>
+        <bean parent="ReferenceDefinition"
+              p:attributeName="catalog"
+              p:attributeToHighlightOnFail="catalog.catalogCd" />
+        <bean parent="ReferenceDefinition"
+              p:attributeName="procurementCard"
+              p:attributeToHighlightOnFail="procurementCard.cardName" />
+      </list>
+    </property>
+    <property name="workflowAttributes" >
+        <ref bean="PunchOutVendorMaintenanceDocument-workflowAttributes" />
+    </property>
+    <property name="maintainableSections" >
+      <list>
+        <ref bean="PunchOutVendorMaintenanceDocument-MainSection" />
+      </list>
+    </property>
+  </bean>
+
+ <!-- Maintenance Section Definitions -->
+  <bean id="PunchOutVendorMaintenanceDocument-MainSection" parent="PunchOutVendorMaintenanceDocument-MainSection-parentBean" />
+
+  <bean id="PunchOutVendorMaintenanceDocument-MainSection-parentBean" abstract="true" parent="MaintainableSectionDefinition"
+        p:title="Edit PunchOutVendor" >
+    <property name="maintainableItems" >
+      <list>
+        <bean parent="MaintainableFieldDefinition"
+              p:name="punchOutVendorName"
+              p:required="true" />        
+        <bean parent="MaintainableFieldDefinition"
+              p:name="catalog.catalogCd"
+              p:overrideFieldConversions="catalog.catalogId:catalogId,catalog.catalogCd:catalogCd,catalog.catalogDesc:catalogDesc"
+              p:lookupReadOnly="true"
+              p:required="true" />	
+		<bean parent="MaintainableFieldDefinition"
+              p:name="catalog.catalogDesc"
+              p:unconditionallyReadOnly="true"
+              p:required="false" />	
+		<bean parent="MaintainableFieldDefinition"
+              p:name="procurementCard.cardName"
+              p:overrideFieldConversions="procurementCard.cardId:cardId,procurementCard.cardName:cardName,procurementCard.cardNumber:cardNumber,procurementCard.cardExpireDate:cardExpireDate"
+              p:lookupReadOnly="true"
+              p:required="true" />	
+		<bean parent="MaintainableFieldDefinition"
+              p:name="procurementCard.cardNumber"
+              p:unconditionallyReadOnly="true"
+              p:required="false" />	
+		<bean parent="MaintainableFieldDefinition"
+              p:name="procurementCard.cardExpireDate"
+              p:unconditionallyReadOnly="true"
+              p:required="false" />	                            	              
+        <bean parent="MaintainableFieldDefinition"
+              p:name="vendorCredentialDomain"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="vendorIdentity"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="vendorSharedSecret"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="punchOutUrl"
+              p:required="false" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="purchaseOrderUrl"
+              p:required="true" />
+       	<bean parent="MaintainableFieldDefinition"
+              p:name="localCredentialDomain"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="localIdentity"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="localUserAgent"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="deploymentMode"
+              p:required="true" />
+<!--         <bean parent="MaintainableFieldDefinition" -->
+<!--               p:name="supplierPartId" -->
+<!--               p:required="true" /> -->
+        <bean parent="MaintainableFieldDefinition"
+              p:name="active"
+              p:defaultValue="true" />              
+      </list>
+    </property>
+  </bean>
+ <!-- workflow attributes -->
+  <bean id="PunchOutVendorMaintenanceDocument-workflowAttributes" parent="PunchOutVendorMaintenanceDocument-workflowAttributes-parentBean" />
+
+  <bean id="PunchOutVendorMaintenanceDocument-workflowAttributes-parentBean" abstract="true" class="org.kuali.rice.kns.datadictionary.WorkflowAttributes" />
+</beans>

@@ -1,0 +1,545 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="ShopCartDetail" parent="ShopCartDetail-parentBean" />
+
+  <bean id="ShopCartDetail-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.ShopCartDetail"
+        p:titleAttribute="shopCartDetailId"
+        p:objectLabel="Shop Cart Detail"
+        p:inquiryDefinition-ref="ShopCartDetail-inquiryDefinition"
+        p:lookupDefinition-ref="ShopCartDetail-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="ShopCartDetail-active" />
+        <ref bean="ShopCartDetail-catalogItemId" />
+        <ref bean="ShopCartDetail-itemUnitOfIssueCd" />
+        <ref bean="ShopCartDetail-lastUpdateDate" />
+        <ref bean="ShopCartDetail-manufacturerNbr" />
+        <ref bean="ShopCartDetail-shippingHt" />
+        <ref bean="ShopCartDetail-shippingLh" />
+        <ref bean="ShopCartDetail-shippingWd" />
+        <ref bean="ShopCartDetail-shippingWgt" />
+        <ref bean="ShopCartDetail-shopCartDetailId" />
+        <ref bean="ShopCartDetail-shoppingCartId" />
+        <ref bean="ShopCartDetail-shopCartItemCostAmt" />
+        <ref bean="ShopCartDetail-shopCartItemDetailDesc" />
+        <ref bean="ShopCartDetail-shopCartItemMarkupAmt" />
+        <ref bean="ShopCartDetail-shopCartItemPriceAmt" />
+        <ref bean="ShopCartDetail-shopCartItemQty" />
+        <ref bean="ShopCartDetail-shopCartItemTaxAmt" />
+        <ref bean="ShopCartDetail-shopCartLineNbr" />
+        <ref bean="ShopCartDetail-vendorDetailAssignedId" />
+        <ref bean="ShopCartDetail-vendorHeaderGeneratedId" />
+        <ref bean="ShopCartDetail-vendorNm" />
+        <ref bean="ShopCartDetail-versionNumber" />
+        <ref bean="ShopCartDetail-warehouseCd" />
+        <ref bean="ShopCartDetail-willcallInd" />
+      </list>
+    </property>
+  </bean>
+
+  <bean id="ShopCartDetail-active" parent="ShopCartDetail-active-parentBean" />
+  <bean id="ShopCartDetail-active-parentBean" abstract="true" parent="GenericAttributes-activeIndicator" 
+        p:name="active"
+        p:required="false" />
+
+  <bean id="ShopCartDetail-catalogItemId" parent="ShopCartDetail-catalogItemId-parentBean" />
+  <bean id="ShopCartDetail-catalogItemId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="catalogItemId"
+        p:forceUppercase="false"
+        p:label="Catalog Item Id"
+        p:shortLabel="Catalog Item Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ShopCartDetail-itemUnitOfIssueCd" parent="ShopCartDetail-itemUnitOfIssueCd-parentBean" />
+  <bean id="ShopCartDetail-itemUnitOfIssueCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="itemUnitOfIssueCd"
+        p:forceUppercase="false"
+        p:label="Item Unit Of Issue Cd"
+        p:shortLabel="Item Unit Of Issue Cd"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ShopCartDetail-lastUpdateDate" parent="ShopCartDetail-lastUpdateDate-parentBean" />
+  <bean id="ShopCartDetail-lastUpdateDate-parentBean" abstract="true" parent="GenericAttributes-genericTimestamp" 
+        p:name="lastUpdateDate"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:required="false" />
+
+  <bean id="ShopCartDetail-manufacturerNbr" parent="ShopCartDetail-manufacturerNbr-parentBean" />
+  <bean id="ShopCartDetail-manufacturerNbr-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="manufacturerNbr"
+        p:forceUppercase="false"
+        p:label="Manufacturer Nbr"
+        p:shortLabel="Manufacturer Nbr"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ShopCartDetail-shippingHt" parent="ShopCartDetail-shippingHt-parentBean" />
+  <bean id="ShopCartDetail-shippingHt-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="shippingHt"
+        p:forceUppercase="false"
+        p:label="Shipping Ht"
+        p:shortLabel="Shipping Ht"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ShopCartDetail-shippingLh" parent="ShopCartDetail-shippingLh-parentBean" />
+  <bean id="ShopCartDetail-shippingLh-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="shippingLh"
+        p:forceUppercase="false"
+        p:label="Shipping Lh"
+        p:shortLabel="Shipping Lh"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ShopCartDetail-shippingWd" parent="ShopCartDetail-shippingWd-parentBean" />
+  <bean id="ShopCartDetail-shippingWd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="shippingWd"
+        p:forceUppercase="false"
+        p:label="Shipping Wd"
+        p:shortLabel="Shipping Wd"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ShopCartDetail-shippingWgt" parent="ShopCartDetail-shippingWgt-parentBean" />
+  <bean id="ShopCartDetail-shippingWgt-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="shippingWgt"
+        p:forceUppercase="false"
+        p:label="Shipping Wgt"
+        p:shortLabel="Shipping Wgt"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ShopCartDetail-shopCartDetailId" parent="ShopCartDetail-shopCartDetailId-parentBean" />
+  <bean id="ShopCartDetail-shopCartDetailId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="shopCartDetailId"
+        p:forceUppercase="false"
+        p:label="Shop Cart Detail Id"
+        p:shortLabel="Shop Cart Detail Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ShopCartDetail-shoppingCartId" parent="ShopCartDetail-shoppingCartId-parentBean" />
+  <bean id="ShopCartDetail-shoppingCartId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="shoppingCartId"
+        p:forceUppercase="false"
+        p:label="Shop Cart Doc Nbr"
+        p:shortLabel="Shop Cart Doc Nbr"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ShopCartDetail-shopCartItemCostAmt" parent="ShopCartDetail-shopCartItemCostAmt-parentBean" />
+  <bean id="ShopCartDetail-shopCartItemCostAmt-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="shopCartItemCostAmt"
+        p:forceUppercase="false"
+        p:label="Shop Cart Item Cost Amt"
+        p:shortLabel="Shop Cart Item Cost Amt"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ShopCartDetail-shopCartItemDetailDesc" parent="ShopCartDetail-shopCartItemDetailDesc-parentBean" />
+  <bean id="ShopCartDetail-shopCartItemDetailDesc-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="shopCartItemDetailDesc"
+        p:forceUppercase="false"
+        p:label="Shop Cart Item Detail Desc"
+        p:shortLabel="Shop Cart Item Detail Desc"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ShopCartDetail-shopCartItemMarkupAmt" parent="ShopCartDetail-shopCartItemMarkupAmt-parentBean" />
+  <bean id="ShopCartDetail-shopCartItemMarkupAmt-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="shopCartItemMarkupAmt"
+        p:forceUppercase="false"
+        p:label="Shop Cart Item Markup Amt"
+        p:shortLabel="Shop Cart Item Markup Amt"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ShopCartDetail-shopCartItemPriceAmt" parent="ShopCartDetail-shopCartItemPriceAmt-parentBean" />
+  <bean id="ShopCartDetail-shopCartItemPriceAmt-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="shopCartItemPriceAmt"
+        p:forceUppercase="false"
+        p:label="Shop Cart Item Price Amt"
+        p:shortLabel="Shop Cart Item Price Amt"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ShopCartDetail-shopCartItemQty" parent="ShopCartDetail-shopCartItemQty-parentBean" />
+  <bean id="ShopCartDetail-shopCartItemQty-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="shopCartItemQty"
+        p:forceUppercase="false"
+        p:label="Shop Cart Item Qty"
+        p:shortLabel="Shop Cart Item Qty"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ShopCartDetail-shopCartItemTaxAmt" parent="ShopCartDetail-shopCartItemTaxAmt-parentBean" />
+  <bean id="ShopCartDetail-shopCartItemTaxAmt-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="shopCartItemTaxAmt"
+        p:forceUppercase="false"
+        p:label="Shop Cart Item Tax Amt"
+        p:shortLabel="Shop Cart Item Tax Amt"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ShopCartDetail-shopCartLineNbr" parent="ShopCartDetail-shopCartLineNbr-parentBean" />
+  <bean id="ShopCartDetail-shopCartLineNbr-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="shopCartLineNbr"
+        p:forceUppercase="false"
+        p:label="Shop Cart Line Nbr"
+        p:shortLabel="Shop Cart Line Nbr"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ShopCartDetail-vendorDetailAssignedId" parent="ShopCartDetail-vendorDetailAssignedId-parentBean" />
+  <bean id="ShopCartDetail-vendorDetailAssignedId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorDetailAssignedId"
+        p:forceUppercase="false"
+        p:label="Vendor Detail Assigned Id"
+        p:shortLabel="Vendor Detail Assigned Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ShopCartDetail-vendorHeaderGeneratedId" parent="ShopCartDetail-vendorHeaderGeneratedId-parentBean" />
+  <bean id="ShopCartDetail-vendorHeaderGeneratedId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorHeaderGeneratedId"
+        p:forceUppercase="false"
+        p:label="Vendor Header Generated Id"
+        p:shortLabel="Vendor Header Generated Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ShopCartDetail-vendorNm" parent="ShopCartDetail-vendorNm-parentBean" />
+  <bean id="ShopCartDetail-vendorNm-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorNm"
+        p:forceUppercase="false"
+        p:label="Vendor Nm"
+        p:shortLabel="Vendor Nm"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ShopCartDetail-versionNumber" parent="ShopCartDetail-versionNumber-parentBean" />
+  <bean id="ShopCartDetail-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+  <bean id="ShopCartDetail-warehouseCd" parent="ShopCartDetail-warehouseCd-parentBean" />
+  <bean id="ShopCartDetail-warehouseCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="warehouseCd"
+        p:forceUppercase="false"
+        p:label="Warehouse Cd"
+        p:shortLabel="Warehouse Cd"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ShopCartDetail-willcallInd" parent="ShopCartDetail-willcallInd-parentBean" />
+  <bean id="ShopCartDetail-willcallInd-parentBean" abstract="true" parent="GenericAttributes-genericBoolean" 
+        p:name="willcallInd"
+        p:required="false" />
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="ShopCartDetail-inquiryDefinition" parent="ShopCartDetail-inquiryDefinition-parentBean" />
+
+  <bean id="ShopCartDetail-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Shop Cart Detail Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Shop Cart Detail Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="active" />
+              <bean parent="FieldDefinition" p:attributeName="catalogItemId" />
+              <bean parent="FieldDefinition" p:attributeName="itemUnitOfIssueCd" />
+              <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+              <bean parent="FieldDefinition" p:attributeName="manufacturerNbr" />
+              <bean parent="FieldDefinition" p:attributeName="shippingHt" />
+              <bean parent="FieldDefinition" p:attributeName="shippingLh" />
+              <bean parent="FieldDefinition" p:attributeName="shippingWd" />
+              <bean parent="FieldDefinition" p:attributeName="shippingWgt" />
+              <bean parent="FieldDefinition" p:attributeName="shopCartDetailId" />
+              <bean parent="FieldDefinition" p:attributeName="shoppingCartId" />
+              <bean parent="FieldDefinition" p:attributeName="shopCartItemCostAmt" />
+              <bean parent="FieldDefinition" p:attributeName="shopCartItemDetailDesc" />
+              <bean parent="FieldDefinition" p:attributeName="shopCartItemMarkupAmt" />
+              <bean parent="FieldDefinition" p:attributeName="shopCartItemPriceAmt" />
+              <bean parent="FieldDefinition" p:attributeName="shopCartItemQty" />
+              <bean parent="FieldDefinition" p:attributeName="shopCartItemTaxAmt" />
+              <bean parent="FieldDefinition" p:attributeName="shopCartLineNbr" />
+              <bean parent="FieldDefinition" p:attributeName="vendorDetailAssignedId" />
+              <bean parent="FieldDefinition" p:attributeName="vendorHeaderGeneratedId" />
+              <bean parent="FieldDefinition" p:attributeName="vendorNm" />
+              <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+              <bean parent="FieldDefinition" p:attributeName="warehouseCd" />
+              <bean parent="FieldDefinition" p:attributeName="willcallInd" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="ShopCartDetail-lookupDefinition" parent="ShopCartDetail-lookupDefinition-parentBean" />
+
+  <bean id="ShopCartDetail-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Shop Cart Detail Lookup" 
+ >
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>shoppingCartId</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="active" />
+        <bean parent="FieldDefinition" p:attributeName="catalogItemId" />
+        <bean parent="FieldDefinition" p:attributeName="itemUnitOfIssueCd" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+        <bean parent="FieldDefinition" p:attributeName="manufacturerNbr" />
+        <bean parent="FieldDefinition" p:attributeName="shippingHt" />
+        <bean parent="FieldDefinition" p:attributeName="shippingLh" />
+        <bean parent="FieldDefinition" p:attributeName="shippingWd" />
+        <bean parent="FieldDefinition" p:attributeName="shippingWgt" />
+        <bean parent="FieldDefinition" p:attributeName="shopCartDetailId" />
+        <bean parent="FieldDefinition" p:attributeName="shoppingCartId" />
+        <bean parent="FieldDefinition" p:attributeName="shopCartItemCostAmt" />
+        <bean parent="FieldDefinition" p:attributeName="shopCartItemDetailDesc" />
+        <bean parent="FieldDefinition" p:attributeName="shopCartItemMarkupAmt" />
+        <bean parent="FieldDefinition" p:attributeName="shopCartItemPriceAmt" />
+        <bean parent="FieldDefinition" p:attributeName="shopCartItemQty" />
+        <bean parent="FieldDefinition" p:attributeName="shopCartItemTaxAmt" />
+        <bean parent="FieldDefinition" p:attributeName="shopCartLineNbr" />
+        <bean parent="FieldDefinition" p:attributeName="vendorDetailAssignedId" />
+        <bean parent="FieldDefinition" p:attributeName="vendorHeaderGeneratedId" />
+        <bean parent="FieldDefinition" p:attributeName="vendorNm" />
+        <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+        <bean parent="FieldDefinition" p:attributeName="warehouseCd" />
+        <bean parent="FieldDefinition" p:attributeName="willcallInd" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="active" />
+        <bean parent="FieldDefinition" p:attributeName="catalogItemId" />
+        <bean parent="FieldDefinition" p:attributeName="itemUnitOfIssueCd" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+        <bean parent="FieldDefinition" p:attributeName="manufacturerNbr" />
+        <bean parent="FieldDefinition" p:attributeName="shippingHt" />
+        <bean parent="FieldDefinition" p:attributeName="shippingLh" />
+        <bean parent="FieldDefinition" p:attributeName="shippingWd" />
+        <bean parent="FieldDefinition" p:attributeName="shippingWgt" />
+        <bean parent="FieldDefinition" p:attributeName="shopCartDetailId" />
+        <bean parent="FieldDefinition" p:attributeName="shoppingCartId" />
+        <bean parent="FieldDefinition" p:attributeName="shopCartItemCostAmt" />
+        <bean parent="FieldDefinition" p:attributeName="shopCartItemDetailDesc" />
+        <bean parent="FieldDefinition" p:attributeName="shopCartItemMarkupAmt" />
+        <bean parent="FieldDefinition" p:attributeName="shopCartItemPriceAmt" />
+        <bean parent="FieldDefinition" p:attributeName="shopCartItemQty" />
+        <bean parent="FieldDefinition" p:attributeName="shopCartItemTaxAmt" />
+        <bean parent="FieldDefinition" p:attributeName="shopCartLineNbr" />
+        <bean parent="FieldDefinition" p:attributeName="vendorDetailAssignedId" />
+        <bean parent="FieldDefinition" p:attributeName="vendorHeaderGeneratedId" />
+        <bean parent="FieldDefinition" p:attributeName="vendorNm" />
+        <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+        <bean parent="FieldDefinition" p:attributeName="warehouseCd" />
+        <bean parent="FieldDefinition" p:attributeName="willcallInd" />
+      </list>
+    </property>
+  </bean>
+
+</beans>

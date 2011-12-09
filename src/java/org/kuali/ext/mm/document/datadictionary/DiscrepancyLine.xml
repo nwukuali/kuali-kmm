@@ -1,0 +1,653 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="DiscrepancyLine" parent="DiscrepancyLine-parentBean" />
+
+  <bean id="DiscrepancyLine-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.document.DiscrepancyLine"
+        p:titleAttribute="discrepancyLineId"
+        p:objectLabel="Reconciliation Discrepancy"
+        p:inquiryDefinition-ref="DiscrepancyLine-inquiryDefinition"
+        p:lookupDefinition-ref="DiscrepancyLine-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="DiscrepancyLine-active" />
+        <ref bean="DiscrepancyLine-difference" />
+        <ref bean="DiscrepancyLine-invoiceAmt" />
+        <ref bean="DiscrepancyLine-invoiceNumber" />
+        <ref bean="DiscrepancyLine-lastUpdateDate" />
+        <ref bean="DiscrepancyLine-orderNumber" />
+        <ref bean="DiscrepancyLine-postedDate" />
+        <ref bean="DiscrepancyLine-discrepancyLineId" />
+        <ref bean="DiscrepancyLine-discrepancyLineDocNbr" />
+        <ref bean="DiscrepancyLine-discrepancyComment" />
+        <ref bean="DiscrepancyLine-totalPCardAmt" />
+        <ref bean="DiscrepancyLine-transactionAmt" />
+        <ref bean="DiscrepancyLine-transactionDate" />
+        <ref bean="DiscrepancyLine-vendorName" />
+        <ref bean="DiscrepancyLine-versionNumber" />
+        <ref bean="DiscrepancyLine-selected"/>        
+        <ref bean="DiscrepancyLine-distributorNumber" />
+    	<ref bean="DiscrepancyLine-shippedDistributorNumber" />
+     	<ref bean="DiscrepancyLine-unitOfIssueCode" />
+    	<ref bean="DiscrepancyLine-itemDescription" />
+    	<ref bean="DiscrepancyLine-qtyOrdered" />
+     	<ref bean="DiscrepancyLine-qtyShipped" />
+     	<ref bean="DiscrepancyLine-invoiceQtyShip" />
+    	<ref bean="DiscrepancyLine-unitInvoiceAmt" />
+     	<ref bean="DiscrepancyLine-taxInvoiceAmt" />
+    	<ref bean="DiscrepancyLine-totalAmt" />
+    	<ref bean="DiscrepancyLine-dateShipped" />
+    	<ref bean="DiscrepancyLine-poPrice" />
+    	<ref bean="DiscrepancyLine-percentageDiff" />
+    	<ref bean="DiscrepancyLine-lineReadOnly" />
+      </list>
+    </property>
+  </bean>
+
+  <bean id="DiscrepancyLine-selected" parent="DiscrepancyLine-selected-parentBean"/>
+  <bean id="DiscrepancyLine-selected-parentBean" parent="GenericAttributes-genericBoolean" abstract="true"
+        p:name="selected"
+     	p:label ="Remove Discrepancy"
+	    p:shortLabel ="Remove Discrepancy">
+    <property name="control">
+      <bean parent="CheckboxControlDefinition"/>
+    </property>
+    <property name="formatterClass" value="org.kuali.rice.kns.web.format.BooleanFormatter"/> 
+  </bean>
+      
+  <bean id="DiscrepancyLine-active" parent="DiscrepancyLine-active-parentBean" />
+  <bean id="DiscrepancyLine-active-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="active"
+        p:forceUppercase="false"
+        p:label="Active"
+        p:shortLabel="Active"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="DiscrepancyLine-difference" parent="DiscrepancyLine-difference-parentBean" />
+  <bean id="DiscrepancyLine-difference-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="difference"
+        p:forceUppercase="false"
+        p:label="Difference"
+        p:shortLabel="Difference"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="DiscrepancyLine-invoiceAmt" parent="DiscrepancyLine-invoiceAmt-parentBean" />
+  <bean id="DiscrepancyLine-invoiceAmt-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="invoiceAmt"
+        p:forceUppercase="false"
+        p:label="Invoice Amt"
+        p:shortLabel="Invoice Amt"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="DiscrepancyLine-invoiceNumber" parent="DiscrepancyLine-invoiceNumber-parentBean" />
+  <bean id="DiscrepancyLine-invoiceNumber-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="invoiceNumber"
+        p:forceUppercase="false"
+        p:label="Invoice Number"
+        p:shortLabel="Invoice Number"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="DiscrepancyLine-lastUpdateDate" parent="DiscrepancyLine-lastUpdateDate-parentBean" />
+  <bean id="DiscrepancyLine-lastUpdateDate-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="lastUpdateDate"
+        p:forceUppercase="false"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="HiddenControlDefinition" />
+    </property>
+  </bean>
+
+  <bean id="DiscrepancyLine-orderNumber" parent="DiscrepancyLine-orderNumber-parentBean" />
+  <bean id="DiscrepancyLine-orderNumber-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="orderNumber"
+        p:forceUppercase="false"
+        p:label="Order Number"
+        p:shortLabel="Order Number"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="DiscrepancyLine-postedDate" parent="DiscrepancyLine-postedDate-parentBean" />
+  <bean id="DiscrepancyLine-postedDate-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="postedDate"
+        p:forceUppercase="false"
+        p:label="Posted Date"
+        p:shortLabel="Posted Date"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  
+  <bean id="DiscrepancyLine-dateShipped" parent="DiscrepancyLine-dateShipped-parentBean" />
+  <bean id="DiscrepancyLine-dateShipped-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="dateShipped"
+        p:forceUppercase="false"
+        p:label="Date Shipped"
+        p:shortLabel="Date Shipped"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="DiscrepancyLine-discrepancyLineId" parent="DiscrepancyLine-discrepancyLineId-parentBean" />
+  <bean id="DiscrepancyLine-discrepancyLineId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="discrepancyLineId"
+        p:forceUppercase="false"
+        p:label="Recon Discr Line Id"
+        p:shortLabel="Recon Discr Line Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="DiscrepancyLine-discrepancyLineDocNbr" parent="DiscrepancyLine-discrepancyLineDocNbr-parentBean" />
+  <bean id="DiscrepancyLine-discrepancyLineDocNbr-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="discrepancyLineDocNbr"
+        p:forceUppercase="false"
+        p:label="Reconciliation Discrepancy Doc Nbr"
+        p:shortLabel="Reconciliation Discrepancy Doc Nbr"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="DiscrepancyLine-discrepancyComment" parent="DiscrepancyLine-discrepancyComment-parentBean" />
+  <bean id="DiscrepancyLine-discrepancyComment-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="discrepancyComment"
+        p:forceUppercase="false"
+        p:label="Discrepancy Comment"
+        p:shortLabel="Discrepancy Comment"
+        p:maxLength="100"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >      
+         <bean parent="TextareaControlDefinition" p:rows="3" p:cols="60"/>
+    </property>   
+  </bean>
+
+  <bean id="DiscrepancyLine-totalPCardAmt" parent="DiscrepancyLine-totalPCardAmt-parentBean" />
+  <bean id="DiscrepancyLine-totalPCardAmt-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="totalPCardAmt"
+        p:forceUppercase="false"
+        p:label="Total P Card Amt"
+        p:shortLabel="Total P Card Amt"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="DiscrepancyLine-transactionAmt" parent="DiscrepancyLine-transactionAmt-parentBean" />
+  <bean id="DiscrepancyLine-transactionAmt-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="transactionAmt"
+        p:forceUppercase="false"
+        p:label="Transaction Amt"
+        p:shortLabel="Transaction Amt"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="DiscrepancyLine-transactionDate" parent="DiscrepancyLine-transactionDate-parentBean" />
+  <bean id="DiscrepancyLine-transactionDate-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="transactionDate"
+        p:forceUppercase="false"
+        p:label="Transaction Date"
+        p:shortLabel="Transaction Date"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="DiscrepancyLine-vendorName" parent="DiscrepancyLine-vendorName-parentBean" />
+  <bean id="DiscrepancyLine-vendorName-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorName"
+        p:forceUppercase="false"
+        p:label="Vendor Name"
+        p:shortLabel="Vendor Name"
+        p:maxLength="100"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="100" />
+    </property>
+  </bean>
+
+  <bean id="DiscrepancyLine-versionNumber" parent="DiscrepancyLine-versionNumber-parentBean" />
+  <bean id="DiscrepancyLine-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+        
+  <bean id="DiscrepancyLine-distributorNumber" parent="DiscrepancyLine-distributorNumber-parentBean" />
+  <bean id="DiscrepancyLine-distributorNumber-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="distributorNumber"
+        p:forceUppercase="true"
+        p:label="Distributor Number"
+        p:shortLabel="Item Number"
+        p:maxLength="30"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="30" />
+    </property>
+  </bean>
+  
+  <bean id="DiscrepancyLine-shippedDistributorNumber" parent="DiscrepancyLine-shippedDistributorNumber-parentBean" />
+  <bean id="DiscrepancyLine-shippedDistributorNumber-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="shippedDistributorNumber"
+        p:forceUppercase="true"
+        p:label="Shipped Distributor Number"
+        p:shortLabel="Item Number"
+        p:maxLength="30"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="30" />
+    </property>
+  </bean>
+	
+  <bean id="DiscrepancyLine-unitOfIssueCode" parent="DiscrepancyLine-unitOfIssueCode-parentBean" />
+  <bean id="DiscrepancyLine-unitOfIssueCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="unitOfIssueCode"
+        p:forceUppercase="true"
+        p:label="Unit Of Issue Code"
+        p:shortLabel="U/I"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  
+  <bean id="DiscrepancyLine-itemDescription" parent="DiscrepancyLine-itemDescription-parentBean" />
+  <bean id="DiscrepancyLine-itemDescription-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="itemDescription"
+        p:forceUppercase="false"
+        p:label="Item Description"
+        p:shortLabel="Description"
+        p:maxLength="400"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+       <bean parent="TextareaControlDefinition" p:rows="5" p:cols="60"/>
+    </property>
+  </bean>
+
+  <bean id="DiscrepancyLine-qtyOrdered" parent="DiscrepancyLine-qtyOrdered-parentBean" />
+  <bean id="DiscrepancyLine-qtyOrdered-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="qtyOrdered"
+        p:forceUppercase="true"
+        p:label="Quantity Ordered"
+        p:shortLabel="Quantity Ordered"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  
+  <bean id="DiscrepancyLine-qtyShipped" parent="DiscrepancyLine-qtyShipped-parentBean" />
+  <bean id="DiscrepancyLine-qtyShipped-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="qtyShipped"
+        p:forceUppercase="true"
+        p:label="Quantity Shipped"
+        p:shortLabel="Quantity Shipped"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  
+  <bean id="DiscrepancyLine-invoiceQtyShip" parent="DiscrepancyLine-invoiceQtyShip-parentBean" />
+  <bean id="DiscrepancyLine-invoiceQtyShip-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="invoiceQtyShip"
+        p:forceUppercase="true"
+        p:label="Invoice Quantity Shipped"
+        p:shortLabel="Invoice Quantity Shipped"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  
+   	
+  <bean id="DiscrepancyLine-unitInvoiceAmt" parent="DiscrepancyLine-unitInvoiceAmt-parentBean" />
+  <bean id="DiscrepancyLine-unitInvoiceAmt-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="unitInvoiceAmt"
+        p:forceUppercase="false"
+        p:label="Unit Invoice Amt"
+        p:shortLabel="Unit Invoice Amt"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  
+  <bean id="DiscrepancyLine-taxInvoiceAmt" parent="DiscrepancyLine-taxInvoiceAmt-parentBean" />
+  <bean id="DiscrepancyLine-taxInvoiceAmt-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="taxInvoiceAmt"
+        p:forceUppercase="false"
+        p:label="Tax Invoice Amt"
+        p:shortLabel="Tax Invoice Amt"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  
+  <bean id="DiscrepancyLine-totalAmt" parent="DiscrepancyLine-totalAmt-parentBean" />
+  <bean id="DiscrepancyLine-totalAmt-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="totalAmt"
+        p:forceUppercase="false"
+        p:label="Total Amt"
+        p:shortLabel="Total Amt"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+    
+  <bean id="DiscrepancyLine-poPrice" parent="DiscrepancyLine-poPrice-parentBean" />
+  <bean id="DiscrepancyLine-poPrice-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="poPrice"
+        p:forceUppercase="false"
+        p:label="PO Price"
+        p:shortLabel="PO Price"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  
+  <bean id="DiscrepancyLine-percentageDiff" parent="DiscrepancyLine-percentageDiff-parentBean" />
+  <bean id="DiscrepancyLine-percentageDiff-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="percentageDiff"
+        p:forceUppercase="false"
+        p:label="Percentage Difference"
+        p:shortLabel="Percentage Difference"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  
+  <bean id="DiscrepancyLine-lineReadOnly" parent="DiscrepancyLine-lineReadOnly-parentBean" />
+  <bean id="DiscrepancyLine-lineReadOnly-parentBean" parent="GenericAttributes-genericBoolean" abstract="true"
+        p:name="lineReadOnly"
+     	p:label ="Read Only Line"
+	    p:shortLabel ="Read Only Line">
+    <property name="control">
+      <bean parent="CheckboxControlDefinition"/>
+    </property>
+    <property name="formatterClass" value="org.kuali.rice.kns.web.format.BooleanFormatter"/> 
+  </bean>
+  
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="DiscrepancyLine-inquiryDefinition" parent="DiscrepancyLine-inquiryDefinition-parentBean" />
+
+  <bean id="DiscrepancyLine-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Reconciliation Discrepancy Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Reconciliation Discrepancy Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="active" />
+              <bean parent="FieldDefinition" p:attributeName="difference" />
+              <bean parent="FieldDefinition" p:attributeName="invoiceAmt" />
+              <bean parent="FieldDefinition" p:attributeName="invoiceNumber" />
+              <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+              <bean parent="FieldDefinition" p:attributeName="orderNumber" />
+              <bean parent="FieldDefinition" p:attributeName="postedDate" />
+              <bean parent="FieldDefinition" p:attributeName="discrepancyLineId" />
+              <bean parent="FieldDefinition" p:attributeName="discrepancyLineDocNbr" />
+              <bean parent="FieldDefinition" p:attributeName="discrepancyComment" />
+              <bean parent="FieldDefinition" p:attributeName="totalPCardAmt" />
+              <bean parent="FieldDefinition" p:attributeName="transactionAmt" />
+              <bean parent="FieldDefinition" p:attributeName="transactionDate" />
+              <bean parent="FieldDefinition" p:attributeName="vendorName" />
+              <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="DiscrepancyLine-lookupDefinition" parent="DiscrepancyLine-lookupDefinition-parentBean" />
+
+  <bean id="DiscrepancyLine-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Reconciliation Discrepancy Lookup" 
+ >
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>discrepancyLineId</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="active" />
+        <bean parent="FieldDefinition" p:attributeName="difference" />
+        <bean parent="FieldDefinition" p:attributeName="invoiceAmt" />
+        <bean parent="FieldDefinition" p:attributeName="invoiceNumber" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+        <bean parent="FieldDefinition" p:attributeName="orderNumber" />
+        <bean parent="FieldDefinition" p:attributeName="postedDate" />
+        <bean parent="FieldDefinition" p:attributeName="discrepancyLineId" />
+        <bean parent="FieldDefinition" p:attributeName="discrepancyLineDocNbr" />
+        <bean parent="FieldDefinition" p:attributeName="discrepancyComment" />
+        <bean parent="FieldDefinition" p:attributeName="totalPCardAmt" />
+        <bean parent="FieldDefinition" p:attributeName="transactionAmt" />
+        <bean parent="FieldDefinition" p:attributeName="transactionDate" />
+        <bean parent="FieldDefinition" p:attributeName="vendorName" />
+        <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="active" />
+        <bean parent="FieldDefinition" p:attributeName="difference" />
+        <bean parent="FieldDefinition" p:attributeName="invoiceAmt" />
+        <bean parent="FieldDefinition" p:attributeName="invoiceNumber" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+        <bean parent="FieldDefinition" p:attributeName="orderNumber" />
+        <bean parent="FieldDefinition" p:attributeName="postedDate" />
+        <bean parent="FieldDefinition" p:attributeName="discrepancyLineId" />
+        <bean parent="FieldDefinition" p:attributeName="discrepancyLineDocNbr" />
+        <bean parent="FieldDefinition" p:attributeName="discrepancyComment" />
+        <bean parent="FieldDefinition" p:attributeName="totalPCardAmt" />
+        <bean parent="FieldDefinition" p:attributeName="transactionAmt" />
+        <bean parent="FieldDefinition" p:attributeName="transactionDate" />
+        <bean parent="FieldDefinition" p:attributeName="vendorName" />
+        <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+      </list>
+    </property>
+  </bean>
+
+</beans>

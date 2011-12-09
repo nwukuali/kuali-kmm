@@ -1,0 +1,220 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="CatalogSubgroupItem" parent="CatalogSubgroupItem-parentBean" />
+
+  <bean id="CatalogSubgroupItem-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.CatalogSubgroupItem"
+        p:titleAttribute="catalogSubgroupItemId"
+        p:objectLabel="Catalog Item Subgroup"
+        p:inquiryDefinition-ref="CatalogSubgroupItem-inquiryDefinition"
+        p:lookupDefinition-ref="CatalogSubgroupItem-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="CatalogSubgroupItem-active" />
+        <ref bean="CatalogSubgroupItem-catalogItemId" />
+        <ref bean="CatalogSubgroupItem-catalogSubgroupId" />
+        <ref bean="CatalogSubgroupItem-catalogSubgroupItemId" />
+        <ref bean="CatalogSubgroupItem-lastUpdateDate" />
+        <ref bean="CatalogSubgroupItem-versionNumber" />
+        <ref bean="CatalogSubgroupItem-newCollectionRecord"/>
+        <ref bean="CatalogSubgroupItem-catalogSubgroup.catalogSubgroupCd" />
+        <ref bean="CatalogSubgroupItem-catalogSubgroup.catalogSubgroupDesc"/>
+        <ref bean="CatalogSubgroupItem-catalogSubgroup.catalogGroup.catalogGroupNm"/>
+      </list>
+    </property>
+    
+     <property name="relationships" >
+      <list>
+        <bean parent="RelationshipDefinition">
+          <property name="objectAttributeName" value="catalogSubgroup" />
+          <property name="primitiveAttributes" >
+            <list>
+              <bean parent="PrimitiveAttributeDefinition"
+                    p:sourceName="catalogSubgroupId"
+                    p:targetName="catalogSubgroupId" />
+            </list>
+          </property>
+          <property name="supportAttributes" >
+            <list>
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="catalogSubgroup.catalogSubgroupCd"
+                    p:targetName="catalogSubgroupCd" />
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="catalogSubgroup.catalogSubgroupDesc"
+                    p:targetName="catalogSubgroupDesc" />
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="catalogSubgroup.catalogGroup.catalogGroupNm"
+                    p:targetName="catalogGroup.catalogGroupNm" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+    
+    </bean>
+
+  <bean id="CatalogSubgroupItem-newCollectionRecord" parent="CatalogSubgroupItem-newCollectionRecord-parentBean"/>
+  <bean id="CatalogSubgroupItem-newCollectionRecord-parentBean" abstract="true" parent="GenericAttributes-newCollectionRecord">
+  </bean>
+  
+  <bean id="CatalogSubgroupItem-catalogSubgroup.catalogSubgroupCd" parent="CatalogSubgroupItem-catalogSubgroup.catalogSubgroupCd-parentBean" />
+  <bean id="CatalogSubgroupItem-catalogSubgroup.catalogSubgroupCd-parentBean" parent="CatalogSubgroup-catalogSubgroupCd" abstract="true"
+        p:name="catalogSubgroup.catalogSubgroupCd"
+        p:label="Catalog Subgroup Code">
+  </bean>
+  
+  <bean id="CatalogSubgroupItem-catalogSubgroup.catalogSubgroupDesc" parent="CatalogSubgroupItem-catalogSubgroup.catalogSubgroupDesc-parentBean" />
+  <bean id="CatalogSubgroupItem-catalogSubgroup.catalogSubgroupDesc-parentBean" parent="CatalogSubgroup-catalogSubgroupDesc" abstract="true"
+        p:name="catalogSubgroup.catalogSubgroupDesc"
+        p:label="Catalog Subgroup Description">
+  </bean> 
+
+  <bean id="CatalogSubgroupItem-catalogSubgroup.catalogGroup.catalogGroupNm" parent="CatalogSubgroupItem-catalogSubgroup.catalogGroup.catalogGroupNm-parentBean" />
+  <bean id="CatalogSubgroupItem-catalogSubgroup.catalogGroup.catalogGroupNm-parentBean" parent="CatalogSubgroup-catalogGroup.catalogGroupNm" abstract="true"
+        p:name="catalogSubgroup.catalogGroup.catalogGroupNm"
+        p:label="Catalog Group Name">
+  </bean> 
+  
+  <bean id="CatalogSubgroupItem-active" parent="CatalogSubgroupItem-active-parentBean" />
+  <bean id="CatalogSubgroupItem-active-parentBean" abstract="true" parent="GenericAttributes-activeIndicator" 
+        p:name="active"
+        p:required="false" />
+
+  <bean id="CatalogSubgroupItem-catalogItemId" parent="CatalogSubgroupItem-catalogItemId-parentBean" />
+  <bean id="CatalogSubgroupItem-catalogItemId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="catalogItemId"
+        p:forceUppercase="false"
+        p:label="Catalog Item ID"
+        p:shortLabel="Catalog Item ID"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CatalogSubgroupItem-catalogSubgroupId" parent="CatalogSubgroupItem-catalogSubgroupId-parentBean" />
+  <bean id="CatalogSubgroupItem-catalogSubgroupId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="catalogSubgroupId"
+        p:forceUppercase="false"
+        p:label="Catalog Subgroup ID"
+        p:shortLabel="Catalog Subgroup ID"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CatalogSubgroupItem-catalogSubgroupItemId" parent="CatalogSubgroupItem-catalogSubgroupItemId-parentBean" />
+  <bean id="CatalogSubgroupItem-catalogSubgroupItemId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="catalogSubgroupItemId"
+        p:forceUppercase="false"
+        p:label="Catalog Subgroup Item ID"
+        p:shortLabel="Catalog Subgroup Item ID"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CatalogSubgroupItem-lastUpdateDate" parent="CatalogSubgroupItem-lastUpdateDate-parentBean" />
+  <bean id="CatalogSubgroupItem-lastUpdateDate-parentBean" abstract="true" parent="GenericAttributes-genericTimestamp" 
+        p:name="lastUpdateDate"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:required="false" />
+
+  <bean id="CatalogSubgroupItem-versionNumber" parent="CatalogSubgroupItem-versionNumber-parentBean" />
+  <bean id="CatalogSubgroupItem-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="CatalogSubgroupItem-inquiryDefinition" parent="CatalogSubgroupItem-inquiryDefinition-parentBean" />
+
+  <bean id="CatalogSubgroupItem-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Catalog Item Subgroup Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Catalog Item Subgroup Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="active" />
+              <bean parent="FieldDefinition" p:attributeName="catalogItemId" />
+              <bean parent="FieldDefinition" p:attributeName="catalogSubgroupId" />
+              <bean parent="FieldDefinition" p:attributeName="catalogSubgroupItemId" />
+              <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+              <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="CatalogSubgroupItem-lookupDefinition" parent="CatalogSubgroupItem-lookupDefinition-parentBean" />
+
+  <bean id="CatalogSubgroupItem-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Catalog Item Subgroup Lookup" 
+ >
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>catalogSubgroupItemId</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="active" />
+        <bean parent="FieldDefinition" p:attributeName="catalogItemId" />
+        <bean parent="FieldDefinition" p:attributeName="catalogSubgroupId" />
+        <bean parent="FieldDefinition" p:attributeName="catalogSubgroupItemId" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+        <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="active" />
+        <bean parent="FieldDefinition" p:attributeName="catalogItemId" />
+        <bean parent="FieldDefinition" p:attributeName="catalogSubgroupId" />
+        <bean parent="FieldDefinition" p:attributeName="catalogSubgroupItemId" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+        <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+      </list>
+    </property>
+  </bean>
+
+</beans>

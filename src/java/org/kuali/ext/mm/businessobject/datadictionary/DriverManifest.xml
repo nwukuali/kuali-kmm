@@ -1,0 +1,131 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="DriverManifest" parent="DriverManifest-parentBean" />
+
+  <bean id="DriverManifest-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.DriverManifest"
+        p:titleAttribute="driverManifestCode"
+        p:objectLabel="Driver Manifest"
+        p:inquiryDefinition-ref="DriverManifest-inquiryDefinition"
+        p:lookupDefinition-ref="DriverManifest-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="DriverManifest-active" />
+        <ref bean="DriverManifest-driverManifestCode" />
+        <ref bean="DriverManifest-driverManifestName" />
+        <ref bean="DriverManifest-lastUpdateDate" />
+        <ref bean="DriverManifest-versionNumber" />
+      </list>
+    </property>
+  </bean>
+
+  <bean id="DriverManifest-active" parent="DriverManifest-active-parentBean" />
+  <bean id="DriverManifest-active-parentBean" abstract="true" parent="GenericAttributes-activeIndicator" 
+        p:name="active"
+        p:label="Active Indicator"
+        p:shortLabel="Active Indicator"
+        p:required="false" />
+
+  <bean id="DriverManifest-driverManifestCode" parent="DriverManifest-driverManifestCode-parentBean" />
+  <bean id="DriverManifest-driverManifestCode-parentBean" parent="GenericAttributes-twoDigitTextCode" abstract="true"
+        p:name="driverManifestCode"
+        p:forceUppercase="true"
+        p:label="Driver Manifest Code"
+        p:shortLabel="Driver Manifest Code"
+        p:required="false" />
+
+  <bean id="DriverManifest-driverManifestName" parent="DriverManifest-driverManifestName-parentBean" />
+  <bean id="DriverManifest-driverManifestName-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="driverManifestName"
+        p:forceUppercase="true"
+        p:label="Driver Manifest Description"
+        p:shortLabel="Driver Manifest Description"
+        p:maxLength="45"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="45" />
+    </property>
+  </bean>
+
+  <bean id="DriverManifest-lastUpdateDate" parent="DriverManifest-lastUpdateDate-parentBean" />
+  <bean id="DriverManifest-lastUpdateDate-parentBean" parent="GenericAttributes-genericTimestamp" abstract="true"
+        p:name="lastUpdateDate"
+        p:forceUppercase="false"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:maxLength="10"
+        p:required="false" >
+  </bean>
+
+
+  <bean id="DriverManifest-versionNumber" parent="DriverManifest-versionNumber-parentBean" />
+  <bean id="DriverManifest-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="DriverManifest-inquiryDefinition" parent="DriverManifest-inquiryDefinition-parentBean" />
+
+  <bean id="DriverManifest-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Driver Manifest Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Driver Manifest Code Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="driverManifestCode" />
+              <bean parent="FieldDefinition" p:attributeName="driverManifestName" />
+              <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+              <bean parent="FieldDefinition" p:attributeName="active" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="DriverManifest-lookupDefinition" parent="DriverManifest-lookupDefinition-parentBean" />
+
+  <bean id="DriverManifest-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Driver Manifest Lookup">
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>driverManifestCode</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>        
+        <bean parent="FieldDefinition" p:attributeName="driverManifestCode" />
+        <bean parent="FieldDefinition" p:attributeName="driverManifestName" />
+        <bean parent="FieldDefinition" p:attributeName="active" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="driverManifestCode" />
+        <bean parent="FieldDefinition" p:attributeName="driverManifestName" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+        <bean parent="FieldDefinition" p:attributeName="active" />
+      </list>
+    </property>
+  </bean>
+
+</beans>

@@ -1,0 +1,460 @@
+/* --- Note: modifications to this file are discouraged. Check the documentation before making any changes to this file. --- */
+	/* sets the page at zero for a base for browser compatablity */
+* {
+	padding: 0;
+	margin: 0;
+}
+
+html {
+	width: 100%;
+}
+
+/* body background color fills in blanks  - all other colors defined in divs */
+body {
+	color: #000;
+	height: 100%;
+	width: 100%;
+	font: 80% Verdana, Arial, Helvetica, sans-serif;
+	background: #ababab;
+}
+
+/* globally resets padding and margins for elements  */
+h1,h2,h3,h4,h5,h6,pre,label,fieldset,address {
+	margin: .5em 1% .5em 0;
+}
+
+ul {
+	margin: 1em .5em;
+}
+
+ol {
+	margin: 1em 3%;
+}
+
+dl {
+	margin: .5em 0 1em;
+}
+
+dd {
+	margin: 0 6%;
+}
+
+dt {
+	margin: .5em 0 0 0;
+}
+
+fieldset {
+	padding: .5em;
+}
+
+li {
+	margin: 0 5% .5em;
+}
+
+p {
+	margin: 0 0 1em 0;
+	line-height: 1.3em;
+}
+
+abbr {
+	border: 0;
+}
+
+/* used to get the border off an image in IE without deprecating the image tag */
+img {
+	border: 0;
+}
+
+blockquote {
+	margin: .5em 1em;
+}
+
+h1 {
+	font: bold 1.8em Georgia, "Times New Roman", Times, serif;
+	margin: 0 .5em .5em 0;
+}
+
+h2 {
+	font: bold 1.5em Georgia, "Times New Roman", Times, serif;
+	margin: 0 .5em 0 0;
+}
+
+h3 {
+	font: bold 1.25em Georgia, "Times New Roman", Times, serif;
+	margin: 1em .5em 0 0;
+}
+
+h4 {
+	font: bold 1em Verdana, Arial, Helvetica, sans-serif;
+	margin: .5em .5em 0 0;
+}
+
+h5 {
+	font: italic bold .9em Verdana, Arial, Helvetica, sans-serif;
+	margin: .5em .5em 0 0;
+}
+
+h6 {
+	font: italic 1em Verdana, Arial, Helvetica, sans-serif;
+	margin: .5em .5em 0 0;
+}
+
+a {
+	color: #063;
+	text-decoration: underline;
+	font-weight: bold;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+dt {
+	font-weight: bold;
+}
+
+/* Formatting Structure */
+	/* ----------------------------------------------------- */
+div#jump {
+	position: absolute;
+	left: 0px;
+	top: -500px;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+}
+
+div#wrapper {
+	position: relative;
+	width: 54.6em;
+	margin: 0 auto 0;
+}
+
+div#header {
+	position: relative;
+	width: 100%;
+	height: 7.5em;
+	background-color: #063;
+	background-image: "images/logo.jpg"
+}
+
+div#header_container {
+	position: relative;
+	width: 55em;
+	height: 7.5em;
+	margin: 0 auto 0;
+}
+
+div#wordmark {
+	position: relative;
+	float: left;
+}
+
+div#wordmark a {
+	display: block;
+	background: url(../_images/wordmark.gif) no-repeat;
+	width: 183px;
+	height: 91px;
+}
+
+div#unit_image {
+	position: relative;
+	float: left;
+}
+
+div#unit_image a {
+	display: block;
+	background: url(../_images/title.gif) no-repeat;
+	width: 517px;
+	height: 91px;
+}
+
+div#unit_text {
+	position: relative;
+	margin: 1em 0 0 0;
+	float: left;
+	width: 40.09em;
+	height: 5em;
+	color: #fff;
+}
+
+div#unit_text a {
+	color: #fff;
+	font-weight: normal;
+	text-decoration: none;
+}
+
+div#unit_text a:hover {
+	text-decoration: none;
+}
+
+div#unit_text p.largeTitle {
+	font-size: 2.4em;
+}
+
+div#unit_text p.smallTitle,div#unit_text p.smallTitle a {
+	font: bold 1.1em Verdana, Arial, Helvetica, sans-serif;
+}
+
+div#unit_text p {
+	margin-bottom: .3em;
+}
+
+div#banner {
+	position: relative;
+	background: #ababab url(../_images/bg_banner.jpg) repeat-x;
+	height: 180px;
+}
+
+div#banner_graphic {
+	position: relative;
+	width: 700px;
+	margin: 0 auto 0;
+}
+
+div#banner_graphic img {
+	display: block;
+}
+
+div#banner_extra {
+	
+}
+
+/* Secondary center aligned elements */
+	/* background color in this div gives illusion of sidebar stretching down - overflow:hidden stretches the div, but will not work in NN 7.1. Using clear:both in a br tag for cross-browser fix. */
+div#columns {
+	position: relative;
+	margin: 0 auto 0;
+	width: 54.6em;
+	background-color: #ccc;
+	height: 1%;
+	z-index: 300;
+}
+
+div#sidebar {
+	position: relative;
+	float: left;
+	width: 15em;
+	margin: 0;
+	background-color: #ccc;
+}
+
+body#one_column div#sidebar {
+	display: none;
+}
+
+/* div#main min-height is set here for non-IE 6 broswers & height is adjusted for IE6 in the mainIE6.css stylesheet */
+	/* see general.js to see how min-height and height are also dynamically adjusted for this div depending on the length of the sidebar */
+div#main {
+	position: relative;
+	min-height: 30em;
+	float: left;
+	width: 36.55em;
+	margin: 0 0 0 0;
+	padding: 1em 1.5em 2em 1.5em;
+	background-color: #eee;
+}
+
+body#one_column div#main {
+	width: 51.63em;
+}
+
+div#callout {
+	display: none;
+}
+
+/* call-out box is only viewable if body tag has the class "callout" */
+body.callout div#callout {
+	display: block;
+	position: relative;
+	width: 14em;
+	float: right;
+	margin: 0;
+	padding: .5em .5em .5em 1em;
+}
+
+br#breakColumns {
+	clear: both;
+}
+
+br#breakHeader {
+	clear: both;
+}
+
+div#footer {
+	position: relative;
+	margin: 0 auto 0;
+	width: 100%;
+	background-color: #666;
+	color: #fff;
+}
+
+div#footer div {
+	position: relative;
+	font-size: .9em;
+	padding-bottom: .5em;
+}
+
+div#footer div a {
+	color: #fff;
+}
+
+div#footer div p {
+	margin: 0;
+	padding: .5em 0 0 0;
+	text-align: center;
+}
+
+div#footer div p#aktl {
+	margin: .5em 0 .5em 25em;
+	width: 240px;
+	height: 38px;
+	text-align: left;
+}
+
+div#footer div p#aktl a {
+	display: block;
+	background: url(../_images/AKTL.gif) no-repeat;
+	width: 240px;
+	height: 38px;
+	padding: .8em 0;
+}
+
+/* ------------------------------------ */ /* Breadcrumbs */
+div#breadcrumbs {
+	position: relative;
+	font-size: .8em;
+	margin: 0 0 1.5em 0;
+}
+
+div#breadcrumbs a {
+	font-weight: normal;
+	text-decoration: underline;
+}
+
+body#home div#breadcrumbs {
+	display: none;
+}
+
+/* Topical */
+div#sidebar div#navGlobal {
+	position: relative;
+	margin: 0 0 1.5em 0;
+	padding: 0;
+}
+
+div#sidebar div#navGlobal ul {
+	margin: 0;
+}
+
+div#sidebar div#navGlobal ul li {
+	border-bottom: solid 1px #bfbfbf;
+	margin: 0 0 0 0;
+	background-color: #ccc;
+	font: 1em Verdana, Arial, Helvetica, sans-serif;
+	list-style: none;
+}
+
+div#sidebar div#navGlobal ul li a {
+	display: block;
+	padding: .4em .5em .4em 1.7em;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	text-decoration: none;
+}
+
+div#sidebar div#navGlobal ul li a:hover {
+	text-decoration: underline;
+}
+
+div#sidebar div#navGlobal ul li a#active {
+	background-color: #eee;
+}
+
+div#sidebar div#navGlobal ul li a#active :hover {
+	text-decoration: none;
+}
+
+/* nested navigation */
+div#sidebar div#navGlobal ul li ul {
+	margin: 0 0 0 4em;
+	font-size: .9em;
+}
+
+div#sidebar div#navGlobal ul li ul li {
+	list-style: disc;
+	border: none;
+}
+
+div#sidebar div#navGlobal ul li ul li a {
+	padding: .4em .5em .4em 0;
+}
+
+div#sidebar div#navGlobal ul li  ul li a#active {
+	background-color: #ccc;
+	color: #063;
+}
+
+/* ---- */ /* Extra text or image area below navigation */
+div#navExtra {
+	margin: 1em;
+}
+
+div#navExtra img {
+	text-align: center;
+}
+
+/* Call-out formatting */
+div#callout div {
+	background-color: #ccc;
+	padding: .7em .7em .5em .7em;
+	margin: 0 0 .5em .5em;
+}
+
+div#callout div h2 {
+	margin: 0 0 0 0;
+	padding: 0 0 .2em 0;
+	font-size: 1em;
+	border-bottom: solid 1px #ccc;
+}
+
+div#callout div ul {
+	margin: .5em .5em 1em .5em;
+}
+
+div#callout div ul li {
+	margin: .2em .2em .2em .5em;
+	font-size: .9em;
+	/* use just for UR sites: list-style-image:url(/_images/bullet.gif);*/
+}
+
+/* Global classes */
+.clear {
+	clear: both;
+}
+
+.show {
+	position: relative;
+	left: 0;
+}
+
+.hide {
+	position: absolute;
+	left: -9999px;
+	width: 100%;
+	height: 100%;
+}
+
+.noBullets {
+	list-style-type: none;
+	margin: .5em 0;
+}
+
+.imgRight {
+	float: right;
+	padding: .5em .5em .5em 1em;
+}
+
+.imgLeft {
+	float: left;
+	padding: .5em 1em .5em 0;
+}

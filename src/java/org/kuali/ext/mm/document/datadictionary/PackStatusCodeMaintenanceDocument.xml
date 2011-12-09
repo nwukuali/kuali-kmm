@@ -1,0 +1,57 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="StoresPackStatusCodeMaintenanceDocument" parent="StoresPackStatusCodeMaintenanceDocument-parentBean" />
+
+  <bean id="StoresPackStatusCodeMaintenanceDocument-parentBean" abstract="true" parent="MaintenanceDocumentEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.PackStatusCode"
+        p:maintainableClass="org.kuali.rice.kns.maintenance.KualiMaintainableImpl"
+        p:documentTypeName="SPAS"
+        p:documentAuthorizerClass="org.kuali.rice.kns.document.authorization.MaintenanceDocumentAuthorizerBase" 
+        p:allowsNewOrCopy="false" >
+    <property name="lockingKeys" >
+      <list>
+        <value>packStatusCode</value>
+      </list>
+    </property>
+    <property name="defaultExistenceChecks" >
+      <list>
+      </list>
+    </property>
+    <property name="workflowAttributes" >
+        <ref bean="StoresPackStatusCodeMaintenanceDocument-workflowAttributes" />
+    </property>
+    <property name="maintainableSections" >
+      <list>
+        <ref bean="StoresPackStatusCodeMaintenanceDocument-MainSection" />
+      </list>
+    </property>
+  </bean>
+
+ <!-- Maintenance Section Definitions -->
+  <bean id="StoresPackStatusCodeMaintenanceDocument-MainSection" parent="StoresPackStatusCodeMaintenanceDocument-MainSection-parentBean" />
+
+  <bean id="StoresPackStatusCodeMaintenanceDocument-MainSection-parentBean" abstract="true" parent="MaintainableSectionDefinition"
+        p:title="Edit Pack Status Code" >
+    <property name="maintainableItems" >
+      <list>
+        <bean parent="MaintainableFieldDefinition"
+              p:name="packStatusCode"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="packStatusName"
+              p:required="true" />
+		<bean parent="MaintainableFieldDefinition"
+              p:name="active"
+              p:defaultValue="true" />              
+      </list>
+    </property>
+  </bean>
+ <!-- workflow attributes -->
+  <bean id="StoresPackStatusCodeMaintenanceDocument-workflowAttributes" parent="StoresPackStatusCodeMaintenanceDocument-workflowAttributes-parentBean" />
+
+  <bean id="StoresPackStatusCodeMaintenanceDocument-workflowAttributes-parentBean" abstract="true" class="org.kuali.rice.kns.datadictionary.WorkflowAttributes" />
+</beans>

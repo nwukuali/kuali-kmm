@@ -1,0 +1,199 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="CycleCount" parent="CycleCount-parentBean" />
+
+  <bean id="CycleCount-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.CycleCount"
+        p:titleAttribute="cycleCntCd"
+        p:objectLabel="Cycle Count"
+        p:inquiryDefinition-ref="CycleCount-inquiryDefinition"
+        p:lookupDefinition-ref="CycleCount-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="CycleCount-active" />
+        <ref bean="CycleCount-cycleCntCd" />
+        <ref bean="CycleCount-cycleCntCdLookable" />        
+        <ref bean="CycleCount-cycleCntDesc" />
+        <ref bean="CycleCount-toleranceAmt" />
+        <ref bean="CycleCount-lastUpdateDate" />
+        <ref bean="CycleCount-timesPerYearNbr" /> 
+        <ref bean="CycleCount-versionNumber" />
+      </list>
+    </property>
+  </bean>
+
+  <bean id="CycleCount-active" parent="CycleCount-active-parentBean" />
+  <bean id="CycleCount-active-parentBean" abstract="true" parent="GenericAttributes-activeIndicator" 
+        p:name="active"
+        p:label="Active Indicator"
+        p:shortLabel="Active Indicator"
+        p:required="false" />
+
+  <bean id="CycleCount-cycleCntCd" parent="CycleCount-cycleCntCd-parentBean" />
+  <bean id="CycleCount-cycleCntCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="cycleCntCd"
+        p:forceUppercase="true"
+        p:label="Cycle Count Code"
+        p:shortLabel="Cycle Count Cd"
+        p:maxLength="1"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AlphaNumericValidationPattern"/>
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="3" />
+    </property>
+  </bean>
+
+  <bean id="CycleCount-cycleCntCdLookable" parent="CycleCount-cycleCntCdLookable-parentBean" />
+  <bean id="CycleCount-cycleCntCdLookable-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="cycleCntCdLookable"
+        p:forceUppercase="true"
+        p:label="Cycle Count Code"
+        p:shortLabel="Cycle Count Cd"
+        p:maxLength="1"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+	<property name="control" >
+      <bean parent="SelectControlDefinition"
+            p:valuesFinderClass="org.kuali.ext.mm.businessobject.options.CountFrequencyFinder"
+            p:includeKeyInLabel="false" />
+    </property>
+  </bean>
+  
+  <bean id="CycleCount-cycleCntDesc" parent="CycleCount-cycleCntDesc-parentBean" />
+  <bean id="CycleCount-cycleCntDesc-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="cycleCntDesc"
+        p:forceUppercase="true"
+        p:label="Cycle Count Description"
+        p:shortLabel="Cycle Count Description"
+        p:maxLength="80"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="50" />
+    </property>
+  </bean>
+
+	<bean id="CycleCount-toleranceAmt" parent="CycleCount-toleranceAmt-parentBean" />
+	<bean id="CycleCount-toleranceAmt-parentBean" parent="AttributeDefinition"
+		abstract="true" 
+		p:name="toleranceAmt" 
+		p:forceUppercase="false" 
+		p:label="Tolerance Amount"
+		p:shortLabel="Tolerance Amount" p:maxLength="8" p:required="false">
+		<property name="validationPattern">
+			<bean parent="FixedPointValidationPattern" p:precision="8"
+				p:allowNegative="false" p:scale="2" />
+		</property>
+		<property name="control">
+			<bean parent="TextControlDefinition" p:size="8" />
+		</property>
+	</bean>
+
+  <bean id="CycleCount-lastUpdateDate" parent="CycleCount-lastUpdateDate-parentBean" />
+  <bean id="CycleCount-lastUpdateDate-parentBean" abstract="true" parent="GenericAttributes-genericTimestamp" 
+        p:name="lastUpdateDate"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:required="false" />
+        
+  <bean id="CycleCount-timesPerYearNbr" parent="CycleCount-timesPerYearNbr-parentBean" />
+  <bean id="CycleCount-timesPerYearNbr-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="timesPerYearNbr"
+        p:forceUppercase="false"
+        p:label="Times Per Year Number"
+        p:shortLabel="Times Per Year Number"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="NumericValidationPattern"/>
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CycleCount-versionNumber" parent="CycleCount-versionNumber-parentBean" />
+  <bean id="CycleCount-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="CycleCount-inquiryDefinition" parent="CycleCount-inquiryDefinition-parentBean" />
+
+  <bean id="CycleCount-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Cycle Count Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Cycle Count Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="active" />
+              <bean parent="FieldDefinition" p:attributeName="cycleCntCd" />
+              <bean parent="FieldDefinition" p:attributeName="cycleCntDesc" />
+              <bean parent="FieldDefinition" p:attributeName="timesPerYearNbr" />
+              <bean parent="FieldDefinition" p:attributeName="toleranceAmt" />
+              <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+              <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="CycleCount-lookupDefinition" parent="CycleCount-lookupDefinition-parentBean" />
+
+  <bean id="CycleCount-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Cycle Count Lookup">
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>cycleCntCd</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>
+      
+        <bean parent="FieldDefinition" p:attributeName="cycleCntCd" />
+        <bean parent="FieldDefinition" p:attributeName="cycleCntDesc" />
+        <bean parent="FieldDefinition" p:attributeName="timesPerYearNbr" />
+        <bean parent="FieldDefinition" p:attributeName="toleranceAmt" />
+        <bean parent="FieldDefinition" p:attributeName="active" />   
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>    
+        <bean parent="FieldDefinition" p:attributeName="cycleCntCd" />
+        <bean parent="FieldDefinition" p:attributeName="cycleCntDesc" />
+        <bean parent="FieldDefinition" p:attributeName="timesPerYearNbr" />
+        <bean parent="FieldDefinition" p:attributeName="toleranceAmt" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+        <bean parent="FieldDefinition" p:attributeName="active" />
+      </list>
+    </property>
+  </bean>
+
+</beans>

@@ -1,0 +1,85 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="StoresBinMaintenanceDocument" parent="StoresBinMaintenanceDocument-parentBean" />
+
+  <bean id="StoresBinMaintenanceDocument-parentBean" abstract="true" parent="MaintenanceDocumentEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.Bin"
+        p:maintainableClass="org.kuali.rice.kns.maintenance.KualiMaintainableImpl"
+        p:documentTypeName="SBIN"
+        p:documentAuthorizerClass="org.kuali.rice.kns.document.authorization.MaintenanceDocumentAuthorizerBase" 
+        p:documentPresentationControllerClass="org.kuali.ext.mm.document.authorization.BinPresentationController" >
+    <property name="businessRulesClass" value="org.kuali.ext.mm.document.validation.impl.BinRule" />
+    <property name="lockingKeys" >
+      <list>
+        <value>binId</value>
+      </list>
+    </property>
+    <property name="defaultExistenceChecks" >
+      <list>
+        <bean parent="ReferenceDefinition"
+              p:attributeName="zone"
+              p:attributeToHighlightOnFail="zone.zoneCd" />
+      </list>
+    </property>
+    <property name="workflowAttributes" >
+        <ref bean="StoresBinMaintenanceDocument-workflowAttributes" />
+    </property>
+    <property name="maintainableSections" >
+      <list>
+        <ref bean="StoresBinMaintenanceDocument-MainSection" />
+      </list>
+    </property>
+  </bean>
+
+ <!-- Maintenance Section Definitions -->
+  <bean id="StoresBinMaintenanceDocument-MainSection" parent="StoresBinMaintenanceDocument-MainSection-parentBean" />
+
+  <bean id="StoresBinMaintenanceDocument-MainSection-parentBean" abstract="true" parent="MaintainableSectionDefinition"
+        p:title="Edit Bin" >
+    <property name="maintainableItems" >
+      <list>
+      
+        <bean parent="MaintainableFieldDefinition"
+              p:name="zone.warehouseCd"
+              p:required="true"
+              p:unconditionallyReadOnly="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="zone.zoneCd"
+              p:required="true"
+              p:lookupReadOnly="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="binNbr"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="shelfId"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="shelfIdNbr"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="maximumShelfQty"
+              p:required="false" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="binHeight"
+              p:required="false" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="binWidth"
+              p:required="false" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="binLength"
+              p:required="false" />
+          <bean parent="MaintainableFieldDefinition"
+              p:name="active"
+              p:defaultValue="true" />
+      </list>
+    </property>
+  </bean>
+ <!-- workflow attributes -->
+  <bean id="StoresBinMaintenanceDocument-workflowAttributes" parent="StoresBinMaintenanceDocument-workflowAttributes-parentBean" />
+
+  <bean id="StoresBinMaintenanceDocument-workflowAttributes-parentBean" abstract="true" class="org.kuali.rice.kns.datadictionary.WorkflowAttributes" />
+</beans>

@@ -1,0 +1,289 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="Accounts" parent="Accounts-parentBean" />
+
+  <bean id="Accounts-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.Accounts"
+        p:titleAttribute="accountsId"
+        p:objectLabel="Accounts"
+        p:inquiryDefinition-ref="Accounts-inquiryDefinition"
+        p:lookupDefinition-ref="Accounts-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="Accounts-accountFixedAmt" />
+        <ref bean="Accounts-formAmount" />
+        <ref bean="Accounts-amountType" />
+        <ref bean="Accounts-accountNbr" />
+        <ref bean="Accounts-accountPct" />
+        <ref bean="Accounts-accountsId" />
+        <ref bean="Accounts-active" />
+        <ref bean="Accounts-departmentReferenceText" />
+        <ref bean="Accounts-finCoaCd" />
+        <ref bean="Accounts-finObjectCd" />
+        <ref bean="Accounts-finSubObjectCd" />
+        <ref bean="Accounts-lastUpdateDate" />
+        <ref bean="Accounts-lineNbr" />
+        <ref bean="Accounts-projectCd" />
+        <ref bean="Accounts-subAcctNbr" />
+        <ref bean="Accounts-versionNumber" />
+      </list>
+    </property>
+  </bean>
+
+  <bean id="Accounts-accountFixedAmt" parent="Accounts-accountFixedAmt-parentBean" />
+  <bean id="Accounts-accountFixedAmt-parentBean" parent="GenericAttributes-genericAmount" abstract="true"
+        p:name="accountFixedAmt"
+        p:forceUppercase="false"
+        p:label="Account Fixed Amt"
+        p:shortLabel="Fixed Amount"
+        p:required="false" >
+      <property name="validationPattern" >
+      	<bean parent="FixedPointValidationPattern"
+            p:precision="17"
+            p:scale="2"
+            p:allowNegative="false" />
+    </property>
+  </bean>
+  
+  <bean id="Accounts-formAmount" parent="Accounts-formAmount-parentBean" />
+  <bean id="Accounts-formAmount-parentBean" parent="GenericAttributes-genericAmount" abstract="true"
+        p:name="formAmount"
+        p:forceUppercase="false"
+        p:label="Amount"
+        p:shortLabel="Amount"
+        p:required="true" >
+      <property name="validationPattern" >
+      	<bean parent="FixedPointValidationPattern"
+            p:precision="17"
+            p:scale="2"
+            p:allowNegative="false" />
+    </property>
+  </bean>
+  
+  <bean id="Accounts-amountType" parent="Accounts-amountType-parentBean" />
+  <bean id="Accounts-amountType-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="amountType"
+        p:forceUppercase="false"
+        p:label="Amount Type"
+        p:shortLabel="Amount Type"
+        p:maxLength="5"
+        p:required="true" >
+      <property name="control">
+      	<bean parent="SelectControlDefinition" p:valuesFinderClass="org.kuali.ext.mm.businessobject.options.AmountTypeValuesFinder" p:includeKeyInLabel="false"/>
+    </property>
+   </bean>
+
+  <bean id="Accounts-accountNbr" parent="Accounts-accountNbr-parentBean" />
+  <bean id="Accounts-accountNbr-parentBean" parent="FinancialAccount-accountNumber" abstract="true"
+        p:name="accountNbr">
+  </bean>
+
+  <bean id="Accounts-accountPct" parent="Accounts-accountPct-parentBean" />
+  <bean id="Accounts-accountPct-parentBean" parent="GenericAttributes-percent" abstract="true"
+        p:name="accountPct"
+        p:forceUppercase="false"
+        p:label="Account Percent"
+        p:shortLabel="Percent"       
+        p:required="false" >
+        <property name="validationPattern" >
+      		<bean parent="FixedPointValidationPattern"
+	            p:precision="17"
+	            p:scale="2"
+	            p:allowNegative="false" />
+    </property>
+  </bean>
+
+  <bean id="Accounts-accountsId" parent="Accounts-accountsId-parentBean" />
+  <bean id="Accounts-accountsId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="accountsId"
+        p:forceUppercase="false"
+        p:label="Accounts Id"
+        p:shortLabel="Accounts Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="Accounts-active" parent="Accounts-active-parentBean" />
+  <bean id="Accounts-active-parentBean" abstract="true" parent="GenericAttributes-activeIndicator" 
+        p:name="active"
+        p:required="false" />
+
+  <bean id="Accounts-departmentReferenceText" parent="Accounts-departmentReferenceText-parentBean" />
+  <bean id="Accounts-departmentReferenceText-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="departmentReferenceText"
+        p:forceUppercase="false"
+        p:label="Org Ref Id"
+        p:shortLabel="Org Ref Id"
+        p:maxLength="8"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="15" />
+    </property>
+  </bean>
+
+  <bean id="Accounts-finCoaCd" parent="Accounts-finCoaCd-parentBean" />
+  <bean id="Accounts-finCoaCd-parentBean" parent="FinancialChart-chartOfAccountsCode" abstract="true"
+        p:name="finCoaCd">
+  </bean>
+
+  <bean id="Accounts-finObjectCd" parent="Accounts-finObjectCd-parentBean" />
+  <bean id="Accounts-finObjectCd-parentBean" parent="FinancialObjectCode-financialObjectCode" abstract="true"
+        p:name="finObjectCd">
+  </bean>
+
+  <bean id="Accounts-finSubObjectCd" parent="Accounts-finSubObjectCd-parentBean" />
+  <bean id="Accounts-finSubObjectCd-parentBean" parent="FinancialSubObjectCode-financialSubObjectCode" abstract="true"
+        p:name="finSubObjectCd"
+        p:required="false" >
+  </bean>
+
+  <bean id="Accounts-lastUpdateDate" parent="Accounts-lastUpdateDate-parentBean" />
+  <bean id="Accounts-lastUpdateDate-parentBean" abstract="true" parent="GenericAttributes-genericTimestamp" 
+        p:name="lastUpdateDate"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:required="false" />
+
+  <bean id="Accounts-lineNbr" parent="Accounts-lineNbr-parentBean" />
+  <bean id="Accounts-lineNbr-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="lineNbr"
+        p:forceUppercase="false"
+        p:label="Line Nbr"
+        p:shortLabel="Line Nbr"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="Accounts-projectCd" parent="Accounts-projectCd-parentBean" />
+  <bean id="Accounts-projectCd-parentBean" parent="FinancialProjectCode-code" abstract="true"
+        p:name="projectCd"
+        p:required="false" >
+  </bean>
+
+
+  <bean id="Accounts-subAcctNbr" parent="Accounts-subAcctNbr-parentBean" />
+  <bean id="Accounts-subAcctNbr-parentBean" parent="FinancialSubAccount-subAccountNumber" abstract="true"
+        p:name="subAcctNbr"
+        p:required="false" >
+  </bean>
+
+  <bean id="Accounts-versionNumber" parent="Accounts-versionNumber-parentBean" />
+  <bean id="Accounts-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="Accounts-inquiryDefinition" parent="Accounts-inquiryDefinition-parentBean" />
+
+  <bean id="Accounts-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Accounts Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Accounts Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="accountFixedAmt" />
+              <bean parent="FieldDefinition" p:attributeName="accountNbr" />
+              <bean parent="FieldDefinition" p:attributeName="accountPct" />
+              <bean parent="FieldDefinition" p:attributeName="accountsId" />
+              <bean parent="FieldDefinition" p:attributeName="active" />
+              <bean parent="FieldDefinition" p:attributeName="departmentReferenceText" />
+              <bean parent="FieldDefinition" p:attributeName="finCoaCd" />
+              <bean parent="FieldDefinition" p:attributeName="finObjectCd" />
+              <bean parent="FieldDefinition" p:attributeName="finSubObjectCd" />
+              <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+              <bean parent="FieldDefinition" p:attributeName="lineNbr" />
+              <bean parent="FieldDefinition" p:attributeName="orderDetailId" />
+              <bean parent="FieldDefinition" p:attributeName="orderDocumentNumber" />
+              <bean parent="FieldDefinition" p:attributeName="projectCd" />
+              <bean parent="FieldDefinition" p:attributeName="subAcctNbr" />
+              <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="Accounts-lookupDefinition" parent="Accounts-lookupDefinition-parentBean" />
+
+  <bean id="Accounts-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Accounts Lookup" 
+ >
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>finCoaCd</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="accountFixedAmt" />
+        <bean parent="FieldDefinition" p:attributeName="accountNbr" />
+        <bean parent="FieldDefinition" p:attributeName="accountPct" />
+        <bean parent="FieldDefinition" p:attributeName="accountsId" />
+        <bean parent="FieldDefinition" p:attributeName="active" />
+        <bean parent="FieldDefinition" p:attributeName="departmentReferenceText" />
+        <bean parent="FieldDefinition" p:attributeName="finCoaCd" />
+        <bean parent="FieldDefinition" p:attributeName="finObjectCd" />
+        <bean parent="FieldDefinition" p:attributeName="finSubObjectCd" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+        <bean parent="FieldDefinition" p:attributeName="lineNbr" />
+        <bean parent="FieldDefinition" p:attributeName="projectCd" />
+        <bean parent="FieldDefinition" p:attributeName="subAcctNbr" />
+        <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="accountFixedAmt" />
+        <bean parent="FieldDefinition" p:attributeName="accountNbr" />
+        <bean parent="FieldDefinition" p:attributeName="accountPct" />
+        <bean parent="FieldDefinition" p:attributeName="accountsId" />
+        <bean parent="FieldDefinition" p:attributeName="active" />
+        <bean parent="FieldDefinition" p:attributeName="departmentReferenceText" />
+        <bean parent="FieldDefinition" p:attributeName="finCoaCd" />
+        <bean parent="FieldDefinition" p:attributeName="finObjectCd" />
+        <bean parent="FieldDefinition" p:attributeName="finSubObjectCd" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+        <bean parent="FieldDefinition" p:attributeName="projectCd" />
+        <bean parent="FieldDefinition" p:attributeName="subAcctNbr" />
+        <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+      </list>
+    </property>
+  </bean>
+
+</beans>

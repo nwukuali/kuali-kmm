@@ -1,0 +1,62 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="StoresStockTransReasonMaintenanceDocument" parent="StoresStockTransReasonMaintenanceDocument-parentBean" />
+
+  <bean id="StoresStockTransReasonMaintenanceDocument-parentBean" abstract="true" parent="MaintenanceDocumentEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.StockTransReason"
+        p:maintainableClass="org.kuali.rice.kns.maintenance.KualiMaintainableImpl"
+        p:documentTypeName="SSTR"
+        p:documentAuthorizerClass="org.kuali.rice.kns.document.authorization.MaintenanceDocumentAuthorizerBase" >
+    <property name="lockingKeys" >
+      <list>
+        <value>stockTransReasonCd</value>
+      </list>
+    </property>
+    <property name="defaultExistenceChecks" >
+      <list>
+      </list>
+    </property>
+    <property name="workflowAttributes" >
+        <ref bean="StoresStockTransReasonMaintenanceDocument-workflowAttributes" />
+    </property>
+    <property name="maintainableSections" >
+      <list>
+        <ref bean="StoresStockTransReasonMaintenanceDocument-MainSection" />
+      </list>
+    </property>
+  </bean>
+
+ <!-- Maintenance Section Definitions -->
+  <bean id="StoresStockTransReasonMaintenanceDocument-MainSection" parent="StoresStockTransReasonMaintenanceDocument-MainSection-parentBean" />
+
+  <bean id="StoresStockTransReasonMaintenanceDocument-MainSection-parentBean" abstract="true" parent="MaintainableSectionDefinition"
+        p:title="Edit Stock Transaction Reason" >
+    <property name="maintainableItems" >
+      <list>
+        <bean parent="MaintainableFieldDefinition"
+              p:name="stockTransReasonCd"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="stockTransReasonDesc"
+              p:required="false" />
+        <bean parent="MaintainableFieldDefinition"
+        	  p:name="incrementDecrementInd"
+        	  p:required="true"/>      
+        <bean parent="MaintainableFieldDefinition"
+        	  p:name="objectTypeCode"
+        	  p:required = "false"/>	  
+        <bean parent="MaintainableFieldDefinition"
+              p:name="active"
+              p:defaultValue="true" />              
+      </list>
+    </property>
+  </bean>
+ <!-- workflow attributes -->
+  <bean id="StoresStockTransReasonMaintenanceDocument-workflowAttributes" parent="StoresStockTransReasonMaintenanceDocument-workflowAttributes-parentBean" />
+
+  <bean id="StoresStockTransReasonMaintenanceDocument-workflowAttributes-parentBean" abstract="true" class="org.kuali.rice.kns.datadictionary.WorkflowAttributes" />
+</beans>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE cXML SYSTEM "http://xml.cXML.org/schemas/cXML/1.2.011/cXML.dtd"><cXML version="1.2.011"
+    payloadID="2009-12-08T11:02:27-0800@0000015625-1"
+    timestamp="2009-12-08T11:02:27-0800" xml:lang="en-US">
+    <Header>
+        <From>
+            <Credential domain="DUNS">
+                <Identity>ucdt</Identity>
+                <SharedSecret>nopassword</SharedSecret>
+            </Credential>
+        </From>
+        <To>
+            <Credential domain="DUNS">
+                <Identity>Dell</Identity>
+                <SharedSecret></SharedSecret>
+            </Credential>
+        </To>
+        <Sender>
+            <Credential domain="DUNS">
+                <Identity>ucdt</Identity>
+                <SharedSecret>nopassword</SharedSecret>
+            </Credential>
+            <UserAgent>UCD EProcurement 1.0</UserAgent>
+        </Sender>
+    </Header>
+    <Request deploymentMode="test">
+        <OrderRequest>
+            <OrderRequestHeader orderID="0000015625-1" type="new" orderDate="2009-12-08 11:02:28.0">
+                <Total>
+                    <Money currency="USD">815.60</Money>
+                </Total>
+                <ShipTo>
+                    <Address addressID="UCD">
+                        <Name xml:lang="en">UCDavis</Name>
+                        <PostalAddress name="default">
+                            <DeliverTo>ALEX MATSIS</DeliverTo>
+                            <DeliverTo>1441 RESEARCH PARK</DeliverTo>
+                            <Street>ROOM 254</Street>
+                            <Street>A&amp;FS:  Accounting and Financial Services VC</Street>
+                            <City>SACRAMENTO</City>
+                            <State>CA</State>
+                            <PostalCode>95829</PostalCode>
+                            <Country isoCountryCode="US">United States</Country>
+                        </PostalAddress>
+                        <Email name="default">aamatsis@ucdavis.edu</Email>
+                        <Phone>
+                            <TelephoneNumber>
+                                <CountryCode isoCountryCode="US">United States</CountryCode>
+                                <AreaOrCityCode>530</AreaOrCityCode>
+                                <Number>752-8010</Number>
+                            </TelephoneNumber>
+                        </Phone>
+                    </Address>
+                </ShipTo>
+                <BillTo>
+                    <Address>
+                        <Name xml:lang="en">UCDavis</Name>
+                        <PostalAddress name="default">
+                            <DeliverTo>Materiel Management</DeliverTo>
+                            <Street>Invoice Desk</Street>
+                            <Street>202 Cousteau Place Ste 205</Street>
+                            <City>Davis</City>
+                            <State>CA</State>
+                            <PostalCode>95618-7761</PostalCode>
+                            <Country isoCountryCode="US">United States</Country>
+                        </PostalAddress>
+                        <Email name="default">ucdep@ucdavis.edu</Email>
+                    </Address>
+                </BillTo>
+                <Tax>
+                    <Money currency="USD">58.66</Money>
+                    <Description xml:lang="en">CA State Tax</Description>
+                </Tax>
+                <Payment>
+                    <PCard number="4111111111111111" expiration="08/08" name="UC Davis"/>
+                </Payment>
+                <Comments xml:lang="en-US">Order:0000015625</Comments>
+            </OrderRequestHeader>
+            <ItemOut quantity="1" lineNumber="1">
+                <ItemID>
+                    <SupplierPartID>224-2256</SupplierPartID>
+                    <SupplierPartAuxiliaryID>1009656406543\1</SupplierPartAuxiliaryID>
+                </ItemID>
+                <ItemDetail>
+                    <UnitPrice>
+                        <Money currency="USD">756.94</Money>
+                    </UnitPrice>
+                    <Description xml:lang="en-US">01:00 OPTIPLEX 960D;OptiPlex 960 Desktop Base Up to 88 Percent Efficient PSU</Description>
+                    <UnitOfMeasure>EA</UnitOfMeasure>
+                    <Classification domain="UNSPSC">4317180300</Classification>
+                </ItemDetail>
+                <Distribution>
+                    <Accounting name="AccountID">
+                        <AccountingSegment id="0000015625-1">
+                            <Name xml:lang="en-US">OLI</Name>
+                            <Description xml:lang="en-US">3-PRAD150---</Description>
+                        </AccountingSegment>
+                    </Accounting>
+                    <Charge>
+                        <Money currency="USD">815.60</Money>
+                    </Charge>
+                </Distribution>
+                <Comments xml:lang="en-US">0000015625-1</Comments>
+            </ItemOut>
+        </OrderRequest>
+    </Request>
+</cXML>

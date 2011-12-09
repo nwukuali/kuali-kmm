@@ -1,0 +1,292 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="DeliveryLabelDocumentLines" parent="DeliveryLabelDocumentLines-parentBean" />
+
+  <bean id="DeliveryLabelDocumentLines-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.document.DeliveryLabelDocumentLines"
+        p:titleAttribute="packListLineId"
+        p:objectLabel="Delivery Label Document Lines"
+        p:inquiryDefinition-ref="DeliveryLabelDocumentLines-inquiryDefinition"
+        p:lookupDefinition-ref="DeliveryLabelDocumentLines-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="DeliveryLabelDocumentLines-active" />
+        <ref bean="DeliveryLabelDocumentLines-lastUpdateDate" />
+        <ref bean="DeliveryLabelDocumentLines-nbrOfCartons" />
+        <ref bean="DeliveryLabelDocumentLines-packListDocNbr" />
+        <ref bean="DeliveryLabelDocumentLines-packListLineId" />       
+        <ref bean="DeliveryLabelDocumentLines-routeCd" />
+        <ref bean="DeliveryLabelDocumentLines-stopCd" />
+        <ref bean="DeliveryLabelDocumentLines-versionNumber" />
+        <ref bean="DeliveryLabelDocumentLines-deliveryCampusCd"/>
+        <ref bean="DeliveryLabelDocumentLines-deliveryBuildingCd"/>
+        <ref bean="DeliveryLabelDocumentLines-deliveryBuildingNm"/>
+        <ref bean="DeliveryLabelDocumentLines-deliveryDepartmentNm"/>  
+        <ref bean="DeliveryLabelDocumentLines-deliveryInstructionTxt"/>      
+      </list>
+    </property>        
+  </bean>
+
+  <bean id="DeliveryLabelDocumentLines-deliveryCampusCd" parent="DeliveryLabelDocumentLines-deliveryCampusCd-parentBean" />
+  <bean id="DeliveryLabelDocumentLines-deliveryCampusCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="deliveryCampusCd"
+        p:label="Delivery Campus Code"
+        p:shortLabel="Delivery Campus Code"
+        p:required="false">
+        <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>    
+  </bean>
+  
+  <bean id="DeliveryLabelDocumentLines-deliveryBuildingCd" parent="DeliveryLabelDocumentLines-deliveryBuildingCd-parentBean" />
+  <bean id="DeliveryLabelDocumentLines-deliveryBuildingCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="deliveryBuildingCd"
+        p:label="Delivery Building Code"
+        p:shortLabel="Delivery Building Code"
+        p:required="false">
+        <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>    
+  </bean>
+  
+  <bean id="DeliveryLabelDocumentLines-deliveryDepartmentNm" parent="DeliveryLabelDocumentLines-deliveryDepartmentNm-parentBean" />
+  <bean id="DeliveryLabelDocumentLines-deliveryDepartmentNm-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="deliveryDepartmentNm"
+        p:label="Delivery Department Name"
+        p:shortLabel="Delivery Department Name"
+        p:required="false">    
+        <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  
+  <bean id="DeliveryLabelDocumentLines-deliveryBuildingNm" parent="DeliveryLabelDocumentLines-deliveryBuildingNm-parentBean" />
+  <bean id="DeliveryLabelDocumentLines-deliveryBuildingNm-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="deliveryBuildingNm"
+        p:label="Delivery Building Name"
+        p:shortLabel="Delivery Building Name"
+        p:required="false">    
+        <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  
+  <bean id="DeliveryLabelDocumentLines-deliveryInstructionTxt" parent="DeliveryLabelDocumentLines-deliveryInstructionTxt-parentBean" />
+  <bean id="DeliveryLabelDocumentLines-deliveryInstructionTxt-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="deliveryInstructionTxt"
+        p:label="Delivery Instruction Text"
+        p:shortLabel="Delivery Instruction Text"
+        p:required="false">    
+        <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  
+  
+  <bean id="DeliveryLabelDocumentLines-active" parent="DeliveryLabelDocumentLines-active-parentBean" />
+  <bean id="DeliveryLabelDocumentLines-active-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="active"
+        p:forceUppercase="false"
+        p:label="Active"
+        p:shortLabel="Active"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="DeliveryLabelDocumentLines-lastUpdateDate" parent="DeliveryLabelDocumentLines-lastUpdateDate-parentBean" />
+  <bean id="DeliveryLabelDocumentLines-lastUpdateDate-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="lastUpdateDate"
+        p:forceUppercase="false"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="HiddenControlDefinition" />
+    </property>
+  </bean>
+
+  <bean id="DeliveryLabelDocumentLines-nbrOfCartons" parent="DeliveryLabelDocumentLines-nbrOfCartons-parentBean" />
+  <bean id="DeliveryLabelDocumentLines-nbrOfCartons-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="nbrOfCartons"
+        p:forceUppercase="false"
+        p:label="Number Of Cartons"
+        p:shortLabel="Number Of Cartons"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="DeliveryLabelDocumentLines-packListDocNbr" parent="DeliveryLabelDocumentLines-packListDocNbr-parentBean" />
+  <bean id="DeliveryLabelDocumentLines-packListDocNbr-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="packListDocNbr"
+        p:forceUppercase="false"
+        p:label="Delivery Label Number"
+        p:shortLabel="Delivery Label Number"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="DeliveryLabelDocumentLines-packListLineId" parent="DeliveryLabelDocumentLines-packListLineId-parentBean" />
+  <bean id="DeliveryLabelDocumentLines-packListLineId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="packListLineId"
+        p:forceUppercase="false"
+        p:label="Pack List Line Id"
+        p:shortLabel="Pack List Line Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="DeliveryLabelDocumentLines-routeCd" parent="DeliveryLabelDocumentLines-routeCd-parentBean" />
+  <bean id="DeliveryLabelDocumentLines-routeCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="routeCd"
+        p:forceUppercase="false"
+        p:label="Route Code"
+        p:shortLabel="Route Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  
+  <bean id="DeliveryLabelDocumentLines-stopCd" parent="DeliveryLabelDocumentLines-stopCd-parentBean" />
+  <bean id="DeliveryLabelDocumentLines-stopCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="stopCd"
+        p:forceUppercase="false"
+        p:label="Stop Sequence"
+        p:shortLabel="Stop Sequence"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="DeliveryLabelDocumentLines-versionNumber" parent="DeliveryLabelDocumentLines-versionNumber-parentBean" />
+  <bean id="DeliveryLabelDocumentLines-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="DeliveryLabelDocumentLines-inquiryDefinition" parent="DeliveryLabelDocumentLines-inquiryDefinition-parentBean" />
+
+  <bean id="DeliveryLabelDocumentLines-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Delivery Label Document Lines Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Delivery Label Document Lines Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="active" />
+              <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+              <bean parent="FieldDefinition" p:attributeName="nbrOfCartons" />
+              <bean parent="FieldDefinition" p:attributeName="packListDocNbr" />
+              <bean parent="FieldDefinition" p:attributeName="packListLineId" />
+              <bean parent="FieldDefinition" p:attributeName="routeCd" />
+              <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="DeliveryLabelDocumentLines-lookupDefinition" parent="DeliveryLabelDocumentLines-lookupDefinition-parentBean" />
+
+  <bean id="DeliveryLabelDocumentLines-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Delivery Lines Lookup" p:lookupableID="deliveryLabelLinesLookupable">
+        
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>packListLineId</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="routeCd" />             
+        <bean parent="FieldDefinition" p:attributeName="packListDocNbr" />
+        <bean parent="FieldDefinition" p:attributeName="deliveryCampusCd"/>
+        <bean parent="FieldDefinition" p:attributeName="deliveryBuildingCd"/>
+        <bean parent="FieldDefinition" p:attributeName="deliveryBuildingNm"/>
+        <bean parent="FieldDefinition" p:attributeName="deliveryDepartmentNm"/>       
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="routeCd" />      
+        <bean parent="FieldDefinition" p:attributeName="packListLineId" />
+        <bean parent="FieldDefinition" p:attributeName="nbrOfCartons" />
+        <bean parent="FieldDefinition" p:attributeName="packListDocNbr" />
+        <bean parent="FieldDefinition" p:attributeName="deliveryCampusCd"/>
+        <bean parent="FieldDefinition" p:attributeName="deliveryBuildingCd"/>
+        <bean parent="FieldDefinition" p:attributeName="deliveryBuildingNm"/>
+        <bean parent="FieldDefinition" p:attributeName="deliveryDepartmentNm"/>  
+      </list>
+    </property>
+  </bean>
+
+</beans>

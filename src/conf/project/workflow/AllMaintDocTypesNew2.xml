@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="ns:workflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="ns:workflow resource:WorkflowData">
+<documentTypes xmlns="ns:workflow/DocumentType" xsi:schemaLocation="ns:workflow/DocumentType resource:DocumentType">
+<documentType>
+  <name>SDOC</name>
+  <label>SDOC</label>
+  <parent>RiceDocument</parent>
+  <serviceNamespace>MM</serviceNamespace>
+</documentType>
+<documentType>
+  <name>SSMD</name>
+  <label>Stores Simple Maintenance Document</label>
+  <parent>SDOC</parent>     
+  <postProcessorName>org.kuali.rice.kns.workflow.postprocessor.KualiPostProcessor</postProcessorName>
+  <docHandler>${kmm.url}/kr/maintenance.do?methodToCall=docHandler</docHandler>
+  <routePaths>
+    <routePath>
+      <start name="AdHoc"  />
+    </routePath>
+  </routePaths>
+  <routeNodes>
+    <start name="AdHoc">
+      <activationType>P</activationType>
+    </start>
+  </routeNodes>
+</documentType>
+
+<documentType>
+	<name>SACD</name>
+	<label>Action Code</label>
+	<parent>SSMD</parent>			
+</documentType>
+
+<documentType>
+	<name>SACT</name>
+	<label>Additional Cost Type</label>
+	<parent>SSMD</parent>
+</documentType>
+
+<documentType>
+	<name>SADT</name>
+	<label>Stock Address Type</label>
+	<parent>SSMD</parent>
+</documentType>
+
+<documentType>
+	<name>SAGR</name>
+	<label>Agreement</label>
+	<parent>SSMD</parent>			
+</documentType>
+
+<documentType>
+	<name>SBIN</name>
+	<label>Bin</label>
+	<parent>SSMD</parent>			
+</documentType>
+
+<documentType>
+	<name>SCLG</name>
+	<label>Catalog</label>
+	<parent>SSMD</parent>			
+</documentType>
+
+<documentType>
+	<name>SCGR</name>
+	<label>Catalog Group</label>
+	<parent>SSMD</parent>			
+</documentType>
+
+<documentType>
+	<name>SCIM</name>
+	<label>Catalog Image</label>
+	<parent>SSMD</parent>			
+</documentType>
+
+<documentType>
+	<name>SCIT</name>
+	<label>Catalog Item</label>
+	<parent>SSMD</parent>
+	<routePaths>
+		<routePath>
+			<start name="AdHoc" nextNode="NewCatalogItem" />
+			<split name="NewCatalogItem">
+				<branch name="True">
+					<requests name="NewCatalogItemReview"
+						nextNode="Join" />
+				</branch>
+				<branch name="False">
+					<simple name="NoOp" nextNode="Join" />
+				</branch>
+				<join name="Join" />
+			</split>
+		</routePath>
+	</routePaths>
+	<routeNodes>
+		<start name="AdHoc" />
+		<split name="NewCatalogItem">
+			<type>org.kuali.ext.mm.sys.workflow.SimpleBooleanSplitNode</type>
+		</split>
+		<role name="NewCatalogItemReview">
+			<qualifierResolverClass>org.kuali.rice.kns.workflow.attribute.DataDictionaryQualifierResolver</qualifierResolverClass>
+			<activationType>P</activationType>
+		</role>
+		<simple name="NoOp">
+			<type>org.kuali.rice.kew.engine.node.NoOpNode</type>
+		</simple>
+		<join name="Join" />
+	</routeNodes>			
+</documentType>
+
+<documentType>
+	<name>SCSG</name>
+	<label>Catalog Subgroup</label>
+	<parent>SSMD</parent>			
+</documentType>
+
+<documentType>
+	<name>SCTP</name>
+	<label>Catalog Type</label>
+	<parent>SSMD</parent>			
+</documentType>
+
+<documentType>
+	<name>SCOD</name>
+	<label>Cost Code</label>
+	<parent>SSMD</parent>			
+</documentType>
+
+<documentType>
+	<name>SCTM</name>
+	<label>Customer</label>
+	<parent>SSMD</parent>			
+</documentType>
+
+<documentType>
+	<name>SPRF</name>
+	<label>Customer Profile</label>
+	<parent>SSMD</parent>			
+</documentType>
+
+<documentType>
+	<name>SCCT</name>
+	<label>Cycle Count</label>
+	<parent>SSMD</parent>			
+</documentType>
+
+<documentType>
+	<name>SDER</name>
+	<label>Delivery Reason</label>
+	<parent>SSMD</parent>			
+</documentType>
+
+<documentType>
+	<name>SDSP</name>
+	<label>Disposition Code</label>
+	<parent>SSMD</parent>			
+</documentType>
+
+<documentType>
+	<name>SDHZ</name>
+	<label>DOT Hazardous</label>
+	<parent>SSMD</parent>			
+</documentType>
+
+<documentType>
+	<name>SDRM</name>
+	<label>Driver Manifest</label>
+	<parent>SSMD</parent>			
+</documentType>
+
+<documentType>
+	<name>SECN</name>
+	<label>EHS Container</label>
+	<parent>SSMD</parent>			
+</documentType>
+
+<documentType>
+	<name>SEHZ</name>
+	<label>EHS Hazardous</label>
+	<parent>SSMD</parent>			
+</documentType>
+
+<documentType>
+	<name>SEZS</name>
+	<label>EHS Hazardous State</label>
+	<parent>SSMD</parent>			
+</documentType>
+
+<documentType>
+	<name>SEZU</name>
+	<label>Hazardous UN</label>
+	<parent>SSMD</parent>			
+</documentType>
+
+<documentType>
+	<name>SMUP</name>
+	<label>Markup</label>
+	<parent>SSMD</parent>			
+</documentType>
+
+<documentType>
+	<name>SMUT</name>
+	<label>Markup Type</label>
+	<parent>SSMD</parent>			
+</documentType>
+
+<documentType>
+	<name>SORS</name>
+	<label>Order Status</label>
+	<parent>SSMD</parent>			
+</documentType>
+
+<documentType>
+	<name>SORT</name>
+	<label>Order Type</label>
+	<parent>SSMD</parent>			
+</documentType>
+
+<documentType>
+	<name>SPLA</name>
+	<label>Pack List Announcement</label>
+	<parent>SSMD</parent>			
+</documentType>
+
+<documentType>
+	<name>SPAS</name>
+	<label>Pack Status Code</label>
+	<parent>SSMD</parent>
+</documentType>
+
+<documentType>
+	<name>SPIS</name>
+	<label>Pick Status Code</label>
+	<parent>SSMD</parent>
+</documentType>
+
+<documentType>
+	<name>SRRC</name>
+	<label>Restricted Route Code</label>
+	<parent>SSMD</parent>
+</documentType>
+
+<documentType>
+	<name>SRSC</name>
+	<label>Return Status Code </label>
+	<parent>SSMD</parent>
+</documentType>
+
+<documentType>
+	<name>SRTE</name>
+	<label>Return Type</label>
+	<parent>SSMD</parent>			
+</documentType>
+
+<documentType>
+	<name>SROT</name>
+	<label>Route </label>
+	<parent>SSMD</parent>
+</documentType>
+
+<documentType>
+	<name>SSAC</name>
+	<label>Stock Attribute Code</label>
+	<parent>SSMD</parent>
+</documentType>
+
+<documentType>
+	<name>SSTR</name>
+	<label>Stock Transaction Reason</label>
+	<parent>SSMD</parent>			
+</documentType>
+
+<documentType>
+	<name>SSTP</name>
+	<label>Stock Type</label>
+	<parent>SSMD</parent>			
+</documentType>
+
+<documentType>
+	<name>SUOI</name>
+	<label>Unit of Issue</label>
+	<parent>SSMD</parent>			
+</documentType>
+
+<documentType>
+	<name>SWHR</name>
+	<label>Warehouse</label>
+	<parent>SSMD</parent>			
+</documentType>
+
+<documentType>
+	<name>SWAT</name>
+	<label>Warehouse Account Type</label>
+	<parent>SSMD</parent>			
+</documentType>
+
+<documentType>
+	<name>SWHA</name>
+	<label>Warehouse Accounts</label>
+	<parent>SSMD</parent>			
+</documentType>
+
+<documentType>
+	<name>SWKS</name>
+	<label>Worksheet Status</label>
+	<parent>SSMD</parent>			
+</documentType>
+
+<documentType>
+	<name>SZON</name>
+	<label>Zone</label>
+	<parent>SSMD</parent>			
+</documentType>
+
+</documentTypes>
+</data>

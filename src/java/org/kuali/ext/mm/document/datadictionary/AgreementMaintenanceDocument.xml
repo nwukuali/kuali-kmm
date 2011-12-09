@@ -1,0 +1,98 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="StoresAgreementMaintenanceDocument" parent="StoresAgreementMaintenanceDocument-parentBean" />
+
+  <bean id="StoresAgreementMaintenanceDocument-parentBean" abstract="true" parent="MaintenanceDocumentEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.Agreement"
+        p:maintainableClass="org.kuali.ext.mm.service.impl.AgreementMaintainableImpl"  
+        p:businessRulesClass="org.kuali.ext.mm.document.validation.impl.AgreementRule" 
+        p:documentTypeName="SAGR"
+        p:documentAuthorizerClass="org.kuali.rice.kns.document.authorization.MaintenanceDocumentAuthorizerBase" >
+    <property name="lockingKeys" >
+      <list>
+        <value>agreementNbr</value>
+      </list>
+    </property>
+    <property name="workflowAttributes" >
+        <ref bean="StoresAgreementMaintenanceDocument-workflowAttributes" />
+    </property>
+    <property name="maintainableSections" >
+      <list>
+        <ref bean="StoresAgreementMaintenanceDocument-MainSection" />
+      </list>
+    </property>
+  </bean>
+
+ <!-- Maintenance Section Definitions -->
+  <bean id="StoresAgreementMaintenanceDocument-MainSection" parent="StoresAgreementMaintenanceDocument-MainSection-parentBean" />
+
+  <bean id="StoresAgreementMaintenanceDocument-MainSection-parentBean" abstract="true" parent="MaintainableSectionDefinition"
+        p:title="Agreement Maintenance" >
+    <property name="maintainableItems" >
+      <list>
+        <bean parent="MaintainableFieldDefinition"
+              p:name="agreementNbr"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="vndrContrGnrtdId" 
+              p:lookupReadOnly="true" 
+              p:required="true"/>
+		<bean parent="MaintainableFieldDefinition"
+              p:name="vndrHeaderGnrtdId" 
+              p:unconditionallyReadOnly="true"/>
+		<bean parent="MaintainableFieldDefinition"
+              p:name="vndrDetailAsgnId" 
+              p:unconditionallyReadOnly="true"/>
+       	<bean parent="MaintainableFieldDefinition"
+              p:name="vendorNm"
+              p:required="true" />                            
+        <bean parent="MaintainableFieldDefinition"
+              p:name="vendorContractName"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="agreementBeginDt"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="agreementEndDt"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="agreementLagDays"
+              p:required="false" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="agreementUsedAmt"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="poId"
+              p:required="false" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="poTotalLimit"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="b2bInd"
+              p:required="false" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="ghostCardInd"
+              p:required="false" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="electronicInvoiceInd"
+              p:required="false"
+              p:defaultValue="true" />
+		<bean parent="MaintainableFieldDefinition"
+              p:name="noPrintInd"
+              p:required="false"
+              p:defaultValue="true" />                      
+        <bean parent="MaintainableFieldDefinition"
+              p:name="active"
+              p:defaultValue="true" />
+      </list>
+    </property>
+  </bean>
+ <!-- workflow attributes -->
+  <bean id="StoresAgreementMaintenanceDocument-workflowAttributes" parent="StoresAgreementMaintenanceDocument-workflowAttributes-parentBean" />
+
+  <bean id="StoresAgreementMaintenanceDocument-workflowAttributes-parentBean" abstract="true" class="org.kuali.rice.kns.datadictionary.WorkflowAttributes" />
+</beans>

@@ -1,0 +1,628 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE cXML SYSTEM "http://xml.cxml.org/schemas/cXML/1.1.010/cXML.dtd">
+<cXML payloadID="2009-12-08T13:00:27.12349832.13284838@dell.com"
+	timestamp="2009-12-08T13:00:27" version="1.1">
+	<Header>
+		<From>
+			<Credential domain="DUNS">
+				<Identity>128293714</Identity>
+			</Credential>
+		</From>
+		<To>
+			<Credential domain="NetworkId">
+				<Identity>ucdt</Identity>
+			</Credential>
+		</To>
+		<Sender>
+			<Credential domain="DUNS">
+				<Identity>128293714</Identity>
+				<SharedSecret>nopassword</SharedSecret>
+			</Credential>
+			<UserAgent>Dell cXML V1.1</UserAgent>
+		</Sender>
+	</Header>
+	<Message deploymentMode="test">
+		<PunchOutOrderMessage>
+			<BuyerCookie>
+				DE-SZMATSIS-2009-12-08T10:58:35-08:00
+			</BuyerCookie>
+			<PunchOutOrderMessageHeader operationAllowed="edit">
+				<Total>
+					<Money currency="USD">756.94</Money>
+				</Total>
+			</PunchOutOrderMessageHeader>
+			<ItemIn quantity="1">
+				<ItemID>
+					<SupplierPartID>224-2256</SupplierPartID>
+					<SupplierPartAuxiliaryID>
+						1009656406543\1
+					</SupplierPartAuxiliaryID>
+				</ItemID>
+				<ItemDetail>
+					<UnitPrice>
+						<Money currency="USD">756.94</Money>
+					</UnitPrice>
+					<Description xml:lang="en">
+						01:00 OPTIPLEX 960D;OptiPlex 960 Desktop Base Up
+						to 88 Percent Efficient PSU
+					</Description>
+					<UnitOfMeasure>EA</UnitOfMeasure>
+					<Classification domain="UNSPSC">
+						43171803
+					</Classification>
+					<ManufacturerPartID>224-2256</ManufacturerPartID>
+					<ManufacturerName>Dell</ManufacturerName>
+				</ItemDetail>
+			</ItemIn>
+			<ItemIn quantity="1">
+				<ItemID>
+					<SupplierPartID>311-9532</SupplierPartID>
+					<SupplierPartAuxiliaryID>
+						1009656406543\1SUBITEM
+					</SupplierPartAuxiliaryID>
+				</ItemID>
+				<ItemDetail>
+					<UnitPrice>
+						<Money currency="USD">0.00</Money>
+					</UnitPrice>
+					<Description xml:lang="en">
+						01:01 Processors:IntelREG CoreTM 2 Duo E8500
+						with VT (3.16GHz, 6M, 1333MHz FSB)
+					</Description>
+					<UnitOfMeasure>EA</UnitOfMeasure>
+					<Classification domain="UNSPSC">
+						43171803
+					</Classification>
+					<ManufacturerPartID />
+					<ManufacturerName>Dell</ManufacturerName>
+				</ItemDetail>
+			</ItemIn>
+			<ItemIn quantity="1">
+				<ItemID>
+					<SupplierPartID>311-7444</SupplierPartID>
+					<SupplierPartAuxiliaryID>
+						1009656406543\1SUBITEM
+					</SupplierPartAuxiliaryID>
+				</ItemID>
+				<ItemDetail>
+					<UnitPrice>
+						<Money currency="USD">0.00</Money>
+					</UnitPrice>
+					<Description xml:lang="en">
+						01:02 Memory:4GB DDR2 Non-ECC SDRAM,800MHz, (2
+						DIMM)
+					</Description>
+					<UnitOfMeasure>EA</UnitOfMeasure>
+					<Classification domain="UNSPSC">
+						43171803
+					</Classification>
+					<ManufacturerPartID />
+					<ManufacturerName>Dell</ManufacturerName>
+				</ItemDetail>
+			</ItemIn>
+			<ItemIn quantity="1">
+				<ItemID>
+					<SupplierPartID>330-1989</SupplierPartID>
+					<SupplierPartAuxiliaryID>
+						1009656406543\1SUBITEM
+					</SupplierPartAuxiliaryID>
+				</ItemID>
+				<ItemDetail>
+					<UnitPrice>
+						<Money currency="USD">0.00</Money>
+					</UnitPrice>
+					<Description xml:lang="en">
+						01:03 Keyboard:Dell Quietkey, No Hot Keys,
+						English, Black
+					</Description>
+					<UnitOfMeasure>EA</UnitOfMeasure>
+					<Classification domain="UNSPSC">
+						43171803
+					</Classification>
+					<ManufacturerPartID />
+					<ManufacturerName>Dell</ManufacturerName>
+				</ItemDetail>
+			</ItemIn>
+			<ItemIn quantity="1">
+				<ItemID>
+					<SupplierPartID>320-3704</SupplierPartID>
+					<SupplierPartAuxiliaryID>
+						1009656406543\1SUBITEM
+					</SupplierPartAuxiliaryID>
+				</ItemID>
+				<ItemDetail>
+					<UnitPrice>
+						<Money currency="USD">0.00</Money>
+					</UnitPrice>
+					<Description xml:lang="en">
+						01:04 Monitors:No Monitor
+					</Description>
+					<UnitOfMeasure>EA</UnitOfMeasure>
+					<Classification domain="UNSPSC">
+						43171803
+					</Classification>
+					<ManufacturerPartID />
+					<ManufacturerName>Dell</ManufacturerName>
+				</ItemDetail>
+			</ItemIn>
+			<ItemIn quantity="1">
+				<ItemID>
+					<SupplierPartID>320-7431</SupplierPartID>
+					<SupplierPartAuxiliaryID>
+						1009656406543\1SUBITEM
+					</SupplierPartAuxiliaryID>
+				</ItemID>
+				<ItemDetail>
+					<UnitPrice>
+						<Money currency="USD">0.00</Money>
+					</UnitPrice>
+					<Description xml:lang="en">
+						01:05 Video Cards:256MB ATI RADEON�HD 3470�(Dual
+						DP), low profile
+					</Description>
+					<UnitOfMeasure>EA</UnitOfMeasure>
+					<Classification domain="UNSPSC">
+						43171803
+					</Classification>
+					<ManufacturerPartID />
+					<ManufacturerName>Dell</ManufacturerName>
+				</ItemDetail>
+			</ItemIn>
+			<ItemIn quantity="1">
+				<ItemID>
+					<SupplierPartID>341-5474</SupplierPartID>
+					<SupplierPartAuxiliaryID>
+						1009656406543\1SUBITEM
+					</SupplierPartAuxiliaryID>
+				</ItemID>
+				<ItemDetail>
+					<UnitPrice>
+						<Money currency="USD">0.00</Money>
+					</UnitPrice>
+					<Description xml:lang="en">
+						01:06 Boot Hard Drives:250GB 3.5" SATA 3.0Gb/s
+						and 8MB DataBurst CacheTM
+					</Description>
+					<UnitOfMeasure>EA</UnitOfMeasure>
+					<Classification domain="UNSPSC">
+						43171803
+					</Classification>
+					<ManufacturerPartID />
+					<ManufacturerName>Dell</ManufacturerName>
+				</ItemDetail>
+			</ItemIn>
+			<ItemIn quantity="1">
+				<ItemID>
+					<SupplierPartID>341-8102</SupplierPartID>
+					<SupplierPartAuxiliaryID>
+						1009656406543\1SUBITEM
+					</SupplierPartAuxiliaryID>
+				</ItemID>
+				<ItemDetail>
+					<UnitPrice>
+						<Money currency="USD">0.00</Money>
+					</UnitPrice>
+					<Description xml:lang="en">
+						01:07 Floppy Drive Options:No Floppy Drive
+					</Description>
+					<UnitOfMeasure>EA</UnitOfMeasure>
+					<Classification domain="UNSPSC">
+						43171803
+					</Classification>
+					<ManufacturerPartID />
+					<ManufacturerName>Dell</ManufacturerName>
+				</ItemDetail>
+			</ItemIn>
+			<ItemIn quantity="1">
+				<ItemID>
+					<SupplierPartID>420-8464</SupplierPartID>
+					<SupplierPartAuxiliaryID>
+						1009656406543\1SUBITEM
+					</SupplierPartAuxiliaryID>
+				</ItemID>
+				<ItemDetail>
+					<UnitPrice>
+						<Money currency="USD">0.00</Money>
+					</UnitPrice>
+					<Description xml:lang="en">
+						01:08 Operating System:Genuine Windows VistaREG
+						Home Basic Service Pack 1, With media, 32
+					</Description>
+					<UnitOfMeasure>EA</UnitOfMeasure>
+					<Classification domain="UNSPSC">
+						43171803
+					</Classification>
+					<ManufacturerPartID />
+					<ManufacturerName>Dell</ManufacturerName>
+				</ItemDetail>
+			</ItemIn>
+			<ItemIn quantity="1">
+				<ItemID>
+					<SupplierPartID>330-2733</SupplierPartID>
+					<SupplierPartAuxiliaryID>
+						1009656406543\1SUBITEM
+					</SupplierPartAuxiliaryID>
+				</ItemID>
+				<ItemDetail>
+					<UnitPrice>
+						<Money currency="USD">0.00</Money>
+					</UnitPrice>
+					<Description xml:lang="en">
+						01:09 Mouse:Dell USB Optical Mouse with Scroll,
+						All Black Design
+					</Description>
+					<UnitOfMeasure>EA</UnitOfMeasure>
+					<Classification domain="UNSPSC">
+						43171803
+					</Classification>
+					<ManufacturerPartID />
+					<ManufacturerName>Dell</ManufacturerName>
+				</ItemDetail>
+			</ItemIn>
+			<ItemIn quantity="1">
+				<ItemID>
+					<SupplierPartID>330-2626</SupplierPartID>
+					<SupplierPartAuxiliaryID>
+						1009656406543\1SUBITEM
+					</SupplierPartAuxiliaryID>
+				</ItemID>
+				<ItemDetail>
+					<UnitPrice>
+						<Money currency="USD">0.00</Money>
+					</UnitPrice>
+					<Description xml:lang="en">
+						01:10 Systems Management Mode:vPro Secure
+						Advanced Hardware Enabled Systems Management
+					</Description>
+					<UnitOfMeasure>EA</UnitOfMeasure>
+					<Classification domain="UNSPSC">
+						43171803
+					</Classification>
+					<ManufacturerPartID />
+					<ManufacturerName>Dell</ManufacturerName>
+				</ItemDetail>
+			</ItemIn>
+			<ItemIn quantity="1">
+				<ItemID>
+					<SupplierPartID>313-7063</SupplierPartID>
+					<SupplierPartAuxiliaryID>
+						1009656406543\1SUBITEM
+					</SupplierPartAuxiliaryID>
+				</ItemID>
+				<ItemDetail>
+					<UnitPrice>
+						<Money currency="USD">0.00</Money>
+					</UnitPrice>
+					<Description xml:lang="en">
+						01:11 CD ROM/DVD ROM:16X DVD+/-RW SATA, Roxio
+						CreatorTM CyberlinkPowerDVDTM
+					</Description>
+					<UnitOfMeasure>EA</UnitOfMeasure>
+					<Classification domain="UNSPSC">
+						43171803
+					</Classification>
+					<ManufacturerPartID />
+					<ManufacturerName>Dell</ManufacturerName>
+				</ItemDetail>
+			</ItemIn>
+			<ItemIn quantity="1">
+				<ItemID>
+					<SupplierPartID>311-9539</SupplierPartID>
+					<SupplierPartAuxiliaryID>
+						1009656406543\1SUBITEM
+					</SupplierPartAuxiliaryID>
+				</ItemID>
+				<ItemDetail>
+					<UnitPrice>
+						<Money currency="USD">0.00</Money>
+					</UnitPrice>
+					<Description xml:lang="en">
+						01:12 QuietKit:No Quiet Kit
+					</Description>
+					<UnitOfMeasure>EA</UnitOfMeasure>
+					<Classification domain="UNSPSC">
+						43171803
+					</Classification>
+					<ManufacturerPartID />
+					<ManufacturerName>Dell</ManufacturerName>
+				</ItemDetail>
+			</ItemIn>
+			<ItemIn quantity="1">
+				<ItemID>
+					<SupplierPartID>313-7072</SupplierPartID>
+					<SupplierPartAuxiliaryID>
+						1009656406543\1SUBITEM
+					</SupplierPartAuxiliaryID>
+				</ItemID>
+				<ItemDetail>
+					<UnitPrice>
+						<Money currency="USD">0.00</Money>
+					</UnitPrice>
+					<Description xml:lang="en">
+						01:13 Speakers:Internal Dell Business Audio
+						Speaker
+					</Description>
+					<UnitOfMeasure>EA</UnitOfMeasure>
+					<Classification domain="UNSPSC">
+						43171803
+					</Classification>
+					<ManufacturerPartID />
+					<ManufacturerName>Dell</ManufacturerName>
+				</ItemDetail>
+			</ItemIn>
+			<ItemIn quantity="1">
+				<ItemID>
+					<SupplierPartID>420-9701</SupplierPartID>
+					<SupplierPartAuxiliaryID>
+						1009656406543\1SUBITEM
+					</SupplierPartAuxiliaryID>
+				</ItemID>
+				<ItemDetail>
+					<UnitPrice>
+						<Money currency="USD">0.00</Money>
+					</UnitPrice>
+					<Description xml:lang="en">
+						01:14 Power Supplies:OptiPlex 960 Desktop Up to
+						88 Percent Efficient Power Supply
+					</Description>
+					<UnitOfMeasure>EA</UnitOfMeasure>
+					<Classification domain="UNSPSC">
+						43171803
+					</Classification>
+					<ManufacturerPartID />
+					<ManufacturerName>Dell</ManufacturerName>
+				</ItemDetail>
+			</ItemIn>
+			<ItemIn quantity="1">
+				<ItemID>
+					<SupplierPartID>330-1711</SupplierPartID>
+					<SupplierPartAuxiliaryID>
+						1009656406543\1SUBITEM
+					</SupplierPartAuxiliaryID>
+				</ItemID>
+				<ItemDetail>
+					<UnitPrice>
+						<Money currency="USD">0.00</Money>
+					</UnitPrice>
+					<Description xml:lang="en">
+						01:15 Documentation:Documentation, English, with
+						125V Power Cord
+					</Description>
+					<UnitOfMeasure>EA</UnitOfMeasure>
+					<Classification domain="UNSPSC">
+						43171803
+					</Classification>
+					<ManufacturerPartID />
+					<ManufacturerName>Dell</ManufacturerName>
+				</ItemDetail>
+			</ItemIn>
+			<ItemIn quantity="1">
+				<ItemID>
+					<SupplierPartID>341-8036</SupplierPartID>
+					<SupplierPartAuxiliaryID>
+						1009656406543\1SUBITEM
+					</SupplierPartAuxiliaryID>
+				</ItemID>
+				<ItemDetail>
+					<UnitPrice>
+						<Money currency="USD">0.00</Money>
+					</UnitPrice>
+					<Description xml:lang="en">
+						01:16 Hard Drive Mode:No RAID
+					</Description>
+					<UnitOfMeasure>EA</UnitOfMeasure>
+					<Classification domain="UNSPSC">
+						43171803
+					</Classification>
+					<ManufacturerPartID />
+					<ManufacturerName>Dell</ManufacturerName>
+				</ItemDetail>
+			</ItemIn>
+			<ItemIn quantity="1">
+				<ItemID>
+					<SupplierPartID>467-3564</SupplierPartID>
+					<SupplierPartAuxiliaryID>
+						1009656406543\1SUBITEM
+					</SupplierPartAuxiliaryID>
+				</ItemID>
+				<ItemDetail>
+					<UnitPrice>
+						<Money currency="USD">0.00</Money>
+					</UnitPrice>
+					<Description xml:lang="en">
+						01:17 Energy Efficiency Options:No Dell Energy
+						Smart Power Management Settings
+					</Description>
+					<UnitOfMeasure>EA</UnitOfMeasure>
+					<Classification domain="UNSPSC">
+						43171803
+					</Classification>
+					<ManufacturerPartID />
+					<ManufacturerName>Dell</ManufacturerName>
+				</ItemDetail>
+			</ItemIn>
+			<ItemIn quantity="1">
+				<ItemID>
+					<SupplierPartID>330-3686</SupplierPartID>
+					<SupplierPartAuxiliaryID>
+						1009656406543\1SUBITEM
+					</SupplierPartAuxiliaryID>
+				</ItemID>
+				<ItemDetail>
+					<UnitPrice>
+						<Money currency="USD">0.00</Money>
+					</UnitPrice>
+					<Description xml:lang="en">
+						01:18 Resource DVD:Resource DVD - contains
+						Diagnostics and Drivers for Vista systems
+					</Description>
+					<UnitOfMeasure>EA</UnitOfMeasure>
+					<Classification domain="UNSPSC">
+						43171803
+					</Classification>
+					<ManufacturerPartID />
+					<ManufacturerName>Dell</ManufacturerName>
+				</ItemDetail>
+			</ItemIn>
+			<ItemIn quantity="1">
+				<ItemID>
+					<SupplierPartID>988-0103</SupplierPartID>
+					<SupplierPartAuxiliaryID>
+						1009656406543\1SUBITEM
+					</SupplierPartAuxiliaryID>
+				</ItemID>
+				<ItemDetail>
+					<UnitPrice>
+						<Money currency="USD">0.00</Money>
+					</UnitPrice>
+					<Description xml:lang="en">
+						01:19 Hardware Support Services:4 Year Basic
+						Limited Warranty and 4 Year NBD Onsite Service
+					</Description>
+					<UnitOfMeasure>EA</UnitOfMeasure>
+					<Classification domain="UNSPSC">
+						43171803
+					</Classification>
+					<ManufacturerPartID />
+					<ManufacturerName>Dell</ManufacturerName>
+				</ItemDetail>
+			</ItemIn>
+			<ItemIn quantity="1">
+				<ItemID>
+					<SupplierPartID>330-2234</SupplierPartID>
+					<SupplierPartAuxiliaryID>
+						1009656406543\1SUBITEM
+					</SupplierPartAuxiliaryID>
+				</ItemID>
+				<ItemDetail>
+					<UnitPrice>
+						<Money currency="USD">0.00</Money>
+					</UnitPrice>
+					<Description xml:lang="en">
+						01:20 Security Hardware:Chassis Intrusion Switch
+						Option
+					</Description>
+					<UnitOfMeasure>EA</UnitOfMeasure>
+					<Classification domain="UNSPSC">
+						43171803
+					</Classification>
+					<ManufacturerPartID />
+					<ManufacturerName>Dell</ManufacturerName>
+				</ItemDetail>
+			</ItemIn>
+			<ItemIn quantity="1">
+				<ItemID>
+					<SupplierPartID>330-2030</SupplierPartID>
+					<SupplierPartAuxiliaryID>
+						1009656406543\1SUBITEM
+					</SupplierPartAuxiliaryID>
+				</ItemID>
+				<ItemDetail>
+					<UnitPrice>
+						<Money currency="USD">0.00</Money>
+					</UnitPrice>
+					<Description xml:lang="en">
+						01:21 Ship Packaging Options:Shipping Material
+						for System, Desktop
+					</Description>
+					<UnitOfMeasure>EA</UnitOfMeasure>
+					<Classification domain="UNSPSC">
+						43171803
+					</Classification>
+					<ManufacturerPartID />
+					<ManufacturerName>Dell</ManufacturerName>
+				</ItemDetail>
+			</ItemIn>
+			<ItemIn quantity="1">
+				<ItemID>
+					<SupplierPartID>311-9545</SupplierPartID>
+					<SupplierPartAuxiliaryID>
+						1009656406543\1SUBITEM
+					</SupplierPartAuxiliaryID>
+				</ItemID>
+				<ItemDetail>
+					<UnitPrice>
+						<Money currency="USD">0.00</Money>
+					</UnitPrice>
+					<Description xml:lang="en">
+						01:22 Thermal Solutions:Mainstream PentiumREG
+						Dual Core
+					</Description>
+					<UnitOfMeasure>EA</UnitOfMeasure>
+					<Classification domain="UNSPSC">
+						43171803
+					</Classification>
+					<ManufacturerPartID />
+					<ManufacturerName>Dell</ManufacturerName>
+				</ItemDetail>
+			</ItemIn>
+			<ItemIn quantity="1">
+				<ItemID>
+					<SupplierPartID>412-0887</SupplierPartID>
+					<SupplierPartAuxiliaryID>
+						1009656406543\1SUBITEM
+					</SupplierPartAuxiliaryID>
+				</ItemID>
+				<ItemDetail>
+					<UnitPrice>
+						<Money currency="USD">0.00</Money>
+					</UnitPrice>
+					<Description xml:lang="en">
+						01:23 Additional System Options:Google Toolbar
+						Removed
+					</Description>
+					<UnitOfMeasure>EA</UnitOfMeasure>
+					<Classification domain="UNSPSC">
+						43171803
+					</Classification>
+					<ManufacturerPartID />
+					<ManufacturerName>Dell</ManufacturerName>
+				</ItemDetail>
+			</ItemIn>
+			<ItemIn quantity="1">
+				<ItemID>
+					<SupplierPartID>310-9490</SupplierPartID>
+					<SupplierPartAuxiliaryID>
+						1009656406543\1SUBITEM
+					</SupplierPartAuxiliaryID>
+				</ItemID>
+				<ItemDetail>
+					<UnitPrice>
+						<Money currency="USD">0.00</Money>
+					</UnitPrice>
+					<Description xml:lang="en">
+						01:24 Processor Branding:vPro Sticker
+					</Description>
+					<UnitOfMeasure>EA</UnitOfMeasure>
+					<Classification domain="UNSPSC">
+						43171803
+					</Classification>
+					<ManufacturerPartID />
+					<ManufacturerName>Dell</ManufacturerName>
+				</ItemDetail>
+			</ItemIn>
+			<ItemIn quantity="1">
+				<ItemID>
+					<SupplierPartID>310-8643</SupplierPartID>
+					<SupplierPartAuxiliaryID>
+						1009656406543\1SUBITEM
+					</SupplierPartAuxiliaryID>
+				</ItemID>
+				<ItemDetail>
+					<UnitPrice>
+						<Money currency="USD">0.00</Money>
+					</UnitPrice>
+					<Description xml:lang="en">
+						01:25 Labels:Vista Basic Sticker
+					</Description>
+					<UnitOfMeasure>EA</UnitOfMeasure>
+					<Classification domain="UNSPSC">
+						43171803
+					</Classification>
+					<ManufacturerPartID />
+					<ManufacturerName>Dell</ManufacturerName>
+				</ItemDetail>
+			</ItemIn>
+		</PunchOutOrderMessage>
+	</Message>
+</cXML>

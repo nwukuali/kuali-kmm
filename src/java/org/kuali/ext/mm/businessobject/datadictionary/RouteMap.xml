@@ -1,0 +1,242 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="RouteMap" parent="RouteMap-parentBean" />
+
+  <bean id="RouteMap-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.RouteMap"
+        p:titleAttribute="routeMapId"
+        p:objectLabel="Route Map"
+        p:inquiryDefinition-ref="RouteMap-inquiryDefinition"
+        p:lookupDefinition-ref="RouteMap-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="RouteMap-active" />
+        <ref bean="RouteMap-deliveryBuildingName" />
+        <ref bean="RouteMap-deliveryCampusCd" />
+        <ref bean="RouteMap-lastUpdateDate" />
+        <ref bean="RouteMap-routeCd" />
+        <ref bean="RouteMap-stopSequnce" />
+        <ref bean="RouteMap-versionNumber" />
+        <ref bean="RouteMap-deliveryBuildingCode"/>
+      </list>
+    </property>
+    	<property name="relationships">
+	    <list>
+	      <bean parent="RelationshipDefinition">
+	        <property name="objectAttributeName" value="financialBuilding"/>
+	        <property name="primitiveAttributes">
+	          <list>
+	            <bean parent="PrimitiveAttributeDefinition" p:sourceName="deliveryBuildingCode" 
+	            	p:targetName="buildingCode"/>
+	          </list>
+	        </property>    
+	         <property name="supportAttributes" >
+            <list>
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="deliveryCampusCd"
+                    p:targetName="campusCode" />  
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="deliveryBuildingName"
+                    p:targetName="buildingName" />                                       
+            </list>
+          </property>      
+	      </bean>
+	      </list>
+	</property>
+  </bean>
+
+  <bean id="RouteMap-active" parent="RouteMap-active-parentBean" />
+  <bean id="RouteMap-active-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="active"
+        p:forceUppercase="false"
+        p:label="Active"
+        p:shortLabel="Active"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="RouteMap-deliveryBuildingCode" parent="RouteMap-deliveryBuildingCode-parentBean" />
+  <bean id="RouteMap-deliveryBuildingCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="deliveryBuildingCode"
+        p:forceUppercase="false"
+        p:label="Delivery Building Code"
+        p:shortLabel="Delivery Building Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="RouteMap-deliveryBuildingName" parent="RouteMap-deliveryBuildingName-parentBean" />
+  <bean id="RouteMap-deliveryBuildingName-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="deliveryBuildingName"
+        p:forceUppercase="false"
+        p:label="Delivery Building Name"
+        p:shortLabel="Delivery Building Name"
+        p:maxLength="100"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="100" />
+    </property>
+  </bean>
+  
+  <bean id="RouteMap-deliveryCampusCd" parent="RouteMap-deliveryCampusCd-parentBean" />
+  <bean id="RouteMap-deliveryCampusCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="deliveryCampusCd"
+        p:forceUppercase="false"
+        p:label="Delivery Campus Code"
+        p:shortLabel="Delivery Campus Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="RouteMap-lastUpdateDate" parent="RouteMap-lastUpdateDate-parentBean" />
+  <bean id="RouteMap-lastUpdateDate-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="lastUpdateDate"
+        p:forceUppercase="false"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="HiddenControlDefinition" />
+    </property>
+  </bean>
+
+  <bean id="RouteMap-routeCd" parent="RouteMap-routeCd-parentBean" />
+  <bean id="RouteMap-routeCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="routeCd"
+        p:forceUppercase="false"
+        p:label="Route Code"
+        p:shortLabel="Route Cd"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="RouteMap-stopSequnce" parent="RouteMap-stopSequnce-parentBean" />
+  <bean id="RouteMap-stopSequnce-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="stopSequnce"
+        p:forceUppercase="false"
+        p:label="Stop Sequence"
+        p:shortLabel="Stop Sequence"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="RouteMap-versionNumber" parent="RouteMap-versionNumber-parentBean" />
+  <bean id="RouteMap-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+        
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="RouteMap-inquiryDefinition" parent="RouteMap-inquiryDefinition-parentBean" />
+
+  <bean id="RouteMap-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"    	
+        p:title="Route Map Inquiry" p:inquirableClass="org.kuali.ext.mm.businessobject.inquiry.MmInquirableImpl" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Route Map Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="deliveryBuildingCode" />
+              <bean parent="FieldDefinition" p:attributeName="deliveryCampusCd" />
+              <bean parent="FieldDefinition" p:attributeName="routeCd" />
+              <bean parent="FieldDefinition" p:attributeName="stopSequnce" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="RouteMap-lookupDefinition" parent="RouteMap-lookupDefinition-parentBean" />
+
+  <bean id="RouteMap-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Route Map Lookup" 
+ >
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>routeMapId</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="deliveryBuildingCode" />
+        <bean parent="FieldDefinition" p:attributeName="deliveryCampusCd" />
+        <bean parent="FieldDefinition" p:attributeName="routeCd" />
+        <bean parent="FieldDefinition" p:attributeName="stopSequnce" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="deliveryBuildingCode" />
+        <bean parent="FieldDefinition" p:attributeName="deliveryCampusCd" />
+        <bean parent="FieldDefinition" p:attributeName="routeCd" />
+        <bean parent="FieldDefinition" p:attributeName="stopSequnce" />
+      </list>
+    </property>
+  </bean>
+
+</beans>

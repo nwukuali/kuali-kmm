@@ -1,0 +1,136 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="PackStatusCode" parent="PackStatusCode-parentBean" />
+
+  <bean id="PackStatusCode-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.PackStatusCode"
+        p:titleAttribute="packStatusCode"
+        p:objectLabel="Pack Status Code"
+        p:inquiryDefinition-ref="PackStatusCode-inquiryDefinition"
+        p:lookupDefinition-ref="PackStatusCode-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="PackStatusCode-active" />
+        <ref bean="PackStatusCode-lastUpdateDate" />
+        <ref bean="PackStatusCode-packStatusName" />
+        <ref bean="PackStatusCode-packStatusCode" />
+        <ref bean="PackStatusCode-versionNumber" />
+      </list>
+    </property>
+  </bean>
+
+  <bean id="PackStatusCode-active" parent="PackStatusCode-active-parentBean" />
+  <bean id="PackStatusCode-active-parentBean" abstract="true" parent="GenericAttributes-activeIndicator" p:name="active" />
+
+  <bean id="PackStatusCode-lastUpdateDate" parent="PackStatusCode-lastUpdateDate-parentBean" />
+  <bean id="PackStatusCode-lastUpdateDate-parentBean" parent="GenericAttributes-genericTimestamp" abstract="true"
+        p:name="lastUpdateDate"
+        p:forceUppercase="false"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:maxLength="10"
+        p:required="false" >
+  </bean>
+
+  <bean id="PackStatusCode-packStatusName" parent="PackStatusCode-packStatusName-parentBean" />
+  <bean id="PackStatusCode-packStatusName-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="packStatusName"
+        p:forceUppercase="true"
+        p:label="Pack Status Name"
+        p:shortLabel="Pack Status Name"
+        p:maxLength="45"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="45" />
+    </property>
+  </bean>
+
+  <bean id="PackStatusCode-packStatusCode" parent="PackStatusCode-packStatusCode-parentBean" />
+  <bean id="PackStatusCode-packStatusCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="packStatusCode"
+        p:forceUppercase="true"
+        p:label="Pack Status Code"
+        p:shortLabel="Pack Status Code"
+        p:maxLength="4"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AlphaNumericValidationPattern"/>
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="4" />
+    </property>
+  </bean>
+
+  <bean id="PackStatusCode-versionNumber" parent="PackStatusCode-versionNumber-parentBean" />
+  <bean id="PackStatusCode-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="PackStatusCode-inquiryDefinition" parent="PackStatusCode-inquiryDefinition-parentBean" />
+
+  <bean id="PackStatusCode-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Pack Status Code Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Pack Status Code Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="packStatusCode" />
+              <bean parent="FieldDefinition" p:attributeName="packStatusName" />
+              <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+              <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+              <bean parent="FieldDefinition" p:attributeName="active" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="PackStatusCode-lookupDefinition" parent="PackStatusCode-lookupDefinition-parentBean" />
+
+  <bean id="PackStatusCode-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Pack Status Code Lookup" >
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>packStatusCode</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="packStatusCode" />
+        <bean parent="FieldDefinition" p:attributeName="packStatusName" />
+        <bean parent="FieldDefinition" p:attributeName="active" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="packStatusCode" />
+        <bean parent="FieldDefinition" p:attributeName="packStatusName" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+        <bean parent="FieldDefinition" p:attributeName="active" />
+      </list>
+    </property>
+  </bean>
+
+</beans>

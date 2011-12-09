@@ -1,0 +1,289 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="CatalogSubgroup" parent="CatalogSubgroup-parentBean" />
+
+  <bean id="CatalogSubgroup-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.CatalogSubgroup"
+        p:titleAttribute="catalogSubgroupId"
+        p:objectLabel="Catalog Subgroup"
+        p:inquiryDefinition-ref="CatalogSubgroup-inquiryDefinition"
+        p:lookupDefinition-ref="CatalogSubgroup-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="CatalogSubgroup-active" />
+        <ref bean="CatalogSubgroup-catalogGroupCd" />
+        <ref bean="CatalogSubgroup-catalogSubgroupId" />
+        <ref bean="CatalogSubgroup-catalogSubgroupCd" />
+        <ref bean="CatalogSubgroup-catalogSubgroupDesc" />
+        <ref bean="CatalogSubgroup-lastUpdateDate" />
+        <ref bean="CatalogSubgroup-priorCatalogSubgroupId" />
+        <ref bean="CatalogSubgroup-priorCatalogSubgroup.catalogGroupCd" />
+        <ref bean="CatalogSubgroup-priorCatalogSubgroup.catalogSubgroupCd" />        
+        <ref bean="CatalogSubgroup-versionNumber" />
+        <ref bean="CatalogSubgroup-catalogGroup.catalogGroupNm"/>
+      </list>
+    </property>
+	 
+	<property name="relationships" >
+      <list>
+        <bean parent="RelationshipDefinition">
+          <property name="objectAttributeName" value="catalogGroup" />
+          <property name="primitiveAttributes" >
+            <list>
+              <bean parent="PrimitiveAttributeDefinition"
+                    p:sourceName="catalogGroupCd"
+                    p:targetName="catalogGroupCd" />
+            </list>
+          </property>
+          <property name="supportAttributes" >
+            <list>
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="catalogGroup.catalogGroupNm"
+                    p:targetName="catalogGroupNm" />              
+            </list>
+          </property>
+        </bean>
+        <bean parent="RelationshipDefinition">
+          <property name="objectAttributeName" value="priorCatalogSubgroup" />
+          <property name="primitiveAttributes" >
+            <list>
+              <bean parent="PrimitiveAttributeDefinition"
+                    p:sourceName="priorCatalogSubgroupId"
+                    p:targetName="catalogSubgroupId" />
+            </list>
+          </property>
+          <property name="supportAttributes" >
+            <list>
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="priorCatalogSubgroup.catalogGroupCd"
+                    p:targetName="catalogGroupCd" />
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="priorCatalogSubgroup.catalogSubgroupCd"
+                    p:targetName="catalogSubgroupCd" />              
+            </list>
+          </property>
+        </bean>               
+      </list>
+    </property>
+	 
+	
+        
+	 
+  </bean>
+  <bean id="CatalogSubgroup-priorCatalogSubgroupId" parent="CatalogSubgroup-priorCatalogSubgroupId-parentBean" />
+  <bean id="CatalogSubgroup-priorCatalogSubgroupId-parentBean" parent="CatalogSubgroup-catalogSubgroupId-parentBean" abstract="true"
+        p:name="priorCatalogSubgroupId"
+        p:forceUppercase="false"
+        p:label="Prior Catalog Subgroup Id"
+        p:shortLabel="Prior Catalog Subgroup Id"
+        p:maxLength="10"
+        p:required="false">
+    <property name="control" >
+      <bean parent="HiddenControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>   
+  
+  <bean id="CatalogSubgroup-catalogSubgroupId" parent="CatalogSubgroup-catalogSubgroupId-parentBean" />
+  <bean id="CatalogSubgroup-catalogSubgroupId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="catalogSubgroupId"
+        p:forceUppercase="false"
+        p:label="Catalog Subgroup Id"
+        p:shortLabel="Catalog Subgroup Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  <bean id="CatalogSubgroup-active" parent="CatalogSubgroup-active-parentBean" />
+  <bean id="CatalogSubgroup-active-parentBean" abstract="true" parent="GenericAttributes-activeIndicator" 
+        p:name="active"
+        p:label="Active Indicator"
+        p:shortLabel="Active"
+        p:required="false" />
+
+  <bean id="CatalogSubgroup-catalogGroupCd" parent="CatalogSubgroup-catalogGroupCd-parentBean" />
+  <bean id="CatalogSubgroup-catalogGroupCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="catalogGroupCd"
+        p:forceUppercase="false"
+        p:label="Catalog Group Code"
+        p:shortLabel="Catalog Group Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AlphaNumericValidationPattern"/>
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  
+  
+  <bean id="CatalogSubgroup-catalogGroup.catalogGroupNm" parent="CatalogSubgroup-catalogGroup.catalogGroupNm-parentBean" />
+  <bean id="CatalogSubgroup-catalogGroup.catalogGroupNm-parentBean" parent="catalogGroup-catalogGroupNm" abstract="true"
+        p:name="catalogGroup.catalogGroupNm"
+        p:forceUppercase="false"
+        p:label="Catalog Group Name"
+        p:shortLabel="Catalog Group Name" >
+  </bean>
+  
+  <bean id="CatalogSubgroup-catalogSubgroupCd" parent="CatalogSubgroup-catalogSubgroupCd-parentBean" />
+  <bean id="CatalogSubgroup-catalogSubgroupCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="catalogSubgroupCd"
+        p:forceUppercase="false"
+        p:label="Catalog Subgroup Code"
+        p:shortLabel="Catalog Subgroup Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AlphaNumericValidationPattern"/>
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CatalogSubgroup-catalogSubgroupDesc" parent="CatalogSubgroup-catalogSubgroupDesc-parentBean" />
+  <bean id="CatalogSubgroup-catalogSubgroupDesc-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="catalogSubgroupDesc"
+        p:forceUppercase="false"
+        p:label="Catalog Subgroup Description"
+        p:shortLabel="Catalog Subgroup Description"
+        p:maxLength="80"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="80" />
+    </property>
+  </bean>
+
+  <bean id="CatalogSubgroup-lastUpdateDate" parent="CatalogSubgroup-lastUpdateDate-parentBean" />
+  <bean id="CatalogSubgroup-lastUpdateDate-parentBean" abstract="true" parent="GenericAttributes-genericTimestamp" 
+        p:name="lastUpdateDate"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:required="false" />
+ 
+  <bean id="CatalogSubgroup-priorCatalogSubgroup.catalogSubgroupCd" parent="CatalogSubgroup-priorCatalogSubgroup.catalogSubgroupCd-parentBean" />
+  <bean id="CatalogSubgroup-priorCatalogSubgroup.catalogSubgroupCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="priorCatalogSubgroup.catalogSubgroupCd"
+        p:forceUppercase="false"
+        p:label="Prior Catalog Subgroup Code"
+        p:shortLabel="Prior Catalog Subgroup Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"/>
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  <bean id="CatalogSubgroup-priorCatalogSubgroup.catalogGroupCd" parent="CatalogSubgroup-priorCatalogSubgroup.catalogGroupCd-parentBean" />
+  <bean id="CatalogSubgroup-priorCatalogSubgroup.catalogGroupCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="priorCatalogSubgroup.catalogGroupCd"
+        p:forceUppercase="false"
+        p:label="Prior Catalog Group Code"
+        p:shortLabel="Prior Catalog Group Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AlphaNumericValidationPattern"/>
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  <bean id="CatalogSubgroup-versionNumber" parent="CatalogSubgroup-versionNumber-parentBean" />
+  <bean id="CatalogSubgroup-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="CatalogSubgroup-inquiryDefinition" parent="CatalogSubgroup-inquiryDefinition-parentBean" />
+
+  <bean id="CatalogSubgroup-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Catalog Subgroup Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Catalog Subgroup Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="active" />
+              <bean parent="FieldDefinition" p:attributeName="catalogGroupCd" />
+              <bean parent="FieldDefinition" p:attributeName="catalogGroup.catalogGroupNm" />
+              <bean parent="FieldDefinition" p:attributeName="catalogSubgroupCd" />
+              <bean parent="FieldDefinition" p:attributeName="catalogSubgroupDesc" />
+              <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+              <bean parent="FieldDefinition" p:attributeName="priorCatalogSubgroup.catalogSubgroupCd" />
+              <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="CatalogSubgroup-lookupDefinition" parent="CatalogSubgroup-lookupDefinition-parentBean" />
+
+  <bean id="CatalogSubgroup-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Catalog Subgroup Lookup" >
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>catalogGroupCd</value>
+            <value>catalogSubgroupCd</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="catalogGroupCd" />
+        <bean parent="FieldDefinition" p:attributeName="catalogSubgroupCd" />
+        <bean parent="FieldDefinition" p:attributeName="catalogSubgroupDesc" />    
+        <bean parent="FieldDefinition" p:attributeName="priorCatalogSubgroupId" />
+        <bean parent="FieldDefinition" p:attributeName="priorCatalogSubgroup.catalogSubgroupCd" p:noLookup="true" />
+        <bean parent="FieldDefinition" p:attributeName="active" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="catalogGroupCd" />
+        <bean parent="FieldDefinition" p:attributeName="catalogGroup.catalogGroupNm" />
+        <bean parent="FieldDefinition" p:attributeName="catalogSubgroupCd" />
+        <bean parent="FieldDefinition" p:attributeName="catalogSubgroupDesc" />    
+        <bean parent="FieldDefinition" p:attributeName="priorCatalogSubgroup.catalogSubgroupCd" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+        <bean parent="FieldDefinition" p:attributeName="active" />
+      </list>
+    </property>
+  </bean>
+</beans>

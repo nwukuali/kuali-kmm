@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+
+	<!-- Global Settings -->
+	<param name="app.namespace">${app.namespace}</param>
+	<param name="version">${build.version}</param>
+	<param name="current.year">${current.year}</param>
+	<param name="build.environment">${build.environment}</param>
+	<param name="environment">${build.environment}</param>
+	<param name="production.environment.code">${production.environment.code}</param>
+	<param name="module.name">${module.name}</param>
+	<param name="application.url">${application.url}</param>
+	<param name="kmm.url">${application.url}</param>
+	<param name="rice.server.url">${rice.server.url}</param>
+	<param name="ksb.server.url">${ksb.server.url}</param>	
+	<param name="service.namespace">${service.namespace}</param>
+	<param name="spring.source.files">${spring.source.files}</param>
+	<param name="default.spring.file">${default.spring.file}</param>
+	<param name="rice.struts.message.resources">${default.struts.mm.message.resources}</param>
+	<param name="use.quartz.scheduling">${use.quartz.scheduling}</param>
+	<param name="dev.mode">${dev.mode}</param>
+	<param name="externalizable.images.url">${externalizable.images.url}</param>
+	<param name="kr.externalizable.images.url">${kr.externalizable.images.url}</param>	
+	<param name="kmm.externalizable.images.url">${kmm.externalizable.images.url}</param>
+	<param name="kr.url">${rice.url}</param>
+	<param name="kim.url">${kim.url}</param>	
+	<param name="javascript.files">${core.javascript.files}</param>	
+	<param name="css.files">${css.files}</param>
+	<param name="portal.javascript.files">${portal.javascript.files}</param>
+	<param name="portal.css.files">${portal.css.files}</param>
+	<param name="cart.css.files">${cart.css.files}</param>	 
+	 <param name="property.files">${property.files}</param>
+	<!-- Application Settings -->
+	<param name="data.dictionary.validate">${data.dictionary.validate}</param>	
+	<param name="shopping.url">${shopping.url}</param>
+	<param name="rice.portal.logout.redirectUrl">${rice.portal.logout.redirectUrl}</param>
+	<param name="shopping.portal.logout.redirectUrl">${shopping.portal.logout.redirectUrl}</param>
+	<param name="b2b.company.name">UCDavis</param>
+	<!-- Logging Settings -->
+	<param name="log4j.settings.path">${log4j.settings.path}</param>
+	<!-- Datasource Settings -->
+	<!-- These are located in security.xml in the external security directory -->	
+	<!-- External Configuration Work Settings -->
+	<param name="attachments.directory">${attachment.dir.location}</param>
+	<param name="attachments.pending.directory">${attachments.pending.directory}</param>
+	<param name="data.xml.root.location">${data.xml.root.location}</param>
+	<param name="external.temp.directory">${external.temp.directory}</param>
+	<param name="external.reports.directory">${external.reports.directory}</param>
+	<!-- MSU only properties -->
+	<param name="external.carousel.directory">${external.carousel.directory}</param>
+	<param name="external.einvoice.directory">${external.einvoice.directory}</param>
+	<param name="external.famis.directory">${external.famis.directory}</param>
+	<!-- Mail Settings -->
+	<param name="mail.debug">${mail.debug}</param>
+	<param name="mail.relay.server">${mail.relay.server}</param>
+	<param name="mail.smtp.host">${mail.smtp.host}</param>
+	<param name="mail.transport.protocol">${mail.transport.protocol}</param>
+	<param name="MailMessage.from">${MailMessage.from}</param>	
+	<param name="mail.shopping.from.address">${mail.shopping.from.address}</param>
+	<param name="KualiExceptionIncidentServiceImpl.REPORT_MAIL_LIST">${incident.mailing.list}</param>
+	<param name="kr.incident.from.address">${kr.incident.from.address}</param>
+	<!-- Transaction Manager Settings -->
+	<param name="transaction.timeout">${transaction.timeout}</param>	
+	<!-- Workflow Settings -->
+	<param name="workflow.url">${workflow.url}</param>
+	<param name="keystore.file">${external.security.directory}/rice.keystore</param>
+	<param name="keystore.alias">${keystore.alias}</param>
+	<param name="keystore.password">${keystore.password}</param>
+	<param name="encryption.key">${encryption.key}</param>	
+	<!-- Financial System Configuration -->
+	<param name="finance.system.name">${finance.system.name}</param>
+	<param name="finance.system.url">${finance.system.url}</param>
+	<param name="finance.system.rice.app">${finance.system.rice.app}</param>	
+	<param name="mm.module.url">${mm.module.url}</param>
+	<!-- Datasource properties -->
+	<param name="rice.custom.ojb.properties">${mm.custom.ojb.properties}</param>	
+	<param name="datasource.platform">${datasource.platform}</param>
+	<param name="datasource.ojb.platform">${datasource.ojb.platform}</param>
+	<param name="datasource.pool.maxSize">${datasource.pool.size}</param>
+	<!-- APP Server [TOMCAT/JBOSS] -->
+	<param name="server.platform">${server.platform}</param>
+	<param name="jboss.mode">${jboss.mode}</param>
+	<!-- JBOSS specific configuration settings -->
+	<param name="transactionManager.jndi.location">${transactionManager.jndi.location}</param>
+	<param name="userTransaction.jndi.location">${userTransaction.jndi.location}</param>
+	<param name="java.naming.factory.initial">${jboss.java.naming.factory.initial}</param>
+	<param name="java.naming.provider.url">${jboss.java.naming.provider.url}</param>
+	<param name="java.naming.factory.url.pkgs">${jboss.java.naming.factory.url.pkgs}</param>
+	<param name="rice.datasource.jndiName">${rice.datasource.jndiName}</param>
+	<param name="ksb.datasource.jndiName">${ksb.datasource.jndiName}</param>
+	<param name="kmm.datasource.jndiName">${kmm.datasource.jndiName}</param>
+	<!-- Quartz Configuration -->
+	<param name="batchEnabled">${batchEnabled}</param>
+	<param name="useJdbcJobStore">${useJdbcJobStore}</param>
+	<param name="batch.rmi.port">${batch.rmi.port}</param>
+	<param name="batch.rmi.service">${batch.rmi.service}</param>
+	<!-- KSB Quartz properties -->
+	<param name="useQuartzDatabase">${useQuartzDatabase}</param>
+	<!-- KSB Message Persistence properties -->
+	<param name="message.persistence">${message.persistence}</param>
+	<param name="message.delivery">${message.delivery}</param>
+	<!-- Catalog Images directory -->
+	<param name="catalog.images.dir">${catalog.images.dir}</param>					
+	<param name="staging.directory">${staging.directory}</param>
+	<param name="externalizable.static.content.url">http://AFS-SD-RS.ou.ad3.ucdavis.edu:8080/kmm-dev/static</param>
+	<param name="datasource.ojb.sequenceManager.className"></param>
+	<param name="kim.runmode">embedded</param>
+	<param name="kcb.runmode">embedded</param>
+	<param name="kew.runmode">embedded</param>
+	<param name="ken.runmode">embedded</param>
+	<param name="gl.implementation.type">${gl.implementation.type}</param>
+	<param name="kmm.gl.collector.dir">${kmm.gl.collector.dir}</param>
+	<!-- This property eases switching between JNDI and regular datasource configs -->
+	<param name="spring.mm.datasource.xml">${spring.mm.datasource.xml}</param>
+	<param name="spring.mm.rice.jta.xml">${spring.mm.rice.jta.xml}</param>
+	<param name="financial.system.origin.code">${financial.system.origin.code}</param>
+	<param name="lucene.index.storage.dir">${lucene.index.storage.dir}</param>
+	<param name="enableLuceneIndexing">${enableLuceneIndexing}</param>
+</config>

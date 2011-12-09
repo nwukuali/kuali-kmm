@@ -1,0 +1,66 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="StoresCatalogItemMarkupMaintenanceDocument" parent="StoresCatalogItemMarkupMaintenanceDocument-parentBean" />
+
+  <bean id="StoresCatalogItemMarkupMaintenanceDocument-parentBean" abstract="true" parent="MaintenanceDocumentEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.CatalogItemMarkup"
+        p:maintainableClass="org.kuali.rice.kns.maintenance.KualiMaintainableImpl"
+        p:documentTypeName="StoresCatalogItemMarkupMaintenanceDocument"
+        p:documentAuthorizerClass="org.kuali.rice.kns.document.authorization.MaintenanceDocumentAuthorizerBase" >
+    <property name="lockingKeys" >
+      <list>
+        <value>catalogItemMarkupId</value>
+      </list>
+    </property>
+    <property name="defaultExistenceChecks" >
+      <list>
+        <bean parent="ReferenceDefinition"
+              p:attributeName="markup"
+              p:attributeToHighlightOnFail="markupCd" />
+    	<bean parent="ReferenceDefinition"
+              p:attributeName="catalogItem"
+              p:attributeToHighlightOnFail="catalogItemId" />
+      </list>
+    </property>
+    <property name="workflowAttributes" >
+        <ref bean="StoresCatalogItemMarkupMaintenanceDocument-workflowAttributes" />
+    </property>
+    <property name="maintainableSections" >
+      <list>
+        <ref bean="StoresCatalogItemMarkupMaintenanceDocument-MainSection" />
+      </list>
+    </property>
+  </bean>
+
+ <!-- Maintenance Section Definitions -->
+  <bean id="StoresCatalogItemMarkupMaintenanceDocument-MainSection" parent="StoresCatalogItemMarkupMaintenanceDocument-MainSection-parentBean" />
+
+  <bean id="StoresCatalogItemMarkupMaintenanceDocument-MainSection-parentBean" abstract="true" parent="MaintainableSectionDefinition"
+        p:title="Edit Catalog Item Markup" >
+    <property name="maintainableItems" >
+      <list>  
+        <bean parent="MaintainableFieldDefinition"
+              p:name="catalogItemId"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="catalogItemMarkupId"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="markupCd"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="active"
+              p:defaultValue="true" />
+      </list>
+      
+    </property>
+  </bean>
+ <!-- workflow attributes -->
+  <bean id="StoresCatalogItemMarkupMaintenanceDocument-workflowAttributes" parent="StoresCatalogItemMarkupMaintenanceDocument-workflowAttributes-parentBean" />
+
+  <bean id="StoresCatalogItemMarkupMaintenanceDocument-workflowAttributes-parentBean" abstract="true" class="org.kuali.rice.kns.datadictionary.WorkflowAttributes" />
+</beans>

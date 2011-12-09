@@ -1,0 +1,57 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="StoresAddressTypeMaintenanceDocument" parent="StoresAddressTypeMaintenanceDocument-parentBean" />
+
+  <bean id="StoresAddressTypeMaintenanceDocument-parentBean" abstract="true" parent="MaintenanceDocumentEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.AddressType"
+        p:maintainableClass="org.kuali.rice.kns.maintenance.KualiMaintainableImpl"
+        p:documentTypeName="SADT"
+        p:documentAuthorizerClass="org.kuali.rice.kns.document.authorization.MaintenanceDocumentAuthorizerBase" >
+    <property name="lockingKeys" >
+      <list>
+        <value>addressTypeCode</value>
+      </list>
+    </property>
+    <property name="defaultExistenceChecks" >
+      <list>
+      </list>
+    </property>
+    <property name="workflowAttributes" >
+        <ref bean="StoresAddressTypeMaintenanceDocument-workflowAttributes" />
+    </property>
+    <property name="maintainableSections" >
+      <list>
+        <ref bean="StoresAddressTypeMaintenanceDocument-MainSection" />
+      </list>
+    </property>
+  </bean>
+
+ <!-- Maintenance Section Definitions -->
+  <bean id="StoresAddressTypeMaintenanceDocument-MainSection" parent="StoresAddressTypeMaintenanceDocument-MainSection-parentBean" />
+
+  <bean id="StoresAddressTypeMaintenanceDocument-MainSection-parentBean" abstract="true" parent="MaintainableSectionDefinition"
+        p:title="Edit Address Type" >
+    <property name="maintainableItems" >
+      <list>
+    
+        <bean parent="MaintainableFieldDefinition"
+              p:name="addressTypeCode"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="name"
+              p:required="true" />
+          <bean parent="MaintainableFieldDefinition"
+              p:name="active"
+              p:defaultValue="true" />
+      </list>
+    </property>
+  </bean>
+ <!-- workflow attributes -->
+  <bean id="StoresAddressTypeMaintenanceDocument-workflowAttributes" parent="StoresAddressTypeMaintenanceDocument-workflowAttributes-parentBean" />
+
+  <bean id="StoresAddressTypeMaintenanceDocument-workflowAttributes-parentBean" abstract="true" class="org.kuali.rice.kns.datadictionary.WorkflowAttributes" />
+</beans>

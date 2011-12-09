@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="DeliveryReason" parent="DeliveryReason-parentBean" />
+
+  <bean id="DeliveryReason-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.DeliveryReason"
+        p:titleAttribute="deliveryReasonCode"
+        p:objectLabel="DeliveryReason"
+        p:inquiryDefinition-ref="DeliveryReason-inquiryDefinition"
+        p:lookupDefinition-ref="DeliveryReason-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="DeliveryReason-active" />
+        <ref bean="DeliveryReason-deliveryReasonCode" />
+        <ref bean="DeliveryReason-deliveryReasonName" />
+        <ref bean="DeliveryReason-lastUpdateDate" />
+        <ref bean="DeliveryReason-versionNumber" />
+      </list>
+    </property>
+  </bean>
+
+  <bean id="DeliveryReason-active" parent="DeliveryReason-active-parentBean" />
+  <bean id="DeliveryReason-active-parentBean" abstract="true" parent="GenericAttributes-activeIndicator" 
+        p:name="active"
+        p:label="Active Indicator"
+        p:shortLabel="Active Indicator"
+        p:required="false" />
+
+  <bean id="DeliveryReason-deliveryReasonCode" parent="DeliveryReason-deliveryReasonCode-parentBean" />
+  <bean id="DeliveryReason-deliveryReasonCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="deliveryReasonCode"
+        p:forceUppercase="true"
+        p:label="Delivery Reason Code"
+        p:shortLabel="Delivery Reason Code"
+        p:maxLength="4"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AlphaNumericValidationPattern"/>
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="4" />
+    </property>
+  </bean>
+
+  <bean id="DeliveryReason-deliveryReasonName" parent="DeliveryReason-deliveryReasonName-parentBean" />
+  <bean id="DeliveryReason-deliveryReasonName-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="deliveryReasonName"
+        p:forceUppercase="true"
+        p:label="Delivery Reason Name"
+        p:shortLabel="Delivery Reason Name"
+        p:maxLength="45"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="45" />
+    </property>
+  </bean>
+
+  <bean id="DeliveryReason-lastUpdateDate" parent="DeliveryReason-lastUpdateDate-parentBean" />
+  <bean id="DeliveryReason-lastUpdateDate-parentBean" parent="GenericAttributes-genericTimestamp" abstract="true"
+        p:name="lastUpdateDate"
+        p:forceUppercase="false"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:maxLength="10"
+        p:required="false" >
+  </bean>
+
+
+  <bean id="DeliveryReason-versionNumber" parent="DeliveryReason-versionNumber-parentBean" />
+  <bean id="DeliveryReason-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="DeliveryReason-inquiryDefinition" parent="DeliveryReason-inquiryDefinition-parentBean" />
+
+  <bean id="DeliveryReason-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Delivery Reason Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Delivery Reason Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="deliveryReasonCode" />
+              <bean parent="FieldDefinition" p:attributeName="deliveryReasonName" />
+              <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+              <bean parent="FieldDefinition" p:attributeName="active" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="DeliveryReason-lookupDefinition" parent="DeliveryReason-lookupDefinition-parentBean" />
+
+  <bean id="DeliveryReason-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Delivery Reason Lookup" >
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>deliveryReasonCode</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>        
+        <bean parent="FieldDefinition" p:attributeName="deliveryReasonCode" />
+        <bean parent="FieldDefinition" p:attributeName="deliveryReasonName" />
+        <bean parent="FieldDefinition" p:attributeName="active" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="deliveryReasonCode" />
+        <bean parent="FieldDefinition" p:attributeName="deliveryReasonName" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+        <bean parent="FieldDefinition" p:attributeName="active" />
+      </list>
+    </property>
+  </bean>
+
+</beans>

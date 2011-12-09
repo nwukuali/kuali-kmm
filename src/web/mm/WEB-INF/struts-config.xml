@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright 2007-2009 The Kuali Foundation
+ 
+ Licensed under the Educational Community License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ 
+ http://www.opensource.org/licenses/ecl2.php
+ 
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN" "http://jakarta.apache.org/struts/dtds/struts-config_1_1.dtd">
+
+<struts-config>
+    <data-sources />
+  
+    <form-beans >	   
+        <form-bean name="KualiForm" type="org.kuali.rice.kns.web.struts.form.KualiForm" />
+        <form-bean name="LookupForm" type="org.kuali.rice.kns.web.struts.form.LookupForm" />
+        <form-bean name="ShoppingExceptionIncidentForm" type="org.kuali.ext.mm.cart.web.struts.ShopCartExceptionIncidentForm" />
+        <form-bean name="ShopCartHomeForm" type="org.kuali.ext.mm.cart.web.struts.ShopCartHomeForm" />
+        <form-bean name="ItemForm" type="org.kuali.ext.mm.cart.web.struts.ItemForm" />
+        <form-bean name="ViewCartForm" type="org.kuali.ext.mm.cart.web.struts.ViewCartForm" />
+        <form-bean name="SavedCartsForm" type="org.kuali.ext.mm.cart.web.struts.SavedCartsForm" />
+        <form-bean name="CheckoutForm" type="org.kuali.ext.mm.cart.web.struts.CheckoutForm" />
+        <form-bean name="BrowseForm" type="org.kuali.ext.mm.cart.web.struts.BrowseForm" />
+        <form-bean name="BrowseCatalogForm" type="org.kuali.ext.mm.cart.web.struts.BrowseCatalogForm" />
+        <form-bean name="SearchForm" type="org.kuali.ext.mm.cart.web.struts.SearchForm" />
+        <form-bean name="FavoritesForm" type="org.kuali.ext.mm.cart.web.struts.FavoritesForm" />
+        <form-bean name="LoginForm" type="org.kuali.ext.mm.cart.web.struts.LoginForm" />
+        <form-bean name="SettingsForm" type="org.kuali.ext.mm.cart.web.struts.SettingsForm" />
+        <form-bean name="ShopCartOrdersForm" type="org.kuali.ext.mm.cart.web.struts.ShopCartOrdersForm" />
+        <form-bean name="ShopCartOrderCompletionForm" type="org.kuali.ext.mm.cart.web.struts.ShopCartOrderCompletionForm" />
+        <form-bean name="ShopCartOrderHistoryForm" type="org.kuali.ext.mm.cart.web.struts.ShopCartOrderHistoryForm" />
+        <form-bean name="RecurringForm" type="org.kuali.ext.mm.cart.web.struts.RecurringForm" />
+        <form-bean name="ProfileForm" type="org.kuali.ext.mm.cart.web.struts.ProfileForm" />
+        <form-bean name="RegisterForm" type="org.kuali.ext.mm.cart.web.struts.RegisterForm" />
+	    <form-bean name="PunchOutForm" type="org.kuali.ext.mm.cart.web.struts.PunchOutForm" />
+	    <form-bean name="PunchOutReturnForm" type="org.kuali.ext.mm.cart.web.struts.PunchOutReturnForm" />
+        <form-bean name="ShopCartErrorForm" type="org.kuali.ext.mm.cart.web.struts.ShopCartErrorForm" />
+        <form-bean name="ShopCartLogoutForm" type="org.kuali.ext.mm.cart.web.struts.ShopCartLogoutForm" />
+        <form-bean name="FrontPageForm" type="org.kuali.ext.mm.cart.web.struts.FrontPageForm" />
+    </form-beans>
+    
+    <global-exceptions>
+		<!-- Begin required KNS exceptions -->
+		<exception type="java.lang.Throwable"
+			handler="org.kuali.rice.kns.web.struts.pojo.StrutsExceptionIncidentHandler"
+			key="meaningless" />
+		<!-- End required KNS exceptions -->
+	</global-exceptions>
+    
+    <global-forwards >
+        <forward name="save" path="/index.jsp" redirect="true" />
+        <forward name="cancel" path="/index.jsp" redirect="true" />
+        <forward name="close" path="/index.jsp" redirect="true" />
+        <forward name="portal" path="/index.jsp" redirect="true" />
+        <forward name="route_report" path="/WEB-INF/jsp/RoutingReportForward.jsp"/>
+        <forward name="updateTextArea" path="/WEB-INF/jsp/TextArea.jsp" />
+<!--        <forward name="exceptionIncidentHandler" path="/kr/kualiExceptionIncidentReport.do" contextRelative="true"/>-->
+        <forward name="exceptionIncidentHandler" path="/kualiExceptionIncidentReport.do" />
+        <forward name="systemError" path="/mm/systemError.do" redirect="true" contextRelative="true"/>
+    </global-forwards>
+
+    <action-mappings>
+    	<action path="/logout" name="ShopCartLogoutForm" type="org.kuali.ext.mm.cart.web.struts.ShopCartLogoutAction" >
+    		<forward name="basic" path="/WEB-INF/jsp/logout.jsp"  />
+    	</action>
+    
+        <action path="/kualiExceptionIncidentReport" name="ShoppingExceptionIncidentForm" type="org.kuali.ext.mm.cart.web.struts.ShopCartExceptionIncidentAction" scope="request">
+            <forward name="basic" path="/kr/WEB-INF/jsp/KualiExceptionIncident.jsp" contextRelative="true" />
+        </action>
+        
+        <action path="/portal" name="KualiForm" type="org.kuali.rice.kns.web.struts.action.KualiSimpleAction">
+            <forward name="basic" path="/index.jsp" />
+        </action>
+        <action path="/index" name="KualiForm" type="org.kuali.rice.kns.web.struts.action.KualiSimpleAction">
+            <forward name="basic" path="/index.jsp" />
+        </action>
+        <action path="/viewCart" name="ViewCartForm" input="/WEB-INF/jsp/viewCart.jsp" type="org.kuali.ext.mm.cart.web.struts.ViewCartAction" 
+        	scope="request" parameter="methodToCall" validate="true" attribute="KualiForm">
+            <forward name="basic" path="/WEB-INF/jsp/viewCart.jsp" />
+        </action>  
+        <action path="/savedCarts" name="SavedCartsForm" type="org.kuali.ext.mm.cart.web.struts.SavedCartsAction" 
+        	scope="request" parameter="methodToCall" validate="true" attribute="KualiForm">
+            <forward name="basic" path="/WEB-INF/jsp/savedCarts.jsp" />
+        </action>
+        <action path="/checkout" name="CheckoutForm" type="org.kuali.ext.mm.cart.web.struts.CheckoutAction" 
+        	scope="request" parameter="methodToCall" validate="true" attribute="KualiForm">
+            <forward name="basic" path="/WEB-INF/jsp/checkout.jsp" />
+        </action>
+        <action path="/home" name="ShopCartHomeForm" type="org.kuali.ext.mm.cart.web.struts.ShopCartHomeAction" 
+        	scope="request" parameter="methodToCall" validate="true" attribute="KualiForm">
+            <forward name="basic" path="/WEB-INF/jsp/home.jsp" />
+        </action>
+        <action path="/item" name="ItemForm" type="org.kuali.ext.mm.cart.web.struts.ItemAction" 
+        	scope="request" parameter="methodToCall" validate="true" attribute="KualiForm">
+            <forward name="basic" path="/WEB-INF/jsp/item.jsp" />
+        </action>
+        <action path="/browse" name="BrowseForm" type="org.kuali.ext.mm.cart.web.struts.BrowseAction" 
+        	scope="request" parameter="methodToCall" validate="true" attribute="KualiForm">
+            <forward name="basic" path="/WEB-INF/jsp/browse.jsp" />
+        </action>
+        <action path="/browseCatalog" name="BrowseCatalogForm" type="org.kuali.ext.mm.cart.web.struts.BrowseCatalogAction" 
+        	scope="request" parameter="methodToCall" validate="true" attribute="KualiForm">
+            <forward name="basic" path="/WEB-INF/jsp/browseCatalog.jsp" />
+        </action>
+        <action path="/search" name="SearchForm" type="org.kuali.ext.mm.cart.web.struts.SearchAction" 
+        	scope="request" parameter="methodToCall" validate="true" attribute="KualiForm">
+            <forward name="basic" path="/WEB-INF/jsp/search.jsp" />
+        </action>
+        <action path="/favorites" name="FavoritesForm" type="org.kuali.ext.mm.cart.web.struts.FavoritesAction" 
+        	scope="request" parameter="methodToCall" validate="true" attribute="KualiForm">
+            <forward name="basic" path="/WEB-INF/jsp/favorites.jsp" />
+        </action>
+        <action path="/login" name="LoginForm" type="org.kuali.ext.mm.cart.web.struts.LoginAction" 
+        	scope="request" parameter="methodToCall" validate="true" attribute="KualiForm">
+            <forward name="basic" path="/WEB-INF/jsp/login.jsp" />
+        </action>
+        <action path="/settings" name="SettingsForm" type="org.kuali.ext.mm.cart.web.struts.SettingsAction" 
+        	scope="request" parameter="methodToCall" validate="true" attribute="KualiForm">
+            <forward name="basic" path="/WEB-INF/jsp/settings.jsp" />
+        </action>
+        <action path="/profile" name="ProfileForm" type="org.kuali.ext.mm.cart.web.struts.ProfileAction" 
+        	scope="request" parameter="methodToCall" validate="true" attribute="KualiForm">
+            <forward name="basic" path="/WEB-INF/jsp/profile.jsp" />
+        </action>
+        <action path="/register" name="RegisterForm" type="org.kuali.ext.mm.cart.web.struts.RegisterAction" 
+        	scope="request" parameter="methodToCall" validate="true" attribute="KualiForm">
+            <forward name="basic" path="/WEB-INF/jsp/register.jsp" />
+        </action>
+        <action path="/orders" name="ShopCartOrdersForm" type="org.kuali.ext.mm.cart.web.struts.ShopCartOrdersAction" 
+        	scope="request" parameter="methodToCall" validate="true" attribute="KualiForm">
+            <forward name="basic" path="/WEB-INF/jsp/orders.jsp" />
+        </action>
+        <action path="/orderCompletion" name="ShopCartOrderCompletionForm" type="org.kuali.ext.mm.cart.web.struts.ShopCartOrderCompletionAction" 
+        	scope="request" parameter="methodToCall" validate="true" attribute="KualiForm">
+            <forward name="basic" path="/WEB-INF/jsp/orderCompletion.jsp" />
+        </action>
+        <action path="/orderSummary" name="ShopCartOrdersForm" type="org.kuali.ext.mm.cart.web.struts.ShopCartOrdersAction" 
+        	scope="request" parameter="methodToCall" validate="true" attribute="KualiForm">
+            <forward name="basic" path="/WEB-INF/jsp/orderSummary.jsp" />
+        </action>
+        <action path="/orderHistory" name="ShopCartOrderHistoryForm" type="org.kuali.ext.mm.cart.web.struts.ShopCartOrderHistoryAction" 
+        	scope="request" parameter="methodToCall" validate="true" attribute="KualiForm">
+            <forward name="basic" path="/WEB-INF/jsp/orderHistory.jsp" />
+        </action>
+        <action path="/recurring" name="RecurringForm" type="org.kuali.ext.mm.cart.web.struts.RecurringAction" 
+        	scope="request" parameter="methodToCall" validate="true" attribute="KualiForm">
+            <forward name="basic" path="/WEB-INF/jsp/recurring.jsp" />
+        </action>
+        <action path="/punchOut" name="PunchOutForm" type="org.kuali.ext.mm.cart.web.struts.PunchOutAction" 
+        	scope="request" parameter="methodToCall" validate="true" attribute="KualiForm">
+            <forward name="basic" path="/WEB-INF/jsp/punchOut.jsp" />
+        </action>
+        <action path="/punchOutReturn" name="PunchOutReturnForm" type="org.kuali.ext.mm.cart.web.struts.PunchOutReturnAction" 
+        	scope="request" parameter="methodToCall" validate="true" attribute="KualiForm">
+            <forward name="basic" path="/WEB-INF/jsp/punchOutReturn.jsp" />
+        </action>
+        <action path="/frontPage" name="FrontPageForm" type="org.kuali.ext.mm.cart.web.struts.FrontPageAction" 
+        	scope="request" parameter="methodToCall" validate="true" attribute="KualiForm">
+            <forward name="basic" path="/WEB-INF/jsp/frontPage.jsp" />
+        </action>
+        <action path="/systemError" name="ShopCartErrorForm" type="org.kuali.ext.mm.cart.web.struts.ShopCartErrorAction" 
+        	scope="request" parameter="methodToCall" validate="true" attribute="KualiForm">
+            <forward name="basic" path="/WEB-INF/jsp/shopCartError.jsp" />
+        </action>
+        
+        
+        <action path="/B2BReceive" name="ShopCartHomeForm" type="org.kuali.ext.mm.cart.web.struts.B2BReceiveAction" 
+        	scope="request" parameter="methodToCall" validate="true" attribute="KualiForm">
+            <forward name="basic" path="/WEB-INF/jsp/home.jsp" />
+        </action>
+
+    </action-mappings>
+    
+    <controller processorClass="org.kuali.rice.kns.web.struts.action.KualiRequestProcessor" />
+    <plug-in className="org.kuali.rice.kns.web.struts.pojo.PojoPlugin" />
+</struts-config>
+

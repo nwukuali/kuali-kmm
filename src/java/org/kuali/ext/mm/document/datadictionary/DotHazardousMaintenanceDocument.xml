@@ -1,0 +1,62 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="StoresDotHazardousMaintenanceDocument" parent="StoresDotHazardousMaintenanceDocument-parentBean" />
+
+  <bean id="StoresDotHazardousMaintenanceDocument-parentBean" abstract="true" parent="MaintenanceDocumentEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.DotHazardous"
+        p:maintainableClass="org.kuali.rice.kns.maintenance.KualiMaintainableImpl"
+        p:documentTypeName="SDHZ"
+        p:documentAuthorizerClass="org.kuali.rice.kns.document.authorization.MaintenanceDocumentAuthorizerBase" >
+    <property name="lockingKeys" >
+      <list>
+        <value>dotHazardousCd</value>
+      </list>
+    </property>
+    <property name="defaultExistenceChecks" >
+      <list>
+        <bean parent="ReferenceDefinition"
+              p:attributeName="driverManifest"
+              p:attributeToHighlightOnFail="driverManifestCd" />
+      </list>
+    </property>
+    <property name="workflowAttributes" >
+        <ref bean="StoresDotHazardousMaintenanceDocument-workflowAttributes" />
+    </property>
+    <property name="maintainableSections" >
+      <list>
+        <ref bean="StoresDotHazardousMaintenanceDocument-MainSection" />
+      </list>
+    </property>
+  </bean>
+
+ <!-- Maintenance Section Definitions -->
+  <bean id="StoresDotHazardousMaintenanceDocument-MainSection" parent="StoresDotHazardousMaintenanceDocument-MainSection-parentBean" />
+
+  <bean id="StoresDotHazardousMaintenanceDocument-MainSection-parentBean" abstract="true" parent="MaintainableSectionDefinition"
+        p:title="Edit DOT Hazardous" >
+    <property name="maintainableItems" >
+      <list>
+        <bean parent="MaintainableFieldDefinition"
+              p:name="dotHazardousCd"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="dotHazardousName"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="driverManifestCd"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="active"
+              p:defaultValue="true" />
+      </list>
+    </property>
+  </bean>
+ <!-- workflow attributes -->
+  <bean id="StoresDotHazardousMaintenanceDocument-workflowAttributes" parent="StoresDotHazardousMaintenanceDocument-workflowAttributes-parentBean" />
+
+  <bean id="StoresDotHazardousMaintenanceDocument-workflowAttributes-parentBean" abstract="true" class="org.kuali.rice.kns.datadictionary.WorkflowAttributes" />
+</beans>

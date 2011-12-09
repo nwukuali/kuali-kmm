@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>     
+    <bean id="riceDataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="resourceRef" value="false" />
+		<property name="jndiTemplate" ref="jndiTemplate" />
+		<property name="expectedType" value="javax.sql.DataSource" />
+		<property name="jndiName" value="${rice.datasource.jndiName}"></property>
+	</bean>
+	<bean id="ksbDataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="resourceRef" value="false" />
+		<property name="jndiTemplate" ref="jndiTemplate" />
+		<property name="expectedType" value="javax.sql.DataSource" />
+		<property name="jndiName" value="${ksb.datasource.jndiName}"></property>
+	</bean>
+	<bean id="kmmDataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="resourceRef" value="false" />
+		<property name="jndiTemplate" ref="jndiTemplate" />
+		<property name="expectedType" value="javax.sql.DataSource" />
+		<property name="jndiName" value="${kmm.datasource.jndiName}"></property>
+	</bean>	
+	<bean id="riceNonTransactionalDataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="resourceRef" value="false" />
+		<property name="jndiTemplate" ref="jndiTemplate" />
+		<property name="expectedType" value="javax.sql.DataSource" />
+		<property name="jndiName" value="${rice.datasource.jndiName}"></property>
+	</bean>
+
+	<bean id="jndiTemplate" class="org.springframework.jndi.JndiTemplate">
+		<property name="environment">
+			<props>
+				<prop key="java.naming.factory.initial">${java.naming.factory.initial}</prop>
+				<prop key="java.naming.provider.url">${java.naming.provider.url}</prop>
+				<prop key="java.naming.factory.url.pkgs">${java.naming.factory.url.pkgs}</prop>
+			</props>
+		</property>
+	</bean>
+	</beans>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+                           http://www.springframework.org/schema/tx
+                           http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+                           http://www.springframework.org/schema/aop
+                           http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+    <bean id="financialSystemAdaptorFactory" class="org.kuali.ext.mm.integration.kfs.KfsSystemAdaptorFactory"/>    
+    <bean id="parentServiceName" class="org.kuali.ext.mm.integration.ServiceNameInfo" abstract="true" 
+    	p:serviceNameSpaceURI="http://kuali.org/kfs" />
+    <bean id="financialSystemConfiguration" class="org.kuali.ext.mm.integration.kfs.KfsSystemConfiguration">
+		<!-- Financial system name , default is KFS -->
+		<property name="appName" value="${finance.system.name}" />
+		<!-- Financial system web url -->
+		<property name="appUrl" value="${finance.system.url}" />
+		<!-- Financial system rice app name by default it is "kr" -->
+		<property name="riceAppName" value="${finance.system.rice.app}" />
+		<property name="financialSystemOriginCode" value="${financial.system.origin.code}" />
+		
+		<property name="serviceNames">
+			<list>
+				<bean parent="parentServiceName" p:name="financialBusinessObjectService" p:localServiceName="kfsBusinessObjectService" />
+				<bean parent="parentServiceName" p:name="financialChartService" p:localServiceName="kfsChartService" />
+				<bean parent="parentServiceName" p:name="financialOrganizationService" p:localServiceName="kfsOrganizationService" />
+				<bean parent="parentServiceName" p:name="financialAccountService" p:localServiceName="kfsAccountService" />
+				<bean parent="parentServiceName" p:name="financialSubAccountService" p:localServiceName="kfsSubAccountService" />
+				<bean parent="parentServiceName" p:name="financialObjectCodeService" p:localServiceName="kfsObjectCodeService" />
+				<bean parent="parentServiceName" p:name="financialProjectCodeService" p:localServiceName="kfsProjectCodeService" />
+				<bean parent="parentServiceName" p:name="financialSubObjectCodeService" p:localServiceName="kfsSubObjectCodeService" />
+				<bean parent="parentServiceName" p:name="financialLocationService" p:localServiceName="kfsBusinessObjectService" />
+				<bean parent="parentServiceName" p:name="financialDocumentService" p:localServiceName="kfsDocumentService" />
+				<bean parent="parentServiceName" p:name="financialTaxService" p:localServiceName="kfsTaxService" />
+				<bean parent="parentServiceName" p:name="financialUniversityDateService" p:localServiceName="kfsUniversityDateService" />
+				<bean parent="parentServiceName" p:name="financialVendorService" p:localServiceName="kfsVendorService" />					
+				<bean parent="parentServiceName" p:name="financialGeneralLedgerPendingEntryService" p:localServiceName="kfsGeneralLedgerPendingEntryService" />				
+				<bean parent="parentServiceName" p:name="financialCapitalAssetService" p:localServiceName="kfsAssetService" />
+				<bean parent="parentServiceName" p:name="financialParameterService" p:localServiceName="kfsParameterService" />
+				<bean parent="parentServiceName" p:name="financialPurchaseOrderService" p:localServiceName="kfsPurchaseOrderService" />
+				<bean parent="parentServiceName" p:name="financialRequisitionService" p:localServiceName="kfsRequisitionService" />
+				<bean parent="parentServiceName" p:name="financialGeneralLedgerService" p:localServiceName="kfsGeneralLedgerService" />
+				
+			</list>
+		</property>
+		<property name="integrationClassMap">
+            <map>
+                <entry key="org.kuali.ext.mm.integration.coa.businessobject.FinancialChart" value="org.kuali.kfs.coa.businessobject.Chart" />
+                <entry key="org.kuali.ext.mm.integration.coa.businessobject.FinancialOrganization" value="org.kuali.kfs.coa.businessobject.Organization" />
+                <entry key="org.kuali.ext.mm.integration.coa.businessobject.FinancialAccount" value="org.kuali.kfs.coa.businessobject.Account" />
+				<entry key="org.kuali.ext.mm.integration.coa.businessobject.FinancialObjectCode" value="org.kuali.kfs.coa.businessobject.ObjectCode" />
+				<entry key="org.kuali.ext.mm.integration.coa.businessobject.FinancialProjectCode" value="org.kuali.kfs.coa.businessobject.ProjectCode" />
+				<entry key="org.kuali.ext.mm.integration.coa.businessobject.FinancialSubAccount" value="org.kuali.kfs.coa.businessobject.SubAccount" />
+				<entry key="org.kuali.ext.mm.integration.coa.businessobject.FinancialSubObjectCode" value="org.kuali.kfs.coa.businessobject.SubObjectCode" />				
+				<entry key="org.kuali.ext.mm.integration.sys.businessobject.FinancialBuilding" value="org.kuali.kfs.sys.businessobject.Building" />
+				<entry key="org.kuali.ext.mm.integration.sys.businessobject.FinancialRoom" value="org.kuali.kfs.sys.businessobject.Room" />				
+				<entry key="org.kuali.ext.mm.integration.vnd.businessobject.FinancialVendorDetail" value="org.kuali.kfs.vnd.businessobject.VendorDetail" />
+				<entry key="org.kuali.ext.mm.integration.vnd.businessobject.FinancialVendorContract" value="org.kuali.kfs.vnd.businessobject.VendorContract" />
+				<entry key="org.kuali.ext.mm.integration.cam.businessobject.FinancialAsset" value="org.kuali.kfs.module.cam.businessobject.Asset" />								
+				<entry key="org.kuali.ext.mm.integration.cam.businessobject.FinancialAssetType" value="org.kuali.kfs.module.cam.businessobject.AssetType" />
+				<entry key="org.kuali.ext.mm.integration.sys.businessobject.FinancialUnitOfMeasure" value="org.kuali.kfs.sys.businessobject.UnitOfMeasure" />
+            </map>
+        </property>
+        <property name="financialSystemAdaptorFactory" ref="financialSystemAdaptorFactory" />
+	</bean>
+</beans>

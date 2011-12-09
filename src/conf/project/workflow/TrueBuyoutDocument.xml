@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="ns:workflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="ns:workflow resource:WorkflowData">
+<documentTypes xmlns="ns:workflow/DocumentType" xsi:schemaLocation="ns:workflow/DocumentType resource:DocumentType">
+<documentType>
+  <name>STBO</name>
+  <label>True Buyout Completion Document</label>
+  <parent>SSTD</parent>     
+  <docHandler>${kmm.url}/trueBuyout.do?methodToCall=docHandler</docHandler>
+  <routePaths>
+        <routePath>
+          <start name="AdHoc"  nextNode="TrueBuyoutReview"/>
+          <requests name="TrueBuyoutReview"/>
+        </routePath>
+      </routePaths>
+      <routeNodes>
+        <start name="AdHoc" />
+        <role name="TrueBuyoutReview">
+          <qualifierResolverClass>org.kuali.rice.kns.workflow.attribute.DataDictionaryQualifierResolver</qualifierResolverClass>
+          <activationType>P</activationType>
+        </role>
+      </routeNodes>  	
+</documentType>
+ </documentTypes>
+</data>

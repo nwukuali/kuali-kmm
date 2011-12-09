@@ -1,0 +1,116 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="StoresMarkupMaintenanceDocument" parent="StoresMarkupMaintenanceDocument-parentBean" />
+
+  <bean id="StoresMarkupMaintenanceDocument-parentBean" abstract="true" parent="MaintenanceDocumentEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.Markup"
+        p:maintainableClass="org.kuali.ext.mm.service.impl.MarkupMaintainableImpl"
+        p:documentTypeName="SMUP"
+        p:documentAuthorizerClass="org.kuali.rice.kns.document.authorization.MaintenanceDocumentAuthorizerBase"
+        p:documentPresentationControllerClass="org.kuali.ext.mm.document.authorization.MarkupPresentationController" >        
+    <property name="businessRulesClass" value="org.kuali.ext.mm.document.validation.impl.MarkupRule" />
+    <property name="lockingKeys" >
+      <list>
+        <value>markupCd</value>
+      </list>
+    </property>
+    <property name="defaultExistenceChecks" >
+      <list>
+      	<bean parent="ReferenceDefinition"
+              p:attributeName="markupType"
+              p:attributeToHighlightOnFail="markupTypeCd" />
+        <bean parent="ReferenceDefinition"
+              p:attributeName="warehouse"
+              p:attributeToHighlightOnFail="warehouseCd" />
+        <bean parent="ReferenceDefinition"
+              p:attributeName="catalogGroup"
+              p:attributeToHighlightOnFail="catalogGroupCode" />
+        <bean parent="ReferenceDefinition"
+              p:attributeName="catalogSubgroup"
+              p:attributeToHighlightOnFail="catalogSubgroup.catalogSubgroupCd" />
+      </list>
+    </property>
+    <property name="workflowAttributes" >
+        <ref bean="StoresMarkupMaintenanceDocument-workflowAttributes" />
+    </property>
+    <property name="maintainableSections" >
+      <list>
+        <ref bean="StoresMarkupMaintenanceDocument-MainSection" />
+      </list>
+    </property>
+  </bean>
+
+ <!-- Maintenance Section Definitions -->
+  <bean id="StoresMarkupMaintenanceDocument-MainSection" parent="StoresMarkupMaintenanceDocument-MainSection-parentBean" />
+
+  <bean id="StoresMarkupMaintenanceDocument-MainSection-parentBean" abstract="true" parent="MaintainableSectionDefinition"
+        p:title="Edit Markup" >
+    <property name="maintainableItems" >
+      <list>
+        <bean parent="MaintainableFieldDefinition"
+              p:name="markupCd"
+              p:required="true" />
+<!--        <bean parent="MaintainableFieldDefinition"-->
+<!--              p:name="markupDesc"-->
+<!--              p:required="true" />-->
+        <bean parent="MaintainableFieldDefinition"
+              p:name="markupNm"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="warehouseCd"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="markupTypeCd"
+              p:required="true" 
+              p:lookupReadOnly="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="markupCoaCd"
+              p:required="false" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="markupOrg"
+              p:required="false" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="markupAccountNbr"
+              p:required="false" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="catalogGroupCode"
+              p:required="false" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="catalogSubgroupId"
+              p:required="false" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="catalogSubgroup.catalogSubgroupCd"
+              p:required="false" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="markupFixed"
+              p:required="false" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="markupRt"
+              p:required="false" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="markupBeginDt"
+              p:required="false" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="markupEndDt"
+              p:required="false" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="markupFromQty"
+              p:required="false" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="markupToQty"
+              p:required="false" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="active"
+              p:defaultValue="true" />
+      </list>
+    </property>
+  </bean>
+ <!-- workflow attributes -->
+  <bean id="StoresMarkupMaintenanceDocument-workflowAttributes" parent="StoresMarkupMaintenanceDocument-workflowAttributes-parentBean" />
+
+  <bean id="StoresMarkupMaintenanceDocument-workflowAttributes-parentBean" abstract="true" class="org.kuali.rice.kns.datadictionary.WorkflowAttributes" />
+</beans>

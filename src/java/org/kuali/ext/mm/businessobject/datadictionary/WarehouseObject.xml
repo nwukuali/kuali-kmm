@@ -1,0 +1,276 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="WarehouseObject" parent="WarehouseObject-parentBean" />
+
+  <bean id="WarehouseObject-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.WarehouseObject"
+        p:titleAttribute="Warehouse Object"
+        p:objectLabel="Warehouse Object"
+        p:inquiryDefinition-ref="WarehouseObject-inquiryDefinition"
+        p:lookupDefinition-ref="WarehouseObject-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="WarehouseObject-active" />
+        <ref bean="WarehouseObject-warehouseObjectId" />
+        <ref bean="WarehouseObject-warehouseCd" />
+        <ref bean="WarehouseObject-warehouseObjectTypeCd" />
+        <ref bean="WarehouseObject-finCoaCd" />
+        <ref bean="WarehouseObject-finObjectCd" />
+        <ref bean="WarehouseObject-finSubObjCd" />
+        <ref bean="WarehouseObject-offsetObjectCd" />
+        <ref bean="WarehouseObject-offsetSubObjCd" />
+        <ref bean="WarehouseObject-lastUpdateDate" />
+        <ref bean="WarehouseObject-versionNumber" />
+      </list>
+    </property>
+     <property name="relationships">
+    	<list>
+    		<bean parent="RelationshipDefinition">
+    			<property name="objectAttributeName"
+    				value="financialChart" />
+    			<property name="primitiveAttributes">
+    				<list>
+    					<bean parent="PrimitiveAttributeDefinition"
+    						p:sourceName="finCoaCd" p:targetName="chartOfAccountsCode" />
+    				</list>
+    			</property>
+    		</bean>
+    		<bean parent="RelationshipDefinition">
+    			<property name="objectAttributeName"
+    				value="financialObjectCode" />
+    			<property name="primitiveAttributes">
+    				<list>
+    					<bean parent="PrimitiveAttributeDefinition"
+    						p:sourceName="finCoaCd" p:targetName="chartOfAccountsCode" />
+    					<bean parent="PrimitiveAttributeDefinition"
+    						p:sourceName="currentFiscalYear" p:targetName="universityFiscalYear" />
+    					<bean parent="PrimitiveAttributeDefinition"
+    						p:sourceName="finObjectCd" p:targetName="financialObjectCode" />
+    				</list>
+    			</property>
+    		</bean>
+    		<bean parent="RelationshipDefinition">
+    			<property name="objectAttributeName"
+    				value="financialOffsetObjectCode" />
+    			<property name="primitiveAttributes">
+    				<list>
+    					<bean parent="PrimitiveAttributeDefinition"
+    						p:sourceName="finCoaCd" p:targetName="chartOfAccountsCode" />
+    					<bean parent="PrimitiveAttributeDefinition"
+    						p:sourceName="currentFiscalYear" p:targetName="universityFiscalYear" />
+    					<bean parent="PrimitiveAttributeDefinition"
+    						p:sourceName="offsetObjectCd" p:targetName="financialObjectCode" />
+    				</list>
+    			</property>
+    		</bean>
+    	</list>
+    </property>
+  </bean>
+
+  <bean id="WarehouseObject-warehouseObjectId" parent="WarehouseObject-warehouseObjectId-parentBean" />
+  <bean id="WarehouseObject-warehouseObjectId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="warehouseObjectId"
+        p:forceUppercase="false"
+        p:label="Warehouse Object Id"
+        p:shortLabel="Warehouse Object Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="WarehouseObject-active" parent="WarehouseObject-active-parentBean" />
+  <bean id="WarehouseObject-active-parentBean" abstract="true" parent="GenericAttributes-activeIndicator" 
+        p:name="active"
+        p:label="Active Indicator"
+        p:shortLabel="Active"
+        p:required="false" />
+
+  <bean id="WarehouseObject-warehouseObjectTypeCd" parent="WarehouseObject-warehouseObjectTypeCd-parentBean" />
+  <bean id="WarehouseObject-warehouseObjectTypeCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="warehouseObjectTypeCd"
+        p:forceUppercase="true"        
+        p:label="Warehouse Object Type Code"
+        p:shortLabel="Warehouse Object Type Code"
+        p:maxLength="4"        
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AlphaNumericValidationPattern"/>
+    </property>
+    <property name="control" >
+      <bean parent="SelectControlDefinition" 
+      	p:valuesFinderClass="org.kuali.rice.kns.lookup.keyvalues.PersistableBusinessObjectValuesFinder"
+      	p:businessObjectClass="org.kuali.ext.mm.businessobject.WarehouseObjectType" 
+      	p:keyAttribute="objectTypeCd"
+      	p:labelAttribute="name"
+      	p:includeKeyInLabel="true" />
+    </property>        
+  </bean>        
+
+  <bean id="WarehouseObject-warehouseCd" parent="WarehouseObject-warehouseCd-parentBean" />
+  <bean id="WarehouseObject-warehouseCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="warehouseCd"
+        p:forceUppercase="true"
+        p:label="Warehouse Code"
+        p:shortLabel="Warehouse Code"
+        p:maxLength="2"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="4" />
+    </property>
+  </bean>
+  <bean id="WarehouseObject-currentFiscalYear" parent="WarehouseObject-currentFiscalYear-parentBean" />
+  <bean id="WarehouseObject-currentFiscalYear-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="currentFiscalYear"
+        p:forceUppercase="false"
+        p:label="Current Fiscal Year"
+        p:shortLabel="Fiscal Year"
+        p:maxLength="4"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="false" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="4" />
+    </property>
+  </bean>  
+  <bean id="WarehouseObject-finCoaCd" parent="WarehouseObject-finCoaCd-parentBean" />
+  <bean id="WarehouseObject-finCoaCd-parentBean" parent="FinancialChart-chartOfAccountsCode" abstract="true"
+        p:name="finCoaCd"
+        p:required="true" >
+  </bean>
+
+  <bean id="WarehouseObject-finObjectCd" parent="WarehouseObject-finObjectCd-parentBean" />
+  <bean id="WarehouseObject-finObjectCd-parentBean" parent="FinancialObjectCode-financialObjectCode" abstract="true" 
+		  p:name="finObjectCd" 
+		  p:required="true">
+  </bean>
+
+  <bean id="WarehouseObject-finSubObjCd" parent="WarehouseObject-finSubObjCd-parentBean" />
+  <bean id="WarehouseObject-finSubObjCd-parentBean" parent="FinancialSubObjectCode-financialSubObjectCode" abstract="true" 
+		  p:name="finSubObjCd" 
+		  p:required="false">
+  </bean>
+
+  <bean id="WarehouseObject-offsetObjectCd" parent="WarehouseObject-offsetObjectCd-parentBean" />
+  <bean id="WarehouseObject-offsetObjectCd-parentBean" parent="FinancialObjectCode-financialObjectCode" abstract="true" 
+		  p:name="offsetObjectCd" 
+		  p:label="Offset Object Code" 
+  		  p:shortLabel="Offset Obj"
+		  p:required="true">
+  </bean>
+
+  <bean id="WarehouseObject-offsetSubObjCd" parent="WarehouseObject-offsetSubObjCd-parentBean" />
+  <bean id="WarehouseObject-offsetSubObjCd-parentBean" parent="FinancialSubObjectCode-financialSubObjectCode" abstract="true" 
+		  p:name="offsetSubObjCd" 
+		  p:label="Offset Sub Object Code" 
+  		  p:shortLabel="Offset Sub Obj"
+		  p:required="false">
+  </bean>
+
+  <bean id="WarehouseObject-lastUpdateDate" parent="WarehouseObject-lastUpdateDate-parentBean" />
+  <bean id="WarehouseObject-lastUpdateDate-parentBean" parent="GenericAttributes-genericTimestamp" abstract="true"
+        p:name="lastUpdateDate"
+        p:forceUppercase="false"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:maxLength="10"
+        p:required="false" >
+  </bean>
+
+  <bean id="WarehouseObject-versionNumber" parent="WarehouseObject-versionNumber-parentBean" />
+  <bean id="WarehouseObject-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="WarehouseObject-inquiryDefinition" parent="WarehouseObject-inquiryDefinition-parentBean" />
+
+  <bean id="WarehouseObject-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Warehouse Objects Inquiry" 
+        p:inquirableClass="org.kuali.ext.mm.businessobject.inquiry.MmInquirableImpl" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Warehouse Objects Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="active" />
+              <bean parent="FieldDefinition" p:attributeName="warehouseCd" />
+              <bean parent="FieldDefinition" p:attributeName="warehouseObjectTypeCd" />
+              <bean parent="FieldDefinition" p:attributeName="finCoaCd" />
+              <bean parent="FieldDefinition" p:attributeName="finObjectCd" />
+              <bean parent="FieldDefinition" p:attributeName="finSubObjCd" />
+              <bean parent="FieldDefinition" p:attributeName="offsetObjectCd" />
+              <bean parent="FieldDefinition" p:attributeName="offsetSubObjCd" />
+              <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+              <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="WarehouseObject-lookupDefinition" parent="WarehouseObject-lookupDefinition-parentBean" />
+
+  <bean id="WarehouseObject-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Warehouse Objects Lookup" >
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>warehouseCd</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>        
+        <bean parent="FieldDefinition" p:attributeName="warehouseCd" />
+        <bean parent="FieldDefinition" p:attributeName="warehouseObjectTypeCd" />
+        <bean parent="FieldDefinition" p:attributeName="finCoaCd" />        
+        <bean parent="FieldDefinition" p:attributeName="finObjectCd" />
+        <bean parent="FieldDefinition" p:attributeName="finSubObjCd" />
+        <bean parent="FieldDefinition" p:attributeName="offsetObjectCd" />
+        <bean parent="FieldDefinition" p:attributeName="offsetSubObjCd" />
+        <bean parent="FieldDefinition" p:attributeName="active" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="warehouseCd" />
+        <bean parent="FieldDefinition" p:attributeName="warehouseObjectTypeCd" />
+        <bean parent="FieldDefinition" p:attributeName="finCoaCd" />
+        <bean parent="FieldDefinition" p:attributeName="finObjectCd" />
+        <bean parent="FieldDefinition" p:attributeName="finSubObjCd" />
+        <bean parent="FieldDefinition" p:attributeName="offsetObjectCd" />
+        <bean parent="FieldDefinition" p:attributeName="offsetSubObjCd" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+        <bean parent="FieldDefinition" p:attributeName="active" />        
+      </list>
+    </property>
+  </bean>
+
+</beans>

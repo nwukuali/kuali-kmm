@@ -1,0 +1,332 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="FinancialAsset" parent="FinancialAsset-parentBean" />
+
+  <bean id="FinancialAsset-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.integration.cam.businessobject.FinancialAsset"
+        p:titleAttribute="Asset"
+        p:objectLabel="Financial Asset"
+        p:inquiryDefinition-ref="FinancialAsset-inquiryDefinition"
+        p:lookupDefinition-ref="FinancialAsset-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="FinancialAsset-buildingCode" />
+        <ref bean="FinancialAsset-buildingRoomNumber" />
+        <ref bean="FinancialAsset-buildingSubRoomNumber" />
+        <ref bean="FinancialAsset-campusCode" />
+        <ref bean="FinancialAsset-quantity" />
+        <ref bean="FinancialAsset-campusTagNumber" />
+        <ref bean="FinancialAsset-capitalAssetDescription" />
+        <ref bean="FinancialAsset-capitalAssetNumber" />
+        <ref bean="FinancialAsset-capitalAssetTypeCode" />
+        <ref bean="FinancialAsset-manufacturerModelNumber" />
+        <ref bean="FinancialAsset-manufacturerName" />
+        <ref bean="FinancialAsset-serialNumber" />
+        <ref bean="FinancialAsset-vendorName" />
+      </list>
+    </property>
+  </bean>
+
+  <bean id="FinancialAsset-buildingCode" parent="FinancialAsset-buildingCode-parentBean" />
+  <bean id="FinancialAsset-buildingCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="buildingCode"
+        p:forceUppercase="false"
+        p:label="Building Code"
+        p:shortLabel="Building Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  
+  <bean id="FinancialAsset-quantity" parent="FinancialAsset-quantity-parentBean"/>
+  <bean id="FinancialAsset-quantity-parentBean" abstract="true" parent="AttributeDefinition">
+    <property name="name" value="quantity"/>
+    <property name="forceUppercase" value="false"/>
+    <property name="label" value="Quantity"/>
+    <property name="shortLabel" value="Quantity"/>
+    <property name="maxLength" value="2"/>
+    <property name="validationPattern">
+      <bean parent="NumericValidationPattern"/>
+    </property>
+    <property name="control">
+      <bean parent="TextControlDefinition" p:size="5"/>
+    </property>
+  </bean>
+
+  <bean id="FinancialAsset-buildingRoomNumber" parent="FinancialAsset-buildingRoomNumber-parentBean" />
+  <bean id="FinancialAsset-buildingRoomNumber-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="buildingRoomNumber"
+        p:forceUppercase="false"
+        p:label="Building Room Number"
+        p:shortLabel="Building Room Number"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialAsset-buildingSubRoomNumber" parent="FinancialAsset-buildingSubRoomNumber-parentBean" />
+  <bean id="FinancialAsset-buildingSubRoomNumber-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="buildingSubRoomNumber"
+        p:forceUppercase="false"
+        p:label="Building Sub Room Number"
+        p:shortLabel="Building Sub Room Number"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialAsset-campusCode" parent="FinancialAsset-campusCode-parentBean" />
+  <bean id="FinancialAsset-campusCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="campusCode"
+        p:forceUppercase="false"
+        p:label="Campus Code"
+        p:shortLabel="Campus Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialAsset-campusTagNumber" parent="FinancialAsset-campusTagNumber-parentBean" />
+  <bean id="FinancialAsset-campusTagNumber-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="campusTagNumber"
+        p:forceUppercase="false"
+        p:label="Campus Tag Number"
+        p:shortLabel="Campus Tag Number"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialAsset-capitalAssetDescription" parent="FinancialAsset-capitalAssetDescription-parentBean" />
+  <bean id="FinancialAsset-capitalAssetDescription-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="capitalAssetDescription"
+        p:forceUppercase="false"
+        p:label="Capital Asset Description"
+        p:shortLabel="Capital Asset Description"
+        p:maxLength="2000"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialAsset-capitalAssetNumber" parent="FinancialAsset-capitalAssetNumber-parentBean" />
+  <bean id="FinancialAsset-capitalAssetNumber-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="capitalAssetNumber"
+        p:forceUppercase="false"
+        p:label="Capital Asset Number"
+        p:shortLabel="Capital Asset Number"
+        p:maxLength="12"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="NumericValidationPattern"/>
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="12" />
+    </property>
+  </bean>
+
+  <bean id="FinancialAsset-capitalAssetTypeCode" parent="FinancialAsset-capitalAssetTypeCode-parentBean" />
+  <bean id="FinancialAsset-capitalAssetTypeCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="capitalAssetTypeCode"
+        p:forceUppercase="false"
+        p:label="Capital Asset Type Code"
+        p:shortLabel="Capital Asset Type Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialAsset-manufacturerModelNumber" parent="FinancialAsset-manufacturerModelNumber-parentBean" />
+  <bean id="FinancialAsset-manufacturerModelNumber-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="manufacturerModelNumber"
+        p:forceUppercase="false"
+        p:label="Manufacturer Model Number"
+        p:shortLabel="Manufacturer Model Number"
+        p:maxLength="25"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="27" />
+    </property>
+  </bean>
+
+  <bean id="FinancialAsset-manufacturerName" parent="FinancialAsset-manufacturerName-parentBean" />
+  <bean id="FinancialAsset-manufacturerName-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="manufacturerName"
+        p:forceUppercase="false"
+        p:label="Manufacturer Name"
+        p:shortLabel="Manufacturer Name"
+        p:maxLength="40"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="42" />
+    </property>
+  </bean>
+
+  <bean id="FinancialAsset-serialNumber" parent="FinancialAsset-serialNumber-parentBean" />
+  <bean id="FinancialAsset-serialNumber-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="serialNumber"
+        p:forceUppercase="false"
+        p:label="Serial Number"
+        p:shortLabel="Serial Number"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialAsset-vendorName" parent="FinancialAsset-vendorName-parentBean" />
+  <bean id="FinancialAsset-vendorName-parentBean" parent="FinancialVendorDetail-vendorName" abstract="true"
+        p:name="vendorName" >       
+  </bean>
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="FinancialAsset-inquiryDefinition" parent="FinancialAsset-inquiryDefinition-parentBean" />
+
+  <bean id="FinancialAsset-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Financial Asset Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Financial Asset Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="buildingCode" />
+              <bean parent="FieldDefinition" p:attributeName="buildingRoomNumber" />
+              <bean parent="FieldDefinition" p:attributeName="buildingSubRoomNumber" />
+              <bean parent="FieldDefinition" p:attributeName="campusCode" />
+              <bean parent="FieldDefinition" p:attributeName="campusTagNumber" />
+              <bean parent="FieldDefinition" p:attributeName="capitalAssetDescription" />
+              <bean parent="FieldDefinition" p:attributeName="capitalAssetNumber" />
+              <bean parent="FieldDefinition" p:attributeName="capitalAssetTypeCode" />
+              <bean parent="FieldDefinition" p:attributeName="manufacturerModelNumber" />
+              <bean parent="FieldDefinition" p:attributeName="manufacturerName" />
+              <bean parent="FieldDefinition" p:attributeName="serialNumber" />
+              <bean parent="FieldDefinition" p:attributeName="vendorName" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="FinancialAsset-lookupDefinition" parent="FinancialAsset-lookupDefinition-parentBean" />
+
+  <bean id="FinancialAsset-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Financial Asset Lookup"  >
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>capitalAssetNumber</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="buildingCode" />
+        <bean parent="FieldDefinition" p:attributeName="buildingRoomNumber" />
+        <bean parent="FieldDefinition" p:attributeName="buildingSubRoomNumber" />
+        <bean parent="FieldDefinition" p:attributeName="campusCode" />
+        <bean parent="FieldDefinition" p:attributeName="campusTagNumber" />
+        <bean parent="FieldDefinition" p:attributeName="capitalAssetDescription" />
+        <bean parent="FieldDefinition" p:attributeName="capitalAssetNumber" />
+        <bean parent="FieldDefinition" p:attributeName="capitalAssetTypeCode" />
+        <bean parent="FieldDefinition" p:attributeName="manufacturerModelNumber" />
+        <bean parent="FieldDefinition" p:attributeName="manufacturerName" />
+        <bean parent="FieldDefinition" p:attributeName="serialNumber" />
+        <bean parent="FieldDefinition" p:attributeName="vendorName" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="buildingCode" />
+        <bean parent="FieldDefinition" p:attributeName="buildingRoomNumber" />
+        <bean parent="FieldDefinition" p:attributeName="buildingSubRoomNumber" />
+        <bean parent="FieldDefinition" p:attributeName="campusCode" />
+        <bean parent="FieldDefinition" p:attributeName="campusTagNumber" />
+        <bean parent="FieldDefinition" p:attributeName="capitalAssetDescription" />
+        <bean parent="FieldDefinition" p:attributeName="capitalAssetNumber" />
+        <bean parent="FieldDefinition" p:attributeName="capitalAssetTypeCode" />
+        <bean parent="FieldDefinition" p:attributeName="manufacturerModelNumber" />
+        <bean parent="FieldDefinition" p:attributeName="manufacturerName" />
+        <bean parent="FieldDefinition" p:attributeName="serialNumber" />
+        <bean parent="FieldDefinition" p:attributeName="vendorName" />
+      </list>
+    </property>
+  </bean>
+
+</beans>

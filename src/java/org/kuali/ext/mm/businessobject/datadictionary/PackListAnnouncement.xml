@@ -1,0 +1,138 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="PackListAnnouncement" parent="PackListAnnouncement-parentBean" />
+
+  <bean id="PackListAnnouncement-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.PackListAnnouncement"
+        p:titleAttribute="packListAnnouncementCode"
+        p:objectLabel="Pack List Announcement"
+        p:inquiryDefinition-ref="PackListAnnouncement-inquiryDefinition"
+        p:lookupDefinition-ref="PackListAnnouncement-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="PackListAnnouncement-active" />
+        <ref bean="PackListAnnouncement-packListAnnouncementCode" />
+        <ref bean="PackListAnnouncement-packListAnnouncementDesc" />
+        <ref bean="PackListAnnouncement-lastUpdateDate" />
+        <ref bean="PackListAnnouncement-versionNumber" />
+      </list>
+    </property>
+  </bean>
+
+  <bean id="PackListAnnouncement-active" parent="PackListAnnouncement-active-parentBean" />
+  <bean id="PackListAnnouncement-active-parentBean" abstract="true" parent="GenericAttributes-activeIndicator" p:name="active" />
+
+
+  <bean id="PackListAnnouncement-packListAnnouncementCode" parent="PackListAnnouncement-packListAnnouncementCode-parentBean" />
+  <bean id="PackListAnnouncement-packListAnnouncementCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="packListAnnouncementCode"
+        p:forceUppercase="true"
+        p:label="Pack List Announcement Code"
+        p:shortLabel="Pack List Announcement Code"
+        p:maxLength="8"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AlphaNumericValidationPattern"/>
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="8" />
+    </property>
+  </bean>
+  
+  <bean id="PackListAnnouncement-packListAnnouncementDesc" parent="PackListAnnouncement-packListAnnouncementDesc-parentBean" />
+  <bean id="PackListAnnouncement-packListAnnouncementDesc-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="packListAnnouncementDesc"
+        p:forceUppercase="false"
+        p:label="Pack List Announcement Description"
+        p:shortLabel="Pack List Announcement Description"
+        p:maxLength="200"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextareaControlDefinition"
+            p:rows="5"
+            p:cols="40" />
+    </property>    
+  </bean>
+
+  <bean id="PackListAnnouncement-lastUpdateDate" parent="PackListAnnouncement-lastUpdateDate-parentBean" />
+  <bean id="PackListAnnouncement-lastUpdateDate-parentBean" parent="GenericAttributes-genericTimestamp" abstract="true"
+        p:name="lastUpdateDate"
+        p:forceUppercase="false"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:maxLength="10"
+        p:required="false" >   
+  </bean>
+
+  <bean id="PackListAnnouncement-versionNumber" parent="PackListAnnouncement-versionNumber-parentBean" />
+  <bean id="PackListAnnouncement-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="PackListAnnouncement-inquiryDefinition" parent="PackListAnnouncement-inquiryDefinition-parentBean" />
+
+  <bean id="PackListAnnouncement-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Pack List Announcement Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Pack List Announcement Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="packListAnnouncementCode" />
+              <bean parent="FieldDefinition" p:attributeName="packListAnnouncementDesc" />
+              <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+              <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+              <bean parent="FieldDefinition" p:attributeName="active" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="PackListAnnouncement-lookupDefinition" parent="PackListAnnouncement-lookupDefinition-parentBean" />
+
+  <bean id="PackListAnnouncement-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Pack List Announcement Lookup" >
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>packListAnnouncementCode</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>        
+        <bean parent="FieldDefinition" p:attributeName="packListAnnouncementCode" />
+        <bean parent="FieldDefinition" p:attributeName="packListAnnouncementDesc" />
+        <bean parent="FieldDefinition" p:attributeName="active" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="packListAnnouncementCode" />
+        <bean parent="FieldDefinition" p:attributeName="packListAnnouncementDesc" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+        <bean parent="FieldDefinition" p:attributeName="active" />
+      </list>
+    </property>
+  </bean>
+
+</beans>

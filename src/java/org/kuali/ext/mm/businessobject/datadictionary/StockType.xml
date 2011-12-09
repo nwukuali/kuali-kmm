@@ -1,0 +1,140 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="StockType" parent="StockType-parentBean" />
+
+  <bean id="StockType-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.StockType"
+        p:titleAttribute="stockTypeCode"
+        p:objectLabel="Stock Type"
+        p:inquiryDefinition-ref="StockType-inquiryDefinition"
+        p:lookupDefinition-ref="StockType-lookupDefinition">
+    <property name="attributes" >
+      <list>
+        <ref bean="StockType-active" />
+        <ref bean="StockType-stockTypeCode" />
+        <ref bean="StockType-stockTypeName" />
+        <ref bean="StockType-lastUpdateDate" />
+        <ref bean="StockType-versionNumber" />
+      </list>
+    </property>
+  </bean>
+
+  <bean id="StockType-active" parent="StockType-active-parentBean" />
+  <bean id="StockType-active-parentBean" abstract="true" parent="GenericAttributes-activeIndicator" 
+        p:name="active"
+        p:label="Active Indicator"
+        p:shortLabel="Active"
+        p:required="false" />
+
+  <bean id="StockType-stockTypeCode" parent="StockType-stockTypeCode-parentBean" />
+  <bean id="StockType-stockTypeCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="stockTypeCode"
+        p:forceUppercase="true"        
+        p:label="Stock Type Code"
+        p:shortLabel="Stock Type Code"
+        p:maxLength="2"        
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AlphaNumericValidationPattern"/>
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="2" />
+    </property>        
+  </bean>        
+
+  <bean id="StockType-stockTypeName" parent="StockType-stockTypeName-parentBean" />
+  <bean id="StockType-stockTypeName-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="stockTypeName"
+        p:forceUppercase="true"
+        p:label="Stock Type Name"
+        p:shortLabel="Stock Type Name"
+        p:maxLength="45"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="45" />
+    </property>
+  </bean>
+
+  <bean id="StockType-lastUpdateDate" parent="StockType-lastUpdateDate-parentBean" />
+  <bean id="StockType-lastUpdateDate-parentBean" parent="GenericAttributes-genericTimestamp" abstract="true"
+        p:name="lastUpdateDate"
+        p:forceUppercase="false"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:maxLength="10"
+        p:required="false" >
+  </bean>
+
+  <bean id="StockType-versionNumber" parent="StockType-versionNumber-parentBean" />
+  <bean id="StockType-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="StockType-inquiryDefinition" parent="StockType-inquiryDefinition-parentBean" />
+
+  <bean id="StockType-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Item Type Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Stock Type Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="active" />
+              <bean parent="FieldDefinition" p:attributeName="stockTypeCode" />
+              <bean parent="FieldDefinition" p:attributeName="stockTypeName" />
+              <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+              <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="StockType-lookupDefinition" parent="StockType-lookupDefinition-parentBean" />
+
+  <bean id="StockType-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Stock Type Lookup" >
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>stockTypeCode</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>        
+        <bean parent="FieldDefinition" p:attributeName="stockTypeCode" />
+        <bean parent="FieldDefinition" p:attributeName="stockTypeName" />
+        <bean parent="FieldDefinition" p:attributeName="active" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="stockTypeCode" />
+        <bean parent="FieldDefinition" p:attributeName="stockTypeName" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+        <bean parent="FieldDefinition" p:attributeName="active" />        
+      </list>
+    </property>
+  </bean>
+
+</beans>

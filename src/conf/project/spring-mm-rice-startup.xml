@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!--
+		Copyright 2007 The Kuali Foundation. Licensed under the Educational
+		Community License, Version 1.0 (the "License"); you may not use this
+		file except in compliance with the License. You may obtain a copy of
+		the License at http://www.opensource.org/licenses/ecl1.php Unless
+		required by applicable law or agreed to in writing, software
+		distributed under the License is distributed on an "AS IS" BASIS,
+		WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+		implied. See the License for the specific language governing
+		permissions and limitations under the License.
+	-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+                           http://www.springframework.org/schema/tx
+                           http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+                           http://www.springframework.org/schema/aop
+                           http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">	
+	<import resource="${spring.mm.rice.jta.xml}" />
+	<import resource="${spring.mm.datasource.xml}" />
+
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="properties" ref="configProperties" />
+	</bean>
+
+	<bean id="config" class="org.kuali.rice.core.config.spring.ConfigFactoryBean">
+		<property name="configLocations">
+			<list>
+				<value>classpath:configuration-locations.xml</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="configProperties"
+		class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+		<property name="targetObject" ref="config" />
+		<property name="targetMethod" value="getProperties" />
+	</bean>
+	
+	<bean id="rice" class="org.kuali.rice.core.config.RiceConfigurer">
+		<property name="dataSource" ref="kmmDataSource" />
+		<property name="serverDataSource" ref="riceDataSource" />
+		<property name="nonTransactionalDataSource" ref="riceNonTransactionalDataSource" />
+		<property name="transactionManager" ref="transactionManager" />
+		<property name="userTransaction" ref="userTransaction" />
+		<property name="serviceNamespace" value="MM" />
+		<property name="environment" value="${build.environment}" />
+		<property name="ksbConfigurer">
+			<bean class="org.kuali.rice.ksb.messaging.config.KSBConfigurer">
+				<property name="messageDataSource" ref="ksbDataSource" />
+				<property name="registryDataSource" ref="ksbDataSource" />
+				<property name="nonTransactionalMessageDataSource" ref="ksbDataSource" />
+				<property name="serviceServletUrl" value="${ksb.server.url}/remoting" />			
+				<!--
+					<property name="exceptionMessagingScheduler" ref="scheduler" />
+				-->
+			</bean>
+		</property>
+		<property name="kewConfigurer">
+			<bean class="org.kuali.rice.kew.config.KEWConfigurer">
+				<property name="clientProtocol" value="local" />
+				<property name="dataSource" ref="riceDataSource" />
+			</bean>
+		</property>
+		<property name="knsConfigurer">
+			<bean class="org.kuali.rice.kns.config.KNSConfigurer">
+				<property name="loadDataDictionary" value="true" />
+				<property name="validateDataDictionary" value="${data.dictionary.validate}" />
+			</bean>
+		</property>
+		<property name="kimConfigurer">
+			<bean class="org.kuali.rice.kim.config.KIMConfigurer" />
+		</property>
+		<property name="kcbConfigurer">
+            <bean class="org.kuali.rice.kcb.config.KCBConfigurer" />
+        </property>
+		<property name="modules">
+			<list>
+				<bean class="org.kuali.ext.mm.common.sys.context.MMConfigurer">
+					<property name="springFileLocations">
+						<value>${spring.source.files}</value>
+					</property>
+					<property name="applicationDataSource" ref="kmmDataSource" />
+				</bean>
+				
+			</list>
+		</property>
+		<property name="additionalSpringFiles">
+			<list>
+				<value>FinancialSystemConfiguration.xml</value>
+			</list>
+		</property>
+	</bean>
+
+</beans>

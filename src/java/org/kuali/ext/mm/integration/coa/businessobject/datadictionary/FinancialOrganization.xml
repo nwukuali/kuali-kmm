@@ -1,0 +1,153 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="FinancialOrganization" parent="FinancialOrganization-parentBean" />
+
+  <bean id="FinancialOrganization-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.integration.coa.businessobject.FinancialOrganization"
+        p:titleAttribute="Financial Organization"
+        p:objectLabel="Financial Organization"
+        p:inquiryDefinition-ref="FinancialOrganization-inquiryDefinition"
+        p:lookupDefinition-ref="FinancialOrganization-lookupDefinition" >
+    <property name="primaryKeys">
+    	<list>
+    		<value>chartOfAccountsCode</value>
+    		<value>organizationCode</value>
+    	</list>
+    </property>
+    <property name="attributes" >
+      <list>
+        <ref bean="FinancialOrganization-active" />
+        <ref bean="FinancialOrganization-chartOfAccountsCode" />
+        <ref bean="FinancialOrganization-organizationCode" />
+        <ref bean="FinancialOrganization-organizationName" />
+      </list>
+    </property>
+  </bean>
+
+  <bean id="FinancialOrganization-active" parent="FinancialOrganization-active-parentBean" />
+  <bean id="FinancialOrganization-active-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="active"
+        p:forceUppercase="false"
+        p:label="Active"
+        p:shortLabel="Active"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialOrganization-chartOfAccountsCode" parent="FinancialOrganization-chartOfAccountsCode-parentBean" />
+  <bean id="FinancialOrganization-chartOfAccountsCode-parentBean" parent="FinancialChart-chartOfAccountsCode" abstract="true"
+        p:name="chartOfAccountsCode"
+        p:required="true" >
+  </bean>
+  <bean id="FinancialOrganization-organizationCode" parent="FinancialOrganization-organizationCode-parentBean" />
+
+  <bean id="FinancialOrganization-msu-organizationCode-parentBean" abstract="true" parent="FinancialOrganization-organizationCode-parentBean">
+    <property name="maxLength" value="8" />
+		<property name="validationPattern">
+			<bean parent="NumericValidationPattern" />
+		</property>
+		<property name="control">
+			<bean parent="TextControlDefinition" p:size="10" />
+		</property>
+  </bean>
+  	
+  <bean id="FinancialOrganization-organizationCode-parentBean" abstract="true" parent="AttributeDefinition">
+    <property name="name" value="organizationCode"/>
+    <property name="forceUppercase" value="true"/>
+    <property name="label" value="Organization Code"/>
+    <property name="shortLabel" value="Org"/>
+    <property name="maxLength" value="4"/>
+    <property name="validationPattern">
+      <bean parent="AnyCharacterValidationPattern"/>
+    </property>
+    <property name="required" value="true"/>
+    <property name="control">
+      <bean parent="TextControlDefinition" p:size="4"/>
+    </property>
+  </bean>
+  <bean id="FinancialOrganization-organizationName" parent="FinancialOrganization-organizationName-parentBean"/>
+
+  <bean id="FinancialOrganization-organizationName-parentBean" abstract="true" parent="AttributeDefinition">
+    <property name="name" value="organizationName"/>
+    <property name="label" value="Organization Name"/>
+    <property name="shortLabel" value="Org Name"/>
+    <property name="maxLength" value="40"/>
+    <property name="validationPattern">
+      <bean parent="AnyCharacterValidationPattern" p:allowWhitespace="true"/>
+    </property>
+    <property name="required" value="true"/>
+    <property name="control">
+      <bean parent="TextControlDefinition" p:size="40"/>
+    </property>
+  </bean>  
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="FinancialOrganization-inquiryDefinition" parent="FinancialOrganization-inquiryDefinition-parentBean" />
+
+  <bean id="FinancialOrganization-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Financial Organization Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Financial Organization Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="active" />
+              <bean parent="FieldDefinition" p:attributeName="chartOfAccountsCode" />
+              <bean parent="FieldDefinition" p:attributeName="organizationCode" />
+              <bean parent="FieldDefinition" p:attributeName="organizationName" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="FinancialOrganization-lookupDefinition" parent="FinancialOrganization-lookupDefinition-parentBean" />
+
+  <bean id="FinancialOrganization-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Financial Organization Lookup" >
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>chartOfAccountsCode</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="active" />
+        <bean parent="FieldDefinition" p:attributeName="chartOfAccountsCode" />
+        <bean parent="FieldDefinition" p:attributeName="organizationCode" />
+        <bean parent="FieldDefinition" p:attributeName="organizationName" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="active" />
+        <bean parent="FieldDefinition" p:attributeName="chartOfAccountsCode" />
+        <bean parent="FieldDefinition" p:attributeName="organizationCode" />
+        <bean parent="FieldDefinition" p:attributeName="organizationName" />
+      </list>
+    </property>
+  </bean>
+
+</beans>

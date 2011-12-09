@@ -1,0 +1,441 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="FinancialVendorContract" parent="FinancialVendorContract-parentBean" />
+
+  <bean id="FinancialVendorContract-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.integration.vnd.businessobject.FinancialVendorContract"
+        p:titleAttribute="Financial Vendor Contract"
+        p:objectLabel="Financial Vendor Contract"
+        p:inquiryDefinition-ref="FinancialVendorContract-inquiryDefinition"
+        p:lookupDefinition-ref="FinancialVendorContract-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="FinancialVendorContract-active" />
+        <ref bean="FinancialVendorContract-vendorContractGeneratedIdentifier" />
+        <ref bean="FinancialVendorContract-contractManagerCode" />
+        <ref bean="FinancialVendorContract-organizationAutomaticPurchaseOrderLimit" />
+        <ref bean="FinancialVendorContract-purchaseOrderCostSourceCode" />
+        <ref bean="FinancialVendorContract-vendorB2bIndicator" />
+        <ref bean="FinancialVendorContract-vendorCampusCode" />
+        <ref bean="FinancialVendorContract-vendorContractBeginningDate" />
+        <ref bean="FinancialVendorContract-vendorContractDescription" />
+        <ref bean="FinancialVendorContract-vendorContractEndDate" />
+        <ref bean="FinancialVendorContract-vendorContractExtensionDate" />
+        <ref bean="FinancialVendorContract-vendorContractName" />
+        <ref bean="FinancialVendorContract-vendorDetailAssignedIdentifier" />
+        <ref bean="FinancialVendorContract-vendorHeaderGeneratedIdentifier" />
+        <ref bean="FinancialVendorContract-vendorPaymentTermsCode" />
+        <ref bean="FinancialVendorContract-vendorShippingPaymentTermsCode" />
+        <ref bean="FinancialVendorContract-vendorShippingTitleCode" />
+      </list>
+    </property>
+  </bean>
+
+  <bean id="FinancialVendorContract-active" parent="FinancialVendorContract-active-parentBean" />
+  <bean id="FinancialVendorContract-active-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="active"
+        p:forceUppercase="false"
+        p:label="Active"
+        p:shortLabel="Active"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialVendorContract-contractManagerCode" parent="FinancialVendorContract-contractManagerCode-parentBean" />
+  <bean id="FinancialVendorContract-contractManagerCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="contractManagerCode"
+        p:forceUppercase="false"
+        p:label="Contract Manager Code"
+        p:shortLabel="Contract Manager Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialVendorContract-organizationAutomaticPurchaseOrderLimit" parent="FinancialVendorContract-organizationAutomaticPurchaseOrderLimit-parentBean" />
+  <bean id="FinancialVendorContract-organizationAutomaticPurchaseOrderLimit-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="organizationAutomaticPurchaseOrderLimit"
+        p:forceUppercase="false"
+        p:label="Organization Automatic Purchase Order Limit"
+        p:shortLabel="Organization Automatic Purchase Order Limit"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialVendorContract-purchaseOrderCostSourceCode" parent="FinancialVendorContract-purchaseOrderCostSourceCode-parentBean" />
+  <bean id="FinancialVendorContract-purchaseOrderCostSourceCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="purchaseOrderCostSourceCode"
+        p:forceUppercase="false"
+        p:label="Purchase Order Cost Source Code"
+        p:shortLabel="Purchase Order Cost Source Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialVendorContract-vendorB2bIndicator" parent="FinancialVendorContract-vendorB2bIndicator-parentBean" />
+  <bean id="FinancialVendorContract-vendorB2bIndicator-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorB2bIndicator"
+        p:forceUppercase="false"
+        p:label="Vendor B2b Indicator"
+        p:shortLabel="Vendor B2b Indicator"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialVendorContract-vendorCampusCode" parent="FinancialVendorContract-vendorCampusCode-parentBean" />
+  <bean id="FinancialVendorContract-vendorCampusCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorCampusCode"
+        p:forceUppercase="false"
+        p:label="Vendor Campus Code"
+        p:shortLabel="Vendor Campus Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialVendorContract-vendorContractBeginningDate" parent="FinancialVendorContract-vendorContractBeginningDate-parentBean" />
+  <bean id="FinancialVendorContract-vendorContractBeginningDate-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorContractBeginningDate"
+        p:forceUppercase="false"
+        p:label="Vendor Contract Beginning Date"
+        p:shortLabel="Vendor Contract Beginning Date"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialVendorContract-vendorContractDescription" parent="FinancialVendorContract-vendorContractDescription-parentBean" />
+  <bean id="FinancialVendorContract-vendorContractDescription-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorContractDescription"
+        p:forceUppercase="false"
+        p:label="Vendor Contract Description"
+        p:shortLabel="Vendor Contract Description"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialVendorContract-vendorContractEndDate" parent="FinancialVendorContract-vendorContractEndDate-parentBean" />
+  <bean id="FinancialVendorContract-vendorContractEndDate-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorContractEndDate"
+        p:forceUppercase="false"
+        p:label="Vendor Contract End Date"
+        p:shortLabel="Vendor Contract End Date"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialVendorContract-vendorContractExtensionDate" parent="FinancialVendorContract-vendorContractExtensionDate-parentBean" />
+  <bean id="FinancialVendorContract-vendorContractExtensionDate-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorContractExtensionDate"
+        p:forceUppercase="false"
+        p:label="Vendor Contract Extension Date"
+        p:shortLabel="Vendor Contract Extension Date"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialVendorContract-vendorContractGeneratedIdentifier" parent="FinancialVendorContract-vendorContractGeneratedIdentifier-parentBean" />
+  <bean id="FinancialVendorContract-vendorContractGeneratedIdentifier-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorContractGeneratedIdentifier"
+        p:forceUppercase="false"
+        p:label="Vendor Contract Generated Identifier"
+        p:shortLabel="Vendor Contract Generated Identifier"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialVendorContract-vendorContractName" parent="FinancialVendorContract-vendorContractName-parentBean" />
+  <bean id="FinancialVendorContract-vendorContractName-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorContractName"
+        p:forceUppercase="false"
+        p:label="Vendor Contract Name"
+        p:shortLabel="Vendor Contract Name"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialVendorContract-vendorDetailAssignedIdentifier" parent="FinancialVendorContract-vendorDetailAssignedIdentifier-parentBean" />
+  <bean id="FinancialVendorContract-vendorDetailAssignedIdentifier-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorDetailAssignedIdentifier"
+        p:forceUppercase="false"
+        p:label="Vendor Detail Assigned Identifier"
+        p:shortLabel="Vendor Detail Assigned Identifier"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialVendorContract-vendorHeaderGeneratedIdentifier" parent="FinancialVendorContract-vendorHeaderGeneratedIdentifier-parentBean" />
+  <bean id="FinancialVendorContract-vendorHeaderGeneratedIdentifier-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorHeaderGeneratedIdentifier"
+        p:forceUppercase="false"
+        p:label="Vendor Header Generated Identifier"
+        p:shortLabel="Vendor Header Generated Identifier"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialVendorContract-vendorPaymentTermsCode" parent="FinancialVendorContract-vendorPaymentTermsCode-parentBean" />
+  <bean id="FinancialVendorContract-vendorPaymentTermsCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorPaymentTermsCode"
+        p:forceUppercase="false"
+        p:label="Vendor Payment Terms Code"
+        p:shortLabel="Vendor Payment Terms Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialVendorContract-vendorShippingPaymentTermsCode" parent="FinancialVendorContract-vendorShippingPaymentTermsCode-parentBean" />
+  <bean id="FinancialVendorContract-vendorShippingPaymentTermsCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorShippingPaymentTermsCode"
+        p:forceUppercase="false"
+        p:label="Vendor Shipping Payment Terms Code"
+        p:shortLabel="Vendor Shipping Payment Terms Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialVendorContract-vendorShippingTitleCode" parent="FinancialVendorContract-vendorShippingTitleCode-parentBean" />
+  <bean id="FinancialVendorContract-vendorShippingTitleCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorShippingTitleCode"
+        p:forceUppercase="false"
+        p:label="Vendor Shipping Title Code"
+        p:shortLabel="Vendor Shipping Title Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="FinancialVendorContract-inquiryDefinition" parent="FinancialVendorContract-inquiryDefinition-parentBean" />
+
+  <bean id="FinancialVendorContract-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Financial Vendor Contract Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Financial Vendor Contract Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="active" />
+              <bean parent="FieldDefinition" p:attributeName="contractManagerCode" />
+              <bean parent="FieldDefinition" p:attributeName="organizationAutomaticPurchaseOrderLimit" />
+              <bean parent="FieldDefinition" p:attributeName="purchaseOrderCostSourceCode" />
+              <bean parent="FieldDefinition" p:attributeName="vendorB2bIndicator" />
+              <bean parent="FieldDefinition" p:attributeName="vendorCampusCode" />
+              <bean parent="FieldDefinition" p:attributeName="vendorContractBeginningDate" />
+              <bean parent="FieldDefinition" p:attributeName="vendorContractDescription" />
+              <bean parent="FieldDefinition" p:attributeName="vendorContractEndDate" />
+              <bean parent="FieldDefinition" p:attributeName="vendorContractExtensionDate" />
+              <bean parent="FieldDefinition" p:attributeName="vendorContractGeneratedIdentifier" />
+              <bean parent="FieldDefinition" p:attributeName="vendorContractName" />
+              <bean parent="FieldDefinition" p:attributeName="vendorDetailAssignedIdentifier" />
+              <bean parent="FieldDefinition" p:attributeName="vendorHeaderGeneratedIdentifier" />
+              <bean parent="FieldDefinition" p:attributeName="vendorPaymentTermsCode" />
+              <bean parent="FieldDefinition" p:attributeName="vendorShippingPaymentTermsCode" />
+              <bean parent="FieldDefinition" p:attributeName="vendorShippingTitleCode" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="FinancialVendorContract-lookupDefinition" parent="FinancialVendorContract-lookupDefinition-parentBean" />
+
+  <bean id="FinancialVendorContract-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Financial Vendor Contract Lookup" 
+ >
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>vendorContractName</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="active" />
+        <bean parent="FieldDefinition" p:attributeName="contractManagerCode" />
+        <bean parent="FieldDefinition" p:attributeName="organizationAutomaticPurchaseOrderLimit" />
+        <bean parent="FieldDefinition" p:attributeName="purchaseOrderCostSourceCode" />
+        <bean parent="FieldDefinition" p:attributeName="vendorB2bIndicator" />
+        <bean parent="FieldDefinition" p:attributeName="vendorCampusCode" />
+        <bean parent="FieldDefinition" p:attributeName="vendorContractBeginningDate" />
+        <bean parent="FieldDefinition" p:attributeName="vendorContractDescription" />
+        <bean parent="FieldDefinition" p:attributeName="vendorContractEndDate" />
+        <bean parent="FieldDefinition" p:attributeName="vendorContractExtensionDate" />
+        <bean parent="FieldDefinition" p:attributeName="vendorContractGeneratedIdentifier" />
+        <bean parent="FieldDefinition" p:attributeName="vendorContractName" />
+        <bean parent="FieldDefinition" p:attributeName="vendorDetailAssignedIdentifier" />
+        <bean parent="FieldDefinition" p:attributeName="vendorHeaderGeneratedIdentifier" />
+        <bean parent="FieldDefinition" p:attributeName="vendorPaymentTermsCode" />
+        <bean parent="FieldDefinition" p:attributeName="vendorShippingPaymentTermsCode" />
+        <bean parent="FieldDefinition" p:attributeName="vendorShippingTitleCode" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="active" />
+        <bean parent="FieldDefinition" p:attributeName="contractManagerCode" />
+        <bean parent="FieldDefinition" p:attributeName="organizationAutomaticPurchaseOrderLimit" />
+        <bean parent="FieldDefinition" p:attributeName="purchaseOrderCostSourceCode" />
+        <bean parent="FieldDefinition" p:attributeName="vendorB2bIndicator" />
+        <bean parent="FieldDefinition" p:attributeName="vendorCampusCode" />
+        <bean parent="FieldDefinition" p:attributeName="vendorContractBeginningDate" />
+        <bean parent="FieldDefinition" p:attributeName="vendorContractDescription" />
+        <bean parent="FieldDefinition" p:attributeName="vendorContractEndDate" />
+        <bean parent="FieldDefinition" p:attributeName="vendorContractExtensionDate" />
+        <bean parent="FieldDefinition" p:attributeName="vendorContractGeneratedIdentifier" />
+        <bean parent="FieldDefinition" p:attributeName="vendorContractName" />
+        <bean parent="FieldDefinition" p:attributeName="vendorDetailAssignedIdentifier" />
+        <bean parent="FieldDefinition" p:attributeName="vendorHeaderGeneratedIdentifier" />
+        <bean parent="FieldDefinition" p:attributeName="vendorPaymentTermsCode" />
+        <bean parent="FieldDefinition" p:attributeName="vendorShippingPaymentTermsCode" />
+        <bean parent="FieldDefinition" p:attributeName="vendorShippingTitleCode" />
+      </list>
+    </property>
+  </bean>
+
+</beans>

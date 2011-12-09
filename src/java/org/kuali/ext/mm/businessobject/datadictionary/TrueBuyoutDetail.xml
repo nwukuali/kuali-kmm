@@ -1,0 +1,249 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="TrueBuyoutDetail" parent="TrueBuyoutDetail-parentBean" />
+  <bean id="TrueBuyoutDetail-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.TrueBuyoutDetail"
+        p:titleAttribute="trueBuyoutDetailId"
+        p:objectLabel="True Buyout Detail"
+        p:inquiryDefinition-ref="TrueBuyoutDetail-inquiryDefinition"
+        p:lookupDefinition-ref="TrueBuyoutDetail-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+		<ref bean="TrueBuyoutDetail-trueBuyoutDetailId" />
+		<ref bean="TrueBuyoutDetail-versionNumber" />
+		<ref bean="TrueBuyoutDetail-stockDistributorNumber" />
+		<ref bean="TrueBuyoutDetail-stockTypeCode" />
+		<ref bean="TrueBuyoutDetail-rentalObjectCode" />
+		<ref bean="TrueBuyoutDetail-trueBuyoutDocumentNumber" />
+		<ref bean="TrueBuyoutDetail-agreementNumber" />
+		<ref bean="TrueBuyoutDetail-orderItemDescription" />
+		<ref bean="TrueBuyoutDetail-orderItemUnitOfIssueCode" />
+		<ref bean="TrueBuyoutDetail-orderItemQuantity" />
+		<ref bean="TrueBuyoutDetail-orderItemCost" />
+		<ref bean="TrueBuyoutDetail-markupCode" />
+		<ref bean="TrueBuyoutDetail-willCall" />
+		<ref bean="TrueBuyoutDetail-catalogId" />
+		<ref bean="TrueBuyoutDetail-catalog.catalogCd" />
+		<ref bean="TrueBuyoutDetail-catalog.warehouseCd" />
+		<ref bean="TrueBuyoutDetail-lastUpdateDate" />
+
+      </list>
+    </property>
+    <property name="relationships" >
+      <list>
+        <bean parent="RelationshipDefinition">
+          <property name="objectAttributeName" value="catalog" />
+          <property name="primitiveAttributes" >
+            <list>
+              <bean parent="PrimitiveAttributeDefinition"
+                    p:sourceName="catalogId"
+                    p:targetName="catalogId" />
+            </list>
+          </property>
+          <property name="supportAttributes" >
+            <list>
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="catalog.catalogCd"
+                    p:targetName="catalogCd" />
+              <bean parent="SupportAttributeDefinition"
+                    p:sourceName="catalog.warehouseCd"
+                    p:targetName="warehouseCd" />                            
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>       
+	
+	<bean id="TrueBuyoutDetail-willCall" parent="TrueBuyoutDetail-willCall-parentBean" />
+  	<bean id="TrueBuyoutDetail-willCall-parentBean" abstract="true" parent="GenericAttributes-genericBoolean" 
+        p:name="willCall"
+        p:label="Will Call"
+        p:shortLabel="Will Call"
+        p:required="false" />
+	
+	<bean id="TrueBuyoutDetail-trueBuyoutDetailId" parent="TrueBuyoutDetail-trueBuyoutDetailId-parentBean" />
+	<bean id="TrueBuyoutDetail-trueBuyoutDetailId-parentBean" parent="AttributeDefinition" abstract="true"
+	    p:name="trueBuyoutDetailId"
+	    p:forceUppercase="false"
+	    p:label="True Buyout Detail ID"
+	    p:shortLabel="True Buyout Detail ID"
+	    p:maxLength="18"
+	    p:required="false" >
+		<property name="validationPattern" >
+		  <bean parent="AnyCharacterValidationPattern"
+		        p:allowWhitespace="true" />
+		</property>
+		<property name="control" >
+		  <bean parent="TextControlDefinition"
+		        p:size="10" />
+		</property>
+	</bean>
+	
+	<bean id="TrueBuyoutDetail-versionNumber" parent="TrueBuyoutDetail-versionNumber-parentBean" />
+	<bean id="TrueBuyoutDetail-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+	
+	<bean id="TrueBuyoutDetail-trueBuyoutDocumentNumber" parent="TrueBuyoutDetail-trueBuyoutDocumentNumber-parentBean" />
+	<bean id="TrueBuyoutDetail-trueBuyoutDocumentNumber-parentBean" parent="TrueBuyoutDocument-documentNumber" abstract="true"
+	    p:name="trueBuyoutDocumentNumber"
+	    p:label="True Buyout Document Number">
+	</bean>
+	
+	<bean id="TrueBuyoutDetail-agreementNumber" parent="TrueBuyoutDetail-agreementNumber-parentBean" />
+	<bean id="TrueBuyoutDetail-agreementNumber-parentBean" parent="Agreement-agreementNbr" abstract="true"
+	    p:name="agreementNumber"
+	    p:required="false" >
+	</bean>
+	
+	<bean id="TrueBuyoutDetail-stockDistributorNumber" parent="TrueBuyoutDetail-stockDistributorNumber-parentBean" />
+	<bean id="TrueBuyoutDetail-stockDistributorNumber-parentBean" parent="Stock-stockDistributorNbr" abstract="true"
+	    p:name="stockDistributorNumber">
+	</bean>
+	
+	<bean id="TrueBuyoutDetail-orderItemDescription" parent="TrueBuyoutDetail-orderItemDescription-parentBean" />
+	<bean id="TrueBuyoutDetail-orderItemDescription-parentBean" parent="OrderDetail-orderItemDetailDesc" abstract="true"
+	    p:name="orderItemDescription"
+	    p:required="true" >
+	</bean>
+	
+	<bean id="TrueBuyoutDetail-orderItemUnitOfIssueCode" parent="TrueBuyoutDetail-orderItemUnitOfIssueCode-parentBean" />
+	<bean id="TrueBuyoutDetail-orderItemUnitOfIssueCode-parentBean" parent="OrderDetail-stockUnitOfIssueCd" abstract="true"
+	    p:name="orderItemUnitOfIssueCode"
+	    p:required="true" >
+	</bean>
+	
+	<bean id="TrueBuyoutDetail-orderItemQuantity" parent="TrueBuyoutDetail-orderItemQuantity-parentBean" />
+	<bean id="TrueBuyoutDetail-orderItemQuantity-parentBean" parent="OrderDetail-orderItemQty" abstract="true"
+	    p:name="orderItemQuantity"
+	    p:label="Order Quantity"
+	    p:shortLabel="Qty"
+	    p:required="true" >
+	</bean>
+	
+	<bean id="TrueBuyoutDetail-orderItemCost" parent="TrueBuyoutDetail-orderItemCost-parentBean" />
+	<bean id="TrueBuyoutDetail-orderItemCost-parentBean" parent="OrderDetail-orderItemCostAmt" abstract="true"
+	    p:name="orderItemCost" 
+	    p:label="Item Price"
+	    p:shortLabel="Item Price">
+	</bean>
+	
+	<bean id="TrueBuyoutDetail-markupCode" parent="TrueBuyoutDetail-markupCode-parentBean" />
+	<bean id="TrueBuyoutDetail-markupCode-parentBean" parent="Markup-markupCd" abstract="true"
+	    p:name="markupCode">
+	</bean>
+	
+	<bean id="TrueBuyoutDetail-stockTypeCode" parent="TrueBuyoutDetail-stockTypeCode-parentBean" />
+	<bean id="TrueBuyoutDetail-stockTypeCode-parentBean" parent="StockType-stockTypeCode" abstract="true"
+	    p:name="stockTypeCode" >
+	</bean>
+	
+	<bean id="TrueBuyoutDetail-rentalObjectCode" parent="TrueBuyoutDetail-rentalObjectCode-parentBean" />
+	<bean id="TrueBuyoutDetail-rentalObjectCode-parentBean" parent="RentalObjectCode-rentalObjectCode" abstract="true"
+	    p:name="rentalObjectCode" >
+	</bean>
+	
+	<bean id="TrueBuyoutDetail-catalogId" parent="TrueBuyoutDetail-catalogId-parentBean" />
+	<bean id="TrueBuyoutDetail-catalogId-parentBean" parent="Catalog-catalogId" abstract="true"
+	    p:name="catalogId"
+	    p:required="true">
+	</bean>
+	
+	<bean id="TrueBuyoutDetail-catalog.catalogCd" parent="TrueBuyoutDetail-catalog.catalogCd-parentBean" />
+	<bean id="TrueBuyoutDetail-catalog.catalogCd-parentBean" parent="Catalog-catalogCd" abstract="true"
+	    p:name="catalog.catalogCd">
+	</bean>
+	
+	<bean id="TrueBuyoutDetail-catalog.warehouseCd" parent="TrueBuyoutDetail-catalog.warehouseCd-parentBean" />
+	<bean id="TrueBuyoutDetail-catalog.warehouseCd-parentBean" parent="Catalog-warehouseCd" abstract="true"
+	    p:name="catalog.warehouseCd">
+	</bean>
+	
+	<bean id="TrueBuyoutDetail-lastUpdateDate" parent="TrueBuyoutDetail-lastUpdateDate-parentBean" />
+	<bean id="TrueBuyoutDetail-lastUpdateDate-parentBean" parent="GenericAttributes-genericTimestamp" abstract="true"
+	    p:name="lastUpdateDate"
+	    p:forceUppercase="false"
+	    p:label="Last Update Date"
+	    p:shortLabel="Last Update">
+	</bean>
+  
+  <!-- Business Object Inquiry Definition -->
+
+  <bean id="TrueBuyoutDetail-inquiryDefinition" parent="TrueBuyoutDetail-inquiryDefinition-parentBean" />
+
+  <bean id="TrueBuyoutDetail-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="True Buyout Detail Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="True Buyout Detail Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+		<bean parent="FieldDefinition" p:attributeName="trueBuyoutDetailId" />
+		<bean parent="FieldDefinition" p:attributeName="trueBuyoutDocumentNumber" />
+		<bean parent="FieldDefinition" p:attributeName="agreementNumber" />
+		<bean parent="FieldDefinition" p:attributeName="stockDistributorNumber" />
+		<bean parent="FieldDefinition" p:attributeName="stockTypeCode" />
+		<bean parent="FieldDefinition" p:attributeName="rentalObjectCode" />
+		<bean parent="FieldDefinition" p:attributeName="orderItemDescription" />
+		<bean parent="FieldDefinition" p:attributeName="orderItemUnitOfIssueCode" />
+		<bean parent="FieldDefinition" p:attributeName="orderItemQuantity" />
+		<bean parent="FieldDefinition" p:attributeName="orderItemCost" />
+		<bean parent="FieldDefinition" p:attributeName="markupCode" />
+		<bean parent="FieldDefinition" p:attributeName="versionNumber" />
+		<bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="TrueBuyoutDetail-lookupDefinition" parent="TrueBuyoutDetail-lookupDefinition-parentBean" />
+
+  <bean id="TrueBuyoutDetail-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="True Buyout Detail Lookup" >
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>trueBuyoutDocumentNumber</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>      
+		<bean parent="FieldDefinition" p:attributeName="trueBuyoutDocumentNumber" />
+		<bean parent="FieldDefinition" p:attributeName="orderItemDescription" />
+		<bean parent="FieldDefinition" p:attributeName="catalogItem.catalog.warehouseCd" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+		<bean parent="FieldDefinition" p:attributeName="trueBuyoutDocumentNumber" />
+		<bean parent="FieldDefinition" p:attributeName="catalogItem.catalog.warehouseCd" />
+		<bean parent="FieldDefinition" p:attributeName="agreementNumber" />
+		<bean parent="FieldDefinition" p:attributeName="stockDistributorNumber" />
+		<bean parent="FieldDefinition" p:attributeName="stockTypeCode" />
+		<bean parent="FieldDefinition" p:attributeName="orderItemDescription" />
+		<bean parent="FieldDefinition" p:attributeName="orderItemUnitOfIssueCode" />
+		<bean parent="FieldDefinition" p:attributeName="orderItemQuantity" />
+		<bean parent="FieldDefinition" p:attributeName="orderItemCost" />
+		<bean parent="FieldDefinition" p:attributeName="markupCode" />
+		<bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+      </list>
+    </property>
+  </bean>
+  
+  
+</beans>

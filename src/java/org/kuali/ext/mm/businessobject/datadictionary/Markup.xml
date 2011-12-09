@@ -1,0 +1,386 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+	<bean id="Markup" parent="Markup-parentBean" />
+
+	<bean id="Markup-parentBean" abstract="true" parent="BusinessObjectEntry"
+		p:businessObjectClass="org.kuali.ext.mm.businessobject.Markup"
+		p:titleAttribute="markupCd" p:objectLabel="Markup"
+		p:inquiryDefinition-ref="Markup-inquiryDefinition"
+		p:lookupDefinition-ref="Markup-lookupDefinition">
+		<property name="attributes">
+			<list>
+				<ref bean="Markup-markupCd" />
+				<ref bean="Markup-versionNumber" />
+				<ref bean="Markup-active" />
+				<ref bean="Markup-lastUpdateDate" />
+				<ref bean="Markup-markupBeginDt" />
+				<ref bean="Markup-catalogGroupCode" />
+				<ref bean="Markup-catalogSubgroupId" />
+				<ref bean="Markup-catalogSubgroup.catalogSubgroupDesc" />
+				<ref bean="Markup-catalogSubgroup.catalogSubgroupCd" />
+				<ref bean="Markup-markupCoaCd" />
+				<ref bean="Markup-markupOrg" />
+				<ref bean="Markup-markupAccountNbr" />
+				<ref bean="Markup-markupEndDt" />
+				<ref bean="Markup-markupFixed" />
+				<ref bean="Markup-markupNm" />
+				<ref bean="Markup-markupRt" />
+				<ref bean="Markup-markupTypeCd" />
+				<ref bean="Markup-warehouseCd" />
+				<ref bean="Markup-markupFromQty" />
+				<ref bean="Markup-markupToQty" />
+			</list>
+		</property>
+		<property name="relationships">
+	      <list>
+	      	<bean parent="RelationshipDefinition">
+	          <property name="objectAttributeName" value="markupType"/>
+	          <property name="primitiveAttributes">
+	            <list>
+	              <bean parent="PrimitiveAttributeDefinition" p:sourceName="markupTypeCd" p:targetName="markupTypeCd"/>
+	            </list>
+	          </property>          
+	        </bean>
+	        <bean parent="RelationshipDefinition">
+	          <property name="objectAttributeName" value="markupChart"/>
+	          <property name="primitiveAttributes">
+	            <list>
+	              <bean parent="PrimitiveAttributeDefinition" p:sourceName="markupCoaCd" p:targetName="chartOfAccountsCode"/>
+	            </list>
+	          </property>          
+	        </bean>
+	        <bean parent="RelationshipDefinition">
+	          <property name="objectAttributeName" value="markupOrganization"/>
+	          <property name="primitiveAttributes">
+	            <list>
+	              <bean parent="PrimitiveAttributeDefinition" p:sourceName="markupCoaCd" p:targetName="chartOfAccountsCode"/>
+	              <bean parent="PrimitiveAttributeDefinition" p:sourceName="markupOrg" p:targetName="organizationCode"/>
+	            </list>
+	          </property>          
+	        </bean>
+	        <bean parent="RelationshipDefinition">
+	          <property name="objectAttributeName" value="markupAccount"/>
+	          <property name="primitiveAttributes">
+	            <list>
+	              <bean parent="PrimitiveAttributeDefinition" p:sourceName="markupCoaCd" p:targetName="chartOfAccountsCode"/>
+	              <bean parent="PrimitiveAttributeDefinition" p:sourceName="markupAccountNbr" p:targetName="accountNumber"/>
+	            </list>
+	          </property>          
+	        </bean>
+	        <bean parent="RelationshipDefinition">
+	          <property name="objectAttributeName" value="catalogGroup"/>
+	          <property name="primitiveAttributes">
+	            <list>
+	              <bean parent="PrimitiveAttributeDefinition" p:sourceName="catalogGroupCode" p:targetName="catalogGroupCd"/>
+	            </list>
+	          </property>          
+	        </bean>
+	        <bean parent="RelationshipDefinition">
+	          <property name="objectAttributeName" value="catalogSubgroup"/>
+	          <property name="primitiveAttributes">
+	            <list>
+	              <bean parent="PrimitiveAttributeDefinition" p:sourceName="catalogSubgroupId" p:targetName="catalogSubgroupId"/>
+<!--	              <bean parent="PrimitiveAttributeDefinition" p:sourceName="catalogGroupCode" p:targetName="catalogGroupCode"/>-->
+	            </list>
+	          </property>
+	          <property name="supportAttributes" >
+	            <list>
+	              <bean parent="SupportAttributeDefinition"
+	                    p:sourceName="catalogSubgroup.catalogSubgroupDesc"
+	                    p:targetName="catalogSubgroupDesc" />
+	              <bean parent="SupportAttributeDefinition"
+	                    p:identifier="true"
+	                    p:sourceName="catalogSubgroup.catalogSubgroupCd"
+	                    p:targetName="catalogSubgroupCd" />    
+	              <bean parent="SupportAttributeDefinition"
+	              		p:identifier="true"
+	                    p:sourceName="catalogGroupCode"
+	                    p:targetName="catalogGroupCd" />    
+	            </list>
+          	  </property>               
+	        </bean>            
+	      </list>
+	    </property>
+	</bean>
+
+	<bean id="Markup-active" parent="Markup-active-parentBean" />
+	<bean id="Markup-active-parentBean" abstract="true"
+		parent="GenericAttributes-activeIndicator" p:name="active" p:label="Active Indicator"
+		p:shortLabel="Active Indicator" p:required="false" />
+
+	<bean id="Markup-lastUpdateDate" parent="Markup-lastUpdateDate-parentBean" />
+	<bean id="Markup-lastUpdateDate-parentBean" parent="GenericAttributes-genericTimestamp"
+		abstract="true" p:name="lastUpdateDate" p:forceUppercase="false"
+		p:label="Last Update Date" p:shortLabel="Last Update Date"
+		p:maxLength="10" p:required="false">
+	</bean>
+
+
+	<bean id="Markup-markupAccountNbr" parent="Markup-markupAccountNbr-parentBean" />
+	<bean id="Markup-markupAccountNbr-parentBean"
+		parent="FinancialAccount-accountNumber" abstract="true"
+		p:name="markupAccountNbr" p:label="Markup Account Number"
+		p:shortLabel="Markup Account Number" p:required="false">
+	</bean>
+
+	<bean id="Markup-markupBeginDt" parent="Markup-markupBeginDt-parentBean" />
+	<bean id="Markup-markupBeginDt-parentBean" abstract="true"
+		parent="GenericAttributes-genericDate" p:name="markupBeginDt" p:label="Markup Begin Date"
+		p:shortLabel="Markup Begin Date" p:required="false" />
+
+	<bean id="Markup-markupCd" parent="Markup-markupCd-parentBean" />
+	<bean id="Markup-markupCd-parentBean" parent="AttributeDefinition" abstract="true" 
+		p:name="markupCd" 
+		p:forceUppercase="true" 
+		p:label="Markup Code"
+		p:shortLabel="Markup Code" 
+		p:maxLength="5" 
+		p:required="false">
+		<property name="validationPattern">
+			<bean parent="AlphaNumericValidationPattern" />
+		</property>
+		<property name="control">
+			<bean parent="TextControlDefinition" p:size="5" />
+		</property>
+	</bean>
+	
+	<bean id="Markup-catalogGroupCode" parent="Markup-catalogGroupCode-parentBean" />
+	<bean id="Markup-catalogGroupCode-parentBean" parent="catalogGroup-catalogGroupCd" abstract="true"
+		p:name="catalogGroupCode" p:label="Markup Group Code"
+		p:shortLabel="Group Code" p:required="false">
+	</bean>
+	
+	<bean id="Markup-catalogSubgroupId" parent="Markup-catalogSubgroupId-parentBean" />
+	<bean id="Markup-catalogSubgroupId-parentBean"
+		parent="CatalogSubgroup-catalogSubgroupId" abstract="true"
+		p:name="catalogSubgroupId" p:label="Markup Subgroup"
+		p:shortLabel="Subgroup" p:required="false">
+	  <property name="control" >
+      <bean parent="HiddenControlDefinition"
+            p:size="10" />
+      </property>
+	</bean>
+	
+	<bean id="Markup-catalogSubgroup.catalogSubgroupDesc" parent="Markup-catalogSubgroup.catalogSubgroupDesc-parentBean" />
+	<bean id="Markup-catalogSubgroup.catalogSubgroupDesc-parentBean"
+		parent="CatalogSubgroup-catalogSubgroupDesc" abstract="true"
+		p:name="catalogSubgroup.catalogSubgroupDesc" p:label="Markup Subgroup"
+		p:shortLabel="Subgroup" p:required="false">
+	</bean>
+	
+	<bean id="Markup-catalogSubgroup.catalogSubgroupCd" parent="Markup-catalogSubgroup.catalogSubgroupCd-parentBean" />
+	<bean id="Markup-catalogSubgroup.catalogSubgroupCd-parentBean"
+		parent="CatalogSubgroup-catalogSubgroupCd" abstract="true"
+		p:name="catalogSubgroup.catalogSubgroupCd" p:label="Markup Subgroup Code"
+		p:shortLabel="Subgroup Code" p:required="false">
+	</bean>
+	
+	<bean id="Markup-markupCoaCd" parent="Markup-markupCoaCd-parentBean" />
+	<bean id="Markup-markupCoaCd-parentBean"
+		parent="FinancialChart-chartOfAccountsCode" abstract="true"
+		p:name="markupCoaCd" p:label="Markup COA Code"
+		p:shortLabel="Markup COA Code" p:required="false">
+	</bean>
+
+	<bean id="Markup-markupEndDt" parent="Markup-markupEndDt-parentBean" />
+	<bean id="Markup-markupEndDt-parentBean" abstract="true"
+		parent="GenericAttributes-genericDate" p:name="markupEndDt" p:label="Markup End Date"
+		p:shortLabel="Markup End Date" p:required="false" />
+
+	<bean id="Markup-markupFixed" parent="Markup-markupFixed-parentBean" />
+	<bean id="Markup-markupFixed-parentBean" parent="AttributeDefinition"
+		abstract="true" p:name="markupFixed" p:forceUppercase="false"
+		p:label="Markup Fixed Price" p:shortLabel="Markup Fixed Price"
+		p:maxLength="8" p:required="false">
+		<property name="validationPattern">
+			<bean parent="FixedPointValidationPattern" p:precision="8"
+				p:allowNegative="false" p:scale="2" />
+		</property>
+		<property name="control">
+			<bean parent="TextControlDefinition" p:size="8" />
+		</property>
+	</bean>
+
+	<bean id="Markup-markupNm" parent="Markup-markupNm-parentBean" />
+	<bean id="Markup-markupNm-parentBean" parent="AttributeDefinition"
+		abstract="true" p:name="markupNm" p:forceUppercase="true" p:label="Markup Name"
+		p:shortLabel="Markup Name" p:maxLength="40" p:required="false">
+		<property name="validationPattern">
+			<bean parent="AnyCharacterValidationPattern" p:allowWhitespace="true" />
+		</property>
+		<property name="control">
+			<bean parent="TextControlDefinition" p:size="40" />
+		</property>
+	</bean>
+
+	<bean id="Markup-markupOrg" parent="Markup-markupOrg-parentBean" />
+	<bean id="Markup-markupOrg-parentBean"
+		parent="FinancialOrganization-organizationCode" abstract="true"
+		p:name="markupOrg" p:label="Markup Organization Code"
+		p:shortLabel="Markup Organization Code" p:required="false">
+	</bean>
+
+	<bean id="Markup-markupRt" parent="Markup-markupRt-parentBean" />
+	<bean id="Markup-markupRt-parentBean" parent="AttributeDefinition" abstract="true" 
+		p:name="markupRt" 
+		p:forceUppercase="false" 
+		p:label="Markup Rate"
+		p:shortLabel="Markup Rate" 
+		p:maxLength="8" p:required="false">
+		<property name="validationPattern">
+			<bean parent="FixedPointValidationPattern" p:precision="8"
+				p:allowNegative="false" p:scale="2" />
+		</property>
+		<property name="control">
+			<bean parent="TextControlDefinition" p:size="8" />
+		</property>
+	</bean>
+
+	<bean id="Markup-markupTypeCd" parent="Markup-markupTypeCd-parentBean" />
+	<bean id="Markup-markupTypeCd-parentBean" parent="MarkupType-markupTypeCd" abstract="true"
+		p:label="Markup Type Code" 
+		p:name="markupTypeCd">
+	</bean>
+
+	<bean id="Markup-versionNumber" parent="Markup-versionNumber-parentBean" />
+	<bean id="Markup-versionNumber-parentBean" abstract="true"
+		parent="AttributeReferenceDummy-versionNumber" p:name="versionNumber"
+		p:required="false" />
+
+	<bean id="Markup-warehouseCd" parent="Markup-warehouseCd-parentBean" />
+	<bean id="Markup-warehouseCd-parentBean" parent="AttributeDefinition"
+		abstract="true" p:name="warehouseCd" p:forceUppercase="true" p:label="Warehouse Code"
+		p:shortLabel="Warehouse Code" p:maxLength="2" p:required="false">
+		<property name="validationPattern">
+			<bean parent="AnyCharacterValidationPattern" p:allowWhitespace="true" />
+		</property>
+		<property name="control">
+			<bean parent="TextControlDefinition" p:size="2" />
+		</property>
+	</bean>
+
+	<bean id="Markup-markupFromQty" parent="Markup-markupFromQty-parentBean" />
+	<bean id="Markup-markupFromQty-parentBean" parent="AttributeDefinition"
+		abstract="true" p:name="markupFromQty" p:forceUppercase="false"
+		p:label="Markup From Discount Quantity" p:shortLabel="Markup From Discount Quantity"
+		p:maxLength="8" p:required="false">
+		<property name="validationPattern">
+			<bean parent="NumericValidationPattern" />
+		</property>
+		<property name="control">
+			<bean parent="TextControlDefinition" p:size="8" />
+		</property>
+	</bean>
+
+	<bean id="Markup-markupToQty" parent="Markup-markupToQty-parentBean" />
+	<bean id="Markup-markupToQty-parentBean" parent="AttributeDefinition"
+		abstract="true" p:name="markupToQty" p:forceUppercase="false"
+		p:label="Markup To Discount Quantity" p:shortLabel="Markup To Discount Quantity"
+		p:maxLength="8" p:required="false">
+		<property name="validationPattern">
+			<bean parent="NumericValidationPattern" />
+		</property>
+		<property name="control">
+			<bean parent="TextControlDefinition" p:size="8" />
+		</property>
+	</bean>
+
+	<!-- Business Object Inquiry Definition -->
+
+	<bean id="Markup-inquiryDefinition" parent="Markup-inquiryDefinition-parentBean" />
+
+	<bean id="Markup-inquiryDefinition-parentBean" abstract="true"
+		parent="InquiryDefinition" p:title="Markup Inquiry" 
+		p:inquirableClass="org.kuali.ext.mm.businessobject.inquiry.MmInquirableImpl" >
+		<property name="inquirySections">
+			<list>
+				<bean parent="InquirySectionDefinition" p:title="Markup Attributes"
+					p:numberOfColumns="1">
+					<property name="inquiryFields">
+						<list>
+							<bean parent="FieldDefinition" p:attributeName="markupCd" />
+							<bean parent="FieldDefinition" p:attributeName="markupNm" />
+							<bean parent="FieldDefinition" p:attributeName="warehouseCd" />
+							<bean parent="FieldDefinition" p:attributeName="markupTypeCd" />
+							<bean parent="FieldDefinition" p:attributeName="markupCoaCd" />
+							<bean parent="FieldDefinition" p:attributeName="markupOrg" />
+							<bean parent="FieldDefinition" p:attributeName="markupAccountNbr" />
+							<bean parent="FieldDefinition" p:attributeName="catalogGroupCode" />
+							<bean parent="FieldDefinition" p:attributeName="catalogSubgroup.catalogSubgroupCd" />
+							<bean parent="FieldDefinition" p:attributeName="markupFixed" />
+							<bean parent="FieldDefinition" p:attributeName="markupRt" />
+							<bean parent="FieldDefinition" p:attributeName="markupBeginDt" />
+							<bean parent="FieldDefinition" p:attributeName="markupEndDt" />
+							<bean parent="FieldDefinition" p:attributeName="markupFromQty" />
+							<bean parent="FieldDefinition" p:attributeName="markupToQty" />
+							<bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+							<bean parent="FieldDefinition" p:attributeName="active" />
+						</list>
+					</property>
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<!-- Business Object Lookup Definition -->
+	<bean id="Markup-lookupDefinition" parent="Markup-lookupDefinition-parentBean" />
+
+	<bean id="Markup-lookupDefinition-parentBean" abstract="true"
+		parent="LookupDefinition" p:title="Markup Lookup">
+		<property name="defaultSort">
+			<bean parent="SortDefinition">
+				<property name="attributeNames">
+					<list>
+						<value>markupCd</value>
+					</list>
+				</property>
+				<property name="sortAscending" value="true" />
+			</bean>
+		</property>
+		<property name="lookupFields">
+			<list>
+				<bean parent="FieldDefinition" p:attributeName="markupCd" />
+				<bean parent="FieldDefinition" p:attributeName="markupNm" />
+				<bean parent="FieldDefinition" p:attributeName="warehouseCd" />
+				<bean parent="FieldDefinition" p:attributeName="markupTypeCd" />
+				<bean parent="FieldDefinition" p:attributeName="markupCoaCd" />
+				<bean parent="FieldDefinition" p:attributeName="markupOrg" />
+				<bean parent="FieldDefinition" p:attributeName="markupAccountNbr" />
+				<bean parent="FieldDefinition" p:attributeName="catalogGroupCode" />
+				<bean parent="FieldDefinition" p:attributeName="catalogSubgroup.catalogSubgroupCd" />
+				<bean parent="FieldDefinition" p:attributeName="markupFixed" />
+				<bean parent="FieldDefinition" p:attributeName="markupRt" />
+				<bean parent="FieldDefinition" p:attributeName="markupBeginDt" />
+				<bean parent="FieldDefinition" p:attributeName="markupEndDt" />
+				<bean parent="FieldDefinition" p:attributeName="markupFromQty" />
+				<bean parent="FieldDefinition" p:attributeName="markupToQty" />
+				<bean parent="FieldDefinition" p:attributeName="active" />
+			</list>
+		</property>
+		<property name="resultFields">
+			<list>
+				<bean parent="FieldDefinition" p:attributeName="markupCd" />
+				<bean parent="FieldDefinition" p:attributeName="markupNm" />
+				<bean parent="FieldDefinition" p:attributeName="warehouseCd" />
+				<bean parent="FieldDefinition" p:attributeName="markupTypeCd" />
+				<bean parent="FieldDefinition" p:attributeName="markupCoaCd" />
+				<bean parent="FieldDefinition" p:attributeName="markupOrg" />
+				<bean parent="FieldDefinition" p:attributeName="markupAccountNbr" />
+				<bean parent="FieldDefinition" p:attributeName="catalogGroupCode" />
+				<bean parent="FieldDefinition" p:attributeName="catalogSubgroup.catalogSubgroupCd" />				
+				<bean parent="FieldDefinition" p:attributeName="markupFixed" />
+				<bean parent="FieldDefinition" p:attributeName="markupRt" />
+				<bean parent="FieldDefinition" p:attributeName="markupBeginDt" />
+				<bean parent="FieldDefinition" p:attributeName="markupEndDt" />
+				<bean parent="FieldDefinition" p:attributeName="markupFromQty" />
+				<bean parent="FieldDefinition" p:attributeName="markupToQty" />
+				<bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+				<bean parent="FieldDefinition" p:attributeName="active" />
+			</list>
+		</property>
+	</bean>
+
+</beans>

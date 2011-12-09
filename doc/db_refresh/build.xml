@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="db_refresh" default="refresh-db">
+	<property file="ant-local.properties" />
+	<property file="ant.properties" />
+
+	<target name="clean">
+		<delete dir="${temp.dir}" />
+		<delete dir="${checkout.dir}" />
+	</target>
+	
+	<target name="init">
+		<mkdir dir="${temp.dir}" />
+		<mkdir dir="${checkout.dir}" />
+	</target>
+
+	<target name="checkout-tool" depends="init">
+		<cvspass cvsroot="${cvsroot}" password="${cvs.password}" />
+		<cvs command="export" cvsRoot="${cvsroot}"
+			dest="${checkout.dir}" package="${impex.cvs.module}" failonerror="true"
+			tag="${impex.cvs.tag}" />
+	</target>
+	
+	<target name="checkout-data" depends="init">
+		<cvspass cvsroot="${cvsroot}" password="${cvs.password}" />
+		<cvs command="checkout" cvsRoot="${cvsroot}"
+			dest="${checkout.dir}" package="${data.cvs.module}" failonerror="true"
+			tag="${data.cvs.branch}" compressionlevel="6" />
+	</target>
+
+	<target name="prep-properties">
+		<!-- create impex-build.properties file -->
+		<pathconvert property="basedir.safe" dirsep="/">
+			<path location="${basedir}" />
+		</pathconvert>
+		<loadfile property="impex.build.properties" srcfile="impex-build.properties">
+			<filterchain>
+				<expandproperties />
+			</filterchain>
+		</loadfile>
+		<echo message="${user.home}/impex-build.properties" />
+		<echo file="${user.home}/impex-build.properties" message="${impex.build.properties}" />
+	</target>
+	
+	<target name="prepare-schema" depends="prep-properties,checkout-tool">
+		<ant antfile="${checkout.dir}/${impex.cvs.module}/build.xml" target="empty-schema" inheritall="false">			
+		</ant>
+	</target>
+
+	<target name="init-schema" depends="prep-properties,checkout-tool">
+		<ant antfile="${checkout.dir}/${impex.cvs.module}/build.xml" target="create-schema" inheritall="false">			
+		</ant>
+	</target>
+
+	<target name="import-schema" depends="prep-properties">
+		<!-- need to run in a separate JVM due to the way that Clover finds its configuration files. -->
+		<java classname="org.apache.tools.ant.Main"
+		      fork="true"
+		      dir="${checkout.dir}/${impex.cvs.module}"
+		>
+		    <classpath path="${java.class.path}" />
+		    <jvmarg value="-Xmx1g" />
+		    <arg value="-Duser.home=${user.home}" />
+		    <arg value="import" />
+		</java>		
+	</target>
+	
+	<target name="refresh-db" depends="clean,init,checkout-tool,checkout-data,prepare-schema,import-schema" />
+	
+</project>

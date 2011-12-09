@@ -1,0 +1,183 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="RentalObjectCode" parent="RentalObjectCode-parentBean" />
+  <bean id="RentalObjectCode-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.RentalObjectCode"
+        p:titleAttribute="rentalObjectCode"
+        p:objectLabel="Rental Object Code"
+        p:inquiryDefinition-ref="RentalObjectCode-inquiryDefinition"
+        p:lookupDefinition-ref="RentalObjectCode-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+		<ref bean="RentalObjectCode-rentalObjectCode" />
+		<ref bean="RentalObjectCode-rentalTypeCode" />
+		<ref bean="RentalObjectCode-description" />
+		<ref bean="RentalObjectCode-dailyDemurragePrice" />
+		<ref bean="RentalObjectCode-depositPrice" />
+		<ref bean="RentalObjectCode-active" />
+		<ref bean="RentalObjectCode-lastUpdateDate" />
+		<ref bean="RentalObjectCode-versionNumber" />
+      </list>
+    </property>
+  </bean>       
+	
+	<bean id="RentalObjectCode-rentalObjectCode" parent="RentalObjectCode-rentalObjectCode-parentBean" />
+	<bean id="RentalObjectCode-rentalObjectCode-parentBean" parent="AttributeDefinition" abstract="true"
+	    p:name="rentalObjectCode"
+	    p:forceUppercase="false"
+	    p:label="Rental Object Code"
+	    p:shortLabel="Rental Code"
+	    p:maxLength="4"
+	    p:required="false" >
+		<property name="validationPattern" >
+		  <bean parent="AlphaNumericValidationPattern" />
+		</property>
+		<property name="control" >
+		  <bean parent="TextControlDefinition"
+		        p:size="5" />
+		</property>
+	</bean>
+	
+	<bean id="RentalObjectCode-rentalTypeCode" parent="RentalObjectCode-rentalTypeCode-parentBean" />
+	<bean id="RentalObjectCode-rentalTypeCode-parentBean" parent="RentalType-rentalTypeCode" abstract="true"
+	    p:name="rentalTypeCode">
+	</bean>
+		
+	<bean id="RentalObjectCode-description" parent="RentalObjectCode-description-parentBean" />
+	<bean id="RentalObjectCode-description-parentBean" parent="AttributeDefinition" abstract="true"
+	    p:name="description"
+	    p:forceUppercase="false"
+	    p:label="Description"
+	    p:shortLabel="Description"
+	    p:maxLength="80"
+	    p:required="false" >
+		<property name="validationPattern" >
+		  <bean parent="AnyCharacterValidationPattern"
+		        p:allowWhitespace="true" />
+		</property>
+		<property name="control" >
+		  <bean parent="TextControlDefinition"
+		        p:size="30" />
+		</property>
+	</bean>
+	
+	<bean id="RentalObjectCode-dailyDemurragePrice" parent="RentalObjectCode-dailyDemurragePrice-parentBean" />
+	<bean id="RentalObjectCode-dailyDemurragePrice-parentBean" parent="GenericAttributes-genericAmount" abstract="true"
+	    p:name="dailyDemurragePrice"
+	    p:forceUppercase="false"
+	    p:label="Daily Demurrage"
+	    p:shortLabel="Daily Demurrage"
+	    p:maxLength="19"
+	    p:required="false" >
+		<property name="validationPattern" >
+      		<bean parent="FixedPointValidationPattern"
+            	p:precision="19"
+            	p:scale="4"
+            	p:allowNegative="false" />
+    	</property>
+	</bean>
+	
+	<bean id="RentalObjectCode-depositPrice" parent="RentalObjectCode-depositPrice-parentBean" />
+	<bean id="RentalObjectCode-depositPrice-parentBean" parent="GenericAttributes-genericAmount" abstract="true"
+	    p:name="depositPrice"
+	    p:forceUppercase="false"
+	    p:label="Deposit Price"
+	    p:shortLabel="Deposit"
+	    p:maxLength="19"
+	    p:required="false" >
+		<property name="validationPattern" >
+      		<bean parent="FixedPointValidationPattern"
+            	p:precision="19"
+            	p:scale="4"
+            	p:allowNegative="false" />
+    	</property>
+	</bean>
+	
+	<bean id="RentalObjectCode-active" parent="RentalObjectCode-active-parentBean" />
+	<bean id="RentalObjectCode-active-parentBean" parent="GenericAttributes-activeIndicator" abstract="true"
+	    p:name="active">
+	</bean>
+	
+	<bean id="RentalObjectCode-lastUpdateDate" parent="RentalObjectCode-lastUpdateDate-parentBean" />
+	<bean id="RentalObjectCode-lastUpdateDate-parentBean" parent="GenericAttributes-genericTimestamp" abstract="true"
+	    p:name="lastUpdateDate"
+	    p:forceUppercase="false"
+	    p:label="Last Update Date"
+	    p:shortLabel="Last Update">
+	</bean>
+	
+	 <bean id="RentalObjectCode-versionNumber" parent="RentalObjectCode-versionNumber-parentBean" />
+ 	 <bean id="RentalObjectCode-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+  
+  <!-- Business Object Inquiry Definition -->
+
+  <bean id="RentalObjectCode-inquiryDefinition" parent="RentalObjectCode-inquiryDefinition-parentBean" />
+
+  <bean id="RentalObjectCode-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Rental Object Code Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Rental Object Code Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+		<bean parent="FieldDefinition" p:attributeName="rentalObjectCode" />
+		<bean parent="FieldDefinition" p:attributeName="description" />
+		<bean parent="FieldDefinition" p:attributeName="rentalTypeCode" />
+		<bean parent="FieldDefinition" p:attributeName="dailyDemurragePrice" />
+		<bean parent="FieldDefinition" p:attributeName="active" />
+		<bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="RentalObjectCode-lookupDefinition" parent="RentalObjectCode-lookupDefinition-parentBean" />
+
+  <bean id="RentalObjectCode-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Rental Object Code Lookup" >
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>rentalObjectCode</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>        
+		<bean parent="FieldDefinition" p:attributeName="rentalObjectCode" />
+		<bean parent="FieldDefinition" p:attributeName="rentalTypeCode" />
+		<bean parent="FieldDefinition" p:attributeName="description" />
+		<bean parent="FieldDefinition" p:attributeName="active" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+		<bean parent="FieldDefinition" p:attributeName="rentalObjectCode" />
+		<bean parent="FieldDefinition" p:attributeName="rentalTypeCode" />
+		<bean parent="FieldDefinition" p:attributeName="description" />
+		<bean parent="FieldDefinition" p:attributeName="dailyDemurragePrice" />
+		<bean parent="FieldDefinition" p:attributeName="depositPrice" />
+		<bean parent="FieldDefinition" p:attributeName="active" />
+		<bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+
+      </list>
+    </property>
+  </bean>
+  
+  
+</beans>

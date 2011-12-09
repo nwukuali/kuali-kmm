@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cXML payloadID="2009-12-08T14:1:2-08:00@128.120.132.78" timestamp="2009-12-08TO14:1:2-08:00" version="1.2.007" xml:lang="enUS">
+			<Header>
+				 <From>
+					 <Credential domain="DUNS">
+						  <Identity>ucdt</Identity>
+					  </Credential>
+				  </From>
+		  	</Header>
+		  <Request deploymentMode="test">
+			 <PunchOutSetupRequest operation="create">
+				  <BuyerCookie>DE-SZMATSIS-2009-12-08T14:1:2-08:00</BuyerCookie> 
+				  <BrowserFormPost>
+				  	<URL>http://aampc.ucdavis.edu/mm/returnrequest.cfm</URL> 
+				  </BrowserFormPost>
+				 <SupplierSetup>
+					<URL>https://b2bpreview.dell.com/invoke/B2BDirect.Entry/processDocument</URL>
+				  </SupplierSetup>
+				 <SelectedItem>
+					 <ItemID>
+						  <SupplierPartID>Dell</SupplierPartID> 
+						  <SupplierPartAuxiliaryID/> 
+					  </ItemID>
+				  </SelectedItem>
+			  </PunchOutSetupRequest>
+		  </Request>
+		</cXML> 

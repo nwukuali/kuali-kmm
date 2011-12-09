@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="HazardousUn" parent="HazardousUn-parentBean" />
+
+  <bean id="HazardousUn-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.HazardousUn"
+        p:titleAttribute="hazardousUnCode"
+        p:objectLabel="hazardousUn"
+        p:inquiryDefinition-ref="HazardousUn-inquiryDefinition"
+        p:lookupDefinition-ref="HazardousUn-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="HazardousUn-active" />
+        <ref bean="HazardousUn-hazardousUnCode" />
+        <ref bean="HazardousUn-hazardousUnDesc" />
+        <ref bean="HazardousUn-hazardousUnStdUnit" />
+        <ref bean="HazardousUn-lastUpdateDate" />
+        <ref bean="HazardousUn-versionNumber" />
+      </list>
+    </property>
+  </bean>
+
+  <bean id="HazardousUn-active" parent="HazardousUn-active-parentBean" />
+  <bean id="HazardousUn-active-parentBean" abstract="true" parent="GenericAttributes-activeIndicator" 
+        p:name="active"
+        p:label="Active Indicator"
+        p:shortLabel="Active Indicator"
+        p:required="false" />
+
+  <bean id="HazardousUn-hazardousUnCode" parent="HazardousUn-hazardousUnCode-parentBean" />
+  <bean id="HazardousUn-hazardousUnCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="hazardousUnCode"
+        p:forceUppercase="true"
+        p:label="Hazardous UN Code"
+        p:shortLabel="Hazardous UN Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AlphaNumericValidationPattern"/>
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="HazardousUn-hazardousUnDesc" parent="HazardousUn-hazardousUnDesc-parentBean" />
+  <bean id="HazardousUn-hazardousUnDesc-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="hazardousUnDesc"
+        p:forceUppercase="true"
+        p:label="Hazardous UN Description"
+        p:shortLabel="Hazardous UN Description"
+        p:maxLength="255"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextareaControlDefinition"
+            p:rows="5"
+            p:cols="40" />
+    </property>       
+  </bean>
+
+  <bean id="HazardousUn-hazardousUnStdUnit" parent="HazardousUn-hazardousUnStdUnit-parentBean" />
+  <bean id="HazardousUn-hazardousUnStdUnit-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="hazardousUnStdUnit"
+        p:forceUppercase="true"
+        p:label="Hazardous UN Standard Unit"
+        p:shortLabel="Hazardous UN Standard Unit"
+        p:maxLength="5"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="5" />
+    </property>
+  </bean>
+  
+  <bean id="HazardousUn-lastUpdateDate" parent="HazardousUn-lastUpdateDate-parentBean" />
+  <bean id="HazardousUn-lastUpdateDate-parentBean" parent="GenericAttributes-genericTimestamp" abstract="true"
+        p:name="lastUpdateDate"
+        p:forceUppercase="false"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:maxLength="10"
+        p:required="false" >
+  </bean>
+
+
+  <bean id="HazardousUn-versionNumber" parent="HazardousUn-versionNumber-parentBean" />
+  <bean id="HazardousUn-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="HazardousUn-inquiryDefinition" parent="HazardousUn-inquiryDefinition-parentBean" />
+
+  <bean id="HazardousUn-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Hazardous UN Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Hazardous UN Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="hazardousUnCode" />
+              <bean parent="FieldDefinition" p:attributeName="hazardousUnDesc" />
+              <bean parent="FieldDefinition" p:attributeName="hazardousUnStdUnit" />
+              <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+              <bean parent="FieldDefinition" p:attributeName="active" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="HazardousUn-lookupDefinition" parent="HazardousUn-lookupDefinition-parentBean" />
+
+  <bean id="HazardousUn-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Hazardous UN Lookup">
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>hazardousUnCode</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>        
+        <bean parent="FieldDefinition" p:attributeName="hazardousUnCode" />
+        <bean parent="FieldDefinition" p:attributeName="hazardousUnDesc" />
+        <bean parent="FieldDefinition" p:attributeName="hazardousUnStdUnit" />
+        <bean parent="FieldDefinition" p:attributeName="active" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="hazardousUnCode" />
+        <bean parent="FieldDefinition" p:attributeName="hazardousUnDesc" />
+        <bean parent="FieldDefinition" p:attributeName="hazardousUnStdUnit" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />        
+      	<bean parent="FieldDefinition" p:attributeName="active" />
+      </list>
+    </property>
+  </bean>
+
+</beans>
+
+

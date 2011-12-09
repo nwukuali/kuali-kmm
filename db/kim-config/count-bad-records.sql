@@ -1,0 +1,10 @@
+select 'krim_role_perm_t - ' || count(1)  from krim_role_perm_t t where perm_id is null or perm_id='';
+select 'krim_role_perm_t - ' || count(1)  from krim_role_perm_t t where role_id is null or role_id='';
+select 'krim_role_rsp_actn_t - ' || count(1)  from krim_role_rsp_actn_t where role_rsp_id in (select role_rsp_id from krim_role_rsp_t where role_id is null or role_id='');
+select 'krim_role_rsp_actn_t - ' || count(1)  from krim_role_rsp_actn_t where role_rsp_id in (select role_rsp_id from krim_role_rsp_t where rsp_id is null or rsp_id='');
+select 'krim_role_rsp_t - ' || count(1)  from krim_role_rsp_t where role_id is null or role_id='';
+select 'krim_role_rsp_t - ' || count(1)  from krim_role_rsp_t where rsp_id is null or rsp_id='';
+select 'krim_role_mbr_attr_data_t - ' || count(1)  from krim_role_mbr_attr_data_t where ROLE_MBR_ID in (select ROLE_MBR_ID from krim_role_mbr_t t where mbr_id is null or mbr_id='');
+select 'krim_role_mbr_attr_data_t - ' || count(1)  from krim_role_mbr_attr_data_t where ROLE_MBR_ID in (select ROLE_MBR_ID from krim_role_mbr_t t where role_id is null or role_id='');
+select 'krim_role_mbr_t - ' || count(1)  from krim_role_mbr_t t where mbr_id is null or mbr_id='';
+select 'krim_role_mbr_t - ' || count(1)  from krim_role_mbr_t t where role_id is null or role_id='';

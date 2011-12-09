@@ -1,0 +1,728 @@
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '200941268'), 
+        'ZZ', '9434834', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '200941269'), 
+        'ZZ', '9439851', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '200941270'), 
+        'ZZ', '9443386', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '200964099'), 
+        'ZZ', '9432116', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '200970040'), 
+        'ZZ', '9443110', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '200970041'), 
+        'ZZ', '9445267', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '200972119'), 
+        'ZZ', '9433868', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '200972120'), 
+        'ZZ', '9439154', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '200972121'), 
+        'ZZ', '9442556', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '200975019'), 
+        'ZZ', '9442551', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '200977018'), 
+        'ZZ', '9434903', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '200979092'), 
+        'ZZ', '9388174', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '200979102'), 
+        'ZZ', '9434897', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '200979103'), 
+        'ZZ', '9443093', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '200980126'), 
+        'ZZ', '9358121', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '200980137'), 
+        'ZZ', '9407049', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '200980139'), 
+        'ZZ', '9413130', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '200980141'), 
+        'ZZ', '9432120', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '200980142'), 
+        'ZZ', '9434843', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '200980143'), 
+        'ZZ', '9437182', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '200980144'), 
+        'ZZ', '9439858', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '200981176'), 
+        'ZZ', '9432133', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '200981177'), 
+        'ZZ', '9434853', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '200981178'), 
+        'ZZ', '9440048', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '200985050'), 
+        'ZZ', '9437171', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '200986095'), 
+        'ZZ', '9442565', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '200986097'), 
+        'ZZ', '9449140', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '200990050'), 
+        'ZZ', '9320348', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '200990057'), 
+        'ZZ', '9422547', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '200990058'), 
+        'ZZ', '9433863', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '200991028'), 
+        'ZZ', '9433874', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '200994122'), 
+        'ZZ', '9423030', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '200994124'), 
+        'ZZ', '9430833', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '200994125'), 
+        'ZZ', '9434899', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '200994126'), 
+        'ZZ', '9437151', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '200994127'), 
+        'ZZ', '9439717', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '200996078'), 
+        'ZZ', '9395082', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '200996081'), 
+        'ZZ', '9419255', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '200996082'), 
+        'ZZ', '9431836', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '200998065'), 
+        'ZZ', '9432105', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201002036'), 
+        'ZZ', '9437179', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201003074'), 
+        'ZZ', '9423433', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201004126'), 
+        'ZZ', '9433890', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201004127'), 
+        'ZZ', '9439170', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201004128'), 
+        'ZZ', '9442574', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201004130'), 
+        'ZZ', '9449123', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201005035'), 
+        'ZZ', '9437145', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201007021'), 
+        'ZZ', '9413132', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201007022'), 
+        'ZZ', '9425202', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201009039'), 
+        'ZZ', '9439723', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201011007'), 
+        'ZZ', '9437149', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201013091'), 
+        'ZZ', '9433866', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201013092'), 
+        'ZZ', '9439150', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201013093'), 
+        'ZZ', '9442553', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201016009'), 
+        'ZZ', '9433896', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201016010'), 
+        'ZZ', '9439173', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201016011'), 
+        'ZZ', '9442579', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201020003'), 
+        'ZZ', '9267104', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201020006'), 
+        'ZZ', '9305821', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201020016'), 
+        'ZZ', '9388181', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201020020'), 
+        'ZZ', '9430836', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201020021'), 
+        'ZZ', '9437158', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201020022'), 
+        'ZZ', '9439719', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201022018'), 
+        'ZZ', '9439848', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201023017'), 
+        'ZZ', '9427487', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201024007'), 
+        'ZZ', '9439856', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201024008'), 
+        'ZZ', '9443388', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201025006'), 
+        'ZZ', '9392790', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201025009'), 
+        'ZZ', '9427500', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201026013'), 
+        'ZZ', '9434841', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201026014'), 
+        'ZZ', '9439845', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201028023'), 
+        'ZZ', '9419421', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201028028'), 
+        'ZZ', '9434904', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201028029'), 
+        'ZZ', '9437167', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201028030'), 
+        'ZZ', '9439721', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201028031'), 
+        'ZZ', '9444014', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201029010'), 
+        'ZZ', '9419424', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201029011'), 
+        'ZZ', '9437166', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201030029'), 
+        'ZZ', '9434909', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201030030'), 
+        'ZZ', '9437174', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201030031'), 
+        'ZZ', '9443102', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201031010'), 
+        'ZZ', '9434915', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201031011'), 
+        'ZZ', '9437172', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201031012'), 
+        'ZZ', '9443114', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201031013'), 
+        'ZZ', '9445275', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201032022'), 
+        'ZZ', '9395615', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201032023'), 
+        'ZZ', '9397566', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201032026'), 
+        'ZZ', '9409069', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201032027'), 
+        'ZZ', '9419415', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201032028'), 
+        'ZZ', '9423036', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201032032'), 
+        'ZZ', '9434917', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201032033'), 
+        'ZZ', '9434963', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201032034'), 
+        'ZZ', '9437164', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201032035'), 
+        'ZZ', '9443098', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201033004'), 
+        'ZZ', '9425206', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201034001'), 
+        'ZZ', '9314407', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201034024'), 
+        'ZZ', '9395473', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201034030'), 
+        'ZZ', '9419405', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201034031'), 
+        'ZZ', '9423049', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201034033'), 
+        'ZZ', '9427687', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201034034'), 
+        'ZZ', '9430829', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201034035'), 
+        'ZZ', '9434893', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201034036'), 
+        'ZZ', '9437143', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;
+INSERT INTO MM_ACCOUNTS_T ( ACCOUNTS_ID, OBJ_ID, VER_NBR, ORDER_DOC_NBR, FIN_COA_CD, 
+                                    ACCOUNT_NBR, SUB_ACCT_NBR, FIN_OBJECT_CD, 
+                                    ACCOUNT_PCT, ACCOUNT_FIXED_AMT, LAST_UPDATE_DT , AMOUNT_TYP)
+VALUES (MM_ACCOUNTS_S.nextval, SYS_GUID(), '1', 
+        (select MM_ORDER_DOC_T.FDOC_NBR from MM_ORDER_DOC_T where ORDER_ID = '201036001'), 
+        'ZZ', '9443108', '00000', '6564', '100.0', '0.0', CURRENT_DATE, 'PCT' )
+;

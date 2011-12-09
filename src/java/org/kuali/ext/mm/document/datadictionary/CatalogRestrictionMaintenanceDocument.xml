@@ -1,0 +1,70 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="CatalogRestrictionMaintenanceDocument" parent="CatalogRestrictionMaintenanceDocument-parentBean" />
+
+  <bean id="CatalogRestrictionMaintenanceDocument-parentBean" abstract="true" parent="MaintenanceDocumentEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.CatalogRestriction"
+        p:maintainableClass="org.kuali.rice.kns.maintenance.KualiMaintainableImpl"
+        p:documentTypeName="SCAR"
+        p:documentAuthorizerClass="org.kuali.rice.kns.document.authorization.MaintenanceDocumentAuthorizerBase" >
+    <property name="businessRulesClass" value="org.kuali.ext.mm.document.validation.impl.CatalogRestrictionRule" />
+    <property name="lockingKeys" >
+      <list>
+        <value>catalogRestrictionId</value>
+      </list>
+    </property>
+    <property name="defaultExistenceChecks" >
+      <list>
+      	<bean parent="ReferenceDefinition"
+              p:attributeName="catalog"
+              p:attributeToHighlightOnFail="catalog.catalogCd" />
+      </list>
+    </property>
+    <property name="workflowAttributes" >
+        <ref bean="CatalogRestrictionMaintenanceDocument-workflowAttributes" />
+    </property>
+    <property name="maintainableSections" >
+      <list>
+        <ref bean="CatalogRestrictionMaintenanceDocument-MainSection" />
+      </list>
+    </property>
+  </bean>
+
+ <!-- Maintenance Section Definitions -->
+  <bean id="CatalogRestrictionMaintenanceDocument-MainSection" parent="CatalogRestrictionMaintenanceDocument-MainSection-parentBean" />
+
+  <bean id="CatalogRestrictionMaintenanceDocument-MainSection-parentBean" abstract="true" parent="MaintainableSectionDefinition"
+        p:title="Catalog Restriction Maintenance" >
+    <property name="maintainableItems" >
+      <list>
+      	<bean parent="MaintainableFieldDefinition"
+              p:name="catalog.catalogCd"
+              p:required="true" 
+              p:lookupReadOnly="true" />              
+        <bean parent="MaintainableFieldDefinition"
+              p:name="restrictionCode"
+              p:required="true" />              
+        <bean parent="MaintainableFieldDefinition"
+              p:name="finacialChartOfAccountsCode"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="organizationCode"
+              p:required="false" />   
+        <bean parent="MaintainableFieldDefinition"
+              p:name="accountNumber"
+              p:required="false" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="active"
+              p:defaultValue="true" />
+      </list>
+    </property>
+  </bean>
+ <!-- workflow attributes -->
+  <bean id="CatalogRestrictionMaintenanceDocument-workflowAttributes" parent="CatalogRestrictionMaintenanceDocument-workflowAttributes-parentBean" />
+
+  <bean id="CatalogRestrictionMaintenanceDocument-workflowAttributes-parentBean" abstract="true" class="org.kuali.rice.kns.datadictionary.WorkflowAttributes" />
+</beans>

@@ -1,0 +1,90 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="StoresCatalogMaintenanceDocument" parent="StoresCatalogMaintenanceDocument-parentBean" />
+
+  <bean id="StoresCatalogMaintenanceDocument-parentBean" abstract="true" parent="MaintenanceDocumentEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.Catalog"
+        p:maintainableClass="org.kuali.rice.kns.maintenance.KualiMaintainableImpl"
+        p:documentTypeName="SCLG"
+        p:documentAuthorizerClass="org.kuali.rice.kns.document.authorization.MaintenanceDocumentAuthorizerBase" >
+
+    <property name="lockingKeys" >
+      <list>
+        <value>catalogId</value>
+      </list>
+    </property>
+    <property name="defaultExistenceChecks" >
+      <list>
+      	<bean parent="ReferenceDefinition"
+              p:attributeName="warehouse"
+              p:attributeToHighlightOnFail="warehouseCd" />
+        <bean parent="ReferenceDefinition"
+              p:attributeName="catalogType"
+              p:attributeToHighlightOnFail="catalogTypeCd" />
+      </list>
+    </property>
+    <property name="workflowAttributes" >
+        <ref bean="StoresCatalogMaintenanceDocument-workflowAttributes" />
+    </property>
+    <property name="maintainableSections" >
+      <list>
+        <ref bean="StoresCatalogMaintenanceDocument-MainSection" />
+      </list>
+    </property>
+  </bean>
+
+ <!-- Maintenance Section Definitions -->
+  <bean id="StoresCatalogMaintenanceDocument-MainSection" parent="StoresCatalogMaintenanceDocument-MainSection-parentBean" />
+
+  <bean id="StoresCatalogMaintenanceDocument-MainSection-parentBean" abstract="true" parent="MaintainableSectionDefinition"
+        p:title="Edit Catalog" >
+    <property name="maintainableItems" >
+      <list>
+        <bean parent="MaintainableFieldDefinition"
+              p:name="catalogCd"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="catalogDesc"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="catalogTypeCd"
+              p:required="true" />             
+        <bean parent="MaintainableFieldDefinition"
+              p:name="catalogBeginDt"
+              p:required="false" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="catalogEndDt"
+              p:required="false" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="priorityNbr"
+              p:required="false" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="agreementNbr"
+              p:required="false" />  
+        <bean parent="MaintainableFieldDefinition"
+              p:name="warehouseCd"
+              p:required="true" />         
+        <bean parent="MaintainableFieldDefinition"
+              p:name="defaultObjectCd"
+              p:required="true" />                       
+        <bean parent="MaintainableFieldDefinition"
+              p:name="catalogPendingDocNbr"
+              p:required="false" />              
+        <bean parent="MaintainableFieldDefinition"
+              p:name="currentInd"
+              p:required="false" /> 
+        <bean parent="MaintainableFieldDefinition"
+              p:name="active"
+              p:defaultValue="true" />
+      </list>
+    </property>
+  </bean>
+ <!-- workflow attributes -->
+  <bean id="StoresCatalogMaintenanceDocument-workflowAttributes" parent="StoresCatalogMaintenanceDocument-workflowAttributes-parentBean" />
+
+  <bean id="StoresCatalogMaintenanceDocument-workflowAttributes-parentBean" abstract="true" class="org.kuali.rice.kns.datadictionary.WorkflowAttributes" />
+</beans>

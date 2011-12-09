@@ -1,0 +1,433 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="BinLookable" parent="BinLookable-parentBean" />
+
+  <bean id="BinLookable-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.BinLookable"
+        p:titleAttribute="binId"
+        p:objectLabel="Bin"
+        p:inquiryDefinition-ref="BinLookable-inquiryDefinition"
+        p:lookupDefinition-ref="BinLookable-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="BinLookable-active" /> 
+        <ref bean="BinLookable-stockBalance.stockBalanceId" />        
+        <ref bean="BinLookable-stockDistributornumber" />        
+        <ref bean="BinLookable-availableQty" />
+        <ref bean="BinLookable-binNbr" />
+        <ref bean="BinLookable-binId" />
+        <ref bean="BinLookable-zone.zoneCd" />
+        <ref bean="BinLookable-zone.warehouseCd" />
+        <ref bean="BinLookable-lastUpdateDate" />
+        <ref bean="BinLookable-maximumShelfQty" />
+        <ref bean="BinLookable-shelfId" />
+        <ref bean="BinLookable-shelfIdNbr" />
+        <ref bean="BinLookable-binHeight" />
+        <ref bean="BinLookable-binWidth" />
+        <ref bean="BinLookable-binLength" />
+        <ref bean="BinLookable-versionNumber" />
+        <ref bean="BinLookable-zoneId" />
+        <ref bean="BinLookable-binDisDesc" />
+        <ref bean="BinLookable-stockBalance.stock.stockDistributorNbr"/>
+     
+      </list>
+    </property>
+    <property name="relationships" >
+      <list>
+        <bean parent="RelationshipDefinition">
+          <property name="objectAttributeName" value="zone" />
+          <property name="primitiveAttributes" >
+            <list>
+              <bean parent="PrimitiveAttributeDefinition"
+                    p:sourceName="zoneId"
+                    p:targetName="zoneId" />
+            </list>
+          </property>
+          <property name="supportAttributes" >
+            <list>
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="zone.zoneCd"
+                    p:targetName="zoneCd" />
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="zone.warehouseCd"
+                    p:targetName="warehouseCd" />
+            </list>
+          </property>
+        </bean>
+        <bean parent="RelationshipDefinition">
+          <property name="objectAttributeName" value="stockBalance" />
+          <property name="primitiveAttributes" >
+            <list>
+              <bean parent="PrimitiveAttributeDefinition"
+                    p:sourceName="stockBalance.binId"
+                    p:targetName="binId" />
+            </list>
+          </property>          
+        </bean>
+       <bean parent="RelationshipDefinition">
+          <property name="objectAttributeName" value="stockBalance.stock" />
+          <property name="primitiveAttributes" >
+            <list>
+              <bean parent="PrimitiveAttributeDefinition"
+                    p:sourceName="stockBalance.stock.stockId"
+                    p:targetName="stockId" />
+            </list>
+          </property>
+          <property name="supportAttributes" >
+            <list>
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="stockBalance.stock.stockDistributorNbr"
+                    p:targetName="stockDistributorNbr" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+    
+  </bean>
+    
+  <bean id="BinLookable-stockBalance.stock.stockDistributorNbr" parent="BinLookable-stockBalance.stock.stockDistributorNbr-parentBean" />
+  <bean id="BinLookable-stockBalance.stock.stockDistributorNbr-parentBean" parent="Stock-stockDistributorNbr" abstract="true"
+        p:name="stockBalance.stock.stockDistributorNbr"
+        p:label="Stock Distributor Number" />
+        
+        
+  <bean id="BinLookable-stockDistributornumber" parent="BinLookable-stockDistributornumber-parentBean" />
+  <bean id="BinLookable-stockDistributornumber-parentBean" parent="Stock-stockDistributorNbr-parentBean" abstract="true"
+        p:name="stockDistributornumber"
+        p:label="Stock Distributor Number" />
+
+  <bean id="BinLookable-stockBalance.stockId" parent="BinLookable-stockBalance.stockId-parentBean" />
+  <bean id="BinLookable-stockBalance.stockId-parentBean" parent="Stock-stockId-parentBean" abstract="true"
+        p:name="stockBalance.stock.stockId" />
+
+  <bean id="BinLookable-stockBalance.stockBalanceId" parent="BinLookable-stockBalance.stockBalanceId-parentBean" />
+  <bean id="BinLookable-stockBalance.stockBalanceId-parentBean" parent="StockBalance-stockBalanceId-parentBean" abstract="true"
+        p:name="stockBalance.stockBalanceId" />
+
+
+
+  <bean id="BinLookable-active" parent="BinLookable-active-parentBean" />
+  <bean id="BinLookable-active-parentBean" abstract="true" parent="GenericAttributes-activeIndicator" 
+        p:name="active"
+        p:label="Active Indicator"
+        p:shortLabel="Active Indicator"
+        p:required="false" />
+
+  <bean id="BinLookable-binNbr" parent="BinLookable-binNbr-parentBean" />
+  <bean id="BinLookable-binNbr-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="binNbr"
+        p:forceUppercase="false"
+        p:label="Bin Number"
+        p:shortLabel="Bin Number"
+        p:maxLength="6"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="6" />
+    </property>
+  </bean>
+
+  <bean id="BinLookable-availableQty" parent="BinLookable-availableQty-parentBean" />
+  <bean id="BinLookable-availableQty-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="availableQty"
+        p:forceUppercase="false"
+        p:label="Available Shelf Quantity"
+        p:shortLabel="Available Shelf Quantity"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="BinLookable-binId" parent="BinLookable-binId-parentBean" />
+  <bean id="BinLookable-binId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="binId"
+        p:forceUppercase="false"
+        p:label="Bin ID"
+        p:shortLabel="Bin ID"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  
+  <bean id="BinLookable-zoneId" parent="BinLookable-zoneId-parentBean" />
+  <bean id="BinLookable-zoneId-parentBean" parent="Zone-zoneId" abstract="true"
+        p:name="zoneId"
+        p:forceUppercase="false"
+        p:label="Zone ID"
+        p:shortLabel="Zone ID"
+        p:required="false" >
+    <property name="control" >
+      <bean parent="HiddenControlDefinition" />
+    </property>
+    <property name="displayLabelAttribute" value="zone.zoneCd" />
+  </bean>
+
+  <bean id="BinLookable-binDisDesc" parent="BinLookable-binDisDesc-parentBean" />
+  <bean id="BinLookable-binDisDesc-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="binDisDesc"
+        p:forceUppercase="false"
+        p:label="Zone/Bin/Shelf ID/Shelf Number"
+        p:shortLabel="Zone/Bin/Shelf ID/Shelf Number"
+        p:maxLength="20"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="20" />
+    </property>
+  </bean>
+    
+    
+  <bean id="BinLookable-zone.zoneCd" parent="BinLookable-zone.zoneCd-parentBean" />
+  <bean id="BinLookable-zone.zoneCd-parentBean" parent="Zone-zoneCd" abstract="true"
+        p:name="zone.zoneCd"
+        p:forceUppercase="false"
+        p:label="Zone Code"
+        p:shortLabel="Zone Code"
+        p:required="false" >
+  </bean>
+  
+  <bean id="BinLookable-zone.warehouseCd" parent="BinLookable-zone.warehouseCd-parentBean" />
+  <bean id="BinLookable-zone.warehouseCd-parentBean" parent="Zone-warehouseCd" abstract="true"
+        p:name="zone.warehouseCd"
+        p:forceUppercase="false"
+        p:label="Warehouse Code"
+        p:shortLabel="Warehouse Code"
+        p:required="false" >
+  </bean>
+
+  <bean id="BinLookable-lastUpdateDate" parent="BinLookable-lastUpdateDate-parentBean" />
+  <bean id="BinLookable-lastUpdateDate-parentBean" parent="GenericAttributes-genericTimestamp" abstract="true"
+        p:name="lastUpdateDate"
+        p:forceUppercase="false"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:maxLength="10"
+        p:required="false" >
+  </bean>
+
+  <bean id="BinLookable-maximumShelfQty" parent="BinLookable-maximumShelfQty-parentBean" />
+  <bean id="BinLookable-maximumShelfQty-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="maximumShelfQty"
+        p:forceUppercase="false"
+        p:label="Maximum Shelf Quantity"
+        p:shortLabel="Maximum Shelf Quantity"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="BinLookable-shelfId" parent="BinLookable-shelfId-parentBean" />
+  <bean id="BinLookable-shelfId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="shelfId"
+        p:forceUppercase="false"
+        p:label="Shelf ID"
+        p:shortLabel="Shelf ID"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="BinLookable-shelfIdNbr" parent="BinLookable-shelfIdNbr-parentBean" />
+  <bean id="BinLookable-shelfIdNbr-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="shelfIdNbr"
+        p:forceUppercase="false"
+        p:label="Shelf ID Number"
+        p:shortLabel="Shelf ID Number"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="NumericValidationPattern" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="BinLookable-binHeight" parent="BinLookable-binHeight-parentBean" />
+  <bean id="BinLookable-binHeight-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="binHeight"
+        p:forceUppercase="false"
+        p:label="Bin Height"
+        p:shortLabel="Bin Height"
+        p:maxLength="8"
+        p:required="false" >
+   	<property name="validationPattern" >
+    	<bean parent="FixedPointValidationPattern"
+            p:precision="8"
+            p:scale="2"
+            p:allowNegative="false" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  
+  <bean id="BinLookable-binWidth" parent="BinLookable-binWidth-parentBean" />
+  <bean id="BinLookable-binWidth-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="binWidth"
+        p:forceUppercase="false"
+        p:label="Bin Width"
+        p:shortLabel="Bin Width"
+        p:maxLength="8"
+        p:required="false" >
+    <property name="validationPattern" >
+    	<bean parent="FixedPointValidationPattern"
+            p:precision="8"
+            p:scale="2"
+            p:allowNegative="false" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  
+  <bean id="BinLookable-binLength" parent="BinLookable-binLength-parentBean" />
+  <bean id="BinLookable-binLength-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="binLength"
+        p:forceUppercase="false"
+        p:label="Bin Length"
+        p:shortLabel="Bin Length"
+        p:maxLength="8"
+        p:required="false" >
+    <property name="validationPattern" >
+    	<bean parent="FixedPointValidationPattern"
+            p:precision="8"
+            p:scale="2"
+            p:allowNegative="false" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="BinLookable-versionNumber" parent="BinLookable-versionNumber-parentBean" />
+  <bean id="BinLookable-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="BinLookable-inquiryDefinition" parent="BinLookable-inquiryDefinition-parentBean" />
+
+  <bean id="BinLookable-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Bin Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Bin Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="active" />
+              <bean parent="FieldDefinition" p:attributeName="zone.warehouseCd" />
+              <bean parent="FieldDefinition" p:attributeName="zone.zoneCd" />              
+              <bean parent="FieldDefinition" p:attributeName="binNbr" />
+              <bean parent="FieldDefinition" p:attributeName="shelfId" />
+              <bean parent="FieldDefinition" p:attributeName="shelfIdNbr" />
+              <bean parent="FieldDefinition" p:attributeName="maximumShelfQty" />
+              <bean parent="FieldDefinition" p:attributeName="binHeight" />  
+		      <bean parent="FieldDefinition" p:attributeName="binWidth" />
+		      <bean parent="FieldDefinition" p:attributeName="binLength" />            
+              <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+              <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="BinLookable-lookupDefinition" parent="BinLookable-lookupDefinition-parentBean" />
+
+  <bean id="BinLookable-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Bin Lookup"
+        p:lookupableID="BinLookable" >
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>binId</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>        
+        <bean parent="FieldDefinition" p:attributeName="stockBalance.stock.stockDistributorNbr" />     
+		<bean parent="FieldDefinition" p:attributeName="zone.warehouseCd" />
+        <bean parent="FieldDefinition" p:attributeName="zone.zoneCd" />
+        <bean parent="FieldDefinition" p:attributeName="zoneId" />
+        <bean parent="FieldDefinition" p:attributeName="binNbr" />
+        <bean parent="FieldDefinition" p:attributeName="shelfId" />
+        <bean parent="FieldDefinition" p:attributeName="shelfIdNbr" />
+        <bean parent="FieldDefinition" p:attributeName="maximumShelfQty" />
+        <bean parent="FieldDefinition" p:attributeName="binHeight" />
+        <bean parent="FieldDefinition" p:attributeName="binWidth" />
+        <bean parent="FieldDefinition" p:attributeName="binLength" />   
+      <bean parent="FieldDefinition" p:attributeName="active" />   
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="binDisDesc" />
+		<bean parent="FieldDefinition" p:attributeName="stockBalance.stock.stockDistributorNbr" />
+        <bean parent="FieldDefinition" p:attributeName="availableQty" />
+        <bean parent="FieldDefinition" p:attributeName="maximumShelfQty" />
+        <bean parent="FieldDefinition" p:attributeName="binHeight" />
+        <bean parent="FieldDefinition" p:attributeName="binWidth" />
+        <bean parent="FieldDefinition" p:attributeName="binLength" />
+      </list>
+    </property>
+  </bean>
+
+</beans>

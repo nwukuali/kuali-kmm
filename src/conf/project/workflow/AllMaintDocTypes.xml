@@ -1,0 +1,703 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="ns:workflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="ns:workflow resource:WorkflowData">
+<documentTypes xmlns="ns:workflow/DocumentType" xsi:schemaLocation="ns:workflow/DocumentType resource:DocumentType">
+<documentType>
+  <name>SDOC</name>
+  <parent>KualiDocument</parent>     
+</documentType>
+<documentType>
+  <name>SSMD</name>
+  <parent>SDOC</parent>     
+  <postProcessorName>org.kuali.rice.kns.workflow.postprocessor.KualiPostProcessor</postProcessorName>
+  <docHandler>${kmm.url}/kr/maintenance.do?methodToCall=docHandler</docHandler>
+  <routePaths>
+    <routePath>
+      <start name="AdHoc"  />
+    </routePath>
+  </routePaths>
+  <routeNodes>
+    <start name="AdHoc">
+      <activationType>P</activationType>
+    </start>
+  </routeNodes>
+</documentType>
+
+<documentType>
+	<name>SCLG</name>
+	<label>Catalog Maintenance Document</label>
+	<parent>SSMD</parent>			
+</documentType>
+
+<documentType>
+	<name>SCTP</name>
+	<label>Catalog Type Maintenance Document</label>
+	<parent>SSMD</parent>			
+</documentType>
+
+<documentType>
+	<name>SBIN</name>
+	<label>BinMaintenanceDocument</label>
+	<parent>SSMD</parent>			
+</documentType>
+
+<documentType>
+	<name>StoresCycleMaintenanceDocument</name>
+	<label>CycleMaintenanceDocument</label>
+	<parent>SSMD</parent>			
+</documentType>
+
+
+
+<documentType>
+	<name>CountParameterMaintenanceDocument</name>
+	<label>CountParameterMaintenanceDocument</label>
+	<parent>RiceDocument</parent>			
+	<postProcessorName>org.kuali.rice.kns.workflow.postprocessor.KualiPostProcessor</postProcessorName>
+	<superUserWorkgroupName>KR-WKFLW:WorkflowAdmin</superUserWorkgroupName>
+	<docHandler>${kr.url}/maintenance.do?methodToCall=docHandler</docHandler>
+	<blanketApproveWorkgroupName>KR-WKFLW:WorkflowAdmin</blanketApproveWorkgroupName>
+	<defaultExceptionWorkgroupName>KR-WKFLW:WorkflowAdmin</defaultExceptionWorkgroupName>
+	<policies/>
+	<routePaths>
+		<routePath>
+			<start name="AdHoc"  />
+		</routePath>
+	</routePaths>
+	<routeNodes>
+		<start name="AdHoc">
+			<activationType>P</activationType>
+		</start>
+	</routeNodes>
+</documentType>
+<documentType>
+	<name>CustomerMaintenanceDocument</name>
+	<label>CustomerMaintenanceDocument</label>
+	<parent>RiceDocument</parent>			
+	<postProcessorName>org.kuali.rice.kns.workflow.postprocessor.KualiPostProcessor</postProcessorName>
+	<superUserWorkgroupName>KR-WKFLW:WorkflowAdmin</superUserWorkgroupName>
+	<docHandler>${kr.url}/maintenance.do?methodToCall=docHandler</docHandler>
+	<blanketApproveWorkgroupName>KR-WKFLW:WorkflowAdmin</blanketApproveWorkgroupName>
+	<defaultExceptionWorkgroupName>KR-WKFLW:WorkflowAdmin</defaultExceptionWorkgroupName>
+	<policies/>
+	<routePaths>
+		<routePath>
+			<start name="AdHoc"  />
+		</routePath>
+	</routePaths>
+	<routeNodes>
+		<start name="AdHoc">
+			<activationType>P</activationType>
+		</start>
+	</routeNodes>
+</documentType>
+<documentType>
+	<name>CustomerProfileMaintenanceDocument</name>
+	<label>CustomerProfileMaintenanceDocument</label>
+	<parent>RiceDocument</parent>			
+	<postProcessorName>org.kuali.rice.kns.workflow.postprocessor.KualiPostProcessor</postProcessorName>
+	<superUserWorkgroupName>KR-WKFLW:WorkflowAdmin</superUserWorkgroupName>
+	<docHandler>${kr.url}/maintenance.do?methodToCall=docHandler</docHandler>
+	<blanketApproveWorkgroupName>KR-WKFLW:WorkflowAdmin</blanketApproveWorkgroupName>
+	<defaultExceptionWorkgroupName>KR-WKFLW:WorkflowAdmin</defaultExceptionWorkgroupName>
+	<policies/>
+	<routePaths>
+		<routePath>
+			<start name="AdHoc"  />
+		</routePath>
+	</routePaths>
+	<routeNodes>
+		<start name="AdHoc">
+			<activationType>P</activationType>
+		</start>
+	</routeNodes>
+</documentType>
+<documentType>
+	<name>CycleMaintenanceDocument</name>
+	<label>CycleMaintenanceDocument</label>
+	<parent>RiceDocument</parent>			
+	<postProcessorName>org.kuali.rice.kns.workflow.postprocessor.KualiPostProcessor</postProcessorName>
+	<superUserWorkgroupName>KR-WKFLW:WorkflowAdmin</superUserWorkgroupName>
+	<docHandler>${kr.url}/maintenance.do?methodToCall=docHandler</docHandler>
+	<blanketApproveWorkgroupName>KR-WKFLW:WorkflowAdmin</blanketApproveWorkgroupName>
+	<defaultExceptionWorkgroupName>KR-WKFLW:WorkflowAdmin</defaultExceptionWorkgroupName>
+	<policies/>
+	<routePaths>
+		<routePath>
+			<start name="AdHoc"  />
+		</routePath>
+	</routePaths>
+	<routeNodes>
+		<start name="AdHoc">
+			<activationType>P</activationType>
+		</start>
+	</routeNodes>
+</documentType>
+<documentType>
+	<name>EhsContainerMaintenanceDocument</name>
+	<label>EhsContainerMaintenanceDocument</label>
+	<parent>RiceDocument</parent>			
+	<postProcessorName>org.kuali.rice.kns.workflow.postprocessor.KualiPostProcessor</postProcessorName>
+	<superUserWorkgroupName>KR-WKFLW:WorkflowAdmin</superUserWorkgroupName>
+	<docHandler>${kr.url}/maintenance.do?methodToCall=docHandler</docHandler>
+	<blanketApproveWorkgroupName>KR-WKFLW:WorkflowAdmin</blanketApproveWorkgroupName>
+	<defaultExceptionWorkgroupName>KR-WKFLW:WorkflowAdmin</defaultExceptionWorkgroupName>
+	<policies/>
+		    <routePaths>
+				<routePath>
+					<start name="AdHoc"  />
+				</routePath>
+			</routePaths>
+			<routeNodes>
+				<start name="AdHoc">
+					<activationType>P</activationType>
+				</start>
+			</routeNodes>
+</documentType>
+<documentType>
+	<name>EhsHazardousMaintenanceDocument</name>
+	<label>EhsHazardousMaintenanceDocument</label>
+	<parent>RiceDocument</parent>			
+	<postProcessorName>org.kuali.rice.kns.workflow.postprocessor.KualiPostProcessor</postProcessorName>
+	<superUserWorkgroupName>KR-WKFLW:WorkflowAdmin</superUserWorkgroupName>
+	<docHandler>${kr.url}/maintenance.do?methodToCall=docHandler</docHandler>
+	<blanketApproveWorkgroupName>KR-WKFLW:WorkflowAdmin</blanketApproveWorkgroupName>
+	<defaultExceptionWorkgroupName>KR-WKFLW:WorkflowAdmin</defaultExceptionWorkgroupName>
+	<policies/>
+		    <routePaths>
+				<routePath>
+					<start name="AdHoc"  />
+				</routePath>
+			</routePaths>
+			<routeNodes>
+				<start name="AdHoc">
+					<activationType>P</activationType>
+				</start>
+			</routeNodes>
+</documentType>
+<documentType>
+	<name>EhsHazardousStateMaintenanceDocument</name>
+	<label>EhsHazardousStateMaintenanceDocument</label>
+	<parent>RiceDocument</parent>			
+	<postProcessorName>org.kuali.rice.kns.workflow.postprocessor.KualiPostProcessor</postProcessorName>
+	<superUserWorkgroupName>KR-WKFLW:WorkflowAdmin</superUserWorkgroupName>
+	<docHandler>${kr.url}/maintenance.do?methodToCall=docHandler</docHandler>
+	<blanketApproveWorkgroupName>KR-WKFLW:WorkflowAdmin</blanketApproveWorkgroupName>
+	<defaultExceptionWorkgroupName>KR-WKFLW:WorkflowAdmin</defaultExceptionWorkgroupName>
+	<policies/>
+	<routePaths>
+		<routePath>
+			<start name="AdHoc"  />
+		</routePath>
+	</routePaths>
+	<routeNodes>
+		<start name="AdHoc">
+			<activationType>P</activationType>
+		</start>
+	</routeNodes>
+</documentType>
+<documentType>
+	<name>EhsUnitOfIssueMaintenanceDocument</name>
+	<label>EhsUnitOfIssueMaintenanceDocument</label>
+	<parent>RiceDocument</parent>			
+	<postProcessorName>org.kuali.rice.kns.workflow.postprocessor.KualiPostProcessor</postProcessorName>
+	<superUserWorkgroupName>KR-WKFLW:WorkflowAdmin</superUserWorkgroupName>
+	<docHandler>${kr.url}/maintenance.do?methodToCall=docHandler</docHandler>
+	<blanketApproveWorkgroupName>KR-WKFLW:WorkflowAdmin</blanketApproveWorkgroupName>
+	<defaultExceptionWorkgroupName>KR-WKFLW:WorkflowAdmin</defaultExceptionWorkgroupName>
+	<policies/>
+		    <routePaths>
+				<routePath>
+					<start name="AdHoc"  />
+				</routePath>
+			</routePaths>
+			<routeNodes>
+				<start name="AdHoc">
+					<activationType>P</activationType>
+				</start>
+			</routeNodes>
+</documentType>
+<documentType>
+	<name>HazardousStateMaintenanceDocument</name>
+	<label>HazardousStateMaintenanceDocument</label>
+	<parent>RiceDocument</parent>			
+	<postProcessorName>org.kuali.rice.kns.workflow.postprocessor.KualiPostProcessor</postProcessorName>
+	<superUserWorkgroupName>KR-WKFLW:WorkflowAdmin</superUserWorkgroupName>
+	<docHandler>${kr.url}/maintenance.do?methodToCall=docHandler</docHandler>
+	<blanketApproveWorkgroupName>KR-WKFLW:WorkflowAdmin</blanketApproveWorkgroupName>
+	<defaultExceptionWorkgroupName>KR-WKFLW:WorkflowAdmin</defaultExceptionWorkgroupName>
+	<policies/>
+	<routePaths>
+		<routePath>
+			<start name="AdHoc"  />
+		</routePath>
+	</routePaths>
+	<routeNodes>
+		<start name="AdHoc">
+			<activationType>P</activationType>
+		</start>
+	</routeNodes>
+</documentType>
+<documentType>
+	<name>HazardousUnMaintenanceDocument</name>
+	<label>HazardousUnMaintenanceDocument</label>
+	<parent>RiceDocument</parent>			
+	<postProcessorName>org.kuali.rice.kns.workflow.postprocessor.KualiPostProcessor</postProcessorName>
+	<superUserWorkgroupName>KR-WKFLW:WorkflowAdmin</superUserWorkgroupName>
+	<docHandler>${kr.url}/maintenance.do?methodToCall=docHandler</docHandler>
+	<blanketApproveWorkgroupName>KR-WKFLW:WorkflowAdmin</blanketApproveWorkgroupName>
+	<defaultExceptionWorkgroupName>KR-WKFLW:WorkflowAdmin</defaultExceptionWorkgroupName>
+	<policies/>
+		    <routePaths>
+				<routePath>
+					<start name="AdHoc"  />
+				</routePath>
+			</routePaths>
+			<routeNodes>
+				<start name="AdHoc">
+					<activationType>P</activationType>
+				</start>
+			</routeNodes>
+</documentType>
+<documentType>
+	<name>ItemTypeMaintenanceDocument</name>
+	<label>ItemTypeMaintenanceDocument</label>
+	<parent>RiceDocument</parent>			
+	<postProcessorName>org.kuali.rice.kns.workflow.postprocessor.KualiPostProcessor</postProcessorName>
+	<superUserWorkgroupName>KR-WKFLW:WorkflowAdmin</superUserWorkgroupName>
+	<docHandler>${kr.url}/maintenance.do?methodToCall=docHandler</docHandler>
+	<blanketApproveWorkgroupName>KR-WKFLW:WorkflowAdmin</blanketApproveWorkgroupName>
+	<defaultExceptionWorkgroupName>KR-WKFLW:WorkflowAdmin</defaultExceptionWorkgroupName>
+	<policies/>
+	<routePaths>
+		<routePath>
+			<start name="AdHoc"  />
+		</routePath>
+	</routePaths>
+	<routeNodes>
+		<start name="AdHoc">
+			<activationType>P</activationType>
+		</start>
+	</routeNodes>
+</documentType>
+<documentType>
+	<name>OrderTypeMaintenanceDocument</name>
+	<label>OrderTypeMaintenanceDocument</label>
+	<parent>RiceDocument</parent>			
+	<postProcessorName>org.kuali.rice.kns.workflow.postprocessor.KualiPostProcessor</postProcessorName>
+	<superUserWorkgroupName>KR-WKFLW:WorkflowAdmin</superUserWorkgroupName>
+	<docHandler>${kr.url}/maintenance.do?methodToCall=docHandler</docHandler>
+	<blanketApproveWorkgroupName>KR-WKFLW:WorkflowAdmin</blanketApproveWorkgroupName>
+	<defaultExceptionWorkgroupName>KR-WKFLW:WorkflowAdmin</defaultExceptionWorkgroupName>
+	<policies/>
+		    <routePaths>
+				<routePath>
+					<start name="AdHoc"  />
+				</routePath>
+			</routePaths>
+			<routeNodes>
+				<start name="AdHoc">
+					<activationType>P</activationType>
+				</start>
+			</routeNodes>
+</documentType>
+<documentType>
+	<name>ServiceTypeMaintenanceDocument</name>
+	<label>ServiceTypeMaintenanceDocument</label>
+	<parent>RiceDocument</parent>			
+	<postProcessorName>org.kuali.rice.kns.workflow.postprocessor.KualiPostProcessor</postProcessorName>
+	<superUserWorkgroupName>KR-WKFLW:WorkflowAdmin</superUserWorkgroupName>
+	<docHandler>${kr.url}/maintenance.do?methodToCall=docHandler</docHandler>
+	<blanketApproveWorkgroupName>KR-WKFLW:WorkflowAdmin</blanketApproveWorkgroupName>
+	<defaultExceptionWorkgroupName>KR-WKFLW:WorkflowAdmin</defaultExceptionWorkgroupName>
+	<policies/>
+		    <routePaths>
+				<routePath>
+					<start name="AdHoc"  />
+				</routePath>
+			</routePaths>
+			<routeNodes>
+				<start name="AdHoc">
+					<activationType>P</activationType>
+				</start>
+			</routeNodes>
+</documentType>
+<documentType>
+	<name>StockTransReasonMaintenanceDocument</name>
+	<label>StockTransReasonMaintenanceDocument</label>
+	<parent>RiceDocument</parent>			
+	<postProcessorName>org.kuali.rice.kns.workflow.postprocessor.KualiPostProcessor</postProcessorName>
+	<superUserWorkgroupName>KR-WKFLW:WorkflowAdmin</superUserWorkgroupName>
+	<docHandler>${kr.url}/maintenance.do?methodToCall=docHandler</docHandler>
+	<blanketApproveWorkgroupName>KR-WKFLW:WorkflowAdmin</blanketApproveWorkgroupName>
+	<defaultExceptionWorkgroupName>KR-WKFLW:WorkflowAdmin</defaultExceptionWorkgroupName>
+	<policies/>
+		    <routePaths>
+				<routePath>
+					<start name="AdHoc"  />
+				</routePath>
+			</routePaths>
+			<routeNodes>
+				<start name="AdHoc">
+					<activationType>P</activationType>
+				</start>
+			</routeNodes>
+</documentType>
+<documentType>
+	<name>WarehouseMaintenanceDocument</name>
+	<label>WarehouseMaintenanceDocument</label>
+	<parent>RiceDocument</parent>			
+	<postProcessorName>org.kuali.rice.kns.workflow.postprocessor.KualiPostProcessor</postProcessorName>
+	<superUserWorkgroupName>KR-WKFLW:WorkflowAdmin</superUserWorkgroupName>
+	<docHandler>${kr.url}/maintenance.do?methodToCall=docHandler</docHandler>
+	<blanketApproveWorkgroupName>KR-WKFLW:WorkflowAdmin</blanketApproveWorkgroupName>
+	<defaultExceptionWorkgroupName>KR-WKFLW:WorkflowAdmin</defaultExceptionWorkgroupName>
+	<policies/>
+	<routePaths>
+		<routePath>
+			<start name="AdHoc"  />
+		</routePath>
+	</routePaths>
+	<routeNodes>
+		<start name="AdHoc">
+			<activationType>P</activationType>
+		</start>
+	</routeNodes>
+</documentType>
+<documentType>
+	<name>WarehouseMaintenanceDocument</name>
+	<label>WarehouseMaintenanceDocument</label>
+	<parent>RiceDocument</parent>			
+	<postProcessorName>org.kuali.rice.kns.workflow.postprocessor.KualiPostProcessor</postProcessorName>
+	<superUserWorkgroupName>KR-WKFLW:WorkflowAdmin</superUserWorkgroupName>
+	<docHandler>${kr.url}/maintenance.do?methodToCall=docHandler</docHandler>
+	<blanketApproveWorkgroupName>KR-WKFLW:WorkflowAdmin</blanketApproveWorkgroupName>
+	<defaultExceptionWorkgroupName>KR-WKFLW:WorkflowAdmin</defaultExceptionWorkgroupName>
+	<policies/>
+	<routePaths>
+		<routePath>
+			<start name="AdHoc"  />
+		</routePath>
+	</routePaths>
+	<routeNodes>
+		<start name="AdHoc">
+			<activationType>P</activationType>
+		</start>
+	</routeNodes>
+</documentType>
+<documentType>
+	<name>ZoneMaintenanceDocument</name>
+	<label>ZoneMaintenanceDocument</label>
+	<parent>RiceDocument</parent>			
+	<postProcessorName>org.kuali.rice.kns.workflow.postprocessor.KualiPostProcessor</postProcessorName>
+	<superUserWorkgroupName>KR-WKFLW:WorkflowAdmin</superUserWorkgroupName>
+	<docHandler>${kr.url}/maintenance.do?methodToCall=docHandler</docHandler>
+	<blanketApproveWorkgroupName>KR-WKFLW:WorkflowAdmin</blanketApproveWorkgroupName>
+	<defaultExceptionWorkgroupName>KR-WKFLW:WorkflowAdmin</defaultExceptionWorkgroupName>
+	<policies/>
+	<routePaths>
+		<routePath>
+			<start name="AdHoc"  />
+		</routePath>
+	</routePaths>
+	<routeNodes>
+		<start name="AdHoc">
+			<activationType>P</activationType>
+		</start>
+	</routeNodes>
+</documentType>
+<documentType>
+	<name>CatalogTypeMaintenanceDocument</name>
+	<label>CatalogTypeMaintenanceDocument</label>
+	<parent>RiceDocument</parent>			
+	<postProcessorName>org.kuali.rice.kns.workflow.postprocessor.KualiPostProcessor</postProcessorName>
+	<superUserWorkgroupName>KR-WKFLW:WorkflowAdmin</superUserWorkgroupName>
+	<docHandler>${kr.url}/maintenance.do?methodToCall=docHandler</docHandler>
+	<blanketApproveWorkgroupName>KR-WKFLW:WorkflowAdmin</blanketApproveWorkgroupName>
+	<defaultExceptionWorkgroupName>KR-WKFLW:WorkflowAdmin</defaultExceptionWorkgroupName>
+	<policies/>
+		    <routePaths>
+				<routePath>
+					<start name="AdHoc"  />
+				</routePath>
+			</routePaths>
+			<routeNodes>
+				<start name="AdHoc">
+					<activationType>P</activationType>
+				</start>
+			</routeNodes>
+</documentType>
+<documentType>
+	<name>PackListAnnouncementMaintenanceDocument</name>
+	<label>PackListAnnouncementMaintenanceDocument</label>
+	<parent>RiceDocument</parent>			
+	<postProcessorName>org.kuali.rice.kns.workflow.postprocessor.KualiPostProcessor</postProcessorName>
+	<superUserWorkgroupName>KR-WKFLW:WorkflowAdmin</superUserWorkgroupName>
+	<docHandler>${kr.url}/maintenance.do?methodToCall=docHandler</docHandler>
+	<blanketApproveWorkgroupName>KR-WKFLW:WorkflowAdmin</blanketApproveWorkgroupName>
+	<defaultExceptionWorkgroupName>KR-WKFLW:WorkflowAdmin</defaultExceptionWorkgroupName>
+	<policies/>
+		    <routePaths>
+				<routePath>
+					<start name="AdHoc"  />
+				</routePath>
+			</routePaths>
+			<routeNodes>
+				<start name="AdHoc">
+					<activationType>P</activationType>
+				</start>
+			</routeNodes>
+</documentType>
+<documentType>
+	<name>ReturnTypeMaintenanceDocument</name>
+	<label>ReturnTypeMaintenanceDocument</label>
+	<parent>RiceDocument</parent>			
+	<postProcessorName>org.kuali.rice.kns.workflow.postprocessor.KualiPostProcessor</postProcessorName>
+	<superUserWorkgroupName>KR-WKFLW:WorkflowAdmin</superUserWorkgroupName>
+	<docHandler>${kr.url}/maintenance.do?methodToCall=docHandler</docHandler>
+	<blanketApproveWorkgroupName>KR-WKFLW:WorkflowAdmin</blanketApproveWorkgroupName>
+	<defaultExceptionWorkgroupName>KR-WKFLW:WorkflowAdmin</defaultExceptionWorkgroupName>
+	<policies/>
+		    <routePaths>
+				<routePath>
+					<start name="AdHoc"  />
+				</routePath>
+			</routePaths>
+			<routeNodes>
+				<start name="AdHoc">
+					<activationType>P</activationType>
+				</start>
+			</routeNodes>
+</documentType>		
+<documentType>
+	<name>ReturnActionCodeMaintenanceDocument</name>
+	<label>ReturnActionCodeMaintenanceDocument</label>
+	<parent>RiceDocument</parent>			
+	<postProcessorName>org.kuali.rice.kns.workflow.postprocessor.KualiPostProcessor</postProcessorName>
+	<superUserWorkgroupName>KR-WKFLW:WorkflowAdmin</superUserWorkgroupName>
+	<docHandler>${kr.url}/maintenance.do?methodToCall=docHandler</docHandler>
+	<blanketApproveWorkgroupName>KR-WKFLW:WorkflowAdmin</blanketApproveWorkgroupName>
+	<defaultExceptionWorkgroupName>KR-WKFLW:WorkflowAdmin</defaultExceptionWorkgroupName>
+	<policies/>
+		    <routePaths>
+				<routePath>
+					<start name="AdHoc"  />
+				</routePath>
+			</routePaths>
+			<routeNodes>
+				<start name="AdHoc">
+					<activationType>P</activationType>
+				</start>
+			</routeNodes>
+</documentType>		
+<documentType>
+	<name>DeliveryReasonMaintenanceDocument</name>
+	<label>DeliveryReasonMaintenanceDocument</label>
+	<parent>RiceDocument</parent>			
+	<postProcessorName>org.kuali.rice.kns.workflow.postprocessor.KualiPostProcessor</postProcessorName>
+	<superUserWorkgroupName>KR-WKFLW:WorkflowAdmin</superUserWorkgroupName>
+	<docHandler>${kr.url}/maintenance.do?methodToCall=docHandler</docHandler>
+	<blanketApproveWorkgroupName>KR-WKFLW:WorkflowAdmin</blanketApproveWorkgroupName>
+	<defaultExceptionWorkgroupName>KR-WKFLW:WorkflowAdmin</defaultExceptionWorkgroupName>
+	<policies/>
+		    <routePaths>
+				<routePath>
+					<start name="AdHoc"  />
+				</routePath>
+			</routePaths>
+			<routeNodes>
+				<start name="AdHoc">
+					<activationType>P</activationType>
+				</start>
+			</routeNodes>
+</documentType>
+<documentType>
+	<name>UnitOfIssueMaintenanceDocument</name>
+	<label>UnitOfIssueMaintenanceDocument</label>
+	<parent>RiceDocument</parent>			
+	<postProcessorName>org.kuali.rice.kns.workflow.postprocessor.KualiPostProcessor</postProcessorName>
+	<superUserWorkgroupName>KR-WKFLW:WorkflowAdmin</superUserWorkgroupName>
+	<docHandler>${kr.url}/maintenance.do?methodToCall=docHandler</docHandler>
+	<blanketApproveWorkgroupName>KR-WKFLW:WorkflowAdmin</blanketApproveWorkgroupName>
+	<defaultExceptionWorkgroupName>KR-WKFLW:WorkflowAdmin</defaultExceptionWorkgroupName>
+	<policies/>
+		    <routePaths>
+				<routePath>
+					<start name="AdHoc"  />
+				</routePath>
+			</routePaths>
+			<routeNodes>
+				<start name="AdHoc">
+					<activationType>P</activationType>
+				</start>
+			</routeNodes>
+</documentType>		
+<documentType>
+	<name>DriverManifestMaintenanceDocument</name>
+	<label>DriverManifestMaintenanceDocument</label>
+	<parent>RiceDocument</parent>			
+	<postProcessorName>org.kuali.rice.kns.workflow.postprocessor.KualiPostProcessor</postProcessorName>
+	<superUserWorkgroupName>KR-WKFLW:WorkflowAdmin</superUserWorkgroupName>
+	<docHandler>${kr.url}/maintenance.do?methodToCall=docHandler</docHandler>
+	<blanketApproveWorkgroupName>KR-WKFLW:WorkflowAdmin</blanketApproveWorkgroupName>
+	<defaultExceptionWorkgroupName>KR-WKFLW:WorkflowAdmin</defaultExceptionWorkgroupName>
+	<policies/>
+	<routePaths>
+		<routePath>
+			<start name="AdHoc"  />
+		</routePath>
+	</routePaths>
+	<routeNodes>
+		<start name="AdHoc">
+			<activationType>P</activationType>
+		</start>
+	</routeNodes>
+</documentType>
+<documentType>
+	<name>DriverMaintenanceDocument</name>
+	<label>DriverMaintenanceDocument</label>
+	<parent>RiceDocument</parent>			
+	<postProcessorName>org.kuali.rice.kns.workflow.postprocessor.KualiPostProcessor</postProcessorName>
+	<superUserWorkgroupName>KR-WKFLW:WorkflowAdmin</superUserWorkgroupName>
+	<docHandler>${kr.url}/maintenance.do?methodToCall=docHandler</docHandler>
+	<blanketApproveWorkgroupName>KR-WKFLW:WorkflowAdmin</blanketApproveWorkgroupName>
+	<defaultExceptionWorkgroupName>KR-WKFLW:WorkflowAdmin</defaultExceptionWorkgroupName>
+	<policies/>
+	<routePaths>
+		<routePath>
+			<start name="AdHoc"  />
+		</routePath>
+	</routePaths>
+	<routeNodes>
+		<start name="AdHoc">
+			<activationType>P</activationType>
+		</start>
+	</routeNodes>
+</documentType>
+<documentType>
+	<name>RouteMaintenanceDocument</name>
+	<label>RouteMaintenanceDocument</label>
+	<parent>RiceDocument</parent>			
+	<postProcessorName>org.kuali.rice.kns.workflow.postprocessor.KualiPostProcessor</postProcessorName>
+	<superUserWorkgroupName>KR-WKFLW:WorkflowAdmin</superUserWorkgroupName>
+	<docHandler>${kr.url}/maintenance.do?methodToCall=docHandler</docHandler>
+	<blanketApproveWorkgroupName>KR-WKFLW:WorkflowAdmin</blanketApproveWorkgroupName>
+	<defaultExceptionWorkgroupName>KR-WKFLW:WorkflowAdmin</defaultExceptionWorkgroupName>
+	<policies/>
+	<routePaths>
+		<routePath>
+			<start name="AdHoc"  />
+		</routePath>
+	</routePaths>
+	<routeNodes>
+		<start name="AdHoc">
+			<activationType>P</activationType>
+		</start>
+	</routeNodes>
+</documentType>
+<documentType>
+	<name>PriceCodeMaintenanceDocument</name>
+	<label>PriceCodeMaintenanceDocument</label>
+	<parent>RiceDocument</parent>			
+	<postProcessorName>org.kuali.rice.kns.workflow.postprocessor.KualiPostProcessor</postProcessorName>
+	<superUserWorkgroupName>KR-WKFLW:WorkflowAdmin</superUserWorkgroupName>
+	<docHandler>${kr.url}/maintenance.do?methodToCall=docHandler</docHandler>
+	<blanketApproveWorkgroupName>KR-WKFLW:WorkflowAdmin</blanketApproveWorkgroupName>
+	<defaultExceptionWorkgroupName>KR-WKFLW:WorkflowAdmin</defaultExceptionWorkgroupName>
+	<policies/>
+	<routePaths>
+		<routePath>
+			<start name="AdHoc"  />
+		</routePath>
+	</routePaths>
+	<routeNodes>
+		<start name="AdHoc">
+			<activationType>P</activationType>
+		</start>
+	</routeNodes>
+</documentType>
+<documentType>
+	<name>AdditionalCostTypeMaintenanceDocument</name>
+	<label>AdditionalCostTypeMaintenanceDocument</label>
+	<parent>RiceDocument</parent>			
+	<postProcessorName>org.kuali.rice.kns.workflow.postprocessor.KualiPostProcessor</postProcessorName>
+	<superUserWorkgroupName>KR-WKFLW:WorkflowAdmin</superUserWorkgroupName>
+	<docHandler>${kr.url}/maintenance.do?methodToCall=docHandler</docHandler>
+	<blanketApproveWorkgroupName>KR-WKFLW:WorkflowAdmin</blanketApproveWorkgroupName>
+	<defaultExceptionWorkgroupName>KR-WKFLW:WorkflowAdmin</defaultExceptionWorkgroupName>
+	<policies/>
+	<routePaths>
+		<routePath>
+			<start name="AdHoc"  />
+		</routePath>
+	</routePaths>
+	<routeNodes>
+		<start name="AdHoc">
+			<activationType>P</activationType>
+		</start>
+	</routeNodes>
+</documentType>
+<documentType>
+	<name>MarkupTypeMaintenanceDocument</name>
+	<label>MarkupTypeMaintenanceDocument</label>
+	<parent>RiceDocument</parent>			
+	<postProcessorName>org.kuali.rice.kns.workflow.postprocessor.KualiPostProcessor</postProcessorName>
+	<superUserWorkgroupName>KR-WKFLW:WorkflowAdmin</superUserWorkgroupName>
+	<docHandler>${kr.url}/maintenance.do?methodToCall=docHandler</docHandler>
+	<blanketApproveWorkgroupName>KR-WKFLW:WorkflowAdmin</blanketApproveWorkgroupName>
+	<defaultExceptionWorkgroupName>KR-WKFLW:WorkflowAdmin</defaultExceptionWorkgroupName>
+	<policies/>
+	<routePaths>
+		<routePath>
+			<start name="AdHoc"  />
+		</routePath>
+	</routePaths>
+	<routeNodes>
+		<start name="AdHoc">
+			<activationType>P</activationType>
+		</start>
+	</routeNodes>
+</documentType>
+<documentType>
+	<name>OrderStatusMaintenanceDocument</name>
+	<label>OrderStatusMaintenanceDocument</label>
+	<parent>RiceDocument</parent>			
+	<postProcessorName>org.kuali.rice.kns.workflow.postprocessor.KualiPostProcessor</postProcessorName>
+	<superUserWorkgroupName>KR-WKFLW:WorkflowAdmin</superUserWorkgroupName>
+	<docHandler>${kr.url}/maintenance.do?methodToCall=docHandler</docHandler>
+	<blanketApproveWorkgroupName>KR-WKFLW:WorkflowAdmin</blanketApproveWorkgroupName>
+	<defaultExceptionWorkgroupName>KR-WKFLW:WorkflowAdmin</defaultExceptionWorkgroupName>
+	<policies/>
+	<routePaths>
+		<routePath>
+			<start name="AdHoc"  />
+		</routePath>
+	</routePaths>
+	<routeNodes>
+		<start name="AdHoc">
+			<activationType>P</activationType>
+		</start>
+	</routeNodes>
+</documentType>
+<documentType>
+	<name>WorksheetStatusMaintenanceDocument</name>
+	<label>WorksheetStatusMaintenanceDocument</label>
+	<parent>RiceDocument</parent>			
+	<postProcessorName>org.kuali.rice.kns.workflow.postprocessor.KualiPostProcessor</postProcessorName>
+	<superUserWorkgroupName>KR-WKFLW:WorkflowAdmin</superUserWorkgroupName>
+	<docHandler>${kr.url}/maintenance.do?methodToCall=docHandler</docHandler>
+	<blanketApproveWorkgroupName>KR-WKFLW:WorkflowAdmin</blanketApproveWorkgroupName>
+	<defaultExceptionWorkgroupName>KR-WKFLW:WorkflowAdmin</defaultExceptionWorkgroupName>
+	<policies/>
+	<routePaths>
+		<routePath>
+			<start name="AdHoc"  />
+		</routePath>
+	</routePaths>
+	<routeNodes>
+		<start name="AdHoc">
+			<activationType>P</activationType>
+		</start>
+	</routeNodes>
+</documentType>
+</documentTypes>
+</data>

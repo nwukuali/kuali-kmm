@@ -1,0 +1,159 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="FinancialObjectCode" parent="FinancialObjectCode-parentBean" />
+
+  <bean id="FinancialObjectCode-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.integration.coa.businessobject.FinancialObjectCode"
+        p:titleAttribute="Financial Object Code"
+        p:objectLabel="Financial Object Code"
+        p:inquiryDefinition-ref="FinancialObjectCode-inquiryDefinition"
+        p:lookupDefinition-ref="FinancialObjectCode-lookupDefinition" >
+    <property name="primaryKeys">
+    	<list>
+    		<value>universityFiscalYear</value>
+    		<value>chartOfAccountsCode</value>
+    		<value>financialObjectCode</value>
+    	</list>
+    </property>
+    <property name="attributes" >
+      <list>
+        <ref bean="FinancialObjectCode-universityFiscalYear" />
+        <ref bean="FinancialObjectCode-chartOfAccountsCode" />
+        <ref bean="FinancialObjectCode-financialObjectCode" />
+        <ref bean="FinancialObjectCode-financialObjectCodeName" />
+        <ref bean="FinancialObjectCode-active" />
+      </list>
+    </property>
+  </bean>
+
+  <bean id="FinancialObjectCode-active" parent="FinancialObjectCode-active-parentBean" />
+  <bean id="FinancialObjectCode-active-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="active"
+        p:forceUppercase="false"
+        p:label="Active"
+        p:shortLabel="Active"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialObjectCode-chartOfAccountsCode" parent="FinancialObjectCode-chartOfAccountsCode-parentBean" />
+  <bean id="FinancialObjectCode-chartOfAccountsCode-parentBean" parent="FinancialChart-chartOfAccountsCode" abstract="true"
+        p:name="chartOfAccountsCode"
+        p:required="true" >   
+  </bean>
+ 
+  <bean id="FinancialObjectCode-financialObjectCode" parent="FinancialObjectCode-financialObjectCode-parentBean"/>
+
+  <bean id="FinancialObjectCode-financialObjectCode-parentBean" abstract="true" parent="AttributeDefinition">
+    <property name="name" value="financialObjectCode"/>
+    <property name="forceUppercase" value="true"/>
+    <property name="label" value="Object Code"/>
+    <property name="shortLabel" value="Object"/>
+    <property name="maxLength" value="4"/>
+    <property name="validationPattern">
+      <bean parent="AlphaNumericValidationPattern"/>
+    </property>
+    <property name="required" value="true"/>
+    <property name="control">
+      <bean parent="TextControlDefinition" p:size="4"/>
+    </property>
+  </bean>
+  <bean id="FinancialObjectCode-financialObjectCodeName" parent="FinancialObjectCode-financialObjectCodeName-parentBean"/>
+
+  <bean id="FinancialObjectCode-financialObjectCodeName-parentBean" abstract="true" parent="AttributeDefinition">
+    <property name="name" value="financialObjectCodeName"/>
+    <property name="label" value="Object Code Name"/>
+    <property name="shortLabel" value="ObjCodeName"/>
+    <property name="maxLength" value="40"/>
+    <property name="validationPattern">
+      <bean parent="AnyCharacterValidationPattern" p:allowWhitespace="true"/>
+    </property>
+    <property name="required" value="true"/>
+    <property name="control">
+      <bean parent="TextControlDefinition" p:size="40"/>
+    </property>
+  </bean>
+  <bean id="FinancialObjectCode-universityFiscalYear" parent="FinancialObjectCode-universityFiscalYear-parentBean"/>
+
+  <bean id="FinancialObjectCode-universityFiscalYear-parentBean" abstract="true" parent="GenericAttributes-genericFiscalYear">
+    <property name="name" value="universityFiscalYear"/>
+    <property name="forceUppercase" value="true"/>
+    <property name="label" value="Fiscal Year"/>
+    <property name="shortLabel" value="FY"/>
+    <property name="required" value="true"/>
+  </bean>
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="FinancialObjectCode-inquiryDefinition" parent="FinancialObjectCode-inquiryDefinition-parentBean" />
+
+  <bean id="FinancialObjectCode-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Financial Object Code Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Financial Object Code Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="active" />
+              <bean parent="FieldDefinition" p:attributeName="chartOfAccountsCode" />
+              <bean parent="FieldDefinition" p:attributeName="financialObjectCode" />
+              <bean parent="FieldDefinition" p:attributeName="financialObjectCodeName" />
+              <bean parent="FieldDefinition" p:attributeName="universityFiscalYear" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="FinancialObjectCode-lookupDefinition" parent="FinancialObjectCode-lookupDefinition-parentBean" />
+
+  <bean id="FinancialObjectCode-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Financial Object Code Lookup" 
+ >
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>chartOfAccountsCode</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="active" />
+        <bean parent="FieldDefinition" p:attributeName="chartOfAccountsCode" />
+        <bean parent="FieldDefinition" p:attributeName="financialObjectCode" />
+        <bean parent="FieldDefinition" p:attributeName="financialObjectCodeName" />
+        <bean parent="FieldDefinition" p:attributeName="universityFiscalYear" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="active" />
+        <bean parent="FieldDefinition" p:attributeName="chartOfAccountsCode" />
+        <bean parent="FieldDefinition" p:attributeName="financialObjectCode" />
+        <bean parent="FieldDefinition" p:attributeName="financialObjectCodeName" />
+        <bean parent="FieldDefinition" p:attributeName="universityFiscalYear" />
+      </list>
+    </property>
+  </bean>
+
+</beans>

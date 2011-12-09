@@ -1,0 +1,164 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="WorksheetCounter" parent="WorksheetCounter-parentBean" />
+
+  <bean id="WorksheetCounter-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.WorksheetCounter"
+        p:titleAttribute="Worksheet Counter"
+        p:objectLabel="Worksheet Counter"
+        p:inquiryDefinition-ref="WorksheetCounter-inquiryDefinition"
+        p:lookupDefinition-ref="WorksheetCounter-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="WorksheetCounter-active" />
+        <ref bean="WorksheetCounter-lastUpdateDate" />
+        <ref bean="WorksheetCounter-versionNumber" />
+        <ref bean="WorksheetCounter-worksheetCountId" />
+        <ref bean="WorksheetCounter-worksheetCounterId" />
+        <ref bean="WorksheetCounter-worksheetPrncplId" />
+      </list>
+    </property>
+  </bean>
+
+  <bean id="WorksheetCounter-active" parent="WorksheetCounter-active-parentBean" />
+  <bean id="WorksheetCounter-active-parentBean" abstract="true" parent="GenericAttributes-activeIndicator" 
+        p:name="active"
+        p:label="Active"
+        p:shortLabel="Active"
+        p:required="false" />
+
+  <bean id="WorksheetCounter-lastUpdateDate" parent="WorksheetCounter-lastUpdateDate-parentBean" />
+  <bean id="WorksheetCounter-lastUpdateDate-parentBean" parent="GenericAttributes-genericDate" abstract="true"
+        p:name="lastUpdateDate"
+        p:forceUppercase="false"
+        p:label="Entry Date"
+        p:shortLabel="Entry Date"
+        p:required="true" >
+  </bean>
+
+  <bean id="WorksheetCounter-versionNumber" parent="WorksheetCounter-versionNumber-parentBean" />
+  <bean id="WorksheetCounter-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+  <bean id="WorksheetCounter-worksheetCountId" parent="WorksheetCounter-worksheetCountId-parentBean" />
+  <bean id="WorksheetCounter-worksheetCountId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="worksheetCountId"
+        p:forceUppercase="false"
+        p:label="Worksheet Count Id"
+        p:shortLabel="Worksheet Count Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="WorksheetCounter-worksheetCounterId" parent="WorksheetCounter-worksheetCounterId-parentBean" />
+  <bean id="WorksheetCounter-worksheetCounterId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="worksheetCounterId"
+        p:forceUppercase="false"
+        p:label="Worksheet Counter Id"
+        p:shortLabel="Worksheet Counter Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="WorksheetCounter-worksheetPrncplId" parent="WorksheetCounter-worksheetPrncplId-parentBean" />
+  <bean id="WorksheetCounter-worksheetPrncplId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="worksheetPrncplId"
+        p:forceUppercase="false"
+        p:label="Worksheet Principal"
+        p:shortLabel="Worksheet Principal"
+        p:maxLength="40"
+        p:required="true" >
+    <property name="validationPattern" >
+     <bean parent="AlphaNumericValidationPattern"/>
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="40" />
+    </property>
+  </bean>
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="WorksheetCounter-inquiryDefinition" parent="WorksheetCounter-inquiryDefinition-parentBean" />
+
+  <bean id="WorksheetCounter-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Worksheet Counter Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Worksheet Counter Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="active" />
+              <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+              <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+              <bean parent="FieldDefinition" p:attributeName="worksheetCountId" />
+              <bean parent="FieldDefinition" p:attributeName="worksheetCounterId" />
+              <bean parent="FieldDefinition" p:attributeName="worksheetPrncplId" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="WorksheetCounter-lookupDefinition" parent="WorksheetCounter-lookupDefinition-parentBean" />
+
+  <bean id="WorksheetCounter-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Worksheet Counter Lookup" >
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>worksheetCounterId</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="active" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+        <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+        <bean parent="FieldDefinition" p:attributeName="worksheetCountId" />
+        <bean parent="FieldDefinition" p:attributeName="worksheetCounterId" />
+        <bean parent="FieldDefinition" p:attributeName="worksheetPrncplId" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="active" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+        <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+        <bean parent="FieldDefinition" p:attributeName="worksheetCountId" />
+        <bean parent="FieldDefinition" p:attributeName="worksheetCounterId" />
+        <bean parent="FieldDefinition" p:attributeName="worksheetPrncplId" />
+      </list>
+    </property>
+  </bean>
+
+</beans>

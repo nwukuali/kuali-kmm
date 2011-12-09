@@ -1,0 +1,2 @@
+insert into mm_batch_ctrl_t (JOB_NM, JOB_DESC, LAST_SUCCESS, LAST_ATTEMPT, CURRENT_STATUS, ERROR_DETAIL)
+values ('pickVerifyInternalBillingJob', 'Pick list verify internal billing daily batch job', null, null, 'READY', null);

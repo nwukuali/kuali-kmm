@@ -1,0 +1,661 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="ReturnDetail" parent="ReturnDetail-parentBean" />
+
+  <bean id="ReturnDetail-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.ReturnDetail"
+        p:titleAttribute="Return Detail"
+        p:objectLabel="Return Detail"
+        p:inquiryDefinition-ref="ReturnDetail-inquiryDefinition"
+        p:lookupDefinition-ref="ReturnDetail-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="ReturnDetail-actionCd" />
+        <ref bean="ReturnDetail-actionCdLoopkupable" />
+        <ref bean="ReturnDetail-returned" />        
+        <ref bean="ReturnDetail-active" />
+        <ref bean="ReturnDetail-catalogItemId" />
+        <ref bean="ReturnDetail-lastUpdateDate" />
+        <ref bean="ReturnDetail-orderDocumentNumber" />
+        <ref bean="ReturnDetail-dispostitionCode" />
+        <ref bean="ReturnDetail-orderLineNumber" />
+        <ref bean="ReturnDetail-poId" />
+        <ref bean="ReturnDetail-reqsId" />
+        <ref bean="ReturnDetail-returnCreditAmt" />
+        <ref bean="ReturnDetail-returnDetailId" />
+        <ref bean="ReturnDetail-returnDetailStatusCode" />
+        <ref bean="ReturnDetail-returnDocNumber" />
+        <ref bean="ReturnDetail-returnItemDetailDescription" />
+        <ref bean="ReturnDetail-returnItemPercentage" />
+        <ref bean="ReturnDetail-returnItemPrice" />
+        <ref bean="ReturnDetail-returnItemExtendedCost" />
+        <ref bean="ReturnDetail-returnQuantity" />
+        <ref bean="ReturnDetail-vendorReturnQuantity" />
+        <ref bean="ReturnDetail-returnUnitOfIssueOfCode" />
+        <ref bean="ReturnDetail-vendorCreditInd" />
+        <ref bean="ReturnDetail-vendorDetailAssignedId" />
+        <ref bean="ReturnDetail-vendorDispositionInd" />
+        <ref bean="ReturnDetail-vendorHeaderGeneratedId" />
+        <ref bean="ReturnDetail-vendorNm" />
+        <ref bean="ReturnDetail-vendorReshipInd" />
+        <ref bean="ReturnDetail-departmentCreditInd" />
+        <ref bean="ReturnDetail-departmentCreditStringInd" />
+        <ref bean="ReturnDetail-versionNumber" />
+      </list>
+    </property>
+  </bean>
+
+  <bean id="ReturnDetail-actionCdLoopkupable" parent="ReturnDetail-actionCdLoopkupable-parentBean" />
+  <bean id="ReturnDetail-actionCdLoopkupable-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="actionCdLoopkupable"
+        p:forceUppercase="false"
+        p:label="Action Cd"
+        p:shortLabel="Action Cd"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="SelectControlDefinition"
+            p:valuesFinderClass="org.kuali.ext.mm.businessobject.options.ReturnActionCodeOptionFinder"
+            p:includeKeyInLabel="false" />
+    </property>
+  </bean>
+
+  <bean id="ReturnDetail-actionCd" parent="ReturnDetail-actionCd-parentBean" />
+  <bean id="ReturnDetail-actionCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="actionCd"
+        p:forceUppercase="false"
+        p:label="Action Cd"
+        p:shortLabel="Action Cd"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  <bean id="ReturnDetail-active" parent="ReturnDetail-active-parentBean" />
+  <bean id="ReturnDetail-active-parentBean" abstract="true" parent="GenericAttributes-activeIndicator" 
+        p:name="active"
+        p:label="Active"
+        p:shortLabel="Active"
+        p:required="false" />
+
+  <bean id="ReturnDetail-catalogItemId" parent="ReturnDetail-catalogItemId-parentBean" />
+  <bean id="ReturnDetail-catalogItemId-parentBean" parent="CatalogItem-catalogId" abstract="true"
+        p:name="catalogItemId"
+	>
+  </bean>
+
+  <bean id="ReturnDetail-lastUpdateDate" parent="ReturnDetail-lastUpdateDate-parentBean" />
+  <bean id="ReturnDetail-lastUpdateDate-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="lastUpdateDate"
+        p:forceUppercase="false"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="HiddenControlDefinition" />
+    </property>
+  </bean>
+
+  <bean id="ReturnDetail-orderDocumentNumber" parent="ReturnDetail-orderDocumentNumber-parentBean" />
+  <bean id="ReturnDetail-orderDocumentNumber-parentBean" parent="OrderDocument-documentNumber" abstract="true"
+        p:name="orderDocumentNumber"
+        p:required="false" >
+  </bean>
+
+  <bean id="ReturnDetail-orderLineNumber" parent="ReturnDetail-orderLineNumber-parentBean" />
+  <bean id="ReturnDetail-orderLineNumber-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="orderLineNumber"
+        p:forceUppercase="false"
+        p:label="Order Line Number"
+        p:shortLabel="Order Line Number"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+
+  <bean id="ReturnDetail-dispostitionCode" parent="ReturnDetail-dispostitionCode-parentBean" />
+  <bean id="ReturnDetail-dispostitionCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="dispostitionCode"
+        p:forceUppercase="false"
+        p:label="Disposition"
+        p:shortLabel="Disposition"
+        p:maxLength="40"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="SelectControlDefinition"
+            p:valuesFinderClass="org.kuali.ext.mm.businessobject.options.DispositionOptionFinder"
+            p:includeKeyInLabel="false" />
+    </property>
+  </bean>
+
+  <bean id="ReturnDetail-poId" parent="ReturnDetail-poId-parentBean" />
+  <bean id="ReturnDetail-poId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="poId"
+        p:forceUppercase="false"
+        p:label="Po Id"
+        p:shortLabel="Po Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ReturnDetail-reqsId" parent="ReturnDetail-reqsId-parentBean" />
+  <bean id="ReturnDetail-reqsId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="reqsId"
+        p:forceUppercase="false"
+        p:label="Reqs Id"
+        p:shortLabel="Reqs Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ReturnDetail-returnCreditAmt" parent="ReturnDetail-returnCreditAmt-parentBean" />
+  <bean id="ReturnDetail-returnCreditAmt-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="returnCreditAmt"
+        p:forceUppercase="false"
+        p:label="Return Credit Amt"
+        p:shortLabel="Return Credit Amt"
+        p:required="false" >
+    <property name="maxLength" value="19" />
+    	<property name="validationPattern" >
+      		<bean parent="FixedPointValidationPattern"
+            	p:precision="19"
+            	p:scale="4"
+            	p:allowNegative="true" />
+    	</property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ReturnDetail-returnDetailId" parent="ReturnDetail-returnDetailId-parentBean" />
+  <bean id="ReturnDetail-returnDetailId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="returnDetailId"
+        p:forceUppercase="false"
+        p:label="Return Detail Id"
+        p:shortLabel="Return Detail Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="NumericValidationPattern" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ReturnDetail-returnDetailStatusCode" parent="ReturnDetail-returnDetailStatusCode-parentBean" />
+  <bean id="ReturnDetail-returnDetailStatusCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="returnDetailStatusCode"
+        p:forceUppercase="false"
+        p:label="Return Detail Status Code"
+        p:shortLabel="Return Detail Status Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ReturnDetail-returnDocNumber" parent="ReturnDetail-returnDocNumber-parentBean" />
+  <bean id="ReturnDetail-returnDocNumber-parentBean" parent="ReturnDoc-documentNumber" abstract="true"
+        p:name="returnDocNumber"
+	>
+  </bean>
+
+  <bean id="ReturnDetail-returnItemDetailDescription" parent="ReturnDetail-returnItemDetailDescription-parentBean" />
+  <bean id="ReturnDetail-returnItemDetailDescription-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="returnItemDetailDescription"
+        p:forceUppercase="false"
+        p:label="Return Item Detail Description"
+        p:shortLabel="Return Item Detail Description"
+        p:maxLength="300"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+       <bean parent="TextareaControlDefinition" p:rows="4" p:cols="60"/>
+    </property>
+  </bean>
+
+  <bean id="ReturnDetail-returnItemPercentage" parent="ReturnDetail-returnItemPercentage-parentBean" />
+  <bean id="ReturnDetail-returnItemPercentage-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="returnItemPercentage"
+        p:forceUppercase="false"
+        p:label="Return Item Percentage"
+        p:shortLabel="Return Item Percentage"
+        p:required="false" >
+        <property name="maxLength" value="19" />
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+    	<property name="validationPattern" >
+      		<bean parent="FixedPointValidationPattern"
+            	p:precision="19"
+            	p:scale="4"
+            	p:allowNegative="true" />
+    	</property>
+    
+  </bean>
+
+  <bean id="ReturnDetail-returnItemPrice" parent="ReturnDetail-returnItemPrice-parentBean" />
+  <bean id="ReturnDetail-returnItemPrice-parentBean" parent="GenericAttributes-genericAmount" abstract="true"
+        p:name="returnItemPrice"
+        p:forceUppercase="false"
+        p:label="Return Item Price"
+        p:shortLabel="Return Item Price"
+        p:maxLength="10"
+        p:required="false" >
+    	<property name="validationPattern" >
+      		<bean parent="FixedPointValidationPattern"
+            	p:precision="19"
+            	p:scale="4"
+            	p:allowNegative="true" />
+    	</property>
+  </bean>
+
+ <bean id="ReturnDetail-returned" parent="ReturnDetail-returned-parentBean"/>
+  <bean id="ReturnDetail-returned-parentBean" abstract="true" parent="GenericAttributes-activeIndicator"
+    p:name="itemReturned"
+	p:label ="Return"
+	p:shortLabel ="Return">
+    <property name="control">
+      <bean parent="CheckboxControlDefinition"/>
+    </property>
+    <property name="formatterClass" value="org.kuali.rice.kns.web.format.BooleanFormatter"/> 
+  </bean>
+
+
+  <bean id="ReturnDetail-returnItemExtendedCost" parent="ReturnDetail-returnItemExtendedCost-parentBean" />
+  <bean id="ReturnDetail-returnItemExtendedCost-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="extendedCost"
+        p:forceUppercase="false"
+        p:label="Extended Cost"
+        p:shortLabel="Extended Cost"
+        p:required="false" >
+    <property name="maxLength" value="19" />
+    	<property name="validationPattern" >
+      		<bean parent="FixedPointValidationPattern"
+            	p:precision="19"
+            	p:scale="4"
+            	p:allowNegative="true" />
+    	</property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ReturnDetail-returnQuantity" parent="ReturnDetail-returnQuantity-parentBean" />
+  <bean id="ReturnDetail-returnQuantity-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="returnQuantity"
+        p:forceUppercase="false"
+        p:label="Return Quantity"
+        p:shortLabel="Return Quantity"
+        p:maxLength="5"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="false" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="5" />
+    </property>
+  </bean>
+
+  <bean id="ReturnDetail-vendorReturnQuantity" parent="ReturnDetail-vendorReturnQuantity-parentBean" />
+  <bean id="ReturnDetail-vendorReturnQuantity-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorReturnQuantity"
+        p:forceUppercase="false"
+        p:label="Venodor Return Quantity"
+        p:shortLabel="Vendor Return Quantity"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ReturnDetail-returnUnitOfIssueOfCode" parent="ReturnDetail-returnUnitOfIssueOfCode-parentBean" />
+  <bean id="ReturnDetail-returnUnitOfIssueOfCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="returnUnitOfIssueOfCode"
+        p:forceUppercase="false"
+        p:label="Return Unit Of Issue"
+        p:shortLabel="Return Unit Of Issue"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ReturnDetail-vendorCreditInd" parent="ReturnDetail-vendorCreditInd-parentBean" />
+  <bean id="ReturnDetail-vendorCreditInd-parentBean" abstract="true" parent="GenericAttributes-genericBoolean" 
+        p:name="vendorCreditInd"
+        p:label="Vendor Issue Credit"
+        p:shortLabel="Vendor Issue Credit"        
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+     <property name="control" >
+      <bean parent="SelectControlDefinition"
+            p:valuesFinderClass="org.kuali.ext.mm.businessobject.options.YesNoValuesFinder"
+            p:includeKeyInLabel="false" />
+    </property>
+    <property name="formatterClass" value="org.kuali.rice.kns.web.format.BooleanFormatter"/>
+	</bean>    
+
+  <bean id="ReturnDetail-vendorDetailAssignedId" parent="ReturnDetail-vendorDetailAssignedId-parentBean" />
+  <bean id="ReturnDetail-vendorDetailAssignedId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorDetailAssignedId"
+        p:forceUppercase="false"
+        p:label="Vendor Detail Assigned Id"
+        p:shortLabel="Vendor Detail Assigned Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ReturnDetail-vendorDispositionInd" parent="ReturnDetail-vendorDispositionInd-parentBean" />
+  <bean id="ReturnDetail-vendorDispositionInd-parentBean" abstract="true" parent="GenericAttributes-genericBoolean" 
+        p:name="vendorDispositionInd"
+        p:label="Disposition Needed"
+        p:shortLabel="Disposition Needed"      
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+     <property name="control" >
+      <bean parent="SelectControlDefinition"
+            p:valuesFinderClass="org.kuali.ext.mm.businessobject.options.YesNoValuesFinder"
+            p:includeKeyInLabel="false" />
+    </property>
+    <property name="formatterClass" value="org.kuali.rice.kns.web.format.BooleanFormatter"/>
+	</bean>    
+
+  <bean id="ReturnDetail-departmentCreditInd" parent="ReturnDetail-departmentCreditInd-parentBean" />
+  <bean id="ReturnDetail-departmentCreditInd-parentBean" abstract="true" parent="GenericAttributes-genericBoolean" 
+        p:name="departmentCreditInd"
+        p:label="Department Credit"
+        p:shortLabel="Department Credit"      
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+     <property name="control" >
+      <bean parent="SelectControlDefinition"
+            p:valuesFinderClass="org.kuali.ext.mm.businessobject.options.YesNoValuesFinder"
+            p:includeKeyInLabel="false" />
+    </property>
+    <property name="formatterClass" value="org.kuali.rice.kns.web.format.BooleanFormatter"/>
+	</bean>
+	
+	<bean id="ReturnDetail-departmentCreditStringInd" parent="ReturnDetail-departmentCreditStringInd-parentBean" />
+  	<bean id="ReturnDetail-departmentCreditStringInd-parentBean" abstract="true" parent="GenericAttributes-genericBoolean" 
+        p:name="departmentCreditStringInd"
+        p:label="Department Credit"
+        p:shortLabel="Department Credit"      
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+     <property name="control" >
+      <bean parent="SelectControlDefinition"
+            p:valuesFinderClass="org.kuali.ext.mm.businessobject.options.RequiredYesNoValuesFinder"
+            p:includeKeyInLabel="false" />
+    </property>
+	</bean>    
+
+  <bean id="ReturnDetail-vendorHeaderGeneratedId" parent="ReturnDetail-vendorHeaderGeneratedId-parentBean" />
+  <bean id="ReturnDetail-vendorHeaderGeneratedId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorHeaderGeneratedId"
+        p:forceUppercase="false"
+        p:label="Vendor Header Generated Id"
+        p:shortLabel="Vendor Header Generated Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ReturnDetail-vendorNm" parent="ReturnDetail-vendorNm-parentBean" />
+  <bean id="ReturnDetail-vendorNm-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorNm"
+        p:forceUppercase="false"
+        p:label="Vendor Nm"
+        p:shortLabel="Vendor Nm"
+        p:maxLength="200"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="200" />
+    </property>
+  </bean>
+
+  <bean id="ReturnDetail-vendorReshipInd" parent="ReturnDetail-vendorReshipInd-parentBean" />
+  <bean id="ReturnDetail-vendorReshipInd-parentBean" abstract="true" parent="GenericAttributes-genericBoolean" 
+        p:name="vendorReshipInd"
+        p:label="Vendor Reship"
+        p:shortLabel="Vendor Reship"        
+        p:required="false" >
+     <property name="control" >
+      <bean parent="SelectControlDefinition"
+            p:valuesFinderClass="org.kuali.ext.mm.businessobject.options.YesNoValuesFinder"
+            p:includeKeyInLabel="false" />
+    </property>
+    <property name="formatterClass" value="org.kuali.rice.kns.web.format.BooleanFormatter"/>
+	</bean>    
+
+  <bean id="ReturnDetail-versionNumber" parent="ReturnDetail-versionNumber-parentBean" />
+  <bean id="ReturnDetail-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="ReturnDetail-inquiryDefinition" parent="ReturnDetail-inquiryDefinition-parentBean" />
+
+  <bean id="ReturnDetail-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Return Detail Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Return Detail Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="actionCd" />
+              <bean parent="FieldDefinition" p:attributeName="active" />
+              <bean parent="FieldDefinition" p:attributeName="catalogItemId" />
+              <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+              <bean parent="FieldDefinition" p:attributeName="orderDocumentNumber" />
+              <bean parent="FieldDefinition" p:attributeName="orderLineNumber" />
+              <bean parent="FieldDefinition" p:attributeName="poId" />
+              <bean parent="FieldDefinition" p:attributeName="reqsId" />
+              <bean parent="FieldDefinition" p:attributeName="returnCreditAmt" />
+              <bean parent="FieldDefinition" p:attributeName="returnDetailId" />
+              <bean parent="FieldDefinition" p:attributeName="returnDetailStatusCode" />
+              <bean parent="FieldDefinition" p:attributeName="returnDocNumber" />
+              <bean parent="FieldDefinition" p:attributeName="returnItemDetailDescription" />
+              <bean parent="FieldDefinition" p:attributeName="returnItemPercentage" />
+              <bean parent="FieldDefinition" p:attributeName="returnItemPrice" />
+              <bean parent="FieldDefinition" p:attributeName="returnQuantity" />
+              <bean parent="FieldDefinition" p:attributeName="returnUnitOfIssueOfCode" />
+              <bean parent="FieldDefinition" p:attributeName="vendorCreditInd" />
+              <bean parent="FieldDefinition" p:attributeName="vendorDetailAssignedId" />
+              <bean parent="FieldDefinition" p:attributeName="vendorDispositionInd" />
+              <bean parent="FieldDefinition" p:attributeName="vendorHeaderGeneratedId" />
+              <bean parent="FieldDefinition" p:attributeName="vendorNm" />
+              <bean parent="FieldDefinition" p:attributeName="vendorReshipInd" />
+              <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="ReturnDetail-lookupDefinition" parent="ReturnDetail-lookupDefinition-parentBean" />
+
+  <bean id="ReturnDetail-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Return Detail Lookup" 
+ >
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>lastUpdateDate</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="actionCd" />
+        <bean parent="FieldDefinition" p:attributeName="active" />
+        <bean parent="FieldDefinition" p:attributeName="catalogItemId" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+        <bean parent="FieldDefinition" p:attributeName="orderDocumentNumber" />
+        <bean parent="FieldDefinition" p:attributeName="orderLineNumber" />
+        <bean parent="FieldDefinition" p:attributeName="poId" />
+        <bean parent="FieldDefinition" p:attributeName="reqsId" />
+        <bean parent="FieldDefinition" p:attributeName="returnCreditAmt" />
+        <bean parent="FieldDefinition" p:attributeName="returnDetailId" />
+        <bean parent="FieldDefinition" p:attributeName="returnDetailStatusCode" />
+        <bean parent="FieldDefinition" p:attributeName="returnDocNumber" />
+        <bean parent="FieldDefinition" p:attributeName="returnItemDetailDescription" />
+        <bean parent="FieldDefinition" p:attributeName="returnItemPercentage" />
+        <bean parent="FieldDefinition" p:attributeName="returnItemPrice" />
+        <bean parent="FieldDefinition" p:attributeName="returnQuantity" />
+        <bean parent="FieldDefinition" p:attributeName="returnUnitOfIssueOfCode" />
+        <bean parent="FieldDefinition" p:attributeName="vendorCreditInd" />
+        <bean parent="FieldDefinition" p:attributeName="vendorDetailAssignedId" />
+        <bean parent="FieldDefinition" p:attributeName="vendorDispositionInd" />
+        <bean parent="FieldDefinition" p:attributeName="vendorHeaderGeneratedId" />
+        <bean parent="FieldDefinition" p:attributeName="vendorNm" />
+        <bean parent="FieldDefinition" p:attributeName="vendorReshipInd" />
+        <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="actionCd" />
+        <bean parent="FieldDefinition" p:attributeName="active" />
+        <bean parent="FieldDefinition" p:attributeName="catalogItemId" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+        <bean parent="FieldDefinition" p:attributeName="orderDocumentNumber" />
+        <bean parent="FieldDefinition" p:attributeName="orderLineNumber" />
+        <bean parent="FieldDefinition" p:attributeName="poId" />
+        <bean parent="FieldDefinition" p:attributeName="reqsId" />
+        <bean parent="FieldDefinition" p:attributeName="returnCreditAmt" />
+        <bean parent="FieldDefinition" p:attributeName="returnDetailId" />
+        <bean parent="FieldDefinition" p:attributeName="returnDetailStatusCode" />
+        <bean parent="FieldDefinition" p:attributeName="returnDocNumber" />
+        <bean parent="FieldDefinition" p:attributeName="returnItemDetailDescription" />
+        <bean parent="FieldDefinition" p:attributeName="returnItemPercentage" />
+        <bean parent="FieldDefinition" p:attributeName="returnItemPrice" />
+        <bean parent="FieldDefinition" p:attributeName="returnQuantity" />
+        <bean parent="FieldDefinition" p:attributeName="returnUnitOfIssueOfCode" />
+        <bean parent="FieldDefinition" p:attributeName="vendorCreditInd" />
+        <bean parent="FieldDefinition" p:attributeName="vendorDetailAssignedId" />
+        <bean parent="FieldDefinition" p:attributeName="vendorDispositionInd" />
+        <bean parent="FieldDefinition" p:attributeName="vendorHeaderGeneratedId" />
+        <bean parent="FieldDefinition" p:attributeName="vendorNm" />
+        <bean parent="FieldDefinition" p:attributeName="vendorReshipInd" />
+        <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+      </list>
+    </property>
+  </bean>
+
+</beans>

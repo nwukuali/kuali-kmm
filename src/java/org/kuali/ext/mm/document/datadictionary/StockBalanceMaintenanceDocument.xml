@@ -1,0 +1,93 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="StoresStockBalanceMaintenanceDocument" parent="StoresStockBalanceMaintenanceDocument-parentBean" />
+
+  <bean id="StoresStockBalanceMaintenanceDocument-parentBean" abstract="true" parent="MaintenanceDocumentEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.StockBalance"
+        p:documentTypeName="StoresStockBalanceMaintenanceDocument"
+        p:documentAuthorizerClass="org.kuali.rice.kns.document.authorization.MaintenanceDocumentAuthorizerBase" >
+
+ 		<!-- ***** Does the Custom Save in two tables ******************************** -->
+   		<property name="maintainableClass" value="org.kuali.ext.mm.service.impl.StockMaintainableImpl" /> 
+   		<!-- ************************************************************************* -->  
+
+		<!-- ***** Does the Custom Save in two tables ******************************** -->	
+   		<property name="documentPresentationControllerClass" value="org.kuali.ext.mm.document.authorization.StockBalancePresentationController" /> 
+   		<!-- ************************************************************************* -->  
+
+    <property name="lockingKeys" >
+      <list>
+        <value>stockBalanceId</value>
+      </list>
+    </property>
+    <property name="defaultExistenceChecks" >
+      <list>
+        <bean parent="ReferenceDefinition"
+              p:attributeName="bin"
+              p:attributeToHighlightOnFail="binId" />
+        <bean parent="ReferenceDefinition"
+              p:attributeName="binLookable"
+              p:attributeToHighlightOnFail="binId" />
+        <bean parent="ReferenceDefinition"
+              p:attributeName="stock"
+              p:attributeToHighlightOnFail="stockId" />
+      </list>
+    </property>
+    <property name="workflowAttributes" >
+        <ref bean="StoresStockBalanceMaintenanceDocument-workflowAttributes" />
+    </property>
+    <property name="maintainableSections" >
+      <list>
+        <ref bean="StoresStockBalanceMaintenanceDocument-MainSection" />
+      </list>
+    </property>
+  </bean>
+
+ <!-- Maintenance Section Definitions -->
+  <bean id="StoresStockBalanceMaintenanceDocument-MainSection" parent="StoresStockBalanceMaintenanceDocument-MainSection-parentBean" />
+
+  <bean id="StoresStockBalanceMaintenanceDocument-MainSection-parentBean" abstract="true" parent="MaintainableSectionDefinition"
+        p:title="Stock Balance Maintenance" >
+    <property name="maintainableItems" >
+      <list>
+        <bean parent="MaintainableFieldDefinition"
+              p:name="stock.stockId"
+              p:required="true">
+              <property name="unconditionallyReadOnly" value="true"></property>
+        </bean>             
+        <bean parent="MaintainableFieldDefinition"
+              p:name="stock.stockDesc"
+              p:required="true">
+              <property name="unconditionallyReadOnly" value="true"></property>
+        </bean>                            
+        <bean parent="MaintainableFieldDefinition"
+              p:name="binId"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="qtyOnHand"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="stockPerishableDt"
+              p:required="false" />        
+        <bean parent="MaintainableFieldDefinition"
+              p:name="stockTransReason.stockTransReasonCd"
+              p:required="true" />     
+        <bean parent="MaintainableFieldDefinition"
+        	  p:name="stockTransReason.stockTransReasonDesc"
+        	  p:required="false">
+        	  <property name="noLookup" value="true"></property>
+        	  <property name="unconditionallyReadOnly" value="true"></property>
+        </bean>     
+      </list>
+    </property>    
+  </bean>
+  
+ <!-- workflow attributes -->
+  <bean id="StoresStockBalanceMaintenanceDocument-workflowAttributes" parent="StoresStockBalanceMaintenanceDocument-workflowAttributes-parentBean" />
+
+  <bean id="StoresStockBalanceMaintenanceDocument-workflowAttributes-parentBean" abstract="true" class="org.kuali.rice.kns.datadictionary.WorkflowAttributes" />
+</beans>

@@ -1,0 +1,170 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="CheckInCorrection" parent="CheckInCorrection-parentBean" />
+
+  <bean id="CheckInCorrection-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.CheckInCorrection"
+        p:titleAttribute="Receipt Correction"
+        p:objectLabel="Receipt Correction"
+        p:inquiryDefinition-ref="CheckInCorrection-inquiryDefinition"
+        p:lookupDefinition-ref="CheckInCorrection-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="CheckInCorrection-distributorNumber" />
+        <ref bean="CheckInCorrection-lastUpdateDate" />
+        <ref bean="CheckInCorrection-orderDocumentNumber" />
+        <ref bean="CheckInCorrection-checkInDocNumber" />
+        <ref bean="CheckInCorrection-orderId" />
+        <ref bean="CheckInCorrection-orderItemQty" />
+        <ref bean="CheckInCorrection-poId" />
+        <ref bean="CheckInCorrection-reqsId" />
+        <ref bean="CheckInCorrection-vendorName" />
+        <ref bean="CheckInCorrection-versionNumber" />
+        <ref bean="CheckInCorrection-warehouseCode" />
+      </list>
+    </property>
+  </bean>
+
+  <bean id="CheckInCorrection-distributorNumber" parent="CheckInCorrection-distributorNumber-parentBean" />
+  <bean id="CheckInCorrection-distributorNumber-parentBean" parent="OrderDetail-distributorNbr" abstract="true"
+        p:name="distributorNumber"
+        p:required="false" >
+  </bean>
+
+  <bean id="CheckInCorrection-lastUpdateDate" parent="CheckInCorrection-lastUpdateDate-parentBean" />
+  <bean id="CheckInCorrection-lastUpdateDate-parentBean" parent="OrderDetail-lastUpdateDate" abstract="true"
+        p:name="lastUpdateDate"
+        p:required="false" >
+  </bean>
+
+  <bean id="CheckInCorrection-orderDocumentNumber" parent="CheckInCorrection-orderDocumentNumber-parentBean" />
+  <bean id="CheckInCorrection-orderDocumentNumber-parentBean" parent="OrderDetail-orderDocument.documentNumber" abstract="true"
+        p:name="orderDocumentNumber"
+        p:required="false" >
+  </bean>
+  
+  <bean id="CheckInCorrection-checkInDocNumber" parent="CheckInCorrection-checkInDocNumber-parentBean" />
+  <bean id="CheckInCorrection-checkInDocNumber-parentBean" parent="CheckinDocument-fdocNbr" abstract="true"
+        p:name="checkInDocNumber"
+        p:label="Check In Doc#"
+        p:required="false" >
+  </bean>
+
+  <bean id="CheckInCorrection-orderId" parent="CheckInCorrection-orderId-parentBean" />
+  <bean id="CheckInCorrection-orderId-parentBean" parent="OrderDocument-orderId" abstract="true"
+        p:name="orderId"
+        p:required="false" >
+  </bean>
+
+  <bean id="CheckInCorrection-orderItemQty" parent="CheckInCorrection-orderItemQty-parentBean" />
+  <bean id="CheckInCorrection-orderItemQty-parentBean" parent="OrderDetail-orderItemQty" abstract="true"
+        p:name="orderItemQty"
+        p:required="false" >
+  </bean>
+
+  <bean id="CheckInCorrection-poId" parent="CheckInCorrection-poId-parentBean" />
+  <bean id="CheckInCorrection-poId-parentBean" parent="OrderDetail-poId" abstract="true"
+        p:name="poId"
+        p:required="false" >
+  </bean>
+
+  <bean id="CheckInCorrection-reqsId" parent="CheckInCorrection-reqsId-parentBean" />
+  <bean id="CheckInCorrection-reqsId-parentBean" parent="OrderDocument-reqsId" abstract="true"
+        p:name="reqsId"
+        p:required="false" >
+  </bean>
+
+  <bean id="CheckInCorrection-vendorName" parent="CheckInCorrection-vendorName-parentBean" />
+  <bean id="CheckInCorrection-vendorName-parentBean" parent="OrderDocument-vendorNm" abstract="true"
+        p:name="vendorName"
+        p:required="false" >
+  </bean>
+
+  <bean id="CheckInCorrection-versionNumber" parent="CheckInCorrection-versionNumber-parentBean" />
+  <bean id="CheckInCorrection-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+  <bean id="CheckInCorrection-warehouseCode" parent="CheckInCorrection-warehouseCode-parentBean" />
+  <bean id="CheckInCorrection-warehouseCode-parentBean" parent="OrderDocument-warehouseCd" abstract="true"
+        p:name="warehouseCode"
+        p:required="false" >
+  </bean>
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="CheckInCorrection-inquiryDefinition" parent="CheckInCorrection-inquiryDefinition-parentBean" />
+
+  <bean id="CheckInCorrection-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Check In Correction Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Check In Correction Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="distributorNumber" />
+              <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+              <bean parent="FieldDefinition" p:attributeName="orderDocumentNumber" />
+              <bean parent="FieldDefinition" p:attributeName="orderId" />
+              <bean parent="FieldDefinition" p:attributeName="orderItemQty" />
+              <bean parent="FieldDefinition" p:attributeName="poId" />
+              <bean parent="FieldDefinition" p:attributeName="reqsId" />
+              <bean parent="FieldDefinition" p:attributeName="vendorName" />
+              <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+              <bean parent="FieldDefinition" p:attributeName="warehouseCode" />
+              <bean parent="FieldDefinition" p:attributeName="checkInDocNumber" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="CheckInCorrection-lookupDefinition" parent="CheckInCorrection-lookupDefinition-parentBean" />
+
+  <bean id="CheckInCorrection-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Receipt Correction" p:lookupableID="checkInCorrectionLookupable" >
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>orderId</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="poId" />
+        <bean parent="FieldDefinition" p:attributeName="distributorNumber" />
+        <bean parent="FieldDefinition" p:attributeName="orderDocumentNumber" />
+        <bean parent="FieldDefinition" p:attributeName="orderId" />
+        <bean parent="FieldDefinition" p:attributeName="reqsId" />
+        <bean parent="FieldDefinition" p:attributeName="warehouseCode" />
+        <bean parent="FieldDefinition" p:attributeName="checkInDocNumber" />
+        <bean parent="FieldDefinition" p:attributeName="vendorName" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="poId" />
+        <bean parent="FieldDefinition" p:attributeName="distributorNumber" />
+        <bean parent="FieldDefinition" p:attributeName="orderDocumentNumber" />
+        <bean parent="FieldDefinition" p:attributeName="orderId" />
+        <bean parent="FieldDefinition" p:attributeName="reqsId" />
+        <bean parent="FieldDefinition" p:attributeName="warehouseCode" />
+        <bean parent="FieldDefinition" p:attributeName="vendorName" />
+        <bean parent="FieldDefinition" p:attributeName="checkInDocNumber" />
+      </list>
+    </property>
+  </bean>
+
+</beans>

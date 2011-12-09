@@ -1,0 +1,179 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="FinancialRoom" parent="FinancialRoom-parentBean" />
+
+  <bean id="FinancialRoom-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.integration.sys.businessobject.FinancialRoom"
+        p:titleAttribute="Financial Room"
+        p:objectLabel="Financial Room"
+        p:inquiryDefinition-ref="FinancialRoom-inquiryDefinition"
+        p:lookupDefinition-ref="FinancialRoom-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="FinancialRoom-active" />
+        <ref bean="FinancialRoom-buildingCode" />
+        <ref bean="FinancialRoom-buildingRoomDepartment" />
+        <ref bean="FinancialRoom-buildingRoomDescription" />
+        <ref bean="FinancialRoom-buildingRoomNumber" />
+        <ref bean="FinancialRoom-buildingRoomType" />
+        <ref bean="FinancialRoom-campusCode" />
+      </list>
+    </property>
+  </bean>
+  <bean id="FinancialRoom-campusCode" parent="FinancialRoom-campusCode-parentBean"/>
+
+  <bean id="FinancialRoom-campusCode-parentBean" abstract="true" parent="Campus-campusCode">
+  	<property name="forceUppercase" value="true"/>
+    <property name="control">
+      <bean parent="SelectControlDefinition" p:valuesFinderClass="org.kuali.rice.kns.lookup.keyvalues.CampusValuesFinder" p:includeKeyInLabel="false"/>
+    </property>
+  </bean>
+  <bean id="FinancialRoom-buildingCode" parent="FinancialRoom-buildingCode-parentBean"/>
+
+  <bean id="FinancialRoom-buildingCode-parentBean" abstract="true" parent="FinancialBuilding-buildingCode">
+  	<property name="forceUppercase" value="true"/>
+  </bean>
+  <bean id="FinancialRoom-buildingRoomNumber" parent="FinancialRoom-buildingRoomNumber-parentBean"/>
+
+  <bean id="FinancialRoom-buildingRoomNumber-parentBean" abstract="true" parent="AttributeDefinition">
+    <property name="name" value="buildingRoomNumber"/>
+    <property name="forceUppercase" value="true"/>
+    <property name="label" value="Building Room Number"/>
+    <property name="shortLabel" value="Room Number"/>
+    <property name="maxLength" value="8"/>
+    <property name="validationPattern">
+      <bean parent="AnyCharacterValidationPattern" p:allowWhitespace="true"/>
+    </property>
+    <property name="required" value="true"/>
+    <property name="control">
+      <bean parent="TextControlDefinition" p:size="8"/>
+    </property>
+    
+    
+  </bean>
+  <bean id="FinancialRoom-buildingRoomDepartment" parent="FinancialRoom-buildingRoomDepartment-parentBean"/>
+
+  <bean id="FinancialRoom-buildingRoomDepartment-parentBean" abstract="true" parent="AttributeDefinition">
+    <property name="name" value="buildingRoomDepartment"/>
+    <property name="label" value="Building Room Department"/>
+    <property name="shortLabel" value="Bldg. Room Department"/>
+    <property name="maxLength" value="40"/>
+    <property name="validationPattern">
+      <bean parent="AnyCharacterValidationPattern" p:allowWhitespace="true"/>
+    </property>
+    <property name="control">
+      <bean parent="TextControlDefinition" p:size="40"/>
+    </property>
+    
+    
+  </bean>
+  <bean id="FinancialRoom-buildingRoomType" parent="FinancialRoom-buildingRoomType-parentBean"/>
+
+  <bean id="FinancialRoom-buildingRoomType-parentBean" abstract="true" parent="AttributeDefinition">
+    <property name="name" value="buildingRoomType"/>
+    <property name="label" value="Building Room Type"/>
+    <property name="shortLabel" value="Bldg. Room Type"/>
+    <property name="maxLength" value="50"/>
+    <property name="validationPattern">
+      <bean parent="AnyCharacterValidationPattern" p:allowWhitespace="true"/>
+    </property>
+    <property name="control">
+      <bean parent="TextControlDefinition" p:size="50"/>
+    </property>
+    
+    
+  </bean>
+  <bean id="FinancialRoom-buildingRoomDescription" parent="FinancialRoom-buildingRoomDescription-parentBean"/>
+
+  <bean id="FinancialRoom-buildingRoomDescription-parentBean" abstract="true" parent="AttributeDefinition">
+    <property name="name" value="buildingRoomDescription"/>
+    <property name="label" value="Building Address Description"/>
+    <property name="shortLabel" value="Bldg. Address Description"/>
+    <property name="maxLength" value="25"/>
+    <property name="validationPattern">
+      <bean parent="AnyCharacterValidationPattern" p:allowWhitespace="true"/>
+    </property>
+    <property name="control">
+      <bean parent="TextControlDefinition" p:size="25"/>
+    </property>
+    
+    
+  </bean>
+  <bean id="FinancialRoom-active" parent="FinancialRoom-active-parentBean"/>
+
+  <bean id="FinancialRoom-active-parentBean" abstract="true" parent="GenericAttributes-activeIndicator">
+    <property name="name" value="active"/>
+  </bean>
+
+<!-- Business Object Inquiry Definition -->
+
+
+  <bean id="FinancialRoom-inquiryDefinition" parent="FinancialRoom-inquiryDefinition-parentBean"/>
+
+  <bean id="FinancialRoom-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition">
+    <property name="title" value="Room Inquiry"/>
+    <property name="inquirySections">
+      <list>
+        <bean parent="InquirySectionDefinition">
+          <property name="title" value=""/>
+          <property name="numberOfColumns" value="1"/>
+          <property name="inquiryFields">
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="campusCode"/>
+              <bean parent="FieldDefinition" p:attributeName="buildingCode"/>
+              <bean parent="FieldDefinition" p:attributeName="buildingRoomNumber"/>
+              <bean parent="FieldDefinition" p:attributeName="buildingRoomDepartment"/>
+              <bean parent="FieldDefinition" p:attributeName="buildingRoomType"/>
+              <bean parent="FieldDefinition" p:attributeName="buildingRoomDescription"/>
+              <bean parent="FieldDefinition" p:attributeName="active"/>
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+<!-- Business Object Lookup Definition -->
+  <bean id="FinancialRoom-lookupDefinition" parent="FinancialRoom-lookupDefinition-parentBean" />
+
+  <bean id="FinancialRoom-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Financial Room Lookup" 
+ >
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>buildingCode</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="active" />
+        <bean parent="FieldDefinition" p:attributeName="buildingCode" />
+        <bean parent="FieldDefinition" p:attributeName="buildingRoomDepartment" />
+        <bean parent="FieldDefinition" p:attributeName="buildingRoomDescription" />
+        <bean parent="FieldDefinition" p:attributeName="buildingRoomNumber" />
+        <bean parent="FieldDefinition" p:attributeName="buildingRoomType" />
+        <bean parent="FieldDefinition" p:attributeName="campusCode" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="active" />
+        <bean parent="FieldDefinition" p:attributeName="buildingCode" />
+        <bean parent="FieldDefinition" p:attributeName="buildingRoomDepartment" />
+        <bean parent="FieldDefinition" p:attributeName="buildingRoomDescription" />
+        <bean parent="FieldDefinition" p:attributeName="buildingRoomNumber" />
+        <bean parent="FieldDefinition" p:attributeName="buildingRoomType" />
+        <bean parent="FieldDefinition" p:attributeName="campusCode" />
+      </list>
+    </property>
+  </bean>
+
+</beans>

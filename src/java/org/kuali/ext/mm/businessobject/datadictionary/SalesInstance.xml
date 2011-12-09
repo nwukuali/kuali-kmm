@@ -1,0 +1,316 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="SalesInstance" parent="SalesInstance-parentBean" />
+
+  <bean id="SalesInstance-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.SalesInstance"
+        p:titleAttribute="salesInstanceId"
+        p:objectLabel="Sales Instance"
+        p:inquiryDefinition-ref="SalesInstance-inquiryDefinition"
+        p:lookupDefinition-ref="SalesInstance-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="SalesInstance-customerProfileId" />
+        <ref bean="SalesInstance-customerProfile.principalName" />
+        <ref bean="SalesInstance-customerProfile.profilePhoneNumber" />
+        <ref bean="SalesInstance-customerProfile.customer.customerName" />
+        <ref bean="SalesInstance-orderDocument.orderId" />
+        <ref bean="SalesInstance-orderDocument.creationDate" />
+        <ref bean="SalesInstance-lastUpdateDate" />
+        <ref bean="SalesInstance-salesInstanceId" />
+        <ref bean="SalesInstance-orderLineTotalAmt" />
+        <ref bean="SalesInstance-orderStatusCd" />
+        <ref bean="SalesInstance-orderTaxableAmt" />
+        <ref bean="SalesInstance-orderTotalAmt" />
+        <ref bean="SalesInstance-orderTypeCd" />
+        <ref bean="SalesInstance-salesInstanceArId" />
+        <ref bean="SalesInstance-versionNumber" />
+      </list>
+    </property>
+    <property name="relationships" >
+      <list>
+        <bean parent="RelationshipDefinition">
+          <property name="objectAttributeName" value="customerProfile" />
+          <property name="primitiveAttributes" >
+            <list>
+              <bean parent="PrimitiveAttributeDefinition"
+                    p:sourceName="customerProfileId"
+                    p:targetName="profileId" />
+            </list>
+          </property>          
+        </bean>
+        <bean parent="RelationshipDefinition">
+          <property name="objectAttributeName" value="orderDocument" />
+          <property name="primitiveAttributes" >
+            <list>
+              <bean parent="PrimitiveAttributeDefinition"
+                    p:sourceName="orderDocumentNbr"
+                    p:targetName="documentNumber" />
+            </list>
+          </property>          
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+  <bean id="SalesInstance-customerProfileId" parent="SalesInstance-customerProfileId-parentBean" />
+  <bean id="SalesInstance-customerProfileId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="customerProfileId"
+        p:forceUppercase="false"
+        p:label="Customer Profile Id"
+        p:shortLabel="Customer Profile Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  
+  <bean id="SalesInstance-customerProfile.principalName" parent="SalesInstance-customerProfile.principalName-parentBean" />
+  <bean id="SalesInstance-customerProfile.principalName-parentBean" parent="Customer-principalName" abstract="true"
+        p:name="customerProfile.principalName" >
+  </bean>
+  
+  <bean id="SalesInstance-customerProfile.profilePhoneNumber" parent="SalesInstance-customerProfile.profilePhoneNumber-parentBean" />
+  <bean id="SalesInstance-customerProfile.profilePhoneNumber-parentBean" parent="Profile-profilePhoneNumber" abstract="true"
+        p:name="customerProfile.profilePhoneNumber" >
+  </bean>
+  
+  <bean id="SalesInstance-customerProfile.customer.customerName" parent="SalesInstance-customerProfile.customer.customerName-parentBean" />
+  <bean id="SalesInstance-customerProfile.customer.customerName-parentBean" parent="Customer-customerName" abstract="true"
+        p:name="customerProfile.customer.customerName" >
+  </bean>
+
+  <bean id="SalesInstance-lastUpdateDate" parent="SalesInstance-lastUpdateDate-parentBean" />
+  <bean id="SalesInstance-lastUpdateDate-parentBean" parent="GenericAttributes-genericTimestamp" abstract="true"
+        p:name="lastUpdateDate"
+        p:forceUppercase="false"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:maxLength="10"
+        p:required="false" >
+  </bean>
+
+  <bean id="SalesInstance-salesInstanceId" parent="SalesInstance-salesInstanceId-parentBean" />
+  <bean id="SalesInstance-salesInstanceId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="salesInstanceId"
+        p:forceUppercase="false"
+        p:label="Sales Instance ID"
+        p:shortLabel="Sales Instance ID"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="NumericValidationPattern" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  
+  <bean id="SalesInstance-orderDocument.orderId" parent="SalesInstance-orderDocument.orderId-parentBean" />
+  <bean id="SalesInstance-orderDocument.orderId-parentBean" parent="OrderDocument-orderId" abstract="true"
+        p:name="orderDocument.orderId" >
+
+  </bean>
+  
+  <bean id="SalesInstance-orderDocument.creationDate" parent="SalesInstance-orderDocument.creationDate-parentBean" />
+  <bean id="SalesInstance-orderDocument.creationDate-parentBean" parent="OrderDocument-creationDate" abstract="true"
+        p:name="orderDocument.creationDate" >
+
+  </bean>
+
+  <bean id="SalesInstance-orderLineTotalAmt" parent="SalesInstance-orderLineTotalAmt-parentBean" />
+  <bean id="SalesInstance-orderLineTotalAmt-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="orderLineTotalAmt"
+        p:forceUppercase="false"
+        p:label="Order Line Total Amount"
+        p:shortLabel="Order Line Total Amt"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="SalesInstance-orderStatusCd" parent="SalesInstance-orderStatusCd-parentBean" />
+  <bean id="SalesInstance-orderStatusCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="orderStatusCd"
+        p:forceUppercase="false"
+        p:label="Order Status Code"
+        p:shortLabel="Order Status Cd"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="SalesInstance-orderTaxableAmt" parent="SalesInstance-orderTaxableAmt-parentBean" />
+  <bean id="SalesInstance-orderTaxableAmt-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="orderTaxableAmt"
+        p:forceUppercase="false"
+        p:label="Order Taxable Amount"
+        p:shortLabel="Order Taxable Amt"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="SalesInstance-orderTotalAmt" parent="SalesInstance-orderTotalAmt-parentBean" />
+  <bean id="SalesInstance-orderTotalAmt-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="orderTotalAmt"
+        p:forceUppercase="false"
+        p:label="Order Total Amount"
+        p:shortLabel="Order Total Amount"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="SalesInstance-orderTypeCd" parent="SalesInstance-orderTypeCd-parentBean" />
+  <bean id="SalesInstance-orderTypeCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="orderTypeCd"
+        p:forceUppercase="false"
+        p:label="Order Type Code"
+        p:shortLabel="Order Type Cd"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="SalesInstance-salesInstanceArId" parent="SalesInstance-salesInstanceArId-parentBean" />
+  <bean id="SalesInstance-salesInstanceArId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="salesInstanceArId"
+        p:forceUppercase="false"
+        p:label="Sales Instance Ar ID"
+        p:shortLabel="Sales Instance Ar ID"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="SalesInstance-versionNumber" parent="SalesInstance-versionNumber-parentBean" />
+  <bean id="SalesInstance-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="SalesInstance-inquiryDefinition" parent="SalesInstance-inquiryDefinition-parentBean" />
+
+  <bean id="SalesInstance-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Sales Instance Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Sales Instance Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              	<bean parent="FieldDefinition" p:attributeName="salesInstanceId" />
+              	<bean parent="FieldDefinition" p:attributeName="orderDocument.orderId" />
+		        <bean parent="FieldDefinition" p:attributeName="orderLineTotalAmt" />
+		        <bean parent="FieldDefinition" p:attributeName="orderStatusCd" />
+		        <bean parent="FieldDefinition" p:attributeName="orderTaxableAmt" />
+		        <bean parent="FieldDefinition" p:attributeName="orderTotalAmt" />
+		        <bean parent="FieldDefinition" p:attributeName="orderTypeCd" />
+		        <bean parent="FieldDefinition" p:attributeName="customerProfile.principalName" />
+		        <bean parent="FieldDefinition" p:attributeName="customerProfile.customer.customerName" />
+		        <bean parent="FieldDefinition" p:attributeName="customerProfile.profilePhoneNumber" />
+		        <bean parent="FieldDefinition" p:attributeName="orderDocument.creationDate" />
+		        <bean parent="FieldDefinition" p:attributeName="versionNumber" />		        
+		        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="SalesInstance-lookupDefinition" parent="SalesInstance-lookupDefinition-parentBean" />
+
+  <bean id="SalesInstance-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Sales Instance Lookup">
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>salesInstanceId</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>
+      	<bean parent="FieldDefinition" p:attributeName="orderDocument.orderId" p:noLookup="true" />
+      	<bean parent="FieldDefinition" p:attributeName="orderTypeCd" />
+      	<bean parent="FieldDefinition" p:attributeName="orderStatusCd" />
+      	<bean parent="FieldDefinition" p:attributeName="customerProfile.principalName" />       
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+      	<bean parent="FieldDefinition" p:attributeName="orderDocument.orderId" />
+      	<bean parent="FieldDefinition" p:attributeName="orderTypeCd" />
+		<bean parent="FieldDefinition" p:attributeName="orderStatusCd" />
+      	<bean parent="FieldDefinition" p:attributeName="customerProfile.principalName" />
+        <bean parent="FieldDefinition" p:attributeName="orderLineTotalAmt" />
+        <bean parent="FieldDefinition" p:attributeName="orderTaxableAmt" />
+        <bean parent="FieldDefinition" p:attributeName="orderTotalAmt" />
+        <bean parent="FieldDefinition" p:attributeName="orderDocument.creationDate" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+      </list>
+    </property>
+  </bean>
+
+</beans>

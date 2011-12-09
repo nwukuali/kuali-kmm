@@ -1,0 +1,438 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="PunchOutVendor" parent="PunchOutVendor-parentBean" />
+
+  <bean id="PunchOutVendor-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.PunchOutVendor"
+        p:titleAttribute="PunchOutVendorName"
+        p:objectLabel="PunchOutVendor"
+        p:inquiryDefinition-ref="PunchOutVendor-inquiryDefinition"
+        p:lookupDefinition-ref="PunchOutVendor-lookupDefinition" >
+    <property name="attributes" >
+      <list>      
+      	<ref bean="PunchOutVendor-punchOutVendorId" />
+        <ref bean="PunchOutVendor-lastUpdateDate" />
+        <ref bean="PunchOutVendor-versionNumber" />
+        <ref bean="PunchOutVendor-punchOutVendorName" />
+        <ref bean="PunchOutVendor-catalogId" />
+        <ref bean="PunchOutVendor-catalog.catalogCd" />
+        <ref bean="PunchOutVendor-catalog.catalogDesc" />
+        <ref bean="PunchOutVendor-vendorCredentialDomain" />
+        <ref bean="PunchOutVendor-vendorIdentity" />
+        <ref bean="PunchOutVendor-vendorSharedSecret" />
+        <ref bean="PunchOutVendor-punchOutUrl" />
+        <ref bean="PunchOutVendor-purchaseOrderUrl" />
+        <ref bean="PunchOutVendor-localCredentialDomain" />
+        <ref bean="PunchOutVendor-localIdentity" />
+        <ref bean="PunchOutVendor-localUserAgent" />
+        <ref bean="PunchOutVendor-deploymentMode" />
+<!--         <ref bean="PunchOutVendor-supplierPartId" /> -->
+        <ref bean="PunchOutVendor-procurementCard.cardName" />
+        <ref bean="PunchOutVendor-procurementCard.cardNumber" />
+        <ref bean="PunchOutVendor-procurementCard.cardExpireDate" />
+        <ref bean="PunchOutVendor-active" />        
+      </list>
+    </property>
+    
+    <property name="relationships" >
+      <list>
+        <bean parent="RelationshipDefinition">
+          <property name="objectAttributeName" value="procurementCard" />
+          <property name="primitiveAttributes" >
+            <list>
+              <bean parent="PrimitiveAttributeDefinition"
+                    p:sourceName="procurementCardId"
+                    p:targetName="cardId" />
+            </list>
+          </property>
+          <property name="supportAttributes" >
+            <list>
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="procurementCard.cardName"
+                    p:targetName="cardName" />
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="procurementCard.cardNumber"
+                    p:targetName="cardNumber" />
+			  <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="procurementCard.cardExpireDate"
+                    p:targetName="cardExpireDate" />                    
+            </list>
+          </property>
+        </bean>
+        <bean parent="RelationshipDefinition">
+          <property name="objectAttributeName" value="catalog" />
+          <property name="primitiveAttributes" >
+            <list>
+              <bean parent="PrimitiveAttributeDefinition"
+                    p:sourceName="catalogId"
+                    p:targetName="catalogId" />
+            </list>
+          </property>
+          <property name="supportAttributes" >
+            <list>
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="catalog.catalogCd"
+                    p:targetName="catalogCd" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+    
+  </bean>
+
+  <bean id="PunchOutVendor-active" parent="PunchOutVendor-active-parentBean" />
+  <bean id="PunchOutVendor-active-parentBean" abstract="true" parent="GenericAttributes-activeIndicator" 
+        p:name="active"
+        p:label="Active Indicator"
+        p:shortLabel="Active"
+        p:required="false" />
+
+  <bean id="PunchOutVendor-lastUpdateDate" parent="PunchOutVendor-lastUpdateDate-parentBean" />
+  <bean id="PunchOutVendor-lastUpdateDate-parentBean" parent="GenericAttributes-genericTimestamp" abstract="true"
+        p:name="lastUpdateDate"
+        p:forceUppercase="false"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:required="false" >
+  </bean>
+
+  <bean id="PunchOutVendor-versionNumber" parent="PunchOutVendor-versionNumber-parentBean" />
+  <bean id="PunchOutVendor-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+  
+  <bean id="PunchOutVendor-punchOutVendorId" parent="PunchOutVendor-punchOutVendorId-parentBean" />
+  <bean id="PunchOutVendor-punchOutVendorId-parentBean" parent="AttributeDefinition" abstract="true"      
+  		p:name="punchOutVendorId"
+        p:forceUppercase="false"
+        p:label="Punch-Out Vendor Id"
+        p:shortLabel="PunchOutVendor Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  
+  <bean id="PunchOutVendor-procurementCard.cardName" parent="PunchOutVendor-procurementCard.cardName-parentBean" />
+  <bean id="PunchOutVendor-procurementCard.cardName-parentBean" parent="PCard-cardName" abstract="true"      
+  		p:name="procurementCard.cardName"
+        p:required="false" >
+  </bean>
+  
+  <bean id="PunchOutVendor-procurementCard.cardNumber" parent="PunchOutVendor-procurementCard.cardNumber-parentBean" />
+  <bean id="PunchOutVendor-procurementCard.cardNumber-parentBean" parent="PCard-cardNumber" abstract="true"      
+  		p:name="procurementCard.cardNumber"
+        p:required="false" >
+  </bean>
+  
+  <bean id="PunchOutVendor-procurementCard.cardExpireDate" parent="PunchOutVendor-procurementCard.cardExpireDate-parentBean" />
+  <bean id="PunchOutVendor-procurementCard.cardExpireDate-parentBean" parent="PCard-cardExpireDate" abstract="true"      
+  		p:name="procurementCard.cardExpireDate"
+        p:required="false" >
+  </bean>
+  
+  <bean id="PunchOutVendor-punchOutVendorName" parent="PunchOutVendor-punchOutVendorName-parentBean" />
+  <bean id="PunchOutVendor-punchOutVendorName-parentBean" parent="AttributeDefinition" abstract="true"      
+  		p:name="punchOutVendorName"
+        p:forceUppercase="false"
+        p:label="Punch-Out Vendor Name"
+        p:shortLabel="Name"
+        p:maxLength="45"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="12" />
+    </property>
+  </bean>
+  
+  <bean id="PunchOutVendor-catalogId" parent="PunchOutVendor-catalogId-parentBean" />
+  <bean id="PunchOutVendor-catalogId-parentBean" parent="Catalog-catalogId" abstract="true"      
+  		p:name="catalogId" >
+  </bean>
+  
+  <bean id="PunchOutVendor-catalog.catalogCd" parent="PunchOutVendor-catalog.catalogCd-parentBean" />
+  <bean id="PunchOutVendor-catalog.catalogCd-parentBean" parent="Catalog-catalogCd" abstract="true"      
+  		p:name="catalog.catalogCd"
+        p:required="false" >
+  </bean>
+  
+  <bean id="PunchOutVendor-catalog.catalogDesc" parent="PunchOutVendor-catalog.catalogDesc-parentBean" />
+  <bean id="PunchOutVendor-catalog.catalogDesc-parentBean" parent="Catalog-catalogDesc" abstract="true"      
+  		p:name="catalog.catalogDesc"
+        p:required="false" >
+  </bean>
+  
+  <bean id="PunchOutVendor-vendorCredentialDomain" parent="PunchOutVendor-vendorCredentialDomain-parentBean" />
+  <bean id="PunchOutVendor-vendorCredentialDomain-parentBean" parent="AttributeDefinition" abstract="true"      
+  		p:name="vendorCredentialDomain"
+        p:forceUppercase="false"
+        p:label="Vendor Credential Domain"
+        p:shortLabel="vendor Credential Domain"
+        p:maxLength="60"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="12" />
+    </property>
+  </bean>
+  
+  <bean id="PunchOutVendor-deploymentMode" parent="PunchOutVendor-deploymentMode-parentBean" />
+  <bean id="PunchOutVendor-deploymentMode-parentBean" parent="AttributeDefinition" abstract="true"      
+  		p:name="deploymentMode"
+        p:forceUppercase="false"
+        p:label="Deployment Mode"
+        p:shortLabel="Deployment Mode"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  
+  <bean id="PunchOutVendor-vendorIdentity" parent="PunchOutVendor-vendorIdentity-parentBean" />
+  <bean id="PunchOutVendor-vendorIdentity-parentBean" parent="AttributeDefinition" abstract="true"      
+  		p:name="vendorIdentity"
+        p:forceUppercase="false"
+        p:label="Vendor Identity"
+        p:shortLabel="Vendor Identity"
+        p:maxLength="60"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="12" />
+    </property>
+  </bean>
+  
+  <bean id="PunchOutVendor-vendorSharedSecret" parent="PunchOutVendor-vendorSharedSecret-parentBean" />
+  <bean id="PunchOutVendor-vendorSharedSecret-parentBean" parent="AttributeDefinition" abstract="true"      
+  		p:name="vendorSharedSecret"
+        p:forceUppercase="false"
+        p:label="Vendor Shared Secret"
+        p:shortLabel="Vendor Shared Secret"
+        p:maxLength="60"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="12" />
+    </property>
+  </bean>
+  
+  <bean id="PunchOutVendor-punchOutUrl" parent="PunchOutVendor-punchOutUrl-parentBean" />
+  <bean id="PunchOutVendor-punchOutUrl-parentBean" parent="AttributeDefinition" abstract="true"      
+  		p:name="punchOutUrl"
+        p:forceUppercase="false"
+        p:label="Punch-Out Url"
+        p:shortLabel="Punch-Out Url"
+        p:maxLength="250"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="60" />
+    </property>
+  </bean>
+  
+  <bean id="PunchOutVendor-purchaseOrderUrl" parent="PunchOutVendor-purchaseOrderUrl-parentBean" />
+  <bean id="PunchOutVendor-purchaseOrderUrl-parentBean" parent="AttributeDefinition" abstract="true"      
+  		p:name="purchaseOrderUrl"
+        p:forceUppercase="false"
+        p:label="Purchase Order Url"
+        p:shortLabel="PO Url"
+        p:maxLength="250"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="60" />
+    </property>
+  </bean>
+  
+  <bean id="PunchOutVendor-localCredentialDomain" parent="PunchOutVendor-localCredentialDomain-parentBean" />
+  <bean id="PunchOutVendor-localCredentialDomain-parentBean" parent="AttributeDefinition" abstract="true"      
+  		p:name="localCredentialDomain"
+        p:forceUppercase="false"
+        p:label="Local Credential Domain"
+        p:shortLabel="Local Credential Domain"
+        p:maxLength="60"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="12" />
+    </property>
+  </bean>
+  
+  <bean id="PunchOutVendor-localIdentity" parent="PunchOutVendor-localIdentity-parentBean" />
+  <bean id="PunchOutVendor-localIdentity-parentBean" parent="AttributeDefinition" abstract="true"      
+  		p:name="localIdentity"
+        p:forceUppercase="false"
+        p:label="Local Identity"
+        p:shortLabel="Local Identity"
+        p:maxLength="60"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="12" />
+    </property>
+  </bean>
+  
+  <bean id="PunchOutVendor-localUserAgent" parent="PunchOutVendor-localUserAgent-parentBean" />
+  <bean id="PunchOutVendor-localUserAgent-parentBean" parent="AttributeDefinition" abstract="true"      
+  		p:name="localUserAgent"
+        p:forceUppercase="false"
+        p:label="User Agent"
+        p:shortLabel="User Agent"
+        p:maxLength="60"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="20" />
+    </property>
+  </bean>
+  
+<!--   <bean id="PunchOutVendor-supplierPartId" parent="PunchOutVendor-supplierPartId-parentBean" /> -->
+<!--   <bean id="PunchOutVendor-supplierPartId-parentBean" parent="AttributeDefinition" abstract="true"       -->
+<!--   		p:name="supplierPartId" -->
+<!--         p:forceUppercase="false" -->
+<!--         p:label="Supplier Part Id" -->
+<!--         p:shortLabel="Supplier Part Id" -->
+<!--         p:maxLength="60" -->
+<!--         p:required="false" > -->
+<!--     <property name="validationPattern" > -->
+<!--       <bean parent="AnyCharacterValidationPattern" -->
+<!--             p:allowWhitespace="true" /> -->
+<!--     </property> -->
+<!--     <property name="control" > -->
+<!--       <bean parent="TextControlDefinition" -->
+<!--             p:size="12" /> -->
+<!--     </property> -->
+<!--   </bean> -->
+  
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="PunchOutVendor-inquiryDefinition" parent="PunchOutVendor-inquiryDefinition-parentBean" />
+
+  <bean id="PunchOutVendor-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Punch-Out Vendor Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="PunchOutVendor Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>              
+              <bean parent="FieldDefinition" p:attributeName="punchOutVendorId" />
+              <bean parent="FieldDefinition" p:attributeName="punchOutVendorName" />
+              <bean parent="FieldDefinition" p:attributeName="catalog.catalogCd" />
+              <bean parent="FieldDefinition" p:attributeName="catalog.catalogDesc" />
+              <bean parent="FieldDefinition" p:attributeName="vendorCredentialDomain" />
+              <bean parent="FieldDefinition" p:attributeName="vendorIdentity" />
+              <bean parent="FieldDefinition" p:attributeName="vendorSharedSecret" />
+              <bean parent="FieldDefinition" p:attributeName="punchOutUrl" />
+              <bean parent="FieldDefinition" p:attributeName="purchaseOrderUrl" />
+              <bean parent="FieldDefinition" p:attributeName="localCredentialDomain" />
+              <bean parent="FieldDefinition" p:attributeName="localIdentity" />
+              <bean parent="FieldDefinition" p:attributeName="localUserAgent" />
+              <bean parent="FieldDefinition" p:attributeName="deploymentMode" />
+<!--               <bean parent="FieldDefinition" p:attributeName="supplierPartId" /> -->
+              <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+              <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+			  <bean parent="FieldDefinition" p:attributeName="active" />              
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="PunchOutVendor-lookupDefinition" parent="PunchOutVendor-lookupDefinition-parentBean" />
+
+  <bean id="PunchOutVendor-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Punch-Out Vendor Lookup" >
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>punchOutVendorName</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="punchOutVendorName" />
+        <bean parent="FieldDefinition" p:attributeName="catalog.catalogCd" />
+        <bean parent="FieldDefinition" p:attributeName="deploymentMode" />
+        <bean parent="FieldDefinition" p:attributeName="active" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="punchOutVendorName" />
+        <bean parent="FieldDefinition" p:attributeName="catalog.catalogCd" />
+        <bean parent="FieldDefinition" p:attributeName="vendorCredentialDomain" />
+        <bean parent="FieldDefinition" p:attributeName="vendorIdentity" />        
+        <bean parent="FieldDefinition" p:attributeName="deploymentMode" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+        <bean parent="FieldDefinition" p:attributeName="active" />        
+      </list>
+    </property>
+  </bean>
+
+</beans>

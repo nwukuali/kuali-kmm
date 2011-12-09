@@ -1,0 +1,57 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="AdditionalCostTypeMaintenanceDocument" parent="AdditionalCostTypeMaintenanceDocument-parentBean" />
+
+  <bean id="AdditionalCostTypeMaintenanceDocument-parentBean" abstract="true" parent="MaintenanceDocumentEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.AdditionalCostType"
+        p:maintainableClass="org.kuali.rice.kns.maintenance.KualiMaintainableImpl"
+        p:documentTypeName="SACT"
+        p:documentAuthorizerClass="org.kuali.rice.kns.document.authorization.MaintenanceDocumentAuthorizerBase" >
+    <property name="lockingKeys" >
+      <list>
+        <value>additionalCostTypeCode</value>
+      </list>
+    </property>
+    <property name="defaultExistenceChecks" >
+      <list>
+      </list>
+    </property>
+    <property name="workflowAttributes" >
+        <ref bean="AdditionalCostTypeMaintenanceDocument-workflowAttributes" />
+    </property>
+    <property name="maintainableSections" >
+      <list>
+        <ref bean="AdditionalCostTypeMaintenanceDocument-MainSection" />
+      </list>
+    </property>
+  </bean>
+
+ <!-- Maintenance Section Definitions -->
+  <bean id="AdditionalCostTypeMaintenanceDocument-MainSection" parent="AdditionalCostTypeMaintenanceDocument-MainSection-parentBean" />
+
+  <bean id="AdditionalCostTypeMaintenanceDocument-MainSection-parentBean" abstract="true" parent="MaintainableSectionDefinition"
+        p:title="Edit Additional Cost Type" >
+    <property name="maintainableItems" >
+      <list>
+      
+        <bean parent="MaintainableFieldDefinition"
+              p:name="additionalCostTypeCode"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="additionalCostTypeName"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="active"
+              p:defaultValue="true" />
+      </list>
+    </property>
+  </bean>
+ <!-- workflow attributes -->
+  <bean id="AdditionalCostTypeMaintenanceDocument-workflowAttributes" parent="AdditionalCostTypeMaintenanceDocument-workflowAttributes-parentBean" />
+
+  <bean id="AdditionalCostTypeMaintenanceDocument-workflowAttributes-parentBean" abstract="true" class="org.kuali.rice.kns.datadictionary.WorkflowAttributes" />
+</beans>

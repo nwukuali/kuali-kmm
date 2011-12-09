@@ -1,0 +1,262 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="CatalogItemMarkup" parent="CatalogItemMarkup-parentBean" />
+
+  <bean id="CatalogItemMarkup-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.CatalogItemMarkup"
+        p:titleAttribute="catalogItemMarkupId"
+        p:objectLabel="Catalog Item Markup"
+        p:inquiryDefinition-ref="CatalogItemMarkup-inquiryDefinition"
+        p:lookupDefinition-ref="CatalogItemMarkup-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="CatalogItemMarkup-active" />
+        <ref bean="CatalogItemMarkup-catalogItemId" />
+        <ref bean="CatalogItemMarkup-catalogItemMarkupId" />
+        <ref bean="CatalogItemMarkup-lastUpdateDate" />
+        <ref bean="CatalogItemMarkup-markupCd" />
+        <ref bean="CatalogItemMarkup-versionNumber" />
+        <ref bean="CatalogItemMarkup-markup.markupNm"/>
+<!--        <ref bean="CatalogItemMarkup-markup.markupDesc"/>-->
+		<ref bean="CatalogItemMarkup-markup.markupType.markupTypeCd"/>
+        <ref bean="CatalogItemMarkup-markup.markupRt"/>
+        <ref bean="CatalogItemMarkup-markup.markupFixed"/>
+        <ref bean="CatalogItemMarkup-markup.markupBeginDt"/>
+        <ref bean="CatalogItemMarkup-markup.markupEndDt"/>
+      </list>
+    </property>
+    
+     <!--<property name="relationships" >
+      <list>
+        <bean parent="RelationshipDefinition">
+          <property name="objectAttributeName" value="markup" />
+          <property name="primitiveAttributes" >
+            <list>
+              <bean parent="PrimitiveAttributeDefinition"
+                    p:sourceName="markup.markupNm"
+                    p:targetName="markupNm">                    
+              </bean>      
+            </list>
+          </property>
+          <property name="supportAttributes" >
+            <list>
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="markup.markupNm"
+                    p:targetName="markupNm" />               
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="markup.markupDesc"
+                    p:targetName="markupDesc" />        
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="markup.markupRt"
+                    p:targetName="markupRt" />        
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="markup.markupBeginDt"
+                    p:targetName="markupBeginDt" />        
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="markup.markupEndDt"
+                    p:targetName="markupEndDt" />        
+            </list>
+          </property>
+        </bean>        
+     </list>
+     </property>
+  --></bean>
+  
+<!--  <bean id="CatalogItemMarkup-markup.markupDesc" parent="CatalogItemMarkup-markup.markupDesc-parentBean" />-->
+<!--  <bean id="CatalogItemMarkup-markup.markupDesc-parentBean" parent="Markup-markupDesc"-->
+<!--	abstract="true" p:name="markup.markupDesc" p:label="Markup Description"-->
+<!--	p:shortLabel="Markup Description">-->
+<!--  </bean>-->
+  
+  <bean id="CatalogItemMarkup-markup.markupType.markupTypeCd" parent="CatalogItemMarkup-markup.markupType.markupTypeCd-parentBean" />
+  <bean id="CatalogItemMarkup-markup.markupType.markupTypeCd-parentBean" parent="MarkupType-markupTypeCd"
+	abstract="true" p:name="markup.markupType.markupTypeCd" p:label="Markup Type Code">
+  </bean>
+  
+  <bean id="CatalogItemMarkup-markup.markupRt" parent="CatalogItemMarkup-markup.markupRt-parentBean" />
+  <bean id="CatalogItemMarkup-markup.markupRt-parentBean" parent="Markup-markupRt"
+	abstract="true" p:name="markup.markupRt" p:label="Markup Rate"
+	p:shortLabel="Markup Rate">
+  </bean>
+  
+  <bean id="CatalogItemMarkup-markup.markupFixed" parent="CatalogItemMarkup-markup.markupFixed-parentBean" />
+  <bean id="CatalogItemMarkup-markup.markupFixed-parentBean" parent="Markup-markupFixed"
+	abstract="true" p:name="markup.markupFixed" p:label="Markup Fixed Price"
+	p:shortLabel="Markup Fixed Price">
+  </bean>
+  
+  <bean id="CatalogItemMarkup-markup.markupBeginDt" parent="CatalogItemMarkup-markup.markupBeginDt-parentBean" />
+  <bean id="CatalogItemMarkup-markup.markupBeginDt-parentBean" parent="Markup-markupBeginDt"
+	abstract="true" p:name="markup.markupBeginDt" p:label="Markup Begin Date"
+	p:shortLabel="Markup Begin Date">
+  </bean>
+  
+  <bean id="CatalogItemMarkup-markup.markupEndDt" parent="CatalogItemMarkup-markup.markupEndDt-parentBean" />
+  <bean id="CatalogItemMarkup-markup.markupEndDt-parentBean" parent="Markup-markupEndDt"
+	abstract="true" p:name="markup.markupEndDt" p:label="Markup End Date"
+	p:shortLabel="Markup End Date">
+  </bean>
+  
+  <bean id="CatalogItemMarkup-markup.markupNm" parent="CatalogItemMarkup-markup.markupNm-parentBean" />
+  <bean id="CatalogItemMarkup-markup.markupNm-parentBean" parent="Markup-markupNm"
+	abstract="true" p:name="markup.markupNm" p:label="Markup Name"
+	p:shortLabel="Markup Name">
+  </bean>
+
+  <bean id="CatalogItemMarkup-active" parent="CatalogItemMarkup-active-parentBean" />
+  <bean id="CatalogItemMarkup-active-parentBean" abstract="true" parent="GenericAttributes-activeIndicator" 
+        p:name="active"
+        p:required="false" />
+
+  <bean id="CatalogItemMarkup-catalogItemId" parent="CatalogItemMarkup-catalogItemId-parentBean" />
+  <bean id="CatalogItemMarkup-catalogItemId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="catalogItemId"
+        p:forceUppercase="false"
+        p:label="Catalog Item ID"
+        p:shortLabel="Catalog Item ID"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CatalogItemMarkup-catalogItemMarkupId" parent="CatalogItemMarkup-catalogItemMarkupId-parentBean" />
+  <bean id="CatalogItemMarkup-catalogItemMarkupId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="catalogItemMarkupId"
+        p:forceUppercase="false"
+        p:label="Catalog Item Markup ID"
+        p:shortLabel="Catalog Item Markup ID"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean><!--
+  
+  <bean id="VendorShippingSpecialCondition-vendorShippingSpecialConditionCode" parent="VendorShippingSpecialCondition-vendorShippingSpecialConditionCode-parentBean"/>
+
+  <bean id="VendorShippingSpecialCondition-vendorShippingSpecialConditionCode-parentBean" abstract="true" parent="ShippingSpecialCondition-vendorShippingSpecialConditionCode">
+    <property name="label" value="Shipping Special Condition"/>
+    <property name="shortLabel" value="Shipping Special Condition"/>
+    <property name="forceUppercase" value="true"/>
+    <property name="required" value="true"/>
+    <property name="control">
+      <bean parent="SelectControlDefinition" p:valuesFinderClass="org.kuali.kfs.vnd.businessobject.options.ShippingSpecialConditionValuesFinder" p:includeKeyInLabel="false"/>
+    </property>
+  </bean>
+
+  --><bean id="CatalogItemMarkup-lastUpdateDate" parent="CatalogItemMarkup-lastUpdateDate-parentBean" />
+  <bean id="CatalogItemMarkup-lastUpdateDate-parentBean" abstract="true" parent="GenericAttributes-genericTimestamp" 
+        p:name="lastUpdateDate"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:required="false" />
+
+  <bean id="CatalogItemMarkup-markupCd" parent="CatalogItemMarkup-markupCd-parentBean" />
+  <bean id="CatalogItemMarkup-markupCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="markupCd"
+        p:forceUppercase="false"
+        p:label="Markup Code"
+        p:shortLabel="Markup Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CatalogItemMarkup-versionNumber" parent="CatalogItemMarkup-versionNumber-parentBean" />
+  <bean id="CatalogItemMarkup-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="CatalogItemMarkup-inquiryDefinition" parent="CatalogItemMarkup-inquiryDefinition-parentBean" />
+
+  <bean id="CatalogItemMarkup-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Catalog Item Markup Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Catalog Item Markup Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="active" />
+              <bean parent="FieldDefinition" p:attributeName="catalogItemId" />
+              <bean parent="FieldDefinition" p:attributeName="catalogItemMarkupId" />
+              <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+              <bean parent="FieldDefinition" p:attributeName="markupCd" />
+              <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="CatalogItemMarkup-lookupDefinition" parent="CatalogItemMarkup-lookupDefinition-parentBean" />
+
+  <bean id="CatalogItemMarkup-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Catalog Item Markup Lookup" 
+ >
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>catalogItemMarkupId</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="active" />
+        <bean parent="FieldDefinition" p:attributeName="catalogItemId" />
+        <bean parent="FieldDefinition" p:attributeName="catalogItemMarkupId" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+        <bean parent="FieldDefinition" p:attributeName="markupCd" />
+        <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="active" />
+        <bean parent="FieldDefinition" p:attributeName="catalogItemId" />
+        <bean parent="FieldDefinition" p:attributeName="catalogItemMarkupId" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+        <bean parent="FieldDefinition" p:attributeName="markupCd" />
+        <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+      </list>
+    </property>
+  </bean>
+
+</beans>

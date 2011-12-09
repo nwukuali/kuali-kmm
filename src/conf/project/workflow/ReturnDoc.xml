@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="ns:workflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="ns:workflow resource:WorkflowData">
+	<documentTypes xmlns="ns:workflow/DocumentType"
+		xsi:schemaLocation="ns:workflow/DocumentType resource:DocumentType">
+		<documentType>
+			<name>SRET</name>
+			<label>Return Document</label>
+			<parent>SSTD</parent>
+			<docHandler>${kmm.url}/returnOrder.do?methodToCall=docHandler</docHandler>
+	   <routePaths>
+        <routePath>
+          <start name="AdHoc"  nextNode="ReturnDocReview"/>
+          <requests name="ReturnDocReview"/>
+        </routePath>
+      </routePaths>
+      <routeNodes>
+        <start name="AdHoc" />
+        <role name="ReturnDocReview">
+          <qualifierResolverClass>org.kuali.rice.kns.workflow.attribute.DataDictionaryQualifierResolver</qualifierResolverClass>
+          <activationType>P</activationType>
+        </role>
+      </routeNodes>
+		</documentType>
+	</documentTypes>
+</data>

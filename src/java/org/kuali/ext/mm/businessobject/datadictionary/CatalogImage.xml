@@ -1,0 +1,156 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="CatalogImage" parent="CatalogImage-parentBean" />
+
+  <bean id="CatalogImage-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.CatalogImage"
+        p:titleAttribute="catalogImageId"
+        p:objectLabel="Catalog Image"
+        p:inquiryDefinition-ref="CatalogImage-inquiryDefinition"
+        p:lookupDefinition-ref="CatalogImage-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="CatalogImage-active" />
+        <ref bean="CatalogImage-catalogImageId" />
+        <ref bean="CatalogImage-catalogImageName" />
+        <ref bean="CatalogImage-catalogImageUrl" />
+        <ref bean="CatalogImage-lastUpdateDate" />
+        <ref bean="CatalogImage-versionNumber" />
+      </list>
+    </property>
+  </bean>
+
+  <bean id="CatalogImage-active" parent="CatalogImage-active-parentBean" />
+  <bean id="CatalogImage-active-parentBean" abstract="true" parent="GenericAttributes-activeIndicator" 
+        p:name="active"
+        p:label ="Active Indicator"
+        p:required="false" />
+
+  <bean id="CatalogImage-catalogImageId" parent="CatalogImage-catalogImageId-parentBean" />
+  <bean id="CatalogImage-catalogImageId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="catalogImageId"
+        p:forceUppercase="false"
+        p:label="Catalog Image Id"
+        p:shortLabel="Catalog Image Id"
+        p:maxLength="18"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="18" />
+    </property>
+  </bean>
+
+  <bean id="CatalogImage-catalogImageName" parent="CatalogImage-catalogImageName-parentBean" />
+  <bean id="CatalogImage-catalogImageName-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="catalogImageName"
+        p:forceUppercase="false"
+        p:label="Catalog Image Name"
+        p:shortLabel="Catalog Image Name"
+        p:maxLength="12"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="12" />
+    </property>
+  </bean>
+
+  <bean id="CatalogImage-catalogImageUrl" parent="CatalogImage-catalogImageUrl-parentBean" />
+  <bean id="CatalogImage-catalogImageUrl-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="catalogImageUrl"
+        p:forceUppercase="false"
+        p:label="Catalog Image URL"
+        p:shortLabel="Catalog Image URL"
+        p:maxLength="250"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+        <bean parent="TextareaControlDefinition" p:rows="4" p:cols="60"/>
+    </property>
+  </bean>
+
+  <bean id="CatalogImage-lastUpdateDate" parent="CatalogImage-lastUpdateDate-parentBean" />
+  <bean id="CatalogImage-lastUpdateDate-parentBean" abstract="true" parent="GenericAttributes-genericTimestamp" 
+        p:name="lastUpdateDate"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:required="false" />
+
+  <bean id="CatalogImage-versionNumber" parent="CatalogImage-versionNumber-parentBean" />
+  <bean id="CatalogImage-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="CatalogImage-inquiryDefinition" parent="CatalogImage-inquiryDefinition-parentBean" />
+
+  <bean id="CatalogImage-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Catalog Image Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Catalog Image Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="active" />
+              <bean parent="FieldDefinition" p:attributeName="catalogImageId" />
+              <bean parent="FieldDefinition" p:attributeName="catalogImageName" />
+              <bean parent="FieldDefinition" p:attributeName="catalogImageUrl" />
+              <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+              <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="CatalogImage-lookupDefinition" parent="CatalogImage-lookupDefinition-parentBean" />
+
+  <bean id="CatalogImage-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Catalog Image Lookup">
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>catalogImageId</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>    
+        <bean parent="FieldDefinition" p:attributeName="catalogImageName" />
+        <bean parent="FieldDefinition" p:attributeName="catalogImageUrl" />
+  		<bean parent="FieldDefinition" p:attributeName="active" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="catalogImageName" />
+        <bean parent="FieldDefinition" p:attributeName="catalogImageUrl" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+        <bean parent="FieldDefinition" p:attributeName="active" />
+      </list>
+    </property>
+  </bean>
+
+</beans>

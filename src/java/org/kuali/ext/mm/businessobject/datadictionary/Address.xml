@@ -1,0 +1,306 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="Address" parent="Address-parentBean" />
+
+  <bean id="Address-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.Address"
+        p:titleAttribute="addressId"
+        p:objectLabel="Address"
+        p:inquiryDefinition-ref="Address-inquiryDefinition"
+        p:lookupDefinition-ref="Address-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="Address-active" />
+        <ref bean="Address-addressCityName" />
+        <ref bean="Address-addressCountryCode" />
+        <ref bean="Address-addressId" />
+        <ref bean="Address-addressProfileId" />
+        <ref bean="Address-addressLine1" />
+        <ref bean="Address-addressLine2" />
+        <ref bean="Address-addressName" />
+        <ref bean="Address-addressPhoneNumber" />
+        <ref bean="Address-addressPostalCode" />
+        <ref bean="Address-addressStateCode" />
+        <ref bean="Address-addressTypeCode" />
+        <ref bean="Address-lastUpdateDate" />
+        <ref bean="Address-versionNumber" />
+      </list>
+    </property>
+  </bean>
+
+  <bean id="Address-active" parent="Address-active-parentBean" />
+  <bean id="Address-active-parentBean" abstract="true" parent="GenericAttributes-activeIndicator" 
+        p:name="active"
+        p:label="Active"
+        p:shortLabel="Active"
+        p:required="false" />
+
+  <bean id="Address-addressCityName" parent="Address-addressCityName-parentBean" />
+  <bean id="Address-addressCityName-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="addressCityName"
+        p:forceUppercase="false"
+        p:label="Address City Name"
+        p:shortLabel="City"
+        p:maxLength="45"
+        p:required="true" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="15" />
+    </property>
+  </bean>
+
+  <bean id="Address-addressCountryCode" parent="Address-addressCountryCode-parentBean" />
+  <bean id="Address-addressCountryCode-parentBean" parent="GenericAttributes-twoDigitTextCode" abstract="true"
+        p:name="addressCountryCode"
+        p:forceUppercase="false"
+        p:label="Address Country Code"
+        p:shortLabel="Country"
+        p:required="true" >
+  </bean>
+
+  <bean id="Address-addressId" parent="Address-addressId-parentBean" />
+  <bean id="Address-addressId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="addressId"
+        p:forceUppercase="false"
+        p:label="Address Id"
+        p:shortLabel="Id"
+        p:maxLength="36"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="15" />
+    </property>
+  </bean>
+  
+  <bean id="Address-addressProfileId" parent="Address-addressProfileId-parentBean" />
+  <bean id="Address-addressProfileId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="addressProfileId"
+        p:forceUppercase="false"
+        p:label="Address Profile Id"
+        p:shortLabel="Profile Id"
+        p:maxLength="36"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="15" />
+    </property>
+  </bean>
+
+  <bean id="Address-addressLine1" parent="Address-addressLine1-parentBean" />
+  <bean id="Address-addressLine1-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="addressLine1"
+        p:forceUppercase="false"
+        p:label="Address Line1"
+        p:shortLabel="Line 1"
+        p:maxLength="45"
+        p:required="true" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="25" />
+    </property>
+  </bean>
+
+  <bean id="Address-addressLine2" parent="Address-addressLine2-parentBean" />
+  <bean id="Address-addressLine2-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="addressLine2"
+        p:forceUppercase="false"
+        p:label="Address Line2"
+        p:shortLabel="Line 2"
+        p:maxLength="45"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="25" />
+    </property>
+  </bean>
+
+  <bean id="Address-addressName" parent="Address-addressName-parentBean" />
+  <bean id="Address-addressName-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="addressName"
+        p:forceUppercase="false"
+        p:label="Address Name"
+        p:shortLabel="Name"
+        p:maxLength="45"
+        p:required="true" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="15" />
+    </property>
+  </bean>
+
+  <bean id="Address-addressPhoneNumber" parent="Address-addressPhoneNumber-parentBean" />
+  <bean id="Address-addressPhoneNumber-parentBean" parent="Profile-profilePhoneNumber" abstract="true"
+        p:name="addressPhoneNumber"
+        p:forceUppercase="false"
+        p:label="Address Phone Number"
+        p:shortLabel="Phone"        
+        p:required="true" >
+  </bean>
+
+  <bean id="Address-addressPostalCode" parent="Address-addressPostalCode-parentBean" />
+  <bean id="Address-addressPostalCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="addressPostalCode"
+        p:forceUppercase="true"
+        p:label="Address Postal Code"
+        p:shortLabel="Zip"
+        p:maxLength="20"
+        p:required="true" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="Address-addressStateCode" parent="Address-addressStateCode-parentBean" />
+  <bean id="Address-addressStateCode-parentBean" parent="GenericAttributes-twoDigitTextCode" abstract="true"
+        p:name="addressStateCode"
+        p:forceUppercase="true"
+        p:label="Address State Code"
+        p:shortLabel="State"
+        p:required="true" >
+  </bean>
+
+  <bean id="Address-addressTypeCode" parent="Address-addressTypeCode-parentBean" />
+  <bean id="Address-addressTypeCode-parentBean" parent="GenericAttributes-twoDigitTextCode" abstract="true"
+        p:name="addressTypeCode"
+        p:forceUppercase="false"
+        p:label="Address Type Code"
+        p:shortLabel="Type Code"
+        p:required="false" >
+  </bean>
+
+  <bean id="Address-lastUpdateDate" parent="Address-lastUpdateDate-parentBean" />
+  <bean id="Address-lastUpdateDate-parentBean" parent="GenericAttributes-genericTimestamp" abstract="true"
+        p:name="lastUpdateDate"
+        p:forceUppercase="false"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:maxLength="10"
+        p:required="false" >
+  </bean>
+
+  <bean id="Address-versionNumber" parent="Address-versionNumber-parentBean" />
+  <bean id="Address-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="Address-inquiryDefinition" parent="Address-inquiryDefinition-parentBean" />
+
+  <bean id="Address-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Address Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Address Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+				<bean parent="FieldDefinition" p:attributeName="active" />
+				<bean parent="FieldDefinition" p:attributeName="addressId" />
+				<bean parent="FieldDefinition" p:attributeName="addressProfileId" />
+				<bean parent="FieldDefinition" p:attributeName="addressTypeCode" />
+				<bean parent="FieldDefinition" p:attributeName="addressName" />
+				<bean parent="FieldDefinition" p:attributeName="addressLine1" />
+				<bean parent="FieldDefinition" p:attributeName="addressLine2" />      	
+				<bean parent="FieldDefinition" p:attributeName="addressCityName" />
+				<bean parent="FieldDefinition" p:attributeName="addressStateCode" />
+				<bean parent="FieldDefinition" p:attributeName="addressPostalCode" />
+				<bean parent="FieldDefinition" p:attributeName="addressCountryCode" />        
+				<bean parent="FieldDefinition" p:attributeName="addressPhoneNumber" />
+				<bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+				<bean parent="FieldDefinition" p:attributeName="versionNumber" />        
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="Address-lookupDefinition" parent="Address-lookupDefinition-parentBean" />
+
+  <bean id="Address-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Address Lookup" >
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>addressName</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>
+		<bean parent="FieldDefinition" p:attributeName="addressId" />
+		<bean parent="FieldDefinition" p:attributeName="addressProfileId" />
+		<bean parent="FieldDefinition" p:attributeName="addressTypeCode" />
+      	<bean parent="FieldDefinition" p:attributeName="addressName" />
+        <bean parent="FieldDefinition" p:attributeName="addressLine1" />
+        <bean parent="FieldDefinition" p:attributeName="addressLine2" />      	
+        <bean parent="FieldDefinition" p:attributeName="addressCityName" />
+        <bean parent="FieldDefinition" p:attributeName="addressStateCode" />
+        <bean parent="FieldDefinition" p:attributeName="addressPostalCode" />
+        <bean parent="FieldDefinition" p:attributeName="addressCountryCode" />        
+        <bean parent="FieldDefinition" p:attributeName="addressPhoneNumber" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+        <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+        <bean parent="FieldDefinition" p:attributeName="active" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+      	<bean parent="FieldDefinition" p:attributeName="active" />
+        <bean parent="FieldDefinition" p:attributeName="addressId" />
+        <bean parent="FieldDefinition" p:attributeName="addressProfileId" />
+		<bean parent="FieldDefinition" p:attributeName="addressTypeCode" />
+      	<bean parent="FieldDefinition" p:attributeName="addressName" />
+        <bean parent="FieldDefinition" p:attributeName="addressLine1" />
+        <bean parent="FieldDefinition" p:attributeName="addressLine2" />      	
+        <bean parent="FieldDefinition" p:attributeName="addressCityName" />
+        <bean parent="FieldDefinition" p:attributeName="addressStateCode" />
+        <bean parent="FieldDefinition" p:attributeName="addressPostalCode" />
+        <bean parent="FieldDefinition" p:attributeName="addressCountryCode" />        
+        <bean parent="FieldDefinition" p:attributeName="addressPhoneNumber" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+        <bean parent="FieldDefinition" p:attributeName="versionNumber" />        
+      </list>
+    </property>
+  </bean>
+
+</beans>

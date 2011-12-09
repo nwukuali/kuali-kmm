@@ -1,0 +1,19 @@
+<config>
+	<!-- DATABASE SETTINGS -->
+	<param name="datasource.username">${datasource.username}</param>
+	<param name="datasource.password">${datasource.password}</param>
+	<param name="datasource.url">${datasource.url}</param>
+	<!-- These properties were supposedly removed due to a rice enhancement, but it didn't work without them. -->
+	<param name="datasource.pool.maxWait">${datasource.pool.maxWait}</param>
+	<param name="datasource.ojb.platform">${datasource.ojb.platform}</param>
+	<param name="datasource.platform">${datasource.platform}</param>
+	<param name="datasource.driver.name">${datasource.driver.name}</param>
+	<param name="datasource.pool.validationQuery">${datasource.pool.validationQuery}</param>
+	<param name="datasource.pool.size">${datasource.pool.size}</param>
+	<param name="rice.datasource.username">${rice.datasource.username}</param>
+	<param name="rice.datasource.password">${rice.datasource.password}</param>
+	<param name="rice.datasource.url">${rice.datasource.url}</param>
+	<param name="ksb.datasource.username">${ksb.datasource.username}</param>
+	<param name="ksb.datasource.password">${ksb.datasource.password}</param>
+	<param name="ksb.datasource.url">${ksb.datasource.url}</param>
+</config>

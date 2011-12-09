@@ -1,0 +1,78 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="DeliveryLogDocument" parent="DeliveryLogDocument-parentBean" />
+  
+  <bean id="DeliveryLogDocument-parentBean" abstract="true" parent="TransactionalDocumentEntry">
+  	<property name="documentTypeName" value="DLDL"/>
+   	<property name="sessionDocument" value="true"/>
+    <property name="documentClass" value="org.kuali.ext.mm.document.DeliveryLogDocument"/>   
+    <property name="businessRulesClass" value="org.kuali.ext.mm.document.validation.impl.DeliveryLogDocumentRule"/>       
+    <property name="documentPresentationControllerClass" value="org.kuali.ext.mm.document.authorization.DeliveryLogDocumentPresentationController"/>    
+    <property name="documentAuthorizerClass" value="org.kuali.rice.kns.document.authorization.TransactionalDocumentAuthorizerBase"/>
+    <property name="allowsCopy" value="true"/>  
+
+  <property name="attributes" >
+    <list>
+      <ref bean="DeliveryLogDocument-versionNumber" />
+      <ref bean="DeliveryLogDocument-routeCd" />
+      <ref bean="DeliveryLogDocument-deliveryLabelLines" />
+    </list>
+  </property>
+  
+  <property name="defaultExistenceChecks" >
+   <list>
+   </list>
+  </property>
+    
+  <property name="workflowAttributes">
+  	<ref bean="DeliveryLogDocument-workflowAttributes" />
+  </property>
+  </bean>
+  
+  <bean id="DeliveryLogDocument-versionNumber" parent="DeliveryLogDocument-versionNumber-parentBean" />
+  <bean id="DeliveryLogDocument-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+  <bean id="DeliveryLogDocument-routeCd" parent="DeliveryLogDocument-routeCd-parentBean" />
+  <bean id="DeliveryLogDocument-routeCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="routeCd" 
+        p:label="Route Code"
+        p:maxLength="2"
+        p:required= "true">
+        <property name="validationPattern" >
+      	<bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    	</property>
+    	<property name="control" >
+      	<bean parent="TextControlDefinition"
+            p:size="8" />
+    </property>
+  </bean>        
+  
+  <bean id="DeliveryLogDocument-deliveryLabelLines" parent="DeliveryLogDocument-deliveryLabelLines-parentBean" />
+  <bean id="DeliveryLogDocument-deliveryLabelLines-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="deliveryLabelLines"
+        p:forceUppercase="false"
+        p:label="Delivery Lines"
+        p:shortLabel="Delivery Lines"
+        p:maxLength="10"
+        p:required="true" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+    
+  <bean id="DeliveryLogDocument-workflowAttributes" parent="DeliveryLogDocument-workflowAttributes-parentBean"/>
+  <bean id="DeliveryLogDocument-workflowAttributes-parentBean" abstract="true" parent="WorkflowAttributes" />
+
+</beans>

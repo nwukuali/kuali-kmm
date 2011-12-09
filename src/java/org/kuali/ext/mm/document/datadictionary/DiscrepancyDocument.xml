@@ -1,0 +1,83 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="DiscrepancyDocument" parent="DiscrepancyDocument-parentBean" />
+  
+  <bean id="DiscrepancyDocument-parentBean" abstract="true" parent="TransactionalDocumentEntry">
+  	<property name="documentTypeName" value="VIRD"/>
+   	<property name="sessionDocument" value="true"/>
+    <property name="documentClass" value="org.kuali.ext.mm.document.DiscrepancyDocument"/>  
+    <property name="businessRulesClass" value="org.kuali.ext.mm.document.validation.impl.DiscrepancyDocumentRule"/>   
+    <property name="documentPresentationControllerClass" value="org.kuali.ext.mm.document.authorization.DiscrepancyDocumentPresentationController"/>
+    <property name="documentAuthorizerClass" value="org.kuali.rice.kns.document.authorization.TransactionalDocumentAuthorizerBase"/>
+    <property name="allowsCopy" value="false"/>  
+
+  <property name="attributes" >
+    <list>
+      <ref bean="DiscrepancyDocument-versionNumber" />
+      <ref bean="DiscrepancyDocument-reportName"/>
+  	  <ref bean="DiscrepancyDocument-vendorName"/>
+  	  <ref bean="DiscrepancyDocument-discrepancyFromDate"/>
+  	  <ref bean="DiscrepancyDocument-discrepancyToDate"/>
+    </list>
+  </property>
+     
+  <property name="workflowAttributes">
+  	<ref bean="DeliveryLabelDocument-workflowAttributes" />
+  </property>
+  </bean>
+           
+  <bean id="DiscrepancyDocument-discrepancyFromDate" parent="DiscrepancyDocument-discrepancyFromDate-parentBean" />            
+  <bean id="DiscrepancyDocument-discrepancyFromDate-parentBean" abstract="true" parent="GenericAttributes-genericDate">
+    <property name="name" value="discrepancyFromDate"/>
+    <property name="label" value="Discrepancy From Date"/>       
+  </bean>
+  
+  <bean id="DiscrepancyDocument-discrepancyToDate" parent="DiscrepancyDocument-discrepancyToDate-parentBean" />            
+  <bean id="DiscrepancyDocument-discrepancyToDate-parentBean" abstract="true" parent="GenericAttributes-genericDate">
+    <property name="name" value="discrepancyToDate"/>  
+    <property name="label" value="Discrepancy To Date"/>    
+  </bean>            
+                      
+  <bean id="DiscrepancyDocument-versionNumber" parent="DiscrepancyDocument-versionNumber-parentBean" />
+  <bean id="DiscrepancyDocument-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+  <bean id="DiscrepancyDocument-reportName" parent="DiscrepancyDocument-reportName-parentBean" />
+  <bean id="DiscrepancyDocument-reportName-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="reportName"
+        p:forceUppercase="true"
+        p:label="Report Name"
+        p:shortLabel="Report Name"
+        p:maxLength="100"
+        p:required="true" >
+    <property name="control" >
+	    <bean parent="SelectControlDefinition"
+	          p:valuesFinderClass="org.kuali.ext.mm.businessobject.options.ReportNamesOptionFinder"
+	          p:includeKeyInLabel="true"/>
+	  </property>
+  </bean>
+        
+  <bean id="DiscrepancyDocument-vendorName" parent="DiscrepancyDocument-vendorName-parentBean" />
+  <bean id="DiscrepancyDocument-vendorName-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorName"
+        p:forceUppercase="true"
+        p:label="Vendor Name"
+        p:shortLabel="Vendor Name"
+        p:maxLength="100"
+        p:required="true" >
+    <property name="control" >
+	    <bean parent="SelectControlDefinition"
+	          p:valuesFinderClass="org.kuali.ext.mm.businessobject.options.VendorNamesOptionFinder"
+	          p:includeKeyInLabel="true"/>
+	  </property>
+  </bean>
+
+  <bean id="DiscrepancyDocument-workflowAttributes" parent="DiscrepancyDocument-workflowAttributes-parentBean"/>
+  <bean id="DiscrepancyDocument-workflowAttributes-parentBean" abstract="true" parent="WorkflowAttributes" />
+
+</beans>

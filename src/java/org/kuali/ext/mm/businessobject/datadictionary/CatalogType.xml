@@ -1,0 +1,135 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="CatalogType" parent="CatalogType-parentBean" />
+
+  <bean id="CatalogType-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.CatalogType"
+        p:titleAttribute="catalogTypeCd"
+        p:objectLabel="Catalog Type"
+        p:inquiryDefinition-ref="CatalogType-inquiryDefinition"
+        p:lookupDefinition-ref="CatalogType-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="CatalogType-active" />
+        <ref bean="CatalogType-catalogTypeCd" />
+        <ref bean="CatalogType-catalogTypeName" />
+        <ref bean="CatalogType-lastUpdateDate" />
+        <ref bean="CatalogType-versionNumber" />
+      </list>
+    </property>
+  </bean>
+
+  <bean id="CatalogType-active" parent="CatalogType-active-parentBean" />
+  <bean id="CatalogType-active-parentBean" abstract="true" parent="GenericAttributes-activeIndicator" 
+        p:name="active"
+        p:label = "Active Indicator"
+        p:required="false" />
+
+  <bean id="CatalogType-catalogTypeCd" parent="CatalogType-catalogTypeCd-parentBean" />
+  <bean id="CatalogType-catalogTypeCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="catalogTypeCd"
+        p:forceUppercase="true"
+        p:label="Catalog Type Code"
+        p:shortLabel="Catalog Type Code"
+        p:maxLength="1"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AlphaNumericValidationPattern"/>
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="1" />
+    </property>
+  </bean>
+
+  <bean id="CatalogType-catalogTypeName" parent="CatalogType-catalogTypeName-parentBean" />
+  <bean id="CatalogType-catalogTypeName-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="catalogTypeName"
+        p:forceUppercase="false"
+        p:label="Catalog Type Name"
+        p:shortLabel="Catalog Type Name"
+        p:maxLength="45"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="45" />
+    </property>
+  </bean>
+
+  <bean id="CatalogType-lastUpdateDate" parent="CatalogType-lastUpdateDate-parentBean" />
+  <bean id="CatalogType-lastUpdateDate-parentBean" abstract="true" parent="GenericAttributes-genericTimestamp" 
+        p:name="lastUpdateDate"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:required="false" />
+
+  <bean id="CatalogType-versionNumber" parent="CatalogType-versionNumber-parentBean" />
+  <bean id="CatalogType-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="CatalogType-inquiryDefinition" parent="CatalogType-inquiryDefinition-parentBean" />
+
+  <bean id="CatalogType-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Catalog Type Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Catalog Type Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="active" />
+              <bean parent="FieldDefinition" p:attributeName="catalogTypeCd" />
+              <bean parent="FieldDefinition" p:attributeName="catalogTypeName" />
+              <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+              <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="CatalogType-lookupDefinition" parent="CatalogType-lookupDefinition-parentBean" />
+
+  <bean id="CatalogType-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Catalog Type Lookup">
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>catalogTypeCd</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="catalogTypeCd" />
+        <bean parent="FieldDefinition" p:attributeName="catalogTypeName" />
+        <bean parent="FieldDefinition" p:attributeName="active" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="catalogTypeCd" />
+        <bean parent="FieldDefinition" p:attributeName="catalogTypeName" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+        <bean parent="FieldDefinition" p:attributeName="active" />
+      </list>
+    </property>
+  </bean>
+</beans>

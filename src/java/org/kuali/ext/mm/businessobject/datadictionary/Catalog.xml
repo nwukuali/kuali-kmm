@@ -1,0 +1,322 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="Catalog" parent="Catalog-parentBean" />
+
+  <bean id="Catalog-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.Catalog"
+        p:titleAttribute="catalogId"
+        p:objectLabel="Catalog"
+        p:inquiryDefinition-ref="Catalog-inquiryDefinition"
+        p:lookupDefinition-ref="Catalog-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="Catalog-active" />
+        <ref bean="Catalog-agreementNbr" />
+        <ref bean="Catalog-catalogBeginDt" />
+        <ref bean="Catalog-catalogCd" />
+        <ref bean="Catalog-catalogDesc" />
+        <ref bean="Catalog-catalogEndDt" />
+        <ref bean="Catalog-warehouseCd" />
+        <ref bean="Catalog-defaultObjectCd"/>
+        <ref bean="Catalog-catalogId" />
+        <ref bean="Catalog-catalogTypeCd" />
+        <ref bean="Catalog-catalogPendingDocNbr" />
+        <ref bean="Catalog-currentInd" />
+        <ref bean="Catalog-lastUpdateDate" />
+        <ref bean="Catalog-priorityNbr" />
+        <ref bean="Catalog-versionNumber" />
+        <ref bean="Catalog-catalogType.catalogTypeName"/>
+      </list>
+    </property>
+  </bean>
+
+  <bean id="Catalog-active" parent="Catalog-active-parentBean" />
+  <bean id="Catalog-active-parentBean" abstract="true" parent="GenericAttributes-activeIndicator" 
+        p:name="active"
+        p:label="Active Indicator"
+        p:required="false" />
+
+  <bean id="Catalog-agreementNbr" parent="Catalog-agreementNbr-parentBean" />
+  <bean id="Catalog-agreementNbr-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="agreementNbr"
+        p:forceUppercase="false"
+        p:label="Agreement Number"
+        p:shortLabel="Agreement Number"
+        p:maxLength="15"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="15" />
+    </property>
+  </bean>
+
+  <bean id="Catalog-catalogType.catalogTypeName" parent="Catalog-catalogType.catalogTypeName-parentBean" />
+  <bean id="Catalog-catalogType.catalogTypeName-parentBean" abstract="true" parent="CatalogType-catalogTypeName" 
+        p:name="catalogType.catalogTypeName"
+        p:label="Catalog Type Name"/>
+
+  <bean id="Catalog-catalogBeginDt" parent="Catalog-catalogBeginDt-parentBean" />
+  <bean id="Catalog-catalogBeginDt-parentBean" abstract="true" parent="GenericAttributes-genericDate" 
+        p:name="catalogBeginDt"
+        p:label="Catalog Begin Date"
+        p:shortLabel="Catalog Begin Date"
+        p:required="false" />
+
+  <bean id="Catalog-catalogCd" parent="Catalog-catalogCd-parentBean" />
+  <bean id="Catalog-catalogCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="catalogCd"
+        p:forceUppercase="true"
+        p:label="Catalog Code"
+        p:shortLabel="Catalog Code"
+        p:maxLength="2"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AlphaNumericValidationPattern"/>
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="2" />
+    </property>
+  </bean>
+
+  <bean id="Catalog-catalogDesc" parent="Catalog-catalogDesc-parentBean" />
+  <bean id="Catalog-catalogDesc-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="catalogDesc"
+        p:forceUppercase="false"
+        p:label="Catalog Description"
+        p:shortLabel="Catalog Description"
+        p:maxLength="200"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+         <bean parent="TextareaControlDefinition" p:rows="3" p:cols="60"/>
+    </property>
+  </bean>
+
+  <bean id="Catalog-catalogEndDt" parent="Catalog-catalogEndDt-parentBean" />
+  <bean id="Catalog-catalogEndDt-parentBean" abstract="true" parent="GenericAttributes-genericDate" 
+        p:name="catalogEndDt"
+        p:label="Catalog End Date"
+        p:shortLabel="Catalog End Date"
+        p:required="false" />
+
+  <bean id="Catalog-catalogId" parent="Catalog-catalogId-parentBean" />
+  <bean id="Catalog-catalogId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="catalogId"
+        p:forceUppercase="false"
+        p:label="Catalog Id"
+        p:shortLabel="Catalog Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AlphaNumericValidationPattern"/>
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="Catalog-catalogTypeCd" parent="Catalog-catalogTypeCd-parentBean" />
+  <bean id="Catalog-catalogTypeCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="catalogTypeCd"
+        p:forceUppercase="false"
+        p:label="Catalog Type Code"
+        p:shortLabel="Catalog Type Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AlphaNumericValidationPattern"/>
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="Catalog-warehouseCd" parent="Catalog-warehouseCd-parentBean" />
+  <bean id="Catalog-warehouseCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="warehouseCd"
+        p:forceUppercase="true"
+        p:label="Warehouse Code"
+        p:shortLabel="Warehouse Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AlphaNumericValidationPattern"/>
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  
+  <bean id="Catalog-defaultObjectCd" parent="Catalog-defaultObjectCd-parentBean" />
+  <bean id="Catalog-defaultObjectCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="defaultObjectCd"
+        p:forceUppercase="true"
+        p:label="Default Object Code"
+        p:shortLabel="Default Object Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AlphaNumericValidationPattern"/>
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  
+
+  <bean id="Catalog-catalogPendingDocNbr" parent="Catalog-catalogPendingDocNbr-parentBean" />
+  <bean id="Catalog-catalogPendingDocNbr-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="catalogPendingDocNbr"
+        p:forceUppercase="false"
+        p:label="Catalog Pending Document Number"
+        p:shortLabel="Catalog Pending Document Nbr"
+        p:maxLength="14"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AlphaNumericValidationPattern"/>
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="14" />
+    </property>
+  </bean>
+
+  <bean id="Catalog-currentInd" parent="Catalog-currentInd-parentBean" />
+  <bean id="Catalog-currentInd-parentBean" abstract="true" parent="GenericAttributes-genericBoolean" 
+        p:name="currentInd"
+        p:label= "Current Indicator"        
+        p:required="false" />
+
+  <bean id="Catalog-lastUpdateDate" parent="Catalog-lastUpdateDate-parentBean" />
+  <bean id="Catalog-lastUpdateDate-parentBean" abstract="true" parent="GenericAttributes-genericTimestamp" 
+        p:name="lastUpdateDate"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:required="false" />
+
+  <bean id="Catalog-priorityNbr" parent="Catalog-priorityNbr-parentBean" />
+  <bean id="Catalog-priorityNbr-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="priorityNbr"
+        p:forceUppercase="false"
+        p:label="Priority Number"
+        p:shortLabel="Priority Number"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="NumericValidationPattern"/>
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="Catalog-versionNumber" parent="Catalog-versionNumber-parentBean" />
+  <bean id="Catalog-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="Catalog-inquiryDefinition" parent="Catalog-inquiryDefinition-parentBean" />
+
+  <bean id="Catalog-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Catalog Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Catalog Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+        <list>
+	        <bean parent="FieldDefinition" p:attributeName="active" />
+	        <bean parent="FieldDefinition" p:attributeName="agreementNbr" />
+	        <bean parent="FieldDefinition" p:attributeName="catalogBeginDt" />
+	        <bean parent="FieldDefinition" p:attributeName="catalogCd" />
+	        <bean parent="FieldDefinition" p:attributeName="catalogDesc" />
+	        <bean parent="FieldDefinition" p:attributeName="catalogEndDt" />
+	        <bean parent="FieldDefinition" p:attributeName="catalogId" />
+	        <bean parent="FieldDefinition" p:attributeName="catalogTypeCd" />
+	        <bean parent="FieldDefinition" p:attributeName="warehouseCd" />
+	        <bean parent="FieldDefinition" p:attributeName="catalogPendingDocNbr" />
+	        <bean parent="FieldDefinition" p:attributeName="currentInd" />
+	        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+	        <bean parent="FieldDefinition" p:attributeName="priorityNbr" />
+	        <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+         </list>                
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="Catalog-lookupDefinition" parent="Catalog-lookupDefinition-parentBean" />
+
+  <bean id="Catalog-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Catalog Lookup" >
+        
+  <!-- ********************************************************************************** --> 
+    <property name="lookupableID" value="catalogLookupable"/>
+  <!-- ********************************************************************************** --> 
+        
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>catalogId</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>        
+       	 <bean parent="FieldDefinition" p:attributeName="catalogCd" /> 
+         <bean parent="FieldDefinition" p:attributeName="catalogDesc" />
+         <bean parent="FieldDefinition" p:attributeName="catalogTypeCd" />
+         <bean parent="FieldDefinition" p:attributeName="catalogBeginDt" />
+         <bean parent="FieldDefinition" p:attributeName="catalogEndDt" />  
+         <bean parent="FieldDefinition" p:attributeName="priorityNbr" />   
+         <bean parent="FieldDefinition" p:attributeName="agreementNbr" />
+         <bean parent="FieldDefinition" p:attributeName="warehouseCd" />
+ 		 <bean parent="FieldDefinition" p:attributeName="catalogPendingDocNbr" />
+         <bean parent="FieldDefinition" p:attributeName="currentInd" />
+         <bean parent="FieldDefinition" p:attributeName="active" />
+       </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+	 <bean parent="FieldDefinition" p:attributeName="catalogCd" /> 
+         <bean parent="FieldDefinition" p:attributeName="catalogDesc" />
+         <bean parent="FieldDefinition" p:attributeName="catalogTypeCd" />
+         <bean parent="FieldDefinition" p:attributeName="catalogBeginDt" />
+         <bean parent="FieldDefinition" p:attributeName="catalogEndDt" />  
+         <bean parent="FieldDefinition" p:attributeName="priorityNbr" />   
+         <bean parent="FieldDefinition" p:attributeName="agreementNbr" />
+         <bean parent="FieldDefinition" p:attributeName="warehouseCd" />
+ 		 <bean parent="FieldDefinition" p:attributeName="catalogPendingDocNbr" />
+         <bean parent="FieldDefinition" p:attributeName="currentInd" />
+         <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+         <bean parent="FieldDefinition" p:attributeName="active" />
+      </list>
+    </property>
+  </bean>
+
+</beans>

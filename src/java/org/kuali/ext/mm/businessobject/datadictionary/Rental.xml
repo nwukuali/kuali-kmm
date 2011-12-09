@@ -1,0 +1,336 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="Rental" parent="Rental-parentBean" />
+  <bean id="Rental-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.Rental"
+        p:titleAttribute="rentalId"
+        p:objectLabel="Rentals"
+        p:inquiryDefinition-ref="Rental-inquiryDefinition"
+        p:lookupDefinition-ref="Rental-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+		<ref bean="Rental-rentalId" />
+		<ref bean="Rental-rentalTypeCode" />
+		<ref bean="Rental-stockId" />
+		<ref bean="Rental-stock.stockDistributorNbr" />
+		<ref bean="Rental-stock.rentalObject.dailyDemurragePrice" />
+		<ref bean="Rental-rentalSerialNumber" />
+		<ref bean="Rental-rentalStatusCode" />
+		<ref bean="Rental-issueDate" />
+		<ref bean="Rental-lastChargeDate" />
+		<ref bean="Rental-returnDate" />
+		<ref bean="Rental-pickListLineId" />
+		<ref bean="Rental-checkinDetailId" />
+		<ref bean="Rental-returnDetailId" />
+		<ref bean="Rental-lastUpdateDate" />
+		<ref bean="Rental-versionNumber" />
+      </list>
+    </property>
+    <property name="relationships" >
+      <list>         
+          <bean parent="RelationshipDefinition">
+          <property name="objectAttributeName" value="stock" />
+          <property name="primitiveAttributes" >
+            <list>
+              <bean parent="PrimitiveAttributeDefinition"
+                    p:sourceName="stockId"
+                    p:targetName="stockId" />
+            </list>
+          </property>
+          <property name="supportAttributes" >
+            <list>
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="stock.stockDistributorNbr"
+                    p:targetName="stockDistributorNbr" />              
+            </list>
+          </property>
+        </bean>
+        <bean parent="RelationshipDefinition">
+          <property name="objectAttributeName" value="stock.rentalObject" />
+          <property name="primitiveAttributes" >
+            <list>
+              <bean parent="PrimitiveAttributeDefinition"
+                    p:sourceName="stock.rentalObject.rentalObjectCode"
+                    p:targetName="rentalObjectCode" />
+            </list>
+          </property>
+          <property name="supportAttributes" >
+            <list>
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="stock.rentalObject.dailyDemurragePrice"
+                    p:targetName="dailyDemurragePrice" />              
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>       
+	
+	<bean id="Rental-rentalId" parent="Rental-rentalId-parentBean" />
+	<bean id="Rental-rentalId-parentBean" parent="AttributeDefinition" abstract="true"
+	    p:name="rentalId"
+	    p:forceUppercase="false"
+	    p:label="Rental ID"
+	    p:shortLabel="Rental ID"
+	    p:maxLength="18"
+	    p:required="false" >
+		<property name="validationPattern" >
+		  <bean parent="AnyCharacterValidationPattern"
+		        p:allowWhitespace="true" />
+		</property>
+		<property name="control" >
+		  <bean parent="TextControlDefinition"
+		        p:size="10" />
+		</property>
+	</bean>
+	
+	<bean id="Rental-rentalTypeCode" parent="Rental-rentalTypeCode-parentBean" />
+	<bean id="Rental-rentalTypeCode-parentBean" parent="RentalType-rentalTypeCode" abstract="true"
+	    p:name="rentalTypeCode"
+	    p:forceUppercase="false" >
+	</bean>
+	
+	<bean id="Rental-stockId" parent="Rental-stockId-parentBean" />
+	<bean id="Rental-stockId-parentBean" parent="AttributeDefinition" abstract="true"
+	    p:name="stockId"
+	    p:forceUppercase="false"
+	    p:label="Stock ID"
+	    p:shortLabel="Stock ID"
+	    p:maxLength="18"
+	    p:required="false" >
+		<property name="validationPattern" >
+		  <bean parent="AnyCharacterValidationPattern"
+		        p:allowWhitespace="true" />
+		</property>
+		<property name="control" >
+		  <bean parent="TextControlDefinition"
+		        p:size="10" />
+		</property>
+	</bean>
+	
+	<bean id="Rental-rentalStatusCode" parent="Rental-rentalStatusCode-parentBean" />
+	<bean id="Rental-rentalStatusCode-parentBean" parent="AttributeDefinition" abstract="true"
+	    p:name="rentalStatusCode"
+	    p:forceUppercase="false"
+	    p:label="Rental Status Code"
+	    p:shortLabel="Rental Status"
+	    p:maxLength="1"
+	    p:required="false" >
+		<property name="validationPattern" >
+		  <bean parent="AnyCharacterValidationPattern"
+		        p:allowWhitespace="true" />
+		</property>
+		<property name="control" >
+		  <bean parent="SelectControlDefinition"
+            p:valuesFinderClass="org.kuali.ext.mm.businessobject.options.RentalStatusValuesFinder"
+            p:includeKeyInLabel="true" />
+		</property>
+	</bean>
+	
+	<bean id="Rental-stock.stockDistributorNbr" parent="Rental-stock.stockDistributorNbr-parentBean" />
+	<bean id="Rental-stock.stockDistributorNbr-parentBean" parent="Stock-stockDistributorNbr" abstract="true"
+	    p:name="stock.stockDistributorNbr">
+	</bean>
+	
+	<bean id="Rental-stock.rentalObject.dailyDemurragePrice" parent="Rental-stock.rentalObject.dailyDemurragePrice-parentBean" />
+	<bean id="Rental-stock.rentalObject.dailyDemurragePrice-parentBean" parent="RentalObjectCode-dailyDemurragePrice" abstract="true"
+	    p:name="stock.rentalObject.dailyDemurragePrice">
+	</bean>
+	
+	<bean id="Rental-rentalSerialNumber" parent="Rental-rentalSerialNumber-parentBean" />
+	<bean id="Rental-rentalSerialNumber-parentBean" parent="AttributeDefinition" abstract="true"
+	    p:name="rentalSerialNumber"
+	    p:forceUppercase="false"
+	    p:label="Serial Number"
+	    p:shortLabel="Serial #"
+	    p:maxLength="80"
+	    p:required="false" >
+		<property name="validationPattern" >
+		  <bean parent="AnyCharacterValidationPattern"
+		        p:allowWhitespace="true" />
+		</property>
+		<property name="control" >
+		  <bean parent="TextControlDefinition"
+		        p:size="20" />
+		</property>
+	</bean>
+	
+	<bean id="Rental-issueDate" parent="Rental-issueDate-parentBean" />
+	<bean id="Rental-issueDate-parentBean" parent="GenericAttributes-genericTimestamp" abstract="true"
+	    p:name="issueDate"
+	    p:forceUppercase="false"
+	    p:label="Issue Date"
+	    p:shortLabel="Issue Date"
+	    p:maxLength="7"
+	    p:required="false" >
+	</bean>
+	
+	<bean id="Rental-lastChargeDate" parent="Rental-lastChargeDate-parentBean" />
+	<bean id="Rental-lastChargeDate-parentBean" parent="GenericAttributes-genericTimestamp" abstract="true"
+	    p:name="lastChargeDate"
+	    p:forceUppercase="false"
+	    p:label="Last Charge Date"
+	    p:shortLabel="Last Charge Date"
+	    p:maxLength="7"
+	    p:required="false" >
+	</bean>
+	
+	<bean id="Rental-returnDate" parent="Rental-returnDate-parentBean" />
+	<bean id="Rental-returnDate-parentBean" parent="GenericAttributes-genericTimestamp" abstract="true"
+	    p:name="returnDate"
+	    p:forceUppercase="false"
+	    p:label="Return Date"
+	    p:shortLabel="Return Date"
+	    p:maxLength="7"
+	    p:required="false" >
+	</bean>
+	
+	<bean id="Rental-pickListLineId" parent="Rental-pickListLineId-parentBean" />
+	<bean id="Rental-pickListLineId-parentBean" parent="AttributeDefinition" abstract="true"
+	    p:name="pickListLineId"
+	    p:forceUppercase="false"
+	    p:label="Pick List Line ID"
+	    p:shortLabel="Pick List Line ID"
+	    p:maxLength="19"
+	    p:required="false" >
+		<property name="validationPattern" >
+		  <bean parent="AnyCharacterValidationPattern"
+		        p:allowWhitespace="true" />
+		</property>
+		<property name="control" >
+		  <bean parent="TextControlDefinition"
+		        p:size="10" />
+		</property>
+	</bean>
+	
+	<bean id="Rental-checkinDetailId" parent="Rental-checkinDetailId-parentBean" />
+	<bean id="Rental-checkinDetailId-parentBean" parent="AttributeDefinition" abstract="true"
+	    p:name="checkinDetailId"
+	    p:forceUppercase="false"
+	    p:label="Checkin Detail ID"
+	    p:shortLabel="Checkin Detail ID"
+	    p:maxLength="18"
+	    p:required="false" >
+		<property name="validationPattern" >
+		  <bean parent="AnyCharacterValidationPattern"
+		        p:allowWhitespace="true" />
+		</property>
+		<property name="control" >
+		  <bean parent="TextControlDefinition"
+		        p:size="10" />
+		</property>
+	</bean>
+	
+	<bean id="Rental-returnDetailId" parent="Rental-returnDetailId-parentBean" />
+	<bean id="Rental-returnDetailId-parentBean" parent="AttributeDefinition" abstract="true"
+	    p:name="returnDetailId"
+	    p:forceUppercase="false"
+	    p:label="Return Detail ID"
+	    p:shortLabel="Return Detail ID"
+	    p:maxLength="18"
+	    p:required="false" >
+		<property name="validationPattern" >
+		  <bean parent="AnyCharacterValidationPattern"
+		        p:allowWhitespace="true" />
+		</property>
+		<property name="control" >
+		  <bean parent="TextControlDefinition"
+		        p:size="10" />
+		</property>
+	</bean>
+	
+	<bean id="Rental-lastUpdateDate" parent="Rental-lastUpdateDate-parentBean" />
+	<bean id="Rental-lastUpdateDate-parentBean" parent="GenericAttributes-genericTimestamp" abstract="true"
+	    p:name="lastUpdateDate"
+	    p:forceUppercase="false"
+	    p:label="Last Update Date"
+	    p:shortLabel="Last Update">
+	</bean>
+	
+	<bean id="Rental-versionNumber" parent="Rental-versionNumber-parentBean" />
+  	<bean id="Rental-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+  
+  <!-- Business Object Inquiry Definition -->
+
+  <bean id="Rental-inquiryDefinition" parent="Rental-inquiryDefinition-parentBean" />
+
+  <bean id="Rental-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Rental Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Rental Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+				<bean parent="FieldDefinition" p:attributeName="rentalId" />
+				<bean parent="FieldDefinition" p:attributeName="rentalTypeCode" />
+				<bean parent="FieldDefinition" p:attributeName="stock.stockDistributorNbr" />
+				<bean parent="FieldDefinition" p:attributeName="rentalSerialNumber" />
+				<bean parent="FieldDefinition" p:attributeName="rentalStatusCode" />
+				<bean parent="FieldDefinition" p:attributeName="issueDate" />
+				<bean parent="FieldDefinition" p:attributeName="lastChargeDate" />
+				<bean parent="FieldDefinition" p:attributeName="returnDate" />
+				<bean parent="FieldDefinition" p:attributeName="pickListLineId" />
+				<bean parent="FieldDefinition" p:attributeName="checkinDetailId" />
+				<bean parent="FieldDefinition" p:attributeName="returnDetailId" />
+				<bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="Rental-lookupDefinition" parent="Rental-lookupDefinition-parentBean" />
+
+  <bean id="Rental-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Rental Lookup" >
+    <property name="lookupableID" value="rentalLookupable" />
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>issueDate</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>        
+		<bean parent="FieldDefinition" p:attributeName="rentalTypeCode" />
+		<bean parent="FieldDefinition" p:attributeName="stock.stockDistributorNbr" />
+		<bean parent="FieldDefinition" p:attributeName="rentalSerialNumber" />
+		<bean parent="FieldDefinition" p:attributeName="rentalStatusCode" />
+		<bean parent="FieldDefinition" p:attributeName="issueDate" />
+		<bean parent="FieldDefinition" p:attributeName="lastChargeDate" />
+		<bean parent="FieldDefinition" p:attributeName="returnDate" />
+
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+		<bean parent="FieldDefinition" p:attributeName="rentalTypeCode" />
+		<bean parent="FieldDefinition" p:attributeName="stock.stockDistributorNbr" />
+		<bean parent="FieldDefinition" p:attributeName="rentalSerialNumber" />
+		<bean parent="FieldDefinition" p:attributeName="rentalStatusCode" />
+		<bean parent="FieldDefinition" p:attributeName="issueDate" />
+		<bean parent="FieldDefinition" p:attributeName="lastChargeDate" />
+		<bean parent="FieldDefinition" p:attributeName="returnDate" />
+		<bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+      </list>
+    </property>
+  </bean>
+  
+  
+</beans>

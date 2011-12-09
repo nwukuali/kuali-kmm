@@ -1,0 +1,586 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="StockHistory" parent="StockHistory-parentBean" />
+
+  <bean id="StockHistory-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.StockHistory"
+        p:titleAttribute="stockHistoryId"
+        p:objectLabel="Stock History"
+        p:inquiryDefinition-ref="StockHistory-inquiryDefinition"
+        p:lookupDefinition-ref="StockHistory-lookupDefinition" >
+    <property name="attributes" >
+      <list>      	
+      	<ref bean="StockHistory-residualTag"/>
+        <ref bean="StockHistory-afterStockPrc" />
+        <ref bean="StockHistory-afterStockQty" />
+        <ref bean="StockHistory-afterStockUnitOfIssueCd" />
+        <ref bean="StockHistory-beforeStockPrc" />
+        <ref bean="StockHistory-beforeStockQty" />
+        <ref bean="StockHistory-beforeStockUnitOfIssueCd" />
+        <ref bean="StockHistory-binId" />
+        <ref bean="StockHistory-checkinDocNbr" />
+        <ref bean="StockHistory-historyTransTimestamp" />
+        <ref bean="StockHistory-lastUpdateDate" />
+        <ref bean="StockHistory-pickVerifyDocNbr" />
+        <ref bean="StockHistory-returnDocNbr" />
+        <ref bean="StockHistory-stockHistoryId" />
+        <ref bean="StockHistory-stockId" />
+        <ref bean="StockHistory-stockTransReasonCode" />
+        <ref bean="StockHistory-transStockPrc" />
+        <ref bean="StockHistory-transStockQty" />
+        <ref bean="StockHistory-transStockUnitOfIssueCd" />
+        <ref bean="StockHistory-versionNumber" />
+        <ref bean="StockHistory-worksheetCountDocNbr" />
+        <ref bean="StockHistory-stock.stockDistributorNbr"/>
+        <ref bean="StockHistory-bin.binNbr"/>
+        <ref bean="StockHistory-bin.binDisDesc"/>
+        <ref bean="StockHistory-bin.shelfId"/>
+        <ref bean="StockHistory-bin.shelfIdNbr"/>
+        <ref bean="StockHistory-bin.zone.zoneCd"/>
+        <ref bean="StockHistory-bin.zone.warehouseCd"/>
+        <ref bean="StockHistory-binLookable.binNbr"/>
+        <ref bean="StockHistory-bin.stockLocation"/>
+      </list>
+    </property>
+    
+    <property name="relationships" >
+      <list>     
+        <bean parent="RelationshipDefinition">
+          <property name="objectAttributeName" value="stock" />
+          <property name="primitiveAttributes" >
+            <list>
+              <bean parent="PrimitiveAttributeDefinition"
+                    p:sourceName="stock.stockDistributorNbr"
+                    p:targetName="stockDistributorNbr" />
+            </list>
+          </property>
+          <property name="supportAttributes" >
+            <list>
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="stock.stockId"
+                    p:targetName="stockId" />
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="stock.stockDistributorNbr"
+                    p:targetName="stockDistributorNbr" />                
+            </list>
+          </property>
+        </bean>
+        <bean parent="RelationshipDefinition">
+          <property name="objectAttributeName" value="bin" />
+          <property name="primitiveAttributes" >
+            <list>
+              <bean parent="PrimitiveAttributeDefinition"
+                    p:sourceName="binId"
+                    p:targetName="binId" />
+            </list>
+          </property>
+        </bean>   
+     </list>
+    </property>        
+  </bean>
+
+  <bean id="StockHistory-bin.stockLocation" parent="StockHistory-bin.stockLocation-parentBean" />
+  <bean id="StockHistory-bin.stockLocation-parentBean" parent="Bin-stockLocation" abstract="true"
+        p:name="bin.stockLocation"
+        p:forceUppercase="false"
+        p:label="Stock Location"
+        p:shortLabel="Location">  
+  </bean>
+
+  <bean id="StockHistory-residualTag" parent="StockHistory-residualTag-parentBean" />
+  <bean id="StockHistory-residualTag-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="residualTag"
+        p:forceUppercase="false"
+        p:label="Residual Tag"
+        p:shortLabel="Residual Tag"
+        p:maxLength="20"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="20" />
+    </property>
+  </bean>
+  
+  <bean id="StockHistory-afterStockPrc" parent="StockHistory-afterStockPrc-parentBean" />
+  <bean id="StockHistory-afterStockPrc-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="afterStockPrc"
+        p:forceUppercase="false"
+        p:label="After Unit Cost"
+        p:shortLabel="After Unit Cost"
+        p:required="false" >
+    <property name="maxLength" value="19" />
+    	<property name="validationPattern" >
+      		<bean parent="FixedPointValidationPattern"
+            	p:precision="19"
+            	p:scale="4"
+            	p:allowNegative="true" />
+    	</property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="StockHistory-afterStockQty" parent="StockHistory-afterStockQty-parentBean" />
+  <bean id="StockHistory-afterStockQty-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="afterStockQty" 
+        p:forceUppercase="false" 
+        p:label="After On Hand Quantity"
+        p:shortLabel="After On Hand Quantity"
+        p:required="false" >
+  <property name="maxLength" value="19" />
+    	<property name="validationPattern" >
+      		<bean parent="FixedPointValidationPattern"
+            	p:precision="11"
+            	p:scale="4"
+            	p:allowNegative="true" />
+    	</property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="StockHistory-afterStockUnitOfIssueCd" parent="StockHistory-afterStockUnitOfIssueCd-parentBean" />
+  <bean id="StockHistory-afterStockUnitOfIssueCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="afterStockUnitOfIssueCd"
+        p:forceUppercase="false"
+        p:label="After Unit Of Issue Code"
+        p:shortLabel="After Unit Of Issue Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="StockHistory-beforeStockPrc" parent="StockHistory-beforeStockPrc-parentBean" />
+  <bean id="StockHistory-beforeStockPrc-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="beforeStockPrc"
+        p:forceUppercase="false"
+        p:label="Before Unit Cost"
+        p:shortLabel="Before Unit Cost"
+        p:required="false" >
+    <property name="maxLength" value="19" />
+    	<property name="validationPattern" >
+      		<bean parent="FixedPointValidationPattern"
+            	p:precision="19"
+            	p:scale="4"
+            	p:allowNegative="true" />
+    	</property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="StockHistory-beforeStockQty" parent="StockHistory-beforeStockQty-parentBean" />
+  <bean id="StockHistory-beforeStockQty-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="beforeStockQty"
+        p:forceUppercase="false"
+        p:label="Before On Hand Quantity"
+        p:shortLabel="Before On Hand Quantity"
+        p:required="false" >
+    <property name="maxLength" value="19" />
+    	<property name="validationPattern" >
+      		<bean parent="FixedPointValidationPattern"
+            	p:precision="11"
+            	p:scale="4"
+            	p:allowNegative="true" />
+    	</property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="StockHistory-beforeStockUnitOfIssueCd" parent="StockHistory-beforeStockUnitOfIssueCd-parentBean" />
+  <bean id="StockHistory-beforeStockUnitOfIssueCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="beforeStockUnitOfIssueCd"
+        p:forceUppercase="false"
+        p:label="Before Unit Of Issue Code"
+        p:shortLabel="Before Unit Of Issue Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="StockHistory-binId" parent="StockHistory-binId-parentBean" />
+  <bean id="StockHistory-binId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="binId"
+        p:forceUppercase="false"
+        p:label="Bin ID"
+        p:shortLabel="Bin"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="StockHistory-checkinDocNbr" parent="StockHistory-checkinDocNbr-parentBean" />
+  <bean id="StockHistory-checkinDocNbr-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="checkinDocNbr"
+        p:forceUppercase="false"
+        p:label="Checkin Doc Number"
+        p:shortLabel="Checkin Doc Number"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="StockHistory-historyTransTimestamp" parent="StockHistory-historyTransTimestamp-parentBean" />
+  <bean id="StockHistory-historyTransTimestamp-parentBean" parent="GenericAttributes-genericTimestamp" abstract="true"
+        p:name="historyTransTimestamp"
+        p:label="Transaction Timestamp"
+        p:shortLabel="Transaction Timestamp"
+        p:required="false" >
+    <property name="formatterClass" value="org.kuali.rice.kns.web.format.DateViewTimestampObjectFormatter" />
+  </bean>
+
+  <bean id="StockHistory-lastUpdateDate" parent="StockHistory-lastUpdateDate-parentBean" />
+  <bean id="StockHistory-lastUpdateDate-parentBean" abstract="true" parent="GenericAttributes-genericTimestamp" 
+        p:name="lastUpdateDate"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:required="false" />
+
+  <bean id="StockHistory-pickVerifyDocNbr" parent="StockHistory-pickVerifyDocNbr-parentBean" />
+  <bean id="StockHistory-pickVerifyDocNbr-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="pickVerifyDocNbr"
+        p:forceUppercase="false"
+        p:label="Pick Verify Doc Number"
+        p:shortLabel="Pick Verify Doc Number"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="StockHistory-returnDocNbr" parent="StockHistory-returnDocNbr-parentBean" />
+  <bean id="StockHistory-returnDocNbr-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="returnDocNbr"
+        p:forceUppercase="false"
+        p:label="Return Doc Number"
+        p:shortLabel="Return Doc Number"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="StockHistory-stockHistoryId" parent="StockHistory-stockHistoryId-parentBean" />
+  <bean id="StockHistory-stockHistoryId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="stockHistoryId"
+        p:forceUppercase="false"
+        p:label="Stock History"
+        p:shortLabel="Stock History"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="StockHistory-stockId" parent="StockHistory-stockId-parentBean" />
+  <bean id="StockHistory-stockId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="stockId"
+        p:forceUppercase="false"
+        p:label="Stock ID"
+        p:shortLabel="Stock ID"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="StockHistory-stockTransReasonCode" parent="StockHistory-stockTransReasonCode-parentBean" />
+  <bean id="StockHistory-stockTransReasonCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="stockTransReasonCode"
+        p:forceUppercase="false"
+        p:label="Transaction Reason Code"
+        p:shortLabel="Transaction Reason Code"
+        p:maxLength="8"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="8" />
+    </property>
+  </bean>
+
+  <bean id="StockHistory-transStockPrc" parent="StockHistory-transStockPrc-parentBean" />
+  <bean id="StockHistory-transStockPrc-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="transStockPrc"
+        p:forceUppercase="false"
+        p:label="Total Transaction/Variance Cost"
+        p:shortLabel="Total Transaction/Variance Cost"
+        p:required="false" >
+    <property name="maxLength" value="19" />
+    	<property name="validationPattern" >
+      		<bean parent="FixedPointValidationPattern"
+            	p:precision="19"
+            	p:scale="4"
+            	p:allowNegative="true" />
+    	</property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="StockHistory-transStockQty" parent="StockHistory-transStockQty-parentBean" />
+  <bean id="StockHistory-transStockQty-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="transStockQty"
+        p:forceUppercase="false"
+        p:label="Transaction/Variance Quantity"
+        p:shortLabel="Transaction/Variance Quantity"
+        p:required="false" >
+    <property name="maxLength" value="19" />
+    	<property name="validationPattern" >
+      		<bean parent="FixedPointValidationPattern"
+            	p:precision="11"
+            	p:scale="4"
+            	p:allowNegative="true" />
+    	</property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="StockHistory-transStockUnitOfIssueCd" parent="StockHistory-transStockUnitOfIssueCd-parentBean" />
+  <bean id="StockHistory-transStockUnitOfIssueCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="transStockUnitOfIssueCd"
+        p:forceUppercase="false"
+        p:label="Transaction Unit Of Issue Code"
+        p:shortLabel="Transaction Unit Of Issue Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="StockHistory-versionNumber" parent="StockHistory-versionNumber-parentBean" />
+  <bean id="StockHistory-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+        
+        
+  <bean id="StockHistory-stock.stockDistributorNbr" parent="StockHistory-stock.stockDistributorNbr-parentBean" />
+  <bean id="StockHistory-stock.stockDistributorNbr-parentBean" abstract="true" parent="Stock-stockDistributorNbr" 
+        p:name="stock.stockDistributorNbr"
+        p:required="false" />
+       
+  <bean id="StockHistory-bin.binNbr" parent="StockHistory-bin.binNbr-parentBean" />
+  <bean id="StockHistory-bin.binNbr-parentBean" abstract="true" parent="Bin-binNbr" 
+        p:name="bin.binNbr"
+        p:label="Bin Number"
+        p:required="false" />
+  
+  <bean id="StockHistory-bin.binDisDesc" parent="StockHistory-bin.binDisDesc-parentBean" />
+  <bean id="StockHistory-bin.binDisDesc-parentBean" abstract="true" parent="Bin-binDisDesc" 
+        p:name="bin.binDisDesc"
+        p:label="Zone/Bin/Shelf ID/Shelf Number"
+        p:required="false" />             
+        
+  <bean id="StockHistory-binLookable.binNbr" parent="StockHistory-binLookable.binNbr-parentBean" />
+  <bean id="StockHistory-binLookable.binNbr-parentBean" abstract="true" parent="BinLookable-binNbr" 
+        p:name="binLookable.binNbr"
+        p:label="Bin Number"
+        p:required="false" />      
+        
+  <bean id="StockHistory-bin.shelfId" parent="StockHistory-bin.shelfId-parentBean" />
+  <bean id="StockHistory-bin.shelfId-parentBean" abstract="true" parent="Bin-shelfId" 
+        p:name="bin.shelfId"
+        p:label="Shelf ID"
+        p:required="false" />
+ 
+  <bean id="StockHistory-bin.shelfIdNbr" parent="StockHistory-bin.shelfIdNbr-parentBean" />
+  <bean id="StockHistory-bin.shelfIdNbr-parentBean" abstract="true" parent="Bin-shelfIdNbr" 
+        p:name="bin.shelfIdNbr"
+        p:label="Shelf ID Number"
+        p:required="false" />
+                     
+  <bean id="StockHistory-bin.zone.zoneCd" parent="StockHistory-bin.zone.zoneCd-parentBean" />
+  <bean id="StockHistory-bin.zone.zoneCd-parentBean" abstract="true" parent="Bin-zone.zoneCd" 
+        p:name="bin.zone.zoneCd"
+        p:label="Zone Code"
+        p:required="false" />
+        
+  <bean id="StockHistory-bin.zone.warehouseCd" parent="StockHistory-bin.zone.warehouseCd-parentBean" />
+  <bean id="StockHistory-bin.zone.warehouseCd-parentBean" abstract="true" parent="Bin-zone.warehouseCd" 
+        p:name="bin.zone.warehouseCd"
+        p:label="Warehouse Code"
+        p:required="false" />
+                        
+  <bean id="StockHistory-worksheetCountDocNbr" parent="StockHistory-worksheetCountDocNbr-parentBean" />
+  <bean id="StockHistory-worksheetCountDocNbr-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="worksheetCountDocNbr"
+        p:forceUppercase="false" 
+        p:label="Worksheet Count Document Number"
+        p:shortLabel="Worksheet Count Document Number"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="StockHistory-inquiryDefinition" parent="StockHistory-inquiryDefinition-parentBean" />
+
+  <bean id="StockHistory-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Stock History Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Stock History Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>		
+             <bean parent="FieldDefinition" p:attributeName="stock.stockDistributorNbr" />
+	        <bean parent="FieldDefinition" p:attributeName="bin.stockLocation" />        
+	        <bean parent="FieldDefinition" p:attributeName="beforeStockQty" />
+	        <bean parent="FieldDefinition" p:attributeName="transStockQty" />
+	        <bean parent="FieldDefinition" p:attributeName="afterStockQty" />            
+	        <bean parent="FieldDefinition" p:attributeName="beforeStockPrc" />
+	        <bean parent="FieldDefinition" p:attributeName="transStockPrc" />
+	        <bean parent="FieldDefinition" p:attributeName="afterStockPrc" />        
+	        <bean parent="FieldDefinition" p:attributeName="beforeStockUnitOfIssueCd" />
+	      	<bean parent="FieldDefinition" p:attributeName="transStockUnitOfIssueCd" />
+	        <bean parent="FieldDefinition" p:attributeName="afterStockUnitOfIssueCd" />        
+	        <bean parent="FieldDefinition" p:attributeName="stockTransReasonCode" />         
+	        <bean parent="FieldDefinition" p:attributeName="residualTag"/>
+	        <bean parent="FieldDefinition" p:attributeName="historyTransTimestamp" />           
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="StockHistory-lookupDefinition" parent="StockHistory-lookupDefinition-parentBean" />
+
+  <bean id="StockHistory-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Stock History Lookup">
+    
+    <!-- ********************************************************************************** --> 
+    <property name="lookupableID" value="historyLookupable"/>
+    <!-- ********************************************************************************** --> 
+            
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+          	<value>stockId</value>
+            <value>stockHistoryId</value> 
+          </list>
+        </property>
+      </bean>
+    </property>
+       
+    <property name="lookupFields" >
+     <list>      
+        <bean parent="FieldDefinition" p:attributeName="stock.stockDistributorNbr" />
+        <bean parent="FieldDefinition" p:attributeName="binId" p:forceLookup="true"  />        
+        <bean parent="FieldDefinition" p:attributeName="stockTransReasonCode" />         
+        <bean parent="FieldDefinition" p:attributeName="residualTag"/>
+        <bean parent="FieldDefinition" p:attributeName="historyTransTimestamp" />                   
+      </list>
+    </property>
+    
+    <property name="resultFields"  >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="stock.stockDistributorNbr" />
+        <bean parent="FieldDefinition" p:attributeName="bin.stockLocation" />        
+        <bean parent="FieldDefinition" p:attributeName="beforeStockQty" />
+        <bean parent="FieldDefinition" p:attributeName="transStockQty" />
+        <bean parent="FieldDefinition" p:attributeName="afterStockQty" />            
+        <bean parent="FieldDefinition" p:attributeName="beforeStockPrc" />
+        <bean parent="FieldDefinition" p:attributeName="transStockPrc" />
+        <bean parent="FieldDefinition" p:attributeName="afterStockPrc" />        
+        <bean parent="FieldDefinition" p:attributeName="beforeStockUnitOfIssueCd" />
+      	<bean parent="FieldDefinition" p:attributeName="transStockUnitOfIssueCd" />
+        <bean parent="FieldDefinition" p:attributeName="afterStockUnitOfIssueCd" />   
+        <bean parent="FieldDefinition" p:attributeName="residualTag"/>     
+        <bean parent="FieldDefinition" p:attributeName="stockTransReasonCode" />         
+        <bean parent="FieldDefinition" p:attributeName="historyTransTimestamp" />        
+      </list>
+    </property>
+  </bean>
+
+</beans>

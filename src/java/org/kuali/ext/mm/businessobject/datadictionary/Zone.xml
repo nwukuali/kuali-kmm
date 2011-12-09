@@ -1,0 +1,172 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="Zone" parent="Zone-parentBean" />
+
+  <bean id="Zone-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.Zone"
+        p:titleAttribute="zoneCd"
+        p:objectLabel="Zone"
+        p:inquiryDefinition-ref="Zone-inquiryDefinition"
+        p:lookupDefinition-ref="Zone-lookupDefinition" >
+    <property name="attributes" >
+      <list>      
+        <ref bean="Zone-lastUpdateDate" />
+        <ref bean="Zone-versionNumber" />
+        <ref bean="Zone-warehouseCd" />
+        <ref bean="Zone-zoneCd" />
+        <ref bean="Zone-zoneDesc" />
+        <ref bean="Zone-zoneId" />
+        <ref bean="Zone-active" />        
+      </list>
+    </property>
+  </bean>
+
+  <bean id="Zone-active" parent="Zone-active-parentBean" />
+  <bean id="Zone-active-parentBean" abstract="true" parent="GenericAttributes-activeIndicator" 
+        p:name="active"
+        p:label="Active Indicator"
+        p:shortLabel="Active"
+        p:required="false" />
+
+  <bean id="Zone-lastUpdateDate" parent="Zone-lastUpdateDate-parentBean" />
+  <bean id="Zone-lastUpdateDate-parentBean" parent="GenericAttributes-genericTimestamp" abstract="true"
+        p:name="lastUpdateDate"
+        p:forceUppercase="false"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:required="false" >
+  </bean>
+
+  <bean id="Zone-versionNumber" parent="Zone-versionNumber-parentBean" />
+  <bean id="Zone-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+  <bean id="Zone-warehouseCd" parent="Zone-warehouseCd-parentBean" />
+  <bean id="Zone-warehouseCd-parentBean" parent="GenericAttributes-twoDigitTextCode" abstract="true"
+        p:name="warehouseCd"
+        p:forceUppercase="true"        
+        p:label="Warehouse Code"
+        p:shortLabel="Warehouse Code"
+        p:required="false" />
+
+  <bean id="Zone-zoneCd" parent="Zone-zoneCd-parentBean" />
+  <bean id="Zone-zoneCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="zoneCd"
+        p:forceUppercase="true"        
+        p:label="Zone Code"
+        p:shortLabel="Zone Code"
+        p:maxLength="2"        
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AlphaNumericValidationPattern"/>
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="2" />
+    </property>        
+  </bean>
+  
+  <bean id="Zone-zoneId" parent="Zone-zoneId-parentBean" />
+  <bean id="Zone-zoneId-parentBean" parent="AttributeDefinition" abstract="true"      
+  		p:name="zoneId"
+        p:forceUppercase="false"
+        p:label="Zone Id"
+        p:shortLabel="Zone Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+	
+  <bean id="Zone-zoneDesc" parent="Zone-zoneDesc-parentBean" />
+  <bean id="Zone-zoneDesc-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="zoneDesc"
+        p:forceUppercase="true"
+        p:label="Zone Description"
+        p:shortLabel="Zone Description"
+        p:maxLength="40"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="40" />
+    </property>
+  </bean>
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="Zone-inquiryDefinition" parent="Zone-inquiryDefinition-parentBean" />
+
+  <bean id="Zone-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Zone Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Zone Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>              
+<!--              <bean parent="FieldDefinition" p:attributeName="zoneId" />-->
+              <bean parent="FieldDefinition" p:attributeName="warehouseCd" />
+              <bean parent="FieldDefinition" p:attributeName="zoneCd" />
+              <bean parent="FieldDefinition" p:attributeName="zoneDesc" />
+              <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+              <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+			  <bean parent="FieldDefinition" p:attributeName="active" />              
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="Zone-lookupDefinition" parent="Zone-lookupDefinition-parentBean" />
+
+  <bean id="Zone-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Zone Lookup" >
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>zoneId</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="warehouseCd" />
+        <bean parent="FieldDefinition" p:attributeName="zoneCd" />        
+        <bean parent="FieldDefinition" p:attributeName="zoneDesc" />
+        <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+        <bean parent="FieldDefinition" p:attributeName="active" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="warehouseCd" />
+        <bean parent="FieldDefinition" p:attributeName="zoneCd" />        
+        <bean parent="FieldDefinition" p:attributeName="zoneDesc" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+        <bean parent="FieldDefinition" p:attributeName="active" />        
+      </list>
+    </property>
+  </bean>
+
+</beans>

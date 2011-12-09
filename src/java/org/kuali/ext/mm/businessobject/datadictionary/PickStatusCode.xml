@@ -1,0 +1,136 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="PickStatusCode" parent="PickStatusCode-parentBean" />
+
+  <bean id="PickStatusCode-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.PickStatusCode"
+        p:titleAttribute="pickStatusCode"
+        p:objectLabel="Pick Status Code"
+        p:inquiryDefinition-ref="PickStatusCode-inquiryDefinition"
+        p:lookupDefinition-ref="PickStatusCode-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="PickStatusCode-active" />
+        <ref bean="PickStatusCode-lastUpdateDate" />
+        <ref bean="PickStatusCode-pickStatusCodeName" />
+        <ref bean="PickStatusCode-pickStatusCode" />
+        <ref bean="PickStatusCode-versionNumber" />
+      </list>
+    </property>
+  </bean>
+
+  <bean id="PickStatusCode-active" parent="PickStatusCode-active-parentBean" />
+  <bean id="PickStatusCode-active-parentBean" abstract="true" parent="GenericAttributes-activeIndicator" p:name="active" />
+
+  <bean id="PickStatusCode-lastUpdateDate" parent="PickStatusCode-lastUpdateDate-parentBean" />
+  <bean id="PickStatusCode-lastUpdateDate-parentBean" parent="GenericAttributes-genericTimestamp" abstract="true"
+        p:name="lastUpdateDate"
+        p:forceUppercase="false"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:maxLength="10"
+        p:required="false" >
+  </bean>
+
+  <bean id="PickStatusCode-pickStatusCodeName" parent="PickStatusCode-pickStatusCodeName-parentBean" />
+  <bean id="PickStatusCode-pickStatusCodeName-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="pickStatusCodeName"
+        p:forceUppercase="true"
+        p:label="Pick Status Code Name"
+        p:shortLabel="Pick Status Code Name"
+        p:maxLength="45"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="45" />
+    </property>
+  </bean>
+
+  <bean id="PickStatusCode-pickStatusCode" parent="PickStatusCode-pickStatusCode-parentBean" />
+  <bean id="PickStatusCode-pickStatusCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="pickStatusCode"
+        p:forceUppercase="true"
+        p:label="Pick Status Code"
+        p:shortLabel="Pick Status Code"
+        p:maxLength="4"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AlphaNumericValidationPattern"/>
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="5" />
+    </property>
+  </bean>
+
+  <bean id="PickStatusCode-versionNumber" parent="PickStatusCode-versionNumber-parentBean" />
+  <bean id="PickStatusCode-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="PickStatusCode-inquiryDefinition" parent="PickStatusCode-inquiryDefinition-parentBean" />
+
+  <bean id="PickStatusCode-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Pick Status Code Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Pick Status Code Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="pickStatusCode" />
+              <bean parent="FieldDefinition" p:attributeName="pickStatusCodeName" />              
+              <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />              
+              <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+              <bean parent="FieldDefinition" p:attributeName="active" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="PickStatusCode-lookupDefinition" parent="PickStatusCode-lookupDefinition-parentBean" />
+
+  <bean id="PickStatusCode-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Pick Status Code Lookup">
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>pickStatusCode</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>        
+        <bean parent="FieldDefinition" p:attributeName="pickStatusCode" />
+        <bean parent="FieldDefinition" p:attributeName="pickStatusCodeName" />
+        <bean parent="FieldDefinition" p:attributeName="active" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="pickStatusCode" />
+        <bean parent="FieldDefinition" p:attributeName="pickStatusCodeName" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+        <bean parent="FieldDefinition" p:attributeName="active" />      
+      </list>
+    </property>
+  </bean>
+
+</beans>

@@ -1,0 +1,187 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="RecurringOrder" parent="RecurringOrder-parentBean" />
+
+  <bean id="RecurringOrder-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.RecurringOrder"
+        p:titleAttribute="Recurring Order"
+        p:objectLabel="Recurring Order"
+        p:inquiryDefinition-ref="RecurringOrder-inquiryDefinition"
+        p:lookupDefinition-ref="RecurringOrder-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="RecurringOrder-active" />
+        <ref bean="RecurringOrder-endDt" />
+        <ref bean="RecurringOrder-lastRecurringDt" />
+        <ref bean="RecurringOrder-lastUpdateDate" />
+        <ref bean="RecurringOrder-noEndDateInd" />
+        <ref bean="RecurringOrder-recurringOrderId" />
+        <ref bean="RecurringOrder-startDt" />
+        <ref bean="RecurringOrder-timesPerYr" />
+        <ref bean="RecurringOrder-versionNumber" />
+      </list>
+    </property>
+  </bean>
+
+  <bean id="RecurringOrder-active" parent="RecurringOrder-active-parentBean" />
+  <bean id="RecurringOrder-active-parentBean" parent="GenericAttributes-activeIndicator" 
+        p:name="active"
+        p:label="Active Indicator"
+        p:shortLabel="Active Indicator"
+        p:required="false" />
+
+  <bean id="RecurringOrder-endDt" parent="RecurringOrder-endDt-parentBean" />
+  <bean id="RecurringOrder-endDt-parentBean" parent="GenericAttributes-genericDate" abstract="true"
+        p:name="endDt"
+        p:forceUppercase="false"
+        p:label="End Date"
+        p:shortLabel="End Date"
+        p:required="false" >
+  </bean>
+
+  <bean id="RecurringOrder-lastRecurringDt" parent="RecurringOrder-lastRecurringDt-parentBean" />
+  <bean id="RecurringOrder-lastRecurringDt-parentBean" parent="GenericAttributes-genericDate" abstract="true"
+        p:name="lastRecurringDt"
+        p:forceUppercase="false"
+        p:label="Last Order Date"
+        p:shortLabel="Last Order Date"
+        p:required="false" >
+  </bean>
+
+  <bean id="RecurringOrder-lastUpdateDate" parent="RecurringOrder-lastUpdateDate-parentBean" />
+  <bean id="RecurringOrder-lastUpdateDate-parentBean" parent="GenericAttributes-genericTimestamp" abstract="true"
+        p:name="lastUpdateDate"
+        p:forceUppercase="false"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:maxLength="10"
+        p:required="false" >
+  </bean>
+
+  <bean id="RecurringOrder-noEndDateInd" parent="RecurringOrder-noEndDateInd-parentBean" />
+  <bean id="RecurringOrder-noEndDateInd-parentBean" parent="GenericAttributes-genericBoolean" abstract="true"
+        p:name="noEndDateInd"
+        p:label="No End Date"
+        p:shortLabel="No End Date"
+        p:required="false" >
+  </bean>
+
+  <bean id="RecurringOrder-recurringOrderId" parent="RecurringOrder-recurringOrderId-parentBean" />
+  <bean id="RecurringOrder-recurringOrderId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="recurringOrderId"
+        p:forceUppercase="false"
+        p:label="Recurring Order Id"
+        p:shortLabel="Recurring Order Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="RecurringOrder-startDt" parent="RecurringOrder-startDt-parentBean" />
+  <bean id="RecurringOrder-startDt-parentBean" parent="GenericAttributes-genericDate" abstract="true"
+        p:name="startDt"
+        p:forceUppercase="false"
+        p:label="Start Date"
+        p:shortLabel="Start Date"
+        p:required="false" >
+  </bean>
+
+  <bean id="RecurringOrder-timesPerYr" parent="RecurringOrder-timesPerYr-parentBean" />
+  <bean id="RecurringOrder-timesPerYr-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="timesPerYr"
+        p:forceUppercase="false"
+        p:label="Frequency"
+        p:shortLabel="Frequency"
+        p:maxLength="10"
+        p:required="false" >
+	<property name="control">
+      	<bean parent="SelectControlDefinition" p:valuesFinderClass="org.kuali.ext.mm.businessobject.options.OrderFrequencyValuesFinder" p:includeKeyInLabel="false" />
+    </property>
+  </bean>
+
+  <bean id="RecurringOrder-versionNumber" parent="RecurringOrder-versionNumber-parentBean" />
+  <bean id="RecurringOrder-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="RecurringOrder-inquiryDefinition" parent="RecurringOrder-inquiryDefinition-parentBean" />
+
+  <bean id="RecurringOrder-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Recurring Order Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Recurring Order Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="active" />
+              <bean parent="FieldDefinition" p:attributeName="endDt" />
+              <bean parent="FieldDefinition" p:attributeName="lastRecurringDt" />
+              <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+              <bean parent="FieldDefinition" p:attributeName="noEndDateInd" />
+              <bean parent="FieldDefinition" p:attributeName="recurringOrderId" />
+              <bean parent="FieldDefinition" p:attributeName="startDt" />
+              <bean parent="FieldDefinition" p:attributeName="timesPerYr" />
+              <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="RecurringOrder-lookupDefinition" parent="RecurringOrder-lookupDefinition-parentBean" />
+
+  <bean id="RecurringOrder-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Recurring Order Lookup"  >
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>recurringOrderId</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>        
+      	<bean parent="FieldDefinition" p:attributeName="recurringOrderId" />
+        <bean parent="FieldDefinition" p:attributeName="startDt" />
+        <bean parent="FieldDefinition" p:attributeName="endDt" />
+        <bean parent="FieldDefinition" p:attributeName="noEndDateInd" />
+        <bean parent="FieldDefinition" p:attributeName="timesPerYr" />
+        <bean parent="FieldDefinition" p:attributeName="lastRecurringDt" />
+        <bean parent="FieldDefinition" p:attributeName="active" />
+        <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="recurringOrderId" />
+        <bean parent="FieldDefinition" p:attributeName="startDt" />
+        <bean parent="FieldDefinition" p:attributeName="endDt" />
+        <bean parent="FieldDefinition" p:attributeName="noEndDateInd" />
+        <bean parent="FieldDefinition" p:attributeName="timesPerYr" />
+        <bean parent="FieldDefinition" p:attributeName="lastRecurringDt" />
+        <bean parent="FieldDefinition" p:attributeName="active" />
+      </list>
+    </property>
+  </bean>
+
+</beans>

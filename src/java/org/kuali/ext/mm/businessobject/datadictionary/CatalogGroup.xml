@@ -1,0 +1,149 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="catalogGroup" parent="catalogGroup-parentBean" />
+
+  <bean id="catalogGroup-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.CatalogGroup"
+        p:titleAttribute="catalogGroupCd"
+        p:objectLabel="Catalog Group"
+        p:inquiryDefinition-ref="catalogGroup-inquiryDefinition"
+        p:lookupDefinition-ref="catalogGroup-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="catalogGroup-active" />
+        <ref bean="catalogGroup-catalogGroupCd" />
+        <ref bean="catalogGroup-displayableInd" />
+        <ref bean="catalogGroup-catalogGroupNm" />
+        <ref bean="catalogGroup-lastUpdateDate" />
+        <ref bean="catalogGroup-versionNumber" />
+      </list>
+    </property>
+  </bean>
+
+  <bean id="catalogGroup-active" parent="catalogGroup-active-parentBean" />
+  <bean id="catalogGroup-active-parentBean" abstract="true" parent="GenericAttributes-activeIndicator" 
+        p:name="active"
+        p:label="Active Indicator"
+        p:shortLabel="Active Indicator"
+        p:required="false" />
+        
+  <bean id="catalogGroup-displayableInd" parent="catalogGroup-displayableInd-parentBean" />
+  <bean id="catalogGroup-displayableInd-parentBean" abstract="true" parent="GenericAttributes-genericBoolean" 
+        p:name="displayableInd"
+        p:label="Displayable Indicator"
+        p:required="false" />
+
+  <bean id="catalogGroup-catalogGroupCd" parent="catalogGroup-catalogGroupCd-parentBean" />
+  <bean id="catalogGroup-catalogGroupCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="catalogGroupCd"
+        p:forceUppercase="true"
+        p:label="Catalog Group Code"
+        p:shortLabel="Catalog Group Code"
+        p:maxLength="12"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AlphaNumericValidationPattern"/>
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="12" />
+    </property>
+  </bean>
+
+  <bean id="catalogGroup-catalogGroupNm" parent="catalogGroup-catalogGroupNm-parentBean" />
+  <bean id="catalogGroup-catalogGroupNm-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="catalogGroupNm"
+        p:forceUppercase="false"
+        p:label="Catalog Group Description"
+        p:shortLabel="Catalog Group Description"
+        p:maxLength="45"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="45" />
+    </property>
+  </bean>
+
+  <bean id="catalogGroup-lastUpdateDate" parent="catalogGroup-lastUpdateDate-parentBean" />
+  <bean id="catalogGroup-lastUpdateDate-parentBean" parent="GenericAttributes-genericTimestamp" abstract="true"
+        p:name="lastUpdateDate"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:required="false" />
+
+  <bean id="catalogGroup-versionNumber" parent="catalogGroup-versionNumber-parentBean" />
+  <bean id="catalogGroup-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="catalogGroup-inquiryDefinition" parent="catalogGroup-inquiryDefinition-parentBean" />
+
+  <bean id="catalogGroup-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Catalog Group Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Catalog Group Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="active" />
+              <bean parent="FieldDefinition" p:attributeName="catalogGroupCd" />
+              <bean parent="FieldDefinition" p:attributeName="catalogGroupNm" />
+              <bean parent="FieldDefinition" p:attributeName="displayableInd" />
+              <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+              <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="catalogGroup-lookupDefinition" parent="catalogGroup-lookupDefinition-parentBean" />
+
+  <bean id="catalogGroup-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Catalog Group Lookup">
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>catalogGroupCd</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>
+       
+        <bean parent="FieldDefinition" p:attributeName="catalogGroupCd" />
+        <bean parent="FieldDefinition" p:attributeName="catalogGroupNm" />
+        <bean parent="FieldDefinition" p:attributeName="displayableInd" />
+     	<bean parent="FieldDefinition" p:attributeName="active" />  
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+       
+        <bean parent="FieldDefinition" p:attributeName="catalogGroupCd" />
+        <bean parent="FieldDefinition" p:attributeName="catalogGroupNm" />
+        <bean parent="FieldDefinition" p:attributeName="displayableInd" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+        <bean parent="FieldDefinition" p:attributeName="active" />
+      </list>
+    </property>
+  </bean>
+
+</beans>

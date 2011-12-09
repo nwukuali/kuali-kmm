@@ -1,0 +1,57 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="StoresOrderStatusMaintenanceDocument" parent="StoresOrderStatusMaintenanceDocument-parentBean" />
+
+  <bean id="StoresOrderStatusMaintenanceDocument-parentBean" abstract="true" parent="MaintenanceDocumentEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.OrderStatus"
+        p:maintainableClass="org.kuali.rice.kns.maintenance.KualiMaintainableImpl"
+        p:documentTypeName="SORS"
+        p:documentAuthorizerClass="org.kuali.rice.kns.document.authorization.MaintenanceDocumentAuthorizerBase" 
+        p:allowsNewOrCopy="false" >
+    <property name="lockingKeys" >
+      <list>
+        <value>orderStatusCd</value>
+      </list>
+    </property>
+    <property name="defaultExistenceChecks" >
+      <list>
+      </list>
+    </property>
+    <property name="workflowAttributes" >
+        <ref bean="StoresOrderStatusMaintenanceDocument-workflowAttributes" />
+    </property>
+    <property name="maintainableSections" >
+      <list>
+        <ref bean="StoresOrderStatusMaintenanceDocument-MainSection" />
+      </list>
+    </property>
+  </bean>
+
+ <!-- Maintenance Section Definitions -->
+  <bean id="StoresOrderStatusMaintenanceDocument-MainSection" parent="StoresOrderStatusMaintenanceDocument-MainSection-parentBean" />
+
+  <bean id="StoresOrderStatusMaintenanceDocument-MainSection-parentBean" abstract="true" parent="MaintainableSectionDefinition"
+        p:title="Edit Order Status" >
+    <property name="maintainableItems" >
+      <list>
+        <bean parent="MaintainableFieldDefinition"
+              p:name="orderStatusCd"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="orderStatusDesc"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="active"
+              p:defaultValue="true" />
+      </list>
+    </property>
+  </bean>
+ <!-- workflow attributes -->
+  <bean id="StoresOrderStatusMaintenanceDocument-workflowAttributes" parent="StoresOrderStatusMaintenanceDocument-workflowAttributes-parentBean" />
+
+  <bean id="StoresOrderStatusMaintenanceDocument-workflowAttributes-parentBean" abstract="true" class="org.kuali.rice.kns.datadictionary.WorkflowAttributes" />
+</beans>

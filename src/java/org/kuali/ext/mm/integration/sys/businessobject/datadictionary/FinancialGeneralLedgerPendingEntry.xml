@@ -1,0 +1,705 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="FinancialGeneralLedgerPendingEntry" parent="FinancialGeneralLedgerPendingEntry-parentBean" />
+
+  <bean id="FinancialGeneralLedgerPendingEntry-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.integration.sys.businessobject.FinancialGeneralLedgerPendingEntry"
+        p:titleAttribute="GeneralLedgerPendingEntry"
+        p:objectLabel="Financial General Ledger Pending Entry"
+        p:inquiryDefinition-ref="FinancialGeneralLedgerPendingEntry-inquiryDefinition"
+        p:lookupDefinition-ref="FinancialGeneralLedgerPendingEntry-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="FinancialGeneralLedgerPendingEntry-accountNumber" />
+        <ref bean="FinancialGeneralLedgerPendingEntry-acctSufficientFundsFinObjCd" />
+        <ref bean="FinancialGeneralLedgerPendingEntry-chartOfAccountsCode" />
+        <ref bean="FinancialGeneralLedgerPendingEntry-documentNumber" />
+        <ref bean="FinancialGeneralLedgerPendingEntry-financialBalanceTypeCode" />
+        <ref bean="FinancialGeneralLedgerPendingEntry-financialDocumentApprovedCode" />
+        <ref bean="FinancialGeneralLedgerPendingEntry-financialDocumentReversalDate" />
+        <ref bean="FinancialGeneralLedgerPendingEntry-financialDocumentTypeCode" />
+        <ref bean="FinancialGeneralLedgerPendingEntry-financialObjectCode" />
+        <ref bean="FinancialGeneralLedgerPendingEntry-financialObjectTypeCode" />
+        <ref bean="FinancialGeneralLedgerPendingEntry-financialSubObjectCode" />
+        <ref bean="FinancialGeneralLedgerPendingEntry-financialSystemOriginationCode" />
+        <ref bean="FinancialGeneralLedgerPendingEntry-organizationDocumentNumber" />
+        <ref bean="FinancialGeneralLedgerPendingEntry-organizationReferenceId" />
+        <ref bean="FinancialGeneralLedgerPendingEntry-projectCode" />
+        <ref bean="FinancialGeneralLedgerPendingEntry-referenceFinancialDocumentNumber" />
+        <ref bean="FinancialGeneralLedgerPendingEntry-referenceFinancialDocumentTypeCode" />
+        <ref bean="FinancialGeneralLedgerPendingEntry-referenceFinancialSystemOriginationCode" />
+        <ref bean="FinancialGeneralLedgerPendingEntry-subAccountNumber" />
+        <ref bean="FinancialGeneralLedgerPendingEntry-transactionDate" />
+        <ref bean="FinancialGeneralLedgerPendingEntry-transactionDebitCreditCode" />
+        <ref bean="FinancialGeneralLedgerPendingEntry-transactionEncumbranceUpdateCode" />
+        <ref bean="FinancialGeneralLedgerPendingEntry-transactionEntryOffsetIndicator" />
+        <ref bean="FinancialGeneralLedgerPendingEntry-transactionEntryProcessedTs" />
+        <ref bean="FinancialGeneralLedgerPendingEntry-transactionLedgerEntryAmount" />
+        <ref bean="FinancialGeneralLedgerPendingEntry-transactionLedgerEntryDescription" />
+        <ref bean="FinancialGeneralLedgerPendingEntry-transactionLedgerEntrySequenceNumber" />
+        <ref bean="FinancialGeneralLedgerPendingEntry-universityFiscalPeriodCode" />
+        <ref bean="FinancialGeneralLedgerPendingEntry-universityFiscalYear" />
+      </list>
+    </property>
+  </bean>
+
+  <bean id="FinancialGeneralLedgerPendingEntry-accountNumber" parent="FinancialGeneralLedgerPendingEntry-accountNumber-parentBean" />
+  <bean id="FinancialGeneralLedgerPendingEntry-accountNumber-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="accountNumber"
+        p:forceUppercase="false"
+        p:label="Account Number"
+        p:shortLabel="Account Number"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialGeneralLedgerPendingEntry-acctSufficientFundsFinObjCd" parent="FinancialGeneralLedgerPendingEntry-acctSufficientFundsFinObjCd-parentBean" />
+  <bean id="FinancialGeneralLedgerPendingEntry-acctSufficientFundsFinObjCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="acctSufficientFundsFinObjCd"
+        p:forceUppercase="false"
+        p:label="Acct Sufficient Funds Fin Obj Cd"
+        p:shortLabel="Acct Sufficient Funds Fin Obj Cd"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialGeneralLedgerPendingEntry-chartOfAccountsCode" parent="FinancialGeneralLedgerPendingEntry-chartOfAccountsCode-parentBean" />
+  <bean id="FinancialGeneralLedgerPendingEntry-chartOfAccountsCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="chartOfAccountsCode"
+        p:forceUppercase="false"
+        p:label="Chart Of Accounts Code"
+        p:shortLabel="Chart Of Accounts Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialGeneralLedgerPendingEntry-documentNumber" parent="FinancialGeneralLedgerPendingEntry-documentNumber-parentBean" />
+  <bean id="FinancialGeneralLedgerPendingEntry-documentNumber-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="documentNumber"
+        p:forceUppercase="false"
+        p:label="Document Number"
+        p:shortLabel="Document Number"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialGeneralLedgerPendingEntry-financialBalanceTypeCode" parent="FinancialGeneralLedgerPendingEntry-financialBalanceTypeCode-parentBean" />
+  <bean id="FinancialGeneralLedgerPendingEntry-financialBalanceTypeCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="financialBalanceTypeCode"
+        p:forceUppercase="false"
+        p:label="Financial Balance Type Code"
+        p:shortLabel="Financial Balance Type Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialGeneralLedgerPendingEntry-financialDocumentApprovedCode" parent="FinancialGeneralLedgerPendingEntry-financialDocumentApprovedCode-parentBean" />
+  <bean id="FinancialGeneralLedgerPendingEntry-financialDocumentApprovedCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="financialDocumentApprovedCode"
+        p:forceUppercase="false"
+        p:label="Financial Document Approved Code"
+        p:shortLabel="Financial Document Approved Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialGeneralLedgerPendingEntry-financialDocumentReversalDate" parent="FinancialGeneralLedgerPendingEntry-financialDocumentReversalDate-parentBean" />
+  <bean id="FinancialGeneralLedgerPendingEntry-financialDocumentReversalDate-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="financialDocumentReversalDate"
+        p:forceUppercase="false"
+        p:label="Financial Document Reversal Date"
+        p:shortLabel="Financial Document Reversal Date"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialGeneralLedgerPendingEntry-financialDocumentTypeCode" parent="FinancialGeneralLedgerPendingEntry-financialDocumentTypeCode-parentBean" />
+  <bean id="FinancialGeneralLedgerPendingEntry-financialDocumentTypeCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="financialDocumentTypeCode"
+        p:forceUppercase="false"
+        p:label="Financial Document Type Code"
+        p:shortLabel="Financial Document Type Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialGeneralLedgerPendingEntry-financialObjectCode" parent="FinancialGeneralLedgerPendingEntry-financialObjectCode-parentBean" />
+  <bean id="FinancialGeneralLedgerPendingEntry-financialObjectCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="financialObjectCode"
+        p:forceUppercase="false"
+        p:label="Financial Object Code"
+        p:shortLabel="Financial Object Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialGeneralLedgerPendingEntry-financialObjectTypeCode" parent="FinancialGeneralLedgerPendingEntry-financialObjectTypeCode-parentBean" />
+  <bean id="FinancialGeneralLedgerPendingEntry-financialObjectTypeCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="financialObjectTypeCode"
+        p:forceUppercase="false"
+        p:label="Financial Object Type Code"
+        p:shortLabel="Financial Object Type Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialGeneralLedgerPendingEntry-financialSubObjectCode" parent="FinancialGeneralLedgerPendingEntry-financialSubObjectCode-parentBean" />
+  <bean id="FinancialGeneralLedgerPendingEntry-financialSubObjectCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="financialSubObjectCode"
+        p:forceUppercase="false"
+        p:label="Financial Sub Object Code"
+        p:shortLabel="Financial Sub Object Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialGeneralLedgerPendingEntry-financialSystemOriginationCode" parent="FinancialGeneralLedgerPendingEntry-financialSystemOriginationCode-parentBean" />
+  <bean id="FinancialGeneralLedgerPendingEntry-financialSystemOriginationCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="financialSystemOriginationCode"
+        p:forceUppercase="false"
+        p:label="Financial System Origination Code"
+        p:shortLabel="Financial System Origination Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialGeneralLedgerPendingEntry-organizationDocumentNumber" parent="FinancialGeneralLedgerPendingEntry-organizationDocumentNumber-parentBean" />
+  <bean id="FinancialGeneralLedgerPendingEntry-organizationDocumentNumber-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="organizationDocumentNumber"
+        p:forceUppercase="false"
+        p:label="Organization Document Number"
+        p:shortLabel="Organization Document Number"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialGeneralLedgerPendingEntry-organizationReferenceId" parent="FinancialGeneralLedgerPendingEntry-organizationReferenceId-parentBean" />
+  <bean id="FinancialGeneralLedgerPendingEntry-organizationReferenceId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="organizationReferenceId"
+        p:forceUppercase="false"
+        p:label="Organization Reference Id"
+        p:shortLabel="Organization Reference Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialGeneralLedgerPendingEntry-projectCode" parent="FinancialGeneralLedgerPendingEntry-projectCode-parentBean" />
+  <bean id="FinancialGeneralLedgerPendingEntry-projectCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="projectCode"
+        p:forceUppercase="false"
+        p:label="Project Code"
+        p:shortLabel="Project Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialGeneralLedgerPendingEntry-referenceFinancialDocumentNumber" parent="FinancialGeneralLedgerPendingEntry-referenceFinancialDocumentNumber-parentBean" />
+  <bean id="FinancialGeneralLedgerPendingEntry-referenceFinancialDocumentNumber-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="referenceFinancialDocumentNumber"
+        p:forceUppercase="false"
+        p:label="Reference Financial Document Number"
+        p:shortLabel="Reference Financial Document Number"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialGeneralLedgerPendingEntry-referenceFinancialDocumentTypeCode" parent="FinancialGeneralLedgerPendingEntry-referenceFinancialDocumentTypeCode-parentBean" />
+  <bean id="FinancialGeneralLedgerPendingEntry-referenceFinancialDocumentTypeCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="referenceFinancialDocumentTypeCode"
+        p:forceUppercase="false"
+        p:label="Reference Financial Document Type Code"
+        p:shortLabel="Reference Financial Document Type Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialGeneralLedgerPendingEntry-referenceFinancialSystemOriginationCode" parent="FinancialGeneralLedgerPendingEntry-referenceFinancialSystemOriginationCode-parentBean" />
+  <bean id="FinancialGeneralLedgerPendingEntry-referenceFinancialSystemOriginationCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="referenceFinancialSystemOriginationCode"
+        p:forceUppercase="false"
+        p:label="Reference Financial System Origination Code"
+        p:shortLabel="Reference Financial System Origination Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialGeneralLedgerPendingEntry-subAccountNumber" parent="FinancialGeneralLedgerPendingEntry-subAccountNumber-parentBean" />
+  <bean id="FinancialGeneralLedgerPendingEntry-subAccountNumber-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="subAccountNumber"
+        p:forceUppercase="false"
+        p:label="Sub Account Number"
+        p:shortLabel="Sub Account Number"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialGeneralLedgerPendingEntry-transactionDate" parent="FinancialGeneralLedgerPendingEntry-transactionDate-parentBean" />
+  <bean id="FinancialGeneralLedgerPendingEntry-transactionDate-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="transactionDate"
+        p:forceUppercase="false"
+        p:label="Transaction Date"
+        p:shortLabel="Transaction Date"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialGeneralLedgerPendingEntry-transactionDebitCreditCode" parent="FinancialGeneralLedgerPendingEntry-transactionDebitCreditCode-parentBean" />
+  <bean id="FinancialGeneralLedgerPendingEntry-transactionDebitCreditCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="transactionDebitCreditCode"
+        p:forceUppercase="false"
+        p:label="Transaction Debit Credit Code"
+        p:shortLabel="Transaction Debit Credit Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialGeneralLedgerPendingEntry-transactionEncumbranceUpdateCode" parent="FinancialGeneralLedgerPendingEntry-transactionEncumbranceUpdateCode-parentBean" />
+  <bean id="FinancialGeneralLedgerPendingEntry-transactionEncumbranceUpdateCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="transactionEncumbranceUpdateCode"
+        p:forceUppercase="false"
+        p:label="Transaction Encumbrance Update Code"
+        p:shortLabel="Transaction Encumbrance Update Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialGeneralLedgerPendingEntry-transactionEntryOffsetIndicator" parent="FinancialGeneralLedgerPendingEntry-transactionEntryOffsetIndicator-parentBean" />
+  <bean id="FinancialGeneralLedgerPendingEntry-transactionEntryOffsetIndicator-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="transactionEntryOffsetIndicator"
+        p:forceUppercase="false"
+        p:label="Transaction Entry Offset Indicator"
+        p:shortLabel="Transaction Entry Offset Indicator"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialGeneralLedgerPendingEntry-transactionEntryProcessedTs" parent="FinancialGeneralLedgerPendingEntry-transactionEntryProcessedTs-parentBean" />
+  <bean id="FinancialGeneralLedgerPendingEntry-transactionEntryProcessedTs-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="transactionEntryProcessedTs"
+        p:forceUppercase="false"
+        p:label="Transaction Entry Processed Ts"
+        p:shortLabel="Transaction Entry Processed Ts"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialGeneralLedgerPendingEntry-transactionLedgerEntryAmount" parent="FinancialGeneralLedgerPendingEntry-transactionLedgerEntryAmount-parentBean" />
+  <bean id="FinancialGeneralLedgerPendingEntry-transactionLedgerEntryAmount-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="transactionLedgerEntryAmount"
+        p:forceUppercase="false"
+        p:label="Transaction Ledger Entry Amount"
+        p:shortLabel="Transaction Ledger Entry Amount"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialGeneralLedgerPendingEntry-transactionLedgerEntryDescription" parent="FinancialGeneralLedgerPendingEntry-transactionLedgerEntryDescription-parentBean" />
+  <bean id="FinancialGeneralLedgerPendingEntry-transactionLedgerEntryDescription-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="transactionLedgerEntryDescription"
+        p:forceUppercase="false"
+        p:label="Transaction Ledger Entry Description"
+        p:shortLabel="Transaction Ledger Entry Description"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialGeneralLedgerPendingEntry-transactionLedgerEntrySequenceNumber" parent="FinancialGeneralLedgerPendingEntry-transactionLedgerEntrySequenceNumber-parentBean" />
+  <bean id="FinancialGeneralLedgerPendingEntry-transactionLedgerEntrySequenceNumber-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="transactionLedgerEntrySequenceNumber"
+        p:forceUppercase="false"
+        p:label="Transaction Ledger Entry Sequence Number"
+        p:shortLabel="Transaction Ledger Entry Sequence Number"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialGeneralLedgerPendingEntry-universityFiscalPeriodCode" parent="FinancialGeneralLedgerPendingEntry-universityFiscalPeriodCode-parentBean" />
+  <bean id="FinancialGeneralLedgerPendingEntry-universityFiscalPeriodCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="universityFiscalPeriodCode"
+        p:forceUppercase="false"
+        p:label="University Fiscal Period Code"
+        p:shortLabel="University Fiscal Period Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialGeneralLedgerPendingEntry-universityFiscalYear" parent="FinancialGeneralLedgerPendingEntry-universityFiscalYear-parentBean" />
+  <bean id="FinancialGeneralLedgerPendingEntry-universityFiscalYear-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="universityFiscalYear"
+        p:forceUppercase="false"
+        p:label="University Fiscal Year"
+        p:shortLabel="University Fiscal Year"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="FinancialGeneralLedgerPendingEntry-inquiryDefinition" parent="FinancialGeneralLedgerPendingEntry-inquiryDefinition-parentBean" />
+
+  <bean id="FinancialGeneralLedgerPendingEntry-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Financial General Ledger Pending Entry Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Financial General Ledger Pending Entry Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="accountNumber" />
+              <bean parent="FieldDefinition" p:attributeName="acctSufficientFundsFinObjCd" />
+              <bean parent="FieldDefinition" p:attributeName="chartOfAccountsCode" />
+              <bean parent="FieldDefinition" p:attributeName="documentNumber" />
+              <bean parent="FieldDefinition" p:attributeName="financialBalanceTypeCode" />
+              <bean parent="FieldDefinition" p:attributeName="financialDocumentApprovedCode" />
+              <bean parent="FieldDefinition" p:attributeName="financialDocumentReversalDate" />
+              <bean parent="FieldDefinition" p:attributeName="financialDocumentTypeCode" />
+              <bean parent="FieldDefinition" p:attributeName="financialObjectCode" />
+              <bean parent="FieldDefinition" p:attributeName="financialObjectTypeCode" />
+              <bean parent="FieldDefinition" p:attributeName="financialSubObjectCode" />
+              <bean parent="FieldDefinition" p:attributeName="financialSystemOriginationCode" />
+              <bean parent="FieldDefinition" p:attributeName="organizationDocumentNumber" />
+              <bean parent="FieldDefinition" p:attributeName="organizationReferenceId" />
+              <bean parent="FieldDefinition" p:attributeName="projectCode" />
+              <bean parent="FieldDefinition" p:attributeName="referenceFinancialDocumentNumber" />
+              <bean parent="FieldDefinition" p:attributeName="referenceFinancialDocumentTypeCode" />
+              <bean parent="FieldDefinition" p:attributeName="referenceFinancialSystemOriginationCode" />
+              <bean parent="FieldDefinition" p:attributeName="subAccountNumber" />
+              <bean parent="FieldDefinition" p:attributeName="transactionDate" />
+              <bean parent="FieldDefinition" p:attributeName="transactionDebitCreditCode" />
+              <bean parent="FieldDefinition" p:attributeName="transactionEncumbranceUpdateCode" />
+              <bean parent="FieldDefinition" p:attributeName="transactionEntryOffsetIndicator" />
+              <bean parent="FieldDefinition" p:attributeName="transactionEntryProcessedTs" />
+              <bean parent="FieldDefinition" p:attributeName="transactionLedgerEntryAmount" />
+              <bean parent="FieldDefinition" p:attributeName="transactionLedgerEntryDescription" />
+              <bean parent="FieldDefinition" p:attributeName="transactionLedgerEntrySequenceNumber" />
+              <bean parent="FieldDefinition" p:attributeName="universityFiscalPeriodCode" />
+              <bean parent="FieldDefinition" p:attributeName="universityFiscalYear" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="FinancialGeneralLedgerPendingEntry-lookupDefinition" parent="FinancialGeneralLedgerPendingEntry-lookupDefinition-parentBean" />
+
+  <bean id="FinancialGeneralLedgerPendingEntry-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Financial General Ledger Pending Entry Lookup" 
+ >
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>documentNumber</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="accountNumber" />
+        <bean parent="FieldDefinition" p:attributeName="acctSufficientFundsFinObjCd" />
+        <bean parent="FieldDefinition" p:attributeName="chartOfAccountsCode" />
+        <bean parent="FieldDefinition" p:attributeName="documentNumber" />
+        <bean parent="FieldDefinition" p:attributeName="financialBalanceTypeCode" />
+        <bean parent="FieldDefinition" p:attributeName="financialDocumentApprovedCode" />
+        <bean parent="FieldDefinition" p:attributeName="financialDocumentReversalDate" />
+        <bean parent="FieldDefinition" p:attributeName="financialDocumentTypeCode" />
+        <bean parent="FieldDefinition" p:attributeName="financialObjectCode" />
+        <bean parent="FieldDefinition" p:attributeName="financialObjectTypeCode" />
+        <bean parent="FieldDefinition" p:attributeName="financialSubObjectCode" />
+        <bean parent="FieldDefinition" p:attributeName="financialSystemOriginationCode" />
+        <bean parent="FieldDefinition" p:attributeName="organizationDocumentNumber" />
+        <bean parent="FieldDefinition" p:attributeName="organizationReferenceId" />
+        <bean parent="FieldDefinition" p:attributeName="projectCode" />
+        <bean parent="FieldDefinition" p:attributeName="referenceFinancialDocumentNumber" />
+        <bean parent="FieldDefinition" p:attributeName="referenceFinancialDocumentTypeCode" />
+        <bean parent="FieldDefinition" p:attributeName="referenceFinancialSystemOriginationCode" />
+        <bean parent="FieldDefinition" p:attributeName="subAccountNumber" />
+        <bean parent="FieldDefinition" p:attributeName="transactionDate" />
+        <bean parent="FieldDefinition" p:attributeName="transactionDebitCreditCode" />
+        <bean parent="FieldDefinition" p:attributeName="transactionEncumbranceUpdateCode" />
+        <bean parent="FieldDefinition" p:attributeName="transactionEntryOffsetIndicator" />
+        <bean parent="FieldDefinition" p:attributeName="transactionEntryProcessedTs" />
+        <bean parent="FieldDefinition" p:attributeName="transactionLedgerEntryAmount" />
+        <bean parent="FieldDefinition" p:attributeName="transactionLedgerEntryDescription" />
+        <bean parent="FieldDefinition" p:attributeName="transactionLedgerEntrySequenceNumber" />
+        <bean parent="FieldDefinition" p:attributeName="universityFiscalPeriodCode" />
+        <bean parent="FieldDefinition" p:attributeName="universityFiscalYear" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="accountNumber" />
+        <bean parent="FieldDefinition" p:attributeName="acctSufficientFundsFinObjCd" />
+        <bean parent="FieldDefinition" p:attributeName="chartOfAccountsCode" />
+        <bean parent="FieldDefinition" p:attributeName="documentNumber" />
+        <bean parent="FieldDefinition" p:attributeName="financialBalanceTypeCode" />
+        <bean parent="FieldDefinition" p:attributeName="financialDocumentApprovedCode" />
+        <bean parent="FieldDefinition" p:attributeName="financialDocumentReversalDate" />
+        <bean parent="FieldDefinition" p:attributeName="financialDocumentTypeCode" />
+        <bean parent="FieldDefinition" p:attributeName="financialObjectCode" />
+        <bean parent="FieldDefinition" p:attributeName="financialObjectTypeCode" />
+        <bean parent="FieldDefinition" p:attributeName="financialSubObjectCode" />
+        <bean parent="FieldDefinition" p:attributeName="financialSystemOriginationCode" />
+        <bean parent="FieldDefinition" p:attributeName="organizationDocumentNumber" />
+        <bean parent="FieldDefinition" p:attributeName="organizationReferenceId" />
+        <bean parent="FieldDefinition" p:attributeName="projectCode" />
+        <bean parent="FieldDefinition" p:attributeName="referenceFinancialDocumentNumber" />
+        <bean parent="FieldDefinition" p:attributeName="referenceFinancialDocumentTypeCode" />
+        <bean parent="FieldDefinition" p:attributeName="referenceFinancialSystemOriginationCode" />
+        <bean parent="FieldDefinition" p:attributeName="subAccountNumber" />
+        <bean parent="FieldDefinition" p:attributeName="transactionDate" />
+        <bean parent="FieldDefinition" p:attributeName="transactionDebitCreditCode" />
+        <bean parent="FieldDefinition" p:attributeName="transactionEncumbranceUpdateCode" />
+        <bean parent="FieldDefinition" p:attributeName="transactionEntryOffsetIndicator" />
+        <bean parent="FieldDefinition" p:attributeName="transactionEntryProcessedTs" />
+        <bean parent="FieldDefinition" p:attributeName="transactionLedgerEntryAmount" />
+        <bean parent="FieldDefinition" p:attributeName="transactionLedgerEntryDescription" />
+        <bean parent="FieldDefinition" p:attributeName="transactionLedgerEntrySequenceNumber" />
+        <bean parent="FieldDefinition" p:attributeName="universityFiscalPeriodCode" />
+        <bean parent="FieldDefinition" p:attributeName="universityFiscalYear" />
+      </list>
+    </property>
+  </bean>
+
+</beans>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="ns:workflow" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="ns:workflow resource:WorkflowData">
+	<documentTypes xmlns="ns:workflow/DocumentType"
+		xsi:schemaLocation="ns:workflow/DocumentType resource:DocumentType">
+		<documentType>
+			<name>SVRT</name>
+			<label>SVRT</label>
+			<parent>SSTD</parent>
+			<docHandler>${kmm.url}/vendorReturnOrder.do?methodToCall=docHandler</docHandler>
+	   <routePaths>
+        <routePath>
+          <start name="AdHoc"  nextNode="VendorReturnDocReview"/>
+          <requests name="VendorReturnDocReview"/>
+        </routePath>
+      </routePaths>
+      <routeNodes>
+        <start name="AdHoc" />
+        <role name="VendorReturnDocReview">
+          <qualifierResolverClass>org.kuali.rice.kns.workflow.attribute.DataDictionaryQualifierResolver</qualifierResolverClass>
+          <activationType>P</activationType>
+        </role>
+      </routeNodes>
+		</documentType>
+	</documentTypes>
+</data>

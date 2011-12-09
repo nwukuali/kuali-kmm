@@ -1,0 +1,383 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="StockCount" parent="StockCount-parentBean" />
+
+  <bean id="StockCount-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.StockCount"
+        p:titleAttribute="Stock Count"
+        p:objectLabel="Stock Count"
+        p:inquiryDefinition-ref="StockCount-inquiryDefinition"
+        p:lookupDefinition-ref="StockCount-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="StockCount-wdoc.WarehouseCd" />
+        <ref bean="StockCount-wdoc.FDocNbr" />
+        <ref bean="StockCount-wcount.WorksheetCount" />
+        <ref bean="StockCount-wcount.WorksheetCountPercen" />
+        <ref bean="StockCount-wcount.WorksheetCountBalanced" />
+        <ref bean="StockCount-stock.WoksheetStatus" />
+        <ref bean="StockCount-wcount.WorksheetCompDate" />    
+        <ref bean="StockCount-stock.ItemNumber" />
+        <ref bean="StockCount-beforeItemQty" />
+        <ref bean="StockCount-beforeItemUnitOfIssueCd" />
+        <ref bean="StockCount-binId" />
+        <ref bean="StockCount-timesCounted" />
+        <ref bean="StockCount-originalDt" />
+        <ref bean="StockCount-stockCountId" />
+        <ref bean="StockCount-stockCountItemQty" />
+        <ref bean="StockCount-stockCountNote" />
+        <ref bean="StockCount-stockId" />
+        <ref bean="StockCount-stockTransReasonCd" />
+        <ref bean="StockCount-worksheetCountId" />
+        <ref bean="StockCount-reprinted" />
+      </list>
+    </property>  
+    <property name="relationships" >
+      <list>
+        <bean parent="RelationshipDefinition">
+          <property name="objectAttributeName" value="stock" />
+          <property name="primitiveAttributes" >
+            <list>
+              <bean parent="PrimitiveAttributeDefinition"
+                    p:sourceName="stock.distributorNbr"
+                    p:targetName="distributorNbr" />
+            </list>
+          </property>
+          <property name="supportAttributes" >
+            <list>
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="stock.stockId"
+                    p:targetName="stockId" />
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="stock.distributorNbr"
+                    p:targetName="distributorNbr" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>    
+  </bean>
+
+  <bean id="StockCount-beforeItemQty" parent="StockCount-beforeItemQty-parentBean" />
+  <bean id="StockCount-beforeItemQty-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="beforeItemQty"
+        p:forceUppercase="false"
+        p:label="Before Stock Count"
+        p:shortLabel="Before Count"
+        p:maxLength="20"
+        p:required="true" >
+    <property name="validationPattern" >
+      	<bean parent="FixedPointValidationPattern"
+            p:precision="11"
+            p:scale="4"
+            p:allowNegative="false" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="12" />
+    </property>
+  </bean>
+
+  <bean id="StockCount-beforeItemUnitOfIssueCd" parent="StockCount-beforeItemUnitOfIssueCd-parentBean" />
+  <bean id="StockCount-beforeItemUnitOfIssueCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="beforeItemUnitOfIssueCd"
+        p:forceUppercase="false"
+        p:label="Before Item Unit Of Issue Cd"
+        p:shortLabel="Before Item Unit Of Issue Cd"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="StockCount-binId" parent="StockCount-binId-parentBean" />
+  <bean id="StockCount-binId-parentBean" parent="Bin-binId" abstract="true"
+        p:name="binId"
+	>
+  </bean>
+
+  <bean id="StockCount-originalDt" parent="StockCount-originalDt-parentBean" />
+  <bean id="StockCount-originalDt-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="originalDt"
+        p:forceUppercase="false"
+        p:label="Original Dt"
+        p:shortLabel="Original Dt"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  
+  <bean id="StockCount-stockCountId" parent="StockCount-stockCountId-parentBean" />
+  <bean id="StockCount-stockCountId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="stockCountId"
+        p:forceUppercase="false"
+        p:label="Stock Count Id"
+        p:shortLabel="Stock Count Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="StockCount-stockCountItemQty" parent="StockCount-stockCountItemQty-parentBean" />
+  <bean id="StockCount-stockCountItemQty-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="stockCountItemQty"
+        p:forceUppercase="false"
+        p:label="Stock Count"
+        p:maxLength="20"
+        p:shortLabel="Stock Count">
+    <property name="validationPattern" >
+      	<bean parent="FixedPointValidationPattern"
+            p:precision="11"
+            p:scale="4"
+            p:allowNegative="false" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="12" />
+    </property>
+  </bean>
+
+ <bean id="StockCount-reprinted" parent="StockCount-reprinted-parentBean"/>
+  <bean id="StockCount-reprinted-parentBean" abstract="true" parent="GenericAttributes-activeIndicator"
+    p:name="reprinted"
+	p:label ="Reprint"
+	p:shortLabel ="Reprint">
+    <property name="control">
+      <bean parent="CheckboxControlDefinition"/>
+    </property>
+    <property name="formatterClass" value="org.kuali.rice.kns.web.format.BooleanFormatter"/> 
+  </bean>
+
+  <bean id="StockCount-stockCountNote" parent="StockCount-stockCountNote-parentBean" />
+  <bean id="StockCount-stockCountNote-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="stockCountNote"
+        p:forceUppercase="false"
+        p:label="Stock Count Note"
+        p:shortLabel="Stock Count Note"
+        p:maxLength="200"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextareaControlDefinition"
+            p:rows="2"
+            p:cols="106" />
+    </property>    
+  </bean>
+  <bean id="StockCount-timesCounted" parent="StockCount-timesCounted-parentBean" />
+  <bean id="StockCount-timesCounted-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="timesCounted"
+        p:forceUppercase="false"
+        p:label="Times Counted"
+        p:shortLabel="Times Counted"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="StockCount-stockId" parent="StockCount-stockId-parentBean" />
+  <bean id="StockCount-stockId-parentBean" parent="Stock-stockId" abstract="true"
+        p:name="stockId"
+	>
+  </bean>
+
+  <bean id="StockCount-stockTransReasonCd" parent="StockCount-stockTransReasonCd-parentBean" />
+  <bean id="StockCount-stockTransReasonCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="stockTransReasonCd"
+        p:forceUppercase="false"
+        p:label="Stock Trans Reason Cd"
+        p:shortLabel="Stock Trans Reason Cd"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="SelectControlDefinition"
+            p:valuesFinderClass="org.kuali.ext.mm.businessobject.options.StockTransReasonFinder"
+            p:includeKeyInLabel="false" />
+    </property>
+  </bean>
+
+  <bean id="StockCount-worksheetCountId" parent="StockCount-worksheetCountId-parentBean" />
+  <bean id="StockCount-worksheetCountId-parentBean" parent="WorksheetCountDoc-documentNumber" abstract="true"
+        p:name="worksheetCountId"
+	>
+  </bean>
+
+  <bean id="StockCount-wdoc.FDocNbr" parent="StockCount-wdoc.FDocNbr-parentBean" />
+  <bean id="StockCount-wdoc.FDocNbr-parentBean" parent="WorksheetCountDoc-documentNumber" abstract="true"
+        p:name="worksheetCountLookable.documentNumber"
+	>
+  </bean>
+
+  <bean id="StockCount-wdoc.WarehouseCd" parent="StockCount-wdoc.WarehouseCd-parentBean" />
+  <bean id="StockCount-wdoc.WarehouseCd-parentBean" parent="Warehouse-warehouseCd" abstract="true"
+        p:name="worksheetCountLookable.warehouseCd"
+	>
+  </bean>
+
+  <bean id="StockCount-wcount.WorksheetCount" parent="StockCount-wcount.WorksheetCount-parentBean" />
+  <bean id="StockCount-wcount.WorksheetCount-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="worksheetCountLookable.worksheetCnt"
+        p:forceUppercase="false"
+        p:label="Worksheet Count"
+        p:shortLabel="Worksheet Count"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="StockCount-wcount.WorksheetCountPercen" parent="StockCount-wcount.WorksheetCountPercen-parentBean" />
+  <bean id="StockCount-wcount.WorksheetCountPercen-parentBean" parent="WorksheetCountDocLookable-countPercentage" abstract="true"
+        p:name="worksheetCountLookable.countPercentage"
+	>
+  </bean>
+
+  <bean id="StockCount-wcount.WorksheetCountBalanced" parent="StockCount-wcount.WorksheetCountBalanced-parentBean" />
+  <bean id="StockCount-wcount.WorksheetCountBalanced-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="worksheetCountLookable.balanceDesc"
+        p:forceUppercase="false"
+        p:label="Balanced"
+        p:shortLabel="Balanced"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="StockCount-stock.WoksheetStatus" parent="StockCount-stock.WoksheetStatus-parentBean" />
+  <bean id="StockCount-stock.WoksheetStatus-parentBean" parent="WorksheetCountDocLookable-worksheetStatusCode" abstract="true"
+        p:name="worksheetCountLookable.worksheetStatusCode"
+	>
+  </bean>
+
+  <bean id="StockCount-wcount.WorksheetCompDate" parent="StockCount-wcount.WorksheetCompDate-parentBean" />
+  <bean id="StockCount-wcount.WorksheetCompDate-parentBean" parent="WorksheetCountDocLookable-worksheetCompletionDt" abstract="true"
+        p:name="worksheetCountLookable.worksheetCompletionDt"
+	>
+  </bean>
+
+  <bean id="StockCount-stock.ItemNumber" parent="StockCount-stock.ItemNumber-parentBean" />
+  <bean id="StockCount-stock.ItemNumber-parentBean" parent="Stock-stockDistributorNbr" abstract="true"
+        p:name="stock.distributorNbr"
+	>
+  </bean>
+
+<!-- entry end -->
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="StockCount-inquiryDefinition" parent="StockCount-inquiryDefinition-parentBean" />
+
+  <bean id="StockCount-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Stock Count Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Stock Count Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="stockId" />
+              <bean parent="FieldDefinition" p:attributeName="timesCounted" />
+              <bean parent="FieldDefinition" p:attributeName="worksheetCountLookable.worksheetCompletionDt" />
+              <bean parent="FieldDefinition" p:attributeName="worksheetCountLookable.worksheetStatusCode" />
+              <bean parent="FieldDefinition" p:attributeName="worksheetCountLookable.worksheetCnt" />
+              <bean parent="FieldDefinition" p:attributeName="worksheetCountLookable.warehouseCd" />
+              <bean parent="FieldDefinition" p:attributeName="worksheetCountLookable.documentNumber" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="StockCount-lookupDefinition" parent="StockCount-lookupDefinition-parentBean" />
+
+  <bean id="StockCount-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Stock Count Lookup" 
+        p:lookupableID="stockCountLookupable">
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>stockId</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>            
+              <bean parent="FieldDefinition" p:attributeName="worksheetCountLookable.worksheetCompletionDt" />
+              <bean parent="FieldDefinition" p:attributeName="worksheetCountLookable.worksheetStatusCode" />
+              <bean parent="FieldDefinition" p:attributeName="worksheetCountLookable.worksheetCnt" />
+              <bean parent="FieldDefinition" p:attributeName="worksheetCountLookable.warehouseCd" />
+              <bean parent="FieldDefinition" p:attributeName="worksheetCountLookable.documentNumber" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>             
+              <bean parent="FieldDefinition" p:attributeName="worksheetCountLookable.worksheetCompletionDt" />
+              <bean parent="FieldDefinition" p:attributeName="worksheetCountLookable.worksheetStatusCode" />
+              <bean parent="FieldDefinition" p:attributeName="worksheetCountLookable.worksheetCnt" />
+              <bean parent="FieldDefinition" p:attributeName="worksheetCountLookable.warehouseCd" />
+              <bean parent="FieldDefinition" p:attributeName="worksheetCountLookable.countPercentage" />
+              <bean parent="FieldDefinition" p:attributeName="worksheetCountLookable.balanceDesc" />
+              <bean parent="FieldDefinition" p:attributeName="worksheetCountLookable.documentNumber" />
+      </list>
+    </property>
+  </bean>
+
+</beans>

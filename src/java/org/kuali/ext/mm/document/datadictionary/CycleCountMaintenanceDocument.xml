@@ -1,0 +1,63 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="StoresCycleCountMaintenanceDocument" parent="StoresCycleCountMaintenanceDocument-parentBean" />
+
+  <bean id="StoresCycleCountMaintenanceDocument-parentBean" abstract="true" parent="MaintenanceDocumentEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.CycleCount"
+        p:maintainableClass="org.kuali.rice.kns.maintenance.KualiMaintainableImpl"
+        p:documentTypeName="SCCT"
+        p:documentAuthorizerClass="org.kuali.rice.kns.document.authorization.MaintenanceDocumentAuthorizerBase" >
+    <property name="lockingKeys" >
+      <list>
+        <value>cycleCntCd</value>
+      </list>
+    </property>
+    <property name="defaultExistenceChecks" >
+      <list>
+      </list>
+    </property>
+    <property name="workflowAttributes" >
+        <ref bean="StoresCycleCountMaintenanceDocument-workflowAttributes" />
+    </property>
+    <property name="maintainableSections" >
+      <list>
+        <ref bean="StoresCycleCountMaintenanceDocument-MainSection" />
+      </list>
+    </property>
+  </bean>
+
+ <!-- Maintenance Section Definitions -->
+  <bean id="StoresCycleCountMaintenanceDocument-MainSection" parent="StoresCycleCountMaintenanceDocument-MainSection-parentBean" />
+
+  <bean id="StoresCycleCountMaintenanceDocument-MainSection-parentBean" abstract="true" parent="MaintainableSectionDefinition"
+        p:title="Edit Cycle Count" >
+    <property name="maintainableItems" >
+      <list>
+      
+        <bean parent="MaintainableFieldDefinition"
+              p:name="cycleCntCd"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="cycleCntDesc"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="timesPerYearNbr"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="toleranceAmt"
+              p:required="false" />
+         <bean parent="MaintainableFieldDefinition"
+              p:name="active"
+              p:defaultValue="true" />
+      </list>
+    </property>
+  </bean>
+ <!-- workflow attributes -->
+  <bean id="StoresCycleCountMaintenanceDocument-workflowAttributes" parent="StoresCycleCountMaintenanceDocument-workflowAttributes-parentBean" />
+
+  <bean id="StoresCycleCountMaintenanceDocument-workflowAttributes-parentBean" abstract="true" class="org.kuali.rice.kns.datadictionary.WorkflowAttributes" />
+</beans>

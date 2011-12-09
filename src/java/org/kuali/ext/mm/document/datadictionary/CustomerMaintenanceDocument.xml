@@ -1,0 +1,57 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="StoresCustomerMaintenanceDocument" parent="StoresCustomerMaintenanceDocument-parentBean" />
+
+  <bean id="StoresCustomerMaintenanceDocument-parentBean" abstract="true" parent="MaintenanceDocumentEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.Customer"
+        p:maintainableClass="org.kuali.rice.kns.maintenance.KualiMaintainableImpl"
+        p:documentTypeName="SCTM"
+        p:documentAuthorizerClass="org.kuali.rice.kns.document.authorization.MaintenanceDocumentAuthorizerBase" >
+    <property name="lockingKeys" >
+      <list>
+        <value>principalName</value>
+      </list>
+    </property>
+    <property name="defaultExistenceChecks" >
+      <list>
+      </list>
+    </property>
+    <property name="workflowAttributes" >
+        <ref bean="StoresCustomerMaintenanceDocument-workflowAttributes" />
+    </property>
+    <property name="maintainableSections" >
+      <list>
+        <ref bean="StoresCustomerMaintenanceDocument-MainSection" />
+      </list>
+    </property>
+  </bean>
+
+ <!-- Maintenance Section Definitions -->
+  <bean id="StoresCustomerMaintenanceDocument-MainSection" parent="StoresCustomerMaintenanceDocument-MainSection-parentBean" />
+
+  <bean id="StoresCustomerMaintenanceDocument-MainSection-parentBean" abstract="true" parent="MaintainableSectionDefinition"
+        p:title="Edit Customer" >
+    <property name="maintainableItems" >
+      <list>
+    
+        <bean parent="MaintainableFieldDefinition"
+              p:name="principalName"
+              p:required="true" />
+<!--        <bean parent="MaintainableFieldDefinition"-->
+<!--              p:name="defaultProfileId"-->
+<!--              p:required="false" />-->
+   <bean parent="MaintainableFieldDefinition"
+              p:name="active"
+              p:defaultValue="true" />
+      </list>
+    </property>
+  </bean>
+ <!-- workflow attributes -->
+  <bean id="StoresCustomerMaintenanceDocument-workflowAttributes" parent="StoresCustomerMaintenanceDocument-workflowAttributes-parentBean" />
+
+  <bean id="StoresCustomerMaintenanceDocument-workflowAttributes-parentBean" abstract="true" class="org.kuali.rice.kns.datadictionary.WorkflowAttributes" />
+</beans>

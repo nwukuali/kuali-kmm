@@ -1,0 +1,85 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="StoresProfileMaintenanceDocument" parent="StoresProfileMaintenanceDocument-parentBean" />
+
+  <bean id="StoresProfileMaintenanceDocument-parentBean" abstract="true" parent="MaintenanceDocumentEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.Profile"
+        p:maintainableClass="org.kuali.rice.kns.maintenance.KualiMaintainableImpl"
+        p:documentTypeName="SPRF"
+        p:documentAuthorizerClass="org.kuali.rice.kns.document.authorization.MaintenanceDocumentAuthorizerBase" >
+    <property name="lockingKeys" >
+      <list>
+        <value>profileName</value>
+        <value>principalName</value>
+      </list>
+    </property>
+    <property name="defaultExistenceChecks" >
+      <list>
+        <bean parent="ReferenceDefinition"
+              p:attributeName="customer"
+              p:attributeToHighlightOnFail="principalName" />
+      </list>
+    </property>
+    <property name="workflowAttributes" >
+        <ref bean="StoresProfileMaintenanceDocument-workflowAttributes" />
+    </property>
+    <property name="maintainableSections" >
+      <list>
+        <ref bean="StoresProfileMaintenanceDocument-MainSection" />
+      </list>
+    </property>
+  </bean>
+
+ <!-- Maintenance Section Definitions -->
+  <bean id="StoresProfileMaintenanceDocument-MainSection" parent="StoresProfileMaintenanceDocument-MainSection-parentBean" />
+
+  <bean id="StoresProfileMaintenanceDocument-MainSection-parentBean" abstract="true" parent="MaintainableSectionDefinition"
+        p:title="Edit Customer Profile" >
+    <property name="maintainableItems" >
+      <list>
+     
+        <bean parent="MaintainableFieldDefinition"
+              p:name="principalName"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="profileName"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="profileEmail"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="deliveryBuildingCode"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="deliveryBuildingRoomNumber"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="billingBuildingCode"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="campusCode"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="finacialChartOfAccountsCode"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="accountNumber"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="subAccountNumber"
+              p:required="false" />
+           <bean parent="MaintainableFieldDefinition"
+              p:name="active"
+              p:defaultValue="true" />
+      </list>
+    </property>
+  </bean>
+ <!-- workflow attributes -->
+  <bean id="StoresProfileMaintenanceDocument-workflowAttributes" parent="StoresProfileMaintenanceDocument-workflowAttributes-parentBean" />
+
+  <bean id="StoresProfileMaintenanceDocument-workflowAttributes-parentBean" abstract="true" class="org.kuali.rice.kns.datadictionary.WorkflowAttributes" />
+</beans>

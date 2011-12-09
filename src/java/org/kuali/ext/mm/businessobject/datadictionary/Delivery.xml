@@ -1,0 +1,126 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="Delivery" parent="Delivery-parentBean" />
+
+  <bean id="Delivery-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.Delivery"
+        p:titleAttribute="documentNumber"
+        p:objectLabel="Delivery"
+        p:inquiryDefinition-ref="Delivery-inquiryDefinition"
+        p:lookupDefinition-ref="Delivery-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="Delivery-documentNumber" />
+        <ref bean="Delivery-routeCd" />
+        <ref bean="Delivery-lastUpdateDate"/>
+      </list>
+    </property>
+     <property name="collections">
+      <list> 
+       	<bean parent="CollectionDefinition" p:name="deliveryLines" p:label="Delivery Line" p:shortLabel="Delivery Line" p:elementLabel="Delivery Line"/>
+      </list>
+    </property>
+  </bean>
+  
+  <bean id="Delivery-documentNumber" parent="Delivery-documentNumber-parentBean" />
+  <bean id="Delivery-documentNumber-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="documentNumber"
+        p:forceUppercase="false"
+        p:label="Driver Log Number"
+        p:shortLabel="Driver Log Number"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  
+  <bean id="Delivery-lastUpdateDate" parent="Delivery-lastUpdateDate-parentBean" />
+  <bean id="Delivery-lastUpdateDate-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="lastUpdateDate"
+        p:forceUppercase="false"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="HiddenControlDefinition" />
+    </property>
+  </bean>
+
+  <bean id="Delivery-routeCd" parent="Delivery-routeCd-parentBean" />
+  <bean id="Delivery-routeCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="routeCd"
+        p:forceUppercase="false"
+        p:label="Route Code"
+        p:shortLabel="Route Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="Delivery-inquiryDefinition" parent="Delivery-inquiryDefinition-parentBean" />
+
+  <bean id="Delivery-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Delivery Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Delivery Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+              <bean parent="FieldDefinition" p:attributeName="routeCd" />
+              <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="Delivery-lookupDefinition" parent="Delivery-lookupDefinition-parentBean" />
+
+  <bean id="Delivery-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Driver Log Lookup" p:lookupableID="deliveryLookupable">
+    
+    <property name="lookupFields" >
+      <list>                
+        <bean parent="FieldDefinition" p:attributeName="routeCd" />        
+        <bean parent="FieldDefinition" p:attributeName="documentNumber" p:noInquiry ="true" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>     
+        <bean parent="FieldDefinition" p:attributeName="routeCd" />        
+        <bean parent="FieldDefinition" p:attributeName="documentNumber"/>
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+      </list>
+    </property>
+  </bean>
+
+</beans>

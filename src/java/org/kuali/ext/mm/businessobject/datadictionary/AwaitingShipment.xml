@@ -1,0 +1,211 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="AwaitingShipment" parent="AwaitingShipment-parentBean" />
+
+  <bean id="AwaitingShipment-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.AwaitingShipment"
+        p:titleAttribute="distributorNumber"
+        p:objectLabel="Awaiting Shipment"
+        p:inquiryDefinition-ref="AwaitingShipment-inquiryDefinition"
+        p:lookupDefinition-ref="AwaitingShipment-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="AwaitingShipment-orderNumber" />
+        <ref bean="AwaitingShipment-quantityToShip" />
+        <ref bean="AwaitingShipment-totalToShip" />
+        <ref bean="AwaitingShipment-unitOfIssue" />
+        <ref bean="AwaitingShipment-shipToCode" />
+        <ref bean="AwaitingShipment-dateEntered" />
+        <ref bean="AwaitingShipment-distributorNumber" />
+        <ref bean="AwaitingShipment-itemDescription" />
+        <ref bean="AwaitingShipment-binLocation" />
+      </list>
+    </property>
+  </bean>      
+
+  <bean id="AwaitingShipment-orderNumber" parent="AwaitingShipment-orderNumber-parentBean" />
+  <bean id="AwaitingShipment-orderNumber-parentBean" parent="OrderDocument-orderId" abstract="true"
+        p:name="orderNumber"
+        p:forceUppercase="false"
+        p:label="Order Number"
+        p:shortLabel="Order #" >
+  </bean>
+  
+  <bean id="AwaitingShipment-quantityToShip" parent="AwaitingShipment-quantityToShip-parentBean" />
+  <bean id="AwaitingShipment-quantityToShip-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="quantityToShip"
+        p:forceUppercase="false"
+        p:label="Qty To Ship"
+        p:shortLabel="Qty To Ship"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="NumericValidationPattern" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  
+  <bean id="AwaitingShipment-totalToShip" parent="AwaitingShipment-totalToShip-parentBean" />
+  <bean id="AwaitingShipment-totalToShip-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="totalToShip"
+        p:forceUppercase="false"
+        p:label="Total To Ship"
+        p:shortLabel="Total To Ship"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="NumericValidationPattern" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  
+  <bean id="AwaitingShipment-shipToCode" parent="AwaitingShipment-shipToCode-parentBean" />
+  <bean id="AwaitingShipment-shipToCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="shipToCode"
+        p:forceUppercase="false"
+        p:label="ShipTo Code"
+        p:shortLabel="ShipTo Code"
+        p:maxLength="45"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="45" />
+    </property>
+  </bean>
+  
+  <bean id="AwaitingShipment-distributorNumber" parent="AwaitingShipment-distributorNumber-parentBean" />
+  <bean id="AwaitingShipment-distributorNumber-parentBean" parent="Stock-stockDistributorNbr" abstract="true"
+        p:name="distributorNumber"
+        p:forceUppercase="false"
+        p:label="Item #"
+        p:shortLabel="Item #"
+        p:required="false" >
+  </bean>
+  
+  <bean id="AwaitingShipment-itemDescription" parent="AwaitingShipment-itemDescription-parentBean" />
+  <bean id="AwaitingShipment-itemDescription-parentBean" parent="Stock-stockDesc" abstract="true"
+        p:name="itemDescription"
+        p:forceUppercase="false"
+        p:label="Item Description"
+        p:shortLabel="Item Description"
+        p:required="false" >
+  </bean>
+  
+  <bean id="AwaitingShipment-unitOfIssue" parent="AwaitingShipment-unitOfIssue-parentBean" />
+  <bean id="AwaitingShipment-unitOfIssue-parentBean" parent="Stock-salesUnitOfIssueCd" abstract="true"
+        p:name="unitOfIssue"
+        p:forceUppercase="false"
+        p:label="U/M"
+        p:shortLabel="U/M"
+        p:required="false" >
+  </bean>
+  
+  <bean id="AwaitingShipment-binLocation" parent="AwaitingShipment-binLocation-parentBean" />
+  <bean id="AwaitingShipment-binLocation-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="binLocation"
+        p:forceUppercase="false"
+        p:label="Location"
+        p:shortLabel="Location"
+        p:maxLength="45"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="45" />
+    </property>
+  </bean>
+
+  <bean id="AwaitingShipment-dateEntered" parent="AwaitingShipment-dateEntered-parentBean" />
+  <bean id="AwaitingShipment-dateEntered-parentBean" parent="GenericAttributes-genericTimestamp" abstract="true"
+        p:name="dateEntered"
+        p:forceUppercase="false"
+        p:label="Date Entered"
+        p:shortLabel="Date Entered"
+        p:maxLength="10"
+        p:required="false" >
+  </bean>
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="AwaitingShipment-inquiryDefinition" parent="AwaitingShipment-inquiryDefinition-parentBean" />
+
+  <bean id="AwaitingShipment-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Awaiting Shipment Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Awaiting Shipment Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="orderNumber" />
+              <bean parent="FieldDefinition" p:attributeName="quantityToShip" />
+              <bean parent="FieldDefinition" p:attributeName="totalToShip" />
+              <bean parent="FieldDefinition" p:attributeName="unitOfIssue" />
+              <bean parent="FieldDefinition" p:attributeName="shipToCode" />
+              <bean parent="FieldDefinition" p:attributeName="dateEntered" />
+              <bean parent="FieldDefinition" p:attributeName="distributorNumber" />
+              <bean parent="FieldDefinition" p:attributeName="itemDescription" />
+              <bean parent="FieldDefinition" p:attributeName="binLocation" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="AwaitingShipment-lookupDefinition" parent="AwaitingShipment-lookupDefinition-parentBean" />
+
+  <bean id="AwaitingShipment-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Awaiting Shipment Lookup" >
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>distributorNumber</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>        
+        <bean parent="FieldDefinition" p:attributeName="orderNumber" />
+        <bean parent="FieldDefinition" p:attributeName="distributorNumber" />
+        <bean parent="FieldDefinition" p:attributeName="dateEntered" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="orderNumber" />
+        <bean parent="FieldDefinition" p:attributeName="quantityToShip" />
+        <bean parent="FieldDefinition" p:attributeName="totalToShip" />
+        <bean parent="FieldDefinition" p:attributeName="unitOfIssue" />
+        <bean parent="FieldDefinition" p:attributeName="shipToCode" />
+        <bean parent="FieldDefinition" p:attributeName="dateEntered" />
+        <bean parent="FieldDefinition" p:attributeName="distributorNumber" />
+        <bean parent="FieldDefinition" p:attributeName="itemDescription" />
+        <bean parent="FieldDefinition" p:attributeName="binLocation" />
+      </list>
+    </property>
+  </bean>
+
+</beans>

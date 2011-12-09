@@ -1,0 +1,175 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="CheckInReceivable" parent="CheckInReceivable-parentBean" />
+
+  <bean id="CheckInReceivable-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.CheckInReceivable"
+        p:titleAttribute="Check In"
+        p:objectLabel="Check In"
+        p:inquiryDefinition-ref="CheckInReceivable-inquiryDefinition"
+        p:lookupDefinition-ref="CheckInReceivable-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="CheckInReceivable-acceptedItemQty" />
+        <ref bean="CheckInReceivable-distributorNumber" />
+        <ref bean="CheckInReceivable-lastUpdateDate" />
+        <ref bean="CheckInReceivable-orderDocumentNumber" />
+        <ref bean="CheckInReceivable-orderId" />
+        <ref bean="CheckInReceivable-orderItemQty" />
+        <ref bean="CheckInReceivable-poId" />
+        <ref bean="CheckInReceivable-rejectedItemQty" />
+        <ref bean="CheckInReceivable-reqsId" />
+        <ref bean="CheckInReceivable-vendorName" />
+        <ref bean="CheckInReceivable-versionNumber" />
+        <ref bean="CheckInReceivable-warehouseCode" />
+      </list>
+    </property>
+  </bean>
+
+  <bean id="CheckInReceivable-acceptedItemQty" parent="CheckInReceivable-acceptedItemQty-parentBean" />
+  <bean id="CheckInReceivable-acceptedItemQty-parentBean" parent="CheckinDetail-acceptedItemQty" abstract="true"
+        p:name="acceptedItemQty"
+        p:required="false" >
+  </bean>
+
+  <bean id="CheckInReceivable-distributorNumber" parent="CheckInReceivable-distributorNumber-parentBean" />
+  <bean id="CheckInReceivable-distributorNumber-parentBean" parent="OrderDetail-distributorNbr" abstract="true"
+        p:name="distributorNumber"
+        p:required="false" >
+  </bean>
+
+  <bean id="CheckInReceivable-lastUpdateDate" parent="CheckInReceivable-lastUpdateDate-parentBean" />
+  <bean id="CheckInReceivable-lastUpdateDate-parentBean" parent="OrderDetail-lastUpdateDate" abstract="true"
+        p:name="lastUpdateDate"
+        p:required="false" >
+  </bean>
+
+  <bean id="CheckInReceivable-orderDocumentNumber" parent="CheckInReceivable-orderDocumentNumber-parentBean" />
+  <bean id="CheckInReceivable-orderDocumentNumber-parentBean" parent="OrderDetail-orderDocument.documentNumber" abstract="true"
+        p:name="orderDocumentNumber"
+        p:required="false" >
+  </bean>
+
+  <bean id="CheckInReceivable-orderId" parent="CheckInReceivable-orderId-parentBean" />
+  <bean id="CheckInReceivable-orderId-parentBean" parent="OrderDocument-orderId" abstract="true"
+        p:name="orderId"
+        p:required="false" >
+  </bean>
+
+  <bean id="CheckInReceivable-orderItemQty" parent="CheckInReceivable-orderItemQty-parentBean" />
+  <bean id="CheckInReceivable-orderItemQty-parentBean" parent="OrderDetail-orderItemQty" abstract="true"
+        p:name="orderItemQty"
+        p:required="false" >
+  </bean>
+
+  <bean id="CheckInReceivable-poId" parent="CheckInReceivable-poId-parentBean" />
+  <bean id="CheckInReceivable-poId-parentBean" parent="OrderDetail-poId" abstract="true"
+        p:name="poId"
+        p:required="false" >
+  </bean>
+
+  <bean id="CheckInReceivable-rejectedItemQty" parent="CheckInReceivable-rejectedItemQty-parentBean" />
+  <bean id="CheckInReceivable-rejectedItemQty-parentBean" parent="CheckinDetail-rejectedItemQty" abstract="true"
+        p:name="rejectedItemQty"
+        p:required="false" >
+  </bean>
+
+  <bean id="CheckInReceivable-reqsId" parent="CheckInReceivable-reqsId-parentBean" />
+  <bean id="CheckInReceivable-reqsId-parentBean" parent="OrderDocument-reqsId" abstract="true"
+        p:name="reqsId"
+        p:required="false" >
+  </bean>
+
+  <bean id="CheckInReceivable-vendorName" parent="CheckInReceivable-vendorName-parentBean" />
+  <bean id="CheckInReceivable-vendorName-parentBean" parent="OrderDocument-vendorNm" abstract="true"
+        p:name="vendorName"
+        p:required="false" >
+  </bean>
+
+  <bean id="CheckInReceivable-versionNumber" parent="CheckInReceivable-versionNumber-parentBean" />
+  <bean id="CheckInReceivable-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+  <bean id="CheckInReceivable-warehouseCode" parent="CheckInReceivable-warehouseCode-parentBean" />
+  <bean id="CheckInReceivable-warehouseCode-parentBean" parent="OrderDocument-warehouseCd" abstract="true"
+        p:name="warehouseCode"
+        p:required="false" >
+  </bean>
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="CheckInReceivable-inquiryDefinition" parent="CheckInReceivable-inquiryDefinition-parentBean" />
+
+  <bean id="CheckInReceivable-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Check In Receivable Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Check In Receivable Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="acceptedItemQty" />
+              <bean parent="FieldDefinition" p:attributeName="distributorNumber" />
+              <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+              <bean parent="FieldDefinition" p:attributeName="orderDocumentNumber" />
+              <bean parent="FieldDefinition" p:attributeName="orderId" />
+              <bean parent="FieldDefinition" p:attributeName="orderItemQty" />
+              <bean parent="FieldDefinition" p:attributeName="poId" />
+              <bean parent="FieldDefinition" p:attributeName="rejectedItemQty" />
+              <bean parent="FieldDefinition" p:attributeName="reqsId" />
+              <bean parent="FieldDefinition" p:attributeName="vendorName" />
+              <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+              <bean parent="FieldDefinition" p:attributeName="warehouseCode" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="CheckInReceivable-lookupDefinition" parent="CheckInReceivable-lookupDefinition-parentBean" />
+
+  <bean id="CheckInReceivable-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Check In Receivable Lookup" p:lookupableID="checkInReceivableLookupable" >
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>poId</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="poId" />
+        <bean parent="FieldDefinition" p:attributeName="distributorNumber" />
+        <bean parent="FieldDefinition" p:attributeName="orderDocumentNumber" />
+        <bean parent="FieldDefinition" p:attributeName="orderId" />
+        <bean parent="FieldDefinition" p:attributeName="reqsId" />
+        <bean parent="FieldDefinition" p:attributeName="warehouseCode" />
+        <bean parent="FieldDefinition" p:attributeName="vendorName" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="poId" />
+        <bean parent="FieldDefinition" p:attributeName="distributorNumber" />
+        <bean parent="FieldDefinition" p:attributeName="orderDocumentNumber" />
+        <bean parent="FieldDefinition" p:attributeName="orderId" />
+        <bean parent="FieldDefinition" p:attributeName="reqsId" />
+        <bean parent="FieldDefinition" p:attributeName="warehouseCode" />
+        <bean parent="FieldDefinition" p:attributeName="vendorName" />
+      </list>
+    </property>
+  </bean>
+
+</beans>

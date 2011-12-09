@@ -1,0 +1,140 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="WarehouseObjectType" parent="WarehouseObjectType-parentBean" />
+
+  <bean id="WarehouseObjectType-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.WarehouseObjectType"
+        p:titleAttribute="objectTypeCd"
+        p:objectLabel="Warehouse Object Type"
+        p:inquiryDefinition-ref="WarehouseObjectType-inquiryDefinition"
+        p:lookupDefinition-ref="WarehouseObjectType-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="WarehouseObjectType-active" />
+        <ref bean="WarehouseObjectType-objectTypeCd" />
+        <ref bean="WarehouseObjectType-name" />
+        <ref bean="WarehouseObjectType-lastUpdateDate" />
+        <ref bean="WarehouseObjectType-versionNumber" />
+      </list>
+    </property>
+  </bean>
+
+  <bean id="WarehouseObjectType-active" parent="WarehouseObjectType-active-parentBean" />
+  <bean id="WarehouseObjectType-active-parentBean" abstract="true" parent="GenericAttributes-activeIndicator" 
+        p:name="active"
+        p:label="Active Indicator"
+        p:shortLabel="Active"
+        p:required="false" />
+
+  <bean id="WarehouseObjectType-objectTypeCd" parent="WarehouseObjectType-objectTypeCd-parentBean" />
+  <bean id="WarehouseObjectType-objectTypeCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="objectTypeCd"
+        p:forceUppercase="true"        
+        p:label="Warehouse Object Type Code"
+        p:shortLabel="Warehouse Object Type Code"
+        p:maxLength="4"        
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AlphaNumericValidationPattern"/>
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="4" />
+    </property>        
+  </bean>        
+
+  <bean id="WarehouseObjectType-name" parent="WarehouseObjectType-name-parentBean" />
+  <bean id="WarehouseObjectType-name-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="name"
+        p:forceUppercase="true"
+        p:label="Warehouse Object Type Name"
+        p:shortLabel="Warehouse Object Type Name"
+        p:maxLength="45"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="45" />
+    </property>
+  </bean>
+
+  <bean id="WarehouseObjectType-lastUpdateDate" parent="WarehouseObjectType-lastUpdateDate-parentBean" />
+  <bean id="WarehouseObjectType-lastUpdateDate-parentBean" parent="GenericAttributes-genericTimestamp" abstract="true"
+        p:name="lastUpdateDate"
+        p:forceUppercase="false"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:maxLength="10"
+        p:required="false" >
+  </bean>
+
+  <bean id="WarehouseObjectType-versionNumber" parent="WarehouseObjectType-versionNumber-parentBean" />
+  <bean id="WarehouseObjectType-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="WarehouseObjectType-inquiryDefinition" parent="WarehouseObjectType-inquiryDefinition-parentBean" />
+
+  <bean id="WarehouseObjectType-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Warehouse Object Type Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Warehouse Object Type Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="active" />
+              <bean parent="FieldDefinition" p:attributeName="objectTypeCd" />
+              <bean parent="FieldDefinition" p:attributeName="name" />
+              <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+              <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="WarehouseObjectType-lookupDefinition" parent="WarehouseObjectType-lookupDefinition-parentBean" />
+
+  <bean id="WarehouseObjectType-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Warehouse Object Type Lookup" >
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>objectTypeCd</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>        
+        <bean parent="FieldDefinition" p:attributeName="objectTypeCd" />
+        <bean parent="FieldDefinition" p:attributeName="name" />
+        <bean parent="FieldDefinition" p:attributeName="active" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="objectTypeCd" />
+        <bean parent="FieldDefinition" p:attributeName="name" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+        <bean parent="FieldDefinition" p:attributeName="active" />        
+      </list>
+    </property>
+  </bean>
+
+</beans>

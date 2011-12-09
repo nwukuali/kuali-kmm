@@ -1,0 +1,105 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="MassUpdateDocument" parent="MassUpdateDocument-parentBean" />
+  <bean id="MassUpdateDocument-parentBean" abstract="true" parent="TransactionalDocumentEntry">
+    <property name="documentTypeName" value="SAMU"/>
+    <property name="sessionDocument" value="true"/>
+    <property name="documentClass" value="org.kuali.ext.mm.document.MassUpdateDocument"/>
+    <property name="documentAuthorizerClass" value="org.kuali.rice.kns.document.authorization.TransactionalDocumentAuthorizerBase"/>
+	<property name="documentPresentationControllerClass" value="org.kuali.ext.mm.document.authorization.MassUpdateDocumentPresentationController" />
+    <property name="businessRulesClass" value="org.kuali.ext.mm.document.validation.impl.MassUpdateDocumentRule"/>
+    <property name="attributes" >
+      <list>
+		<ref bean="MassUpdateDocument-documentNumber" />
+		<ref bean="MassUpdateDocument-versionNumber" />
+		<ref bean="MassUpdateDocument-previousAgreementNumber" />
+		<ref bean="MassUpdateDocument-newAgreementNumber" />
+		<ref bean="MassUpdateDocument-updateFileName" />
+		<ref bean="MassUpdateDocument-finalIndicator" />
+		<ref bean="MassUpdateDocument-lastUpdateDate" />
+
+      </list>
+    </property>
+    <property name="workflowAttributes">
+    	<ref bean="MassUpdateDocument-workflowAttributes" />
+    </property>
+  </bean>       
+	
+	<bean id="MassUpdateDocument-documentNumber" parent="MassUpdateDocument-documentNumber-parentBean" />
+	<bean id="MassUpdateDocument-documentNumber-parentBean" parent="AttributeDefinition" abstract="true"
+	    p:name="documentNumber"
+	    p:forceUppercase="false"
+	    p:label="Document #"
+	    p:shortLabel="Doc #"
+	    p:maxLength="14"
+	    p:required="false" >
+		<property name="validationPattern" >
+		  <bean parent="AnyCharacterValidationPattern"
+		        p:allowWhitespace="true" />
+		</property>
+		<property name="control" >
+		  <bean parent="TextControlDefinition"
+		        p:size="10" />
+		</property>
+	</bean>
+	
+	<bean id="MassUpdateDocument-updateFileName" parent="MassUpdateDocument-updateFileName-parentBean" />
+	<bean id="MassUpdateDocument-updateFileName-parentBean" parent="AttributeDefinition" abstract="true"
+	    p:name="updateFileName"
+	    p:forceUppercase="false"
+	    p:label="File To Upload (CVS)"
+	    p:shortLabel="Update File"
+	    p:maxLength="255"
+	    p:required="false" >
+		<property name="validationPattern" >
+		  <bean parent="AnyCharacterValidationPattern"
+		        p:allowWhitespace="true" />
+		</property>
+		<property name="control" >
+		  <bean parent="TextControlDefinition"
+		        p:size="10" />
+		</property>
+	</bean>
+	
+	<bean id="MassUpdateDocument-versionNumber" parent="MassUpdateDocument-versionNumber-parentBean" />
+	<bean id="MassUpdateDocument-versionNumber-parentBean" parent="GenericAttributes-versionNumber" abstract="true"
+	    p:name="versionNumber"   >
+	</bean>
+	
+	<bean id="MassUpdateDocument-previousAgreementNumber" parent="MassUpdateDocument-previousAgreementNumber-parentBean" />
+	<bean id="MassUpdateDocument-previousAgreementNumber-parentBean" parent="Agreement-agreementNbr" abstract="true"
+	    p:name="previousAgreementNumber"
+	    p:label="Previous Agreement"
+	    p:shortLabel="Previous Agreement"
+	    p:required="true">
+	</bean>
+	
+<bean id="MassUpdateDocument-finalIndicator" parent="MassUpdateDocument-finalIndicator-parentBean" />
+  <bean id="MassUpdateDocument-finalIndicator-parentBean" abstract="true" parent="GenericAttributes-genericBoolean" 
+        p:name="finalIndicator"
+        p:label="Final Indicator"
+        p:shortLabel="Final"        
+        p:required="false" />
+	
+	<bean id="MassUpdateDocument-newAgreementNumber" parent="MassUpdateDocument-newAgreementNumber-parentBean" />
+	<bean id="MassUpdateDocument-newAgreementNumber-parentBean" parent="Agreement-agreementNbr" abstract="true"
+	    p:name="newAgreementNumber"
+	    p:label="New Agreement"
+	    p:shortLabel="New Agreement"
+	    p:required="true">
+	</bean>
+	
+	<bean id="MassUpdateDocument-lastUpdateDate" parent="MassUpdateDocument-lastUpdateDate-parentBean" />
+	<bean id="MassUpdateDocument-lastUpdateDate-parentBean" parent="GenericAttributes-genericTimestamp" abstract="true"
+	    p:name="lastUpdateDate">
+	</bean>
+  
+  
+	<bean id="MassUpdateDocument-workflowAttributes" parent="MassUpdateDocument-workflowAttributes-parentBean"/>
+	
+	<bean id="MassUpdateDocument-workflowAttributes-parentBean" abstract="true" parent="WorkflowAttributes" />
+</beans>

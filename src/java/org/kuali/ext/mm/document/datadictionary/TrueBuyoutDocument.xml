@@ -1,0 +1,89 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="TrueBuyoutDocument" parent="TrueBuyoutDocument-parentBean" />
+  <bean id="TrueBuyoutDocument-parentBean" abstract="true" parent="TransactionalDocumentEntry">
+    <property name="documentTypeName" value="STBO"/>
+    <property name="sessionDocument" value="true"/>
+    <property name="documentClass" value="org.kuali.ext.mm.document.TrueBuyoutDocument"/>
+    <property name="documentAuthorizerClass" value="org.kuali.rice.kns.document.authorization.TransactionalDocumentAuthorizerBase"/>
+	<property name="documentPresentationControllerClass" value="org.kuali.rice.kns.document.authorization.TransactionalDocumentPresentationControllerBase" />
+    <property name="businessRulesClass" value="org.kuali.ext.mm.document.validation.impl.TrueBuyoutDocumentRule"/>
+    <property name="attributes" >
+      <list>
+		<ref bean="TrueBuyoutDocument-documentNumber" />
+		<ref bean="TrueBuyoutDocument-versionNumber" />
+		<ref bean="TrueBuyoutDocument-customerProfileId" />
+		<ref bean="TrueBuyoutDocument-campusCode" />
+		<ref bean="TrueBuyoutDocument-orderDocumentNumber" />
+		<ref bean="TrueBuyoutDocument-deliveryDepartmentName" />
+		<ref bean="TrueBuyoutDocument-lastUpdateDate" />
+
+      </list>
+    </property>
+    <property name="workflowAttributes">
+    	<ref bean="TrueBuyoutDocument-workflowAttributes" />
+    </property>
+  </bean>       
+	
+	<bean id="TrueBuyoutDocument-documentNumber" parent="TrueBuyoutDocument-documentNumber-parentBean" />
+	<bean id="TrueBuyoutDocument-documentNumber-parentBean" parent="DocumentHeader-documentNumber" abstract="true"
+        p:name="documentNumber" >
+  	</bean>
+  	
+  	<bean id="TrueBuyoutDocument-deliveryDepartmentName" parent="TrueBuyoutDocument-deliveryDepartmentName-parentBean" />
+	<bean id="TrueBuyoutDocument-deliveryDepartmentName-parentBean" parent="OrderDocument-deliveryDepartmentNm" abstract="true"
+        p:name="deliveryDepartmentName" >
+  	</bean>
+  	
+  	<bean id="TrueBuyoutDocument-campusCode" parent="TrueBuyoutDocument-campusCode-parentBean" />
+	<bean id="TrueBuyoutDocument-campusCode-parentBean" parent="Profile-campusCode" abstract="true"
+        p:name="campusCode" >
+  	</bean>
+  	
+  	
+  	<bean id="TrueBuyoutDocument-orderDocumentNumber" parent="TrueBuyoutDocument-orderDocumentNumber-parentBean" />
+	<bean id="TrueBuyoutDocument-orderDocumentNumber-parentBean" parent="OrderDocument-documentNumber" abstract="true"
+        p:name="orderDocumentNumber" 
+        p:label="Order Document Number"
+        p:shortLabel="Order Doc Nbr">
+  	</bean>
+	
+	<bean id="TrueBuyoutDocument-versionNumber" parent="TrueBuyoutDocument-versionNumber-parentBean" />
+	<bean id="TrueBuyoutDocument-versionNumber-parentBean" parent="GenericAttributes-versionNumber" abstract="true"
+	    p:name="versionNumber">
+	</bean>
+	
+	<bean id="TrueBuyoutDocument-customerProfileId" parent="TrueBuyoutDocument-customerProfileId-parentBean" />
+	<bean id="TrueBuyoutDocument-customerProfileId-parentBean" parent="Profile-profileId" abstract="true"
+	    p:name="customerProfileId"
+	    p:forceUppercase="false"
+	    p:label="Customer Profile ID"
+	    p:shortLabel="Profile ID"
+	    p:maxLength="18"
+	    p:required="false" >
+		<property name="validationPattern" >
+		  <bean parent="AnyCharacterValidationPattern"
+		        p:allowWhitespace="true" />
+		</property>
+		<property name="control" >
+		  <bean parent="TextControlDefinition"
+		        p:size="10" />
+		</property>
+	</bean>
+	
+	<bean id="TrueBuyoutDocument-lastUpdateDate" parent="TrueBuyoutDocument-lastUpdateDate-parentBean" />
+	<bean id="TrueBuyoutDocument-lastUpdateDate-parentBean" parent="GenericAttributes-genericTimestamp" abstract="true"
+	    p:name="lastUpdateDate"
+	    p:forceUppercase="false"
+	    p:label="Last Update Date"
+	    p:shortLabel="Last Update">
+	</bean>
+  
+	<bean id="TrueBuyoutDocument-workflowAttributes" parent="TrueBuyoutDocument-workflowAttributes-parentBean"/>
+	
+	<bean id="TrueBuyoutDocument-workflowAttributes-parentBean" abstract="true" parent="WorkflowAttributes" />
+</beans>

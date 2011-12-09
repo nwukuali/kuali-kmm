@@ -1,0 +1,712 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="CatalogItem" parent="CatalogItem-parentBean" />
+
+  <bean id="CatalogItem-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.CatalogItem"
+        p:titleAttribute="catalogItemId"
+        p:objectLabel="Catalog Item"
+        p:inquiryDefinition-ref="CatalogItem-inquiryDefinition"
+        p:lookupDefinition-ref="CatalogItem-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="CatalogItem-active" />
+        <ref bean="CatalogItem-catalogDesc" />
+        <ref bean="CatalogItem-catalogId" />
+        <ref bean="CatalogItem-catalog.catalogCd"/>
+        <ref bean="CatalogItem-catalog.catalogDesc"/>
+        <ref bean="CatalogItem-catalog.catalogType.catalogTypeName"/>
+        <ref bean="CatalogItem-catalogItemId" />
+        <ref bean="CatalogItem-catalogItemPndId" />
+        <ref bean="CatalogItem-substituteDistributorNbr" />
+        <ref bean="CatalogItem-catalogPrc" />
+        <ref bean="CatalogItem-catalogUnitOfIssueCd" />
+        <ref bean="CatalogItem-displayableInd" />
+        <ref bean="CatalogItem-distributorNbr" />
+        <ref bean="CatalogItem-lastUpdateDate" />
+        <ref bean="CatalogItem-manufacturerNbr" />
+        <ref bean="CatalogItem-shippingHt" />
+        <ref bean="CatalogItem-shippingLh" />
+        <ref bean="CatalogItem-shippingWd" />
+        <ref bean="CatalogItem-shippingWgt" />
+        <ref bean="CatalogItem-stockId" />
+        <ref bean="CatalogItem-unspscCd" />
+        <ref bean="CatalogItem-spaidId"/>
+        <ref bean="CatalogItem-versionNumber" />
+        <ref bean="CatalogItem-willcallInd" />
+        <ref bean="CatalogItem-recycledInd" />
+        <ref bean="CatalogItem-taxableInd"/>
+        <ref bean="CatalogItem-stock.upcCd"/>
+        <ref bean="CatalogItem-stock.obsoleteInd" />
+        <ref bean="CatalogItem-stock.perishableInd" />
+        <ref bean="CatalogItem-stock.recycledInd" />
+        <ref bean="CatalogItem-stock.reorderPointQty"/>
+        <ref bean="CatalogItem-stock.safetyStockDays" />
+        <ref bean="CatalogItem-stock.safetyStockQty" />
+        <ref bean="CatalogItem-stock.distributorNbr" />
+        <ref bean="CatalogItem-stock.taxableInd"/>
+        <ref bean="CatalogItem-stock.surchargeInd" />
+		<ref bean="CatalogItem-stock.minimumOrderQty" />
+		<ref bean="CatalogItem-stock.packagingUnitDesc"/>
+		<ref bean="CatalogItem-stock.buyUnitOfIssueCd"/>		
+		<ref bean="CatalogItem-stock.buyUnitOfIssueRt" />
+		<ref bean="CatalogItem-stock.salesUnitOfIssueCd" />
+		<ref bean="CatalogItem-stock.salesUnitOfIssueRt" />
+		<ref bean="CatalogItem-stock.agreementNbr" />      
+    	<ref bean="CatalogItem-stock.stockTypeCode" />
+    	<ref bean="CatalogItem-stock.rentalObjectCode"/>  
+        <ref bean="CatalogItem-stock.cycleCntCd" />
+        <ref bean="CatalogItem-stock.restrictedRouteCd" />
+        <ref bean="CatalogItem-stock.stockPackNotes.stockPackNoteId"/>
+        <ref bean="CatalogItem-stock.hazardousMateriels.hazardousMaterielId"/>              
+        <ref bean="CatalogItem-stock.stockBalances.stockBalanceId"/>       
+        <ref bean="CatalogItem-stock.stockAttributes.stockAttributeId"/>
+    	<ref bean="CatalogItem-stock.lastChangeActvIndDt"/>
+        <ref bean="CatalogItem-stock.soleSourceInd"/>
+		<ref bean="CatalogItem-stock.maximumOrderQty"/>
+		<ref bean="CatalogItem-stock.removeUntilDate"/>
+		<ref bean="CatalogItem-stock.active"/>
+		
+      </list>
+    </property>
+    <property name="collections">
+      <list> 
+       	<bean parent="CollectionDefinition" p:name="catalogItemImages" p:label="Catalog Item Images" p:shortLabel="Images" p:elementLabel="Images"/>
+     	<bean parent="CollectionDefinition" p:name="catalogItemMarkups" p:label="Catalog Item Markups" p:shortLabel="Markups" p:elementLabel="Markups"/>
+        <bean parent="CollectionDefinition" p:name="catalogSubgroupItems" p:label="Catalog Item Subgroups" p:shortLabel="Subgroups" p:elementLabel="Subgroups"/>
+        <bean parent="CollectionDefinition" p:name="stock.stockPackNotes" p:label="Stock Pack Notes" p:shortLabel="notes" p:elementLabel="notes"/>
+      	<bean parent="CollectionDefinition" p:name="stock.hazardousMateriels" p:label="Hazardous Materiels" p:shortLabel="Hazardous Materiels" p:elementLabel="Hazardous Materiels" /> 	
+      	<bean parent="CollectionDefinition" p:name="stock.stockBalances" p:label="Stock Balances" p:shortLabel="Stock Balances" p:elementLabel="Stock Balances" />
+      </list>
+    </property>
+    <property name="relationships">
+    	<list>
+    	<bean parent="RelationshipDefinition">
+	          <property name="objectAttributeName" value="buyUnitOfIssue"/>
+	          <property name="primitiveAttributes">
+	            <list>
+	              <bean parent="PrimitiveAttributeDefinition"
+	              	p:sourceName="stock.buyUnitOfIssueCd"
+	              	p:targetName="itemUnitOfMeasureCode" />
+	            </list>
+	          </property>          
+	        </bean>
+    	</list>
+    </property>               
+  </bean>
+  
+  <bean id="CatalogItem-substituteDistributorNbr" parent="CatalogItem-substituteDistributorNbr-parentBean" />
+  <bean id="CatalogItem-substituteDistributorNbr-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="substituteDistributorNbr"
+        p:forceUppercase="false"
+        p:label="Substitute Distributor Number"
+        p:shortLabel="Substitute Distributor Number"
+        p:maxLength="30"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="30" />
+    </property>
+  </bean>
+  
+  <bean id="CatalogItem-stock.stockPackNotes.stockPackNoteId" parent="CatalogItem-stock.stockPackNotes.stockPackNoteId-parentBean" /> 
+  <bean id="CatalogItem-stock.stockPackNotes.stockPackNoteId-parentBean" abstract="true" parent="Stock-stockPackNotes.stockPackNoteId">
+  <property name="name" value="stock.stockPackNotes.stockPackNoteId" /> 
+  <property name="shortLabel" value="Stock Pack Note" /> 
+  </bean>
+  
+  <bean id="CatalogItem-stock.stockAttributes.stockAttributeId" parent="CatalogItem-stock.stockAttributes.stockAttributeId-parentBean" /> 
+  <bean id="CatalogItem-stock.stockAttributes.stockAttributeId-parentBean" abstract="true" parent="Stock-stockAttributes.stockAttributeId">
+  <property name="name" value="stock.stockAttributes.stockAttributeId" /> 
+  <property name="shortLabel" value="Stock Attribute" /> 
+  </bean> 
+  
+  <bean id="CatalogItem-stock.stockBalances.stockBalanceId" parent="CatalogItem-stock.stockBalances.stockBalanceId-parentBean" /> 
+  <bean id="CatalogItem-stock.stockBalances.stockBalanceId-parentBean" abstract="true" parent="Stock-stockBalances.stockBalanceId">
+  <property name="name" value="stock.stockBalances.stockBalanceId" /> 
+  <property name="shortLabel" value="Stock Balance" /> 
+  </bean>
+  
+  <bean id="CatalogItem-stock.hazardousMateriels.hazardousMaterielId" parent="CatalogItem-stock.hazardousMateriels.hazardousMaterielId-parentBean" /> 
+  <bean id="CatalogItem-stock.hazardousMateriels.hazardousMaterielId-parentBean" abstract="true" parent="Stock-hazardousMateriels.hazardousMaterielId">
+  <property name="name" value="stock.hazardousMateriels.hazardousMaterielId" /> 
+  <property name="shortLabel" value="Hazardous Materiel" /> 
+  </bean>
+    
+  <bean id="CatalogItem-active" parent="CatalogItem-active-parentBean" />
+  <bean id="CatalogItem-active-parentBean" abstract="true" parent="GenericAttributes-activeIndicator" 
+        p:name="active"
+        p:label="Active Indicator"
+        p:required="false" />
+  
+ <bean id="CatalogItem-stock.active" parent="CatalogItem-stock.active-parentBean" />
+  <bean id="CatalogItem-stock.active-parentBean" abstract="true" parent="Stock-active" 
+        p:name="stock.active"
+        p:label="Active Indicator"
+        p:required="false" />
+              
+
+  <bean id="CatalogItem-catalogDesc" parent="CatalogItem-catalogDesc-parentBean" />
+  <bean id="CatalogItem-catalogDesc-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="catalogDesc"
+        p:forceUppercase="false"
+        p:label="Catalog Item Description"
+        p:shortLabel="Description"
+        p:maxLength="400"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+       <bean parent="TextareaControlDefinition" p:rows="5" p:cols="60"/>
+    </property>
+  </bean>
+
+  <bean id="CatalogItem-catalogId" parent="CatalogItem-catalogId-parentBean" />
+  <bean id="CatalogItem-catalogId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="catalogId"
+        p:forceUppercase="true"
+        p:label="Catalog ID"
+        p:shortLabel="Catalog ID"
+        p:maxLength="10"
+        p:required="true" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  
+  <bean id="CatalogItem-catalog.catalogCd" parent="CatalogItem-catalog.catalogCd-parentBean" />
+  <bean id="CatalogItem-catalog.catalogCd-parentBean" parent="Catalog-catalogCd" abstract="true"
+        p:name="catalog.catalogCd"
+        p:label="Catalog Code">
+  </bean>
+  
+  <bean id="CatalogItem-catalog.catalogDesc" parent="CatalogItem-catalog.catalogDesc-parentBean" />
+  <bean id="CatalogItem-catalog.catalogDesc-parentBean" parent="Catalog-catalogDesc" abstract="true"
+        p:name="catalog.catalogDesc"
+        p:label="Catalog Description">
+  </bean>
+  
+  <bean id="CatalogItem-catalog.catalogType.catalogTypeName" parent="CatalogItem-catalog.catalogType.catalogTypeName-parentBean" />
+  <bean id="CatalogItem-catalog.catalogType.catalogTypeName-parentBean" parent="Catalog-catalogType.catalogTypeName" abstract="true"
+        p:name="catalog.catalogType.catalogTypeName"
+        p:label="Catalog Type Name">
+  </bean>
+
+  <bean id="CatalogItem-catalogItemId" parent="CatalogItem-catalogItemId-parentBean" />
+  <bean id="CatalogItem-catalogItemId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="catalogItemId"
+        p:forceUppercase="false"
+        p:label="Catalog Item ID"
+        p:shortLabel="Catalog Item ID"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CatalogItem-catalogItemPndId" parent="CatalogItem-catalogItemPndId-parentBean" />
+  <bean id="CatalogItem-catalogItemPndId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="catalogItemPndId"
+        p:forceUppercase="false"
+        p:label="Catalog Item Pending Id"
+        p:shortLabel="Catalog Item Pending Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CatalogItem-catalogPrc" parent="CatalogItem-catalogPrc-parentBean" />
+  <bean id="CatalogItem-catalogPrc-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="catalogPrc"
+        p:forceUppercase="false"
+        p:label="Item Price"
+        p:shortLabel="Item Price"
+        p:maxLength="19" p:required="false">
+		<property name="validationPattern">
+			<bean parent="FixedPointValidationPattern" p:precision="19"
+				p:allowNegative="false" p:scale="4" />
+		</property>
+		<property name="control">
+			<bean parent="TextControlDefinition" p:size="10" />
+		</property>
+  </bean>
+
+  <bean id="CatalogItem-catalogUnitOfIssueCd" parent="CatalogItem-catalogUnitOfIssueCd-parentBean" />
+  <bean id="CatalogItem-catalogUnitOfIssueCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="catalogUnitOfIssueCd"
+        p:forceUppercase="true"
+        p:label="Sales Unit Of Issue Code"
+        p:shortLabel="U/I"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CatalogItem-displayableInd" parent="CatalogItem-displayableInd-parentBean" />
+  <bean id="CatalogItem-displayableInd-parentBean" abstract="true" parent="GenericAttributes-genericBoolean" 
+        p:name="displayableInd"
+        p:label="Displayable Indicator"
+        p:required="false" />
+
+  <bean id="CatalogItem-distributorNbr" parent="CatalogItem-distributorNbr-parentBean" />
+  <bean id="CatalogItem-distributorNbr-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="distributorNbr"
+        p:forceUppercase="true"
+        p:label="Distributor Number"
+        p:shortLabel="Item Number"
+        p:maxLength="30"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="30" />
+    </property>
+  </bean>
+
+  <bean id="CatalogItem-lastUpdateDate" parent="CatalogItem-lastUpdateDate-parentBean" />
+  <bean id="CatalogItem-lastUpdateDate-parentBean" abstract="true" parent="GenericAttributes-genericTimestamp" 
+        p:name="lastUpdateDate"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:required="false" />
+
+  <bean id="CatalogItem-stock.lastChangeActvIndDt" parent="CatalogItem-stock.lastChangeActvIndDt-parentBean" />
+  <bean id="CatalogItem-stock.lastChangeActvIndDt-parentBean" abstract="true" parent="Stock-lastChangeActvIndDt" 
+        p:name="stock.lastChangeActvIndDt"
+        p:label="Active Indicator Last Change Date"
+        p:shortLabel="Active Indicator Last Change Date"
+        p:required="false" />
+
+  <bean id="CatalogItem-manufacturerNbr" parent="CatalogItem-manufacturerNbr-parentBean" />
+  <bean id="CatalogItem-manufacturerNbr-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="manufacturerNbr"
+        p:forceUppercase="true"
+        p:label="Manufacturer Number"
+        p:shortLabel="Manufacturer Number"
+        p:maxLength="30"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="30" />
+    </property>
+  </bean>
+
+  <bean id="CatalogItem-shippingHt" parent="CatalogItem-shippingHt-parentBean" />
+  <bean id="CatalogItem-shippingHt-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="shippingHt"
+        p:forceUppercase="false"
+        p:label="Shipping Height"
+        p:shortLabel="Height"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CatalogItem-shippingLh" parent="CatalogItem-shippingLh-parentBean" />
+  <bean id="CatalogItem-shippingLh-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="shippingLh"
+        p:forceUppercase="false"
+        p:label="Shipping Length"
+        p:shortLabel="Length"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CatalogItem-shippingWd" parent="CatalogItem-shippingWd-parentBean" />
+  <bean id="CatalogItem-shippingWd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="shippingWd"
+        p:forceUppercase="false"
+        p:label="Shipping Width"
+        p:shortLabel="Width"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CatalogItem-shippingWgt" parent="CatalogItem-shippingWgt-parentBean" />
+  <bean id="CatalogItem-shippingWgt-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="shippingWgt"
+        p:forceUppercase="false"
+        p:label="Shipping Weight"
+        p:shortLabel="Weight"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CatalogItem-stockId" parent="CatalogItem-stockId-parentBean" />
+  <bean id="CatalogItem-stockId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="stockId"
+        p:forceUppercase="false"
+        p:label="Stock ID"
+        p:shortLabel="Stock ID"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CatalogItem-unspscCd" parent="CatalogItem-unspscCd-parentBean" />
+  <bean id="CatalogItem-unspscCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="unspscCd"
+        p:forceUppercase="true"
+        p:label="UNSPSC Code"
+        p:shortLabel="UNSPSC Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  
+  <bean id="CatalogItem-spaidId" parent="CatalogItem-spaidId-parentBean" />
+  <bean id="CatalogItem-spaidId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="spaidId"
+        p:forceUppercase="true"
+        p:label="Spaid ID"
+        p:shortLabel="Spaid ID"
+        p:maxLength="28"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="28" />
+    </property>
+  </bean>
+
+  <bean id="CatalogItem-stock.upcCd" parent="CatalogItem-stock.upcCd-parentBean" />
+  <bean id="CatalogItem-stock.upcCd-parentBean" parent="Stock-upcCd" abstract="true"
+        p:name="stock.upcCd"
+        p:label="UPC Code"
+        p:required="false" />
+  
+  <bean id="CatalogItem-versionNumber" parent="CatalogItem-versionNumber-parentBean" />
+  <bean id="CatalogItem-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:label="Version Indicator"
+        p:required="false" />
+
+  <bean id="CatalogItem-willcallInd" parent="CatalogItem-willcallInd-parentBean" />
+  <bean id="CatalogItem-willcallInd-parentBean" abstract="true" parent="GenericAttributes-genericBoolean" 
+        p:name="willcallInd"
+        p:label="Will Call Indicator"
+        p:required="false" />
+ 
+  <bean id="CatalogItem-recycledInd" parent="CatalogItem-recycledInd-parentBean" />
+  <bean id="CatalogItem-recycledInd-parentBean" abstract="true" parent="GenericAttributes-genericBoolean" 
+        p:name="recycledInd"
+        p:label="Recycled Indicator"
+        p:required="false" />
+        
+  <bean id="CatalogItem-taxableInd" parent="CatalogItem-taxableInd-parentBean" />
+  <bean id="CatalogItem-taxableInd-parentBean" abstract="true" parent="GenericAttributes-genericBoolean" 
+        p:name="taxableInd"
+        p:label="Taxable Indicator"
+        p:required="false" />       
+        
+  <bean id="CatalogItem-stock.obsoleteInd" parent="CatalogItem-stock.obsoleteInd-parentBean" />
+  <bean id="CatalogItem-stock.obsoleteInd-parentBean" abstract="true" parent="Stock-obsoleteInd" 
+        p:name="stock.obsoleteInd"
+        p:label="Obsolete Indicator"
+        p:required="false" />
+
+  <bean id="CatalogItem-stock.perishableInd" parent="CatalogItem-stock.perishableInd-parentBean" />
+  <bean id="CatalogItem-stock.perishableInd-parentBean" abstract="true" parent="Stock-perishableInd" 
+        p:name="stock.perishableInd"
+        p:label="Perishable Indicator"
+        p:required="false" />
+
+  <bean id="CatalogItem-stock.recycledInd" parent="CatalogItem-stock.recycledInd-parentBean" />
+  <bean id="CatalogItem-stock.recycledInd-parentBean" abstract="true" parent="Stock-recycledInd" 
+        p:name="stock.recycledInd"
+        p:label="Recycled Indicator"
+        p:required="false" />
+
+  <bean id="CatalogItem-stock.reorderPointQty" parent="CatalogItem-stock.reorderPointQty-parentBean" />
+  <bean id="CatalogItem-stock.reorderPointQty-parentBean" parent="Stock-reorderPointQty" abstract="true"
+        p:name="stock.reorderPointQty"    
+        p:label="Reorder Point Quantity" >
+  </bean>
+
+  <bean id="CatalogItem-stock.safetyStockDays" parent="CatalogItem-stock.safetyStockDays-parentBean" />
+  <bean id="CatalogItem-stock.safetyStockDays-parentBean" parent="Stock-safetyStockDays" abstract="true"
+        p:name="stock.safetyStockDays"
+        p:label="Safety Stock Days">
+  </bean>
+
+  <bean id="CatalogItem-stock.safetyStockQty" parent="CatalogItem-stock.safetyStockQty-parentBean" />
+  <bean id="CatalogItem-stock.safetyStockQty-parentBean" parent="Stock-safetyStockQty" abstract="true"
+        p:name="stock.safetyStockQty"
+        p:forceUppercase="false"
+        p:label="Safety Stock Quantity">
+  </bean>
+    
+  <bean id="CatalogItem-stock.distributorNbr" parent="CatalogItem-stock.distributorNbr-parentBean" />
+  <bean id="CatalogItem-stock.distributorNbr-parentBean" parent="Stock-distributorNbr" abstract="true"
+        p:name="stock.distributorNbr"
+        p:label="Agreement Distributor Number"
+        p:shortLabel="Agreement Distributor Number">
+  </bean>
+
+  <bean id="CatalogItem-stock.surchargeInd" parent="CatalogItem-stock.surchargeInd-parentBean" />
+  <bean id="CatalogItem-stock.surchargeInd-parentBean" abstract="true" parent="Stock-surchargeInd" 
+        p:name="stock.surchargeInd"
+        p:label="Surcharge Indicator"
+        p:required="false" />
+
+  <bean id="CatalogItem-stock.taxableInd" parent="CatalogItem-stock.taxableInd-parentBean" />
+  <bean id="CatalogItem-stock.taxableInd-parentBean" abstract="true" parent="Stock-taxableInd" 
+        p:name="stock.taxableInd"
+        p:label="Taxable Indicator"
+        p:required="false" />
+  
+  <bean id="CatalogItem-stock.soleSourceInd" parent="CatalogItem-stock.soleSourceInd-parentBean" />
+  <bean id="CatalogItem-stock.soleSourceInd-parentBean" abstract="true" parent="Stock-soleSourceInd" 
+        p:name="stock.soleSourceInd"
+        p:label="Sole Source Indicator"
+        p:required="false" />
+       
+  <bean id="CatalogItem-stock.packagingUnitDesc" parent="CatalogItem-stock.packagingUnitDesc-parentBean" />
+  <bean id="CatalogItem-stock.packagingUnitDesc-parentBean" parent="Stock-packagingUnitDesc" abstract="true"
+        p:name="stock.packagingUnitDesc"
+        p:shortLabel="Packaging Unit Description"
+        p:label="Packaging Unit Description">
+   </bean>
+   
+   <bean id="CatalogItem-stock.minimumOrderQty" parent="CatalogItem-stock.minimumOrderQty-parentBean" />
+   <bean id="CatalogItem-stock.minimumOrderQty-parentBean" parent="Stock-minimumOrderQty" abstract="true"
+        p:name="stock.minimumOrderQty"
+        p:shortLabel="Minimum Order Quantity"
+        p:label="Minimum Order Quantity" >
+   </bean>
+   
+   <bean id="CatalogItem-stock.maximumOrderQty" parent="CatalogItem-stock.maximumOrderQty-parentBean" />
+   <bean id="CatalogItem-stock.maximumOrderQty-parentBean" parent="Stock-maximumOrderQty" abstract="true"
+        p:name="stock.maximumOrderQty"
+        p:shortLabel="Maximum Order Quantity"
+        p:label="Maximum Order Quantity" >
+   </bean>
+   
+   <bean id="CatalogItem-stock.removeUntilDate" parent="Stock-removeUntilDate-parentBean" p:name="stock.removeUntilDate" />
+   
+  <bean id="CatalogItem-stock.buyUnitOfIssueRt" parent="CatalogItem-stock.buyUnitOfIssueRt-parentBean" />
+  <bean id="CatalogItem-stock.buyUnitOfIssueRt-parentBean" parent="Stock-buyUnitOfIssueRt" abstract="true"
+        p:name="stock.buyUnitOfIssueRt"
+        p:shortLabel="Buy Unit Of Issue Rate"      
+        p:label="Buy Unit of Issue Rate">		
+   </bean>
+   
+  <bean id="CatalogItem-stock.salesUnitOfIssueRt" parent="CatalogItem-stock.salesUnitOfIssueRt-parentBean" />
+  <bean id="CatalogItem-stock.salesUnitOfIssueRt-parentBean" parent="Stock-salesUnitOfIssueRt" abstract="true"
+        p:name="stock.salesUnitOfIssueRt"
+        p:label="Sales Unit of Issue Rate">		
+  </bean>
+ 
+  <bean id="CatalogItem-stock.agreementNbr" parent="CatalogItem-stock.agreementNbr-parentBean"/>
+  <bean id="CatalogItem-stock.agreementNbr-parentBean" abstract="true" parent="Stock-agreementNbr"
+    p:name="stock.agreementNbr" 
+    p:label= "Agreement Number"
+    p:required = "false"/>
+    
+  <bean id="CatalogItem-stock.stockTypeCode" parent="CatalogItem-stock.stockTypeCode-parentBean"/>
+  <bean id="CatalogItem-stock.stockTypeCode-parentBean" abstract="true" parent="Stock-stockTypeCode"
+    p:name="stock.stockTypeCode" 
+    p:label= "Stock Type Code"
+    p:required = "false"/>    
+    
+  <bean id="CatalogItem-stock.rentalObjectCode" parent="CatalogItem-stock.rentalObjectCode-parentBean"/>
+  <bean id="CatalogItem-stock.rentalObjectCode-parentBean" abstract="true" parent="Stock-rentalObjectCode"
+    p:name="stock.rentalObjectCode" 
+    p:label= "Rental Object Code"
+    p:required = "false"/>
+    
+  <bean id="CatalogItem-stock.cycleCntCd" parent="CatalogItem-stock.cycleCntCd-parentBean"/>
+  <bean id="CatalogItem-stock.cycleCntCd-parentBean" abstract="true" parent="Stock-cycleCntCd"
+    p:name="stock.cycleCntCd" 
+    p:label= "Cycle Count Code"
+    p:required = "false"/>
+    
+  <bean id="CatalogItem-stock.restrictedRouteCd" parent="CatalogItem-stock.restrictedRouteCd-parentBean"/>
+  <bean id="CatalogItem-stock.restrictedRouteCd-parentBean" abstract="true" parent="Stock-restrictedRouteCd"
+    p:name="stock.restrictedRouteCd" 
+    p:label= "Restricted Route Code"
+    p:required = "false"/>  
+  
+  <bean id="CatalogItem-stock.buyUnitOfIssueCd" parent="CatalogItem-stock.buyUnitOfIssueCd-parentBean"/>
+  <bean id="CatalogItem-stock.buyUnitOfIssueCd-parentBean" abstract="true" parent="Stock-buyUnitOfIssueCd"
+    p:name="stock.buyUnitOfIssueCd" 
+    p:label= "Buy Unit Of Issue Code"
+    p:required = "false"/>
+  
+  <bean id="CatalogItem-stock.salesUnitOfIssueCd" parent="CatalogItem-stock.salesUnitOfIssueCd-parentBean"/>
+  <bean id="CatalogItem-stock.salesUnitOfIssueCd-parentBean" abstract="true" parent="Stock-salesUnitOfIssueCd"
+    p:name="stock.salesUnitOfIssueCd" 
+    p:label= "Sales Unit Of Issue Code"
+    p:required = "false"/>    
+    
+ <!-- Business Object Inquiry Definition -->
+
+  <bean id="CatalogItem-inquiryDefinition" parent="CatalogItem-inquiryDefinition-parentBean" />
+
+  <bean id="CatalogItem-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Catalog Item Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Catalog Item Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+		     	<bean parent="FieldDefinition" p:attributeName="catalogId" />
+		        <bean parent="FieldDefinition" p:attributeName="catalogDesc" />  
+		        <bean parent="FieldDefinition" p:attributeName="catalogPrc" />
+		        <bean parent="FieldDefinition" p:attributeName="distributorNbr" />
+		        <bean parent="FieldDefinition" p:attributeName="catalogUnitOfIssueCd" />
+		        <bean parent="FieldDefinition" p:attributeName="displayableInd" />
+		        <bean parent="FieldDefinition" p:attributeName="taxableInd" /> 
+		        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+		        <bean parent="FieldDefinition" p:attributeName="active" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="CatalogItem-lookupDefinition" parent="CatalogItem-lookupDefinition-parentBean" />
+
+  <bean id="CatalogItem-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Catalog Item Lookup">
+ 
+  <!-- ********************************************************************************** --> 
+    <property name="lookupableID" value="catalogItemLookupable"/>
+  <!-- ********************************************************************************** --> 
+        
+        
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>catalogItemId</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="catalog.catalogCd">
+        	<property name="noLookup" value="true"></property>
+        </bean>
+        <bean parent="FieldDefinition" p:attributeName="catalogDesc" />  
+        <bean parent="FieldDefinition" p:attributeName="catalogPrc" />
+        <bean parent="FieldDefinition" p:attributeName="stock.agreementNbr" />
+        <bean parent="FieldDefinition" p:attributeName="distributorNbr" />
+        <bean parent="FieldDefinition" p:attributeName="catalogUnitOfIssueCd" />
+        <bean parent="FieldDefinition" p:attributeName="displayableInd" />
+        <bean parent="FieldDefinition" p:attributeName="taxableInd" />
+        <bean parent="FieldDefinition" p:attributeName="active" />
+      </list>
+    </property>
+    <property name="resultFields"  >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="catalog.catalogCd" />
+        <bean parent="FieldDefinition" p:attributeName="catalogDesc" />  
+        <bean parent="FieldDefinition" p:attributeName="catalogPrc" />
+        <bean parent="FieldDefinition" p:attributeName="distributorNbr" />
+        <bean parent="FieldDefinition" p:attributeName="catalogUnitOfIssueCd" />
+        <bean parent="FieldDefinition" p:attributeName="displayableInd" />
+        <bean parent="FieldDefinition" p:attributeName="taxableInd" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+        <bean parent="FieldDefinition" p:attributeName="active" />
+     </list>
+    </property>
+  </bean>
+
+</beans>

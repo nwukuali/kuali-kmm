@@ -1,0 +1,549 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="PickListLine" parent="PickListLine-parentBean" />
+
+  <bean id="PickListLine-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.PickListLine"
+        p:titleAttribute="pickListLineNbr"
+        p:objectLabel="Pick List Line"
+        p:inquiryDefinition-ref="PickListLine-inquiryDefinition"
+        p:lookupDefinition-ref="PickListLine-lookupDefinition" >
+    <property name="attributes" >
+      <list>        
+        <ref bean="PickListLine-bin.binNbr" />
+        <ref bean="PickListLine-bin.shelfId" />
+        <ref bean="PickListLine-bin.shelfIdNbr" />
+        <ref bean="PickListLine-bin.zone.zoneCd" />
+        <ref bean="PickListLine-bin.zone.warehouseCd" />
+        <ref bean="PickListLine-salesInstance.orderDocument.orderId" />
+        <ref bean="PickListLine-salesInstance.orderDocument.campusCd" />
+        <ref bean="PickListLine-salesInstance.orderDocument.deliveryBuildingCd" />
+        <ref bean="PickListLine-salesInstance.customerProfile.profilePhoneNumber" />
+        <ref bean="PickListLine-salesInstance.customerProfile.customer.customerName" />
+        <ref bean="PickListLine-pickListDocument.documentNumber" />
+        <ref bean="PickListLine-pickTicket.pickTicketNumber" />
+        <ref bean="PickListLine-pickStatusCode.pickStatusCode" />
+        <ref bean="PickListLine-route.routeCd" />
+        <ref bean="PickListLine-stock.stockId" />
+        <ref bean="PickListLine-stock.stockDistributorNbr" />
+        <ref bean="PickListLine-stock.stockDesc" />
+        <ref bean="PickListLine-binId" />
+        <ref bean="PickListLine-createdDate" />
+        <ref bean="PickListLine-orderDetail.willCall" />
+        <ref bean="PickListLine-backOrderQty" />
+        <ref bean="PickListLine-pickStockQty" />
+        <ref bean="PickListLine-stockQty" />
+        <ref bean="PickListLine-orderDetail.stockUnitOfIssueCd" />
+        <ref bean="PickListLine-pickTubNbr" />
+		<ref bean="PickListLine-itemLocation" />
+		        
+<!--        <ref bean="PickListLine-versionNumber" />-->
+<!--        <ref bean="PickListLine-backOrderId" />-->
+<!--        <ref bean="PickListLine-pickListDocumentNumber" />-->
+<!--        <ref bean="PickListLine-pickListLineId" />-->
+<!--        <ref bean="PickListLine-lastUpdateDate" />-->
+
+      </list>
+    </property>
+    <property name="relationships" >
+      <list>
+        <bean parent="RelationshipDefinition">
+          <property name="objectAttributeName" value="bin" />
+          <property name="primitiveAttributes" >
+            <list>
+              <bean parent="PrimitiveAttributeDefinition"
+                    p:sourceName="binId"
+                    p:targetName="binId" />
+            </list>
+          </property>
+          <property name="supportAttributes" >
+            <list>
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="bin.binNbr"
+                    p:targetName="binNbr" />
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="bin.shelfId"
+                    p:targetName="shelfId" />
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="bin.shelfIdNbr"
+                    p:targetName="shelfIdNbr" />
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="bin.zone.zoneCd"
+                    p:targetName="zone.zoneCd" />
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="bin.zone.warehouseCd"
+                    p:targetName="zone.warehouseCd" />
+            </list>
+          </property>
+        </bean>
+        <bean parent="RelationshipDefinition">
+          <property name="objectAttributeName" value="stock" />
+          <property name="primitiveAttributes" >
+            <list>
+              <bean parent="PrimitiveAttributeDefinition"
+                    p:sourceName="stockId"
+                    p:targetName="stockId" />
+            </list>
+          </property>
+          <property name="supportAttributes" >
+            <list>
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="stock.stockDistributorNbr"
+                    p:targetName="stockDistributorNbr" />
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="stock.stockDesc"
+                    p:targetName="stockDesc" />             
+            </list>
+          </property>
+        </bean>
+        <bean parent="RelationshipDefinition">
+          <property name="objectAttributeName" value="salesInstance" />
+          <property name="primitiveAttributes" >
+            <list>
+              <bean parent="PrimitiveAttributeDefinition"
+                    p:sourceName="salesInstanceId"
+                    p:targetName="salesInstanceId" />
+            </list>
+          </property> 
+          <property name="supportAttributes" >
+            <list>
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="salesInstance.orderDocument.orderId"
+                    p:targetName="orderDocument.orderId" />
+            </list>
+          </property>
+        </bean>
+		</list>
+    </property>
+    
+    <property name="collections" >
+      <list>
+        <bean parent="CollectionDefinition"
+              p:name="rentals"
+              p:label="Rentals"
+              p:shortLabel="Rentals" />      
+      </list>
+    </property>
+  </bean>
+  
+  <bean id="PickListLine-binId" parent="PickListLine-binId-parentBean" />
+  <bean id="PickListLine-binId-parentBean" parent="Bin-binId" abstract="true"
+        p:name="binId" >
+  </bean>
+  
+  <bean id="PickListLine-bin.shelfId" parent="PickListLine-bin.shelfId-parentBean" />
+  <bean id="PickListLine-bin.shelfId-parentBean" parent="Bin-shelfId" abstract="true"
+        p:name="bin.shelfId" >
+  </bean>
+  
+  <bean id="PickListLine-bin.shelfIdNbr" parent="PickListLine-bin.shelfIdNbr-parentBean" />
+  <bean id="PickListLine-bin.shelfIdNbr-parentBean" parent="Bin-shelfIdNbr" abstract="true"
+        p:name="bin.shelfIdNbr" >
+  </bean>
+
+  <bean id="PickListLine-bin.binNbr" parent="PickListLine-bin.binNbr-parentBean" />
+  <bean id="PickListLine-bin.binNbr-parentBean" parent="Bin-binNbr" abstract="true"
+        p:name="bin.binNbr" >
+  </bean>
+  
+  <bean id="PickListLine-bin.zone.zoneCd" parent="PickListLine-bin.zone.zoneCd-parentBean" />
+  <bean id="PickListLine-bin.zone.zoneCd-parentBean" parent="Zone-zoneCd" abstract="true"
+        p:name="bin.zone.zoneCd" >
+  </bean>  
+  
+  <bean id="PickListLine-bin.zone.warehouseCd" parent="PickListLine-bin.zone.warehouseCd-parentBean" />
+  <bean id="PickListLine-bin.zone.warehouseCd-parentBean" parent="Zone-warehouseCd" abstract="true"
+        p:name="bin.zone.warehouseCd" >
+  </bean>  
+  
+  <bean id="PickListLine-orderDetail.willCall" parent="PickListLine-orderDetail.willCall-parentBean" />
+  <bean id="PickListLine-orderDetail.willCall-parentBean" parent="OrderDetail-willCall" abstract="true"
+        p:name="orderDetail.willCall" >
+  </bean>
+  
+  <bean id="PickListLine-pickStatusCode.pickStatusCode" parent="PickListLine-pickStatusCode.pickStatusCode-parentBean" />
+  <bean id="PickListLine-pickStatusCode.pickStatusCode-parentBean" parent="PickStatusCode-pickStatusCode" abstract="true"
+        p:name="pickStatusCode.pickStatusCode">
+  </bean>
+  
+  <bean id="PickListLine-pickListDocument.documentNumber" parent="PickListLine-pickListDocument.documentNumber-parentBean" />
+  <bean id="PickListLine-pickListDocument.documentNumber-parentBean" parent="DocumentHeader-documentNumber" abstract="true"
+        p:name="pickListDocument.documentNumber"
+        p:label="Pick List Document Number" >
+  </bean>
+  
+  <bean id="PickListLine-pickTicket.pickTicketNumber" parent="PickListLine-pickTicket.pickTicketNumber-parentBean" />
+  <bean id="PickListLine-pickTicket.pickTicketNumber-parentBean" parent="PickTicket-pickTicketNumber" abstract="true"
+        p:name="pickTicket.pickTicketNumber" >
+  </bean>
+<!---->
+<!--  <bean id="PickListLine-pickListLineNbr" parent="PickListLine-pickListLineNbr-parentBean" />-->
+<!--  <bean id="PickListLine-pickListLineNbr-parentBean" parent="AttributeDefinition" abstract="true"-->
+<!--        p:name="pickListLineNbr"-->
+<!--        p:forceUppercase="false"-->
+<!--        p:label="Pick List Lines"-->
+<!--        p:shortLabel="Pick List Lines"-->
+<!--        p:maxLength="10"-->
+<!--        p:required="false" >-->
+<!--    <property name="validationPattern" >-->
+<!--      <bean parent="NumericValidationPattern" />-->
+<!--    </property>-->
+<!--    <property name="control" >-->
+<!--      <bean parent="TextControlDefinition"-->
+<!--            p:size="10" />-->
+<!--    </property>-->
+<!--  </bean>-->
+  
+  <bean id="PickListLine-salesInstance.orderDocument.orderId" parent="PickListLine-salesInstance.orderDocument.orderId-parentBean" />
+  <bean id="PickListLine-salesInstance.orderDocument.orderId-parentBean" parent="OrderDocument-orderId" abstract="true"
+        p:name="salesInstance.orderDocument.orderId" />        
+  
+  <bean id="PickListLine-salesInstance.orderDocument.campusCd" parent="PickListLine-salesInstance.orderDocument.campusCd-parentBean" />
+  <bean id="PickListLine-salesInstance.orderDocument.campusCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="salesInstance.orderDocument.campusCd"
+        p:forceUppercase="false"
+        p:label="Campus Code"
+        p:shortLabel="Campus Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>  
+
+  <bean id="PickListLine-salesInstance.orderDocument.deliveryBuildingCd" parent="PickListLine-salesInstance.orderDocument.deliveryBuildingCd-parentBean" />
+  <bean id="PickListLine-salesInstance.orderDocument.deliveryBuildingCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="salesInstance.orderDocument.deliveryBuildingCd"
+        p:forceUppercase="false"
+        p:label="Building Code"
+        p:shortLabel="Building Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>  
+  
+  <bean id="PickListLine-salesInstance.customerProfile.profilePhoneNumber" parent="PickListLine-salesInstance.customerProfile.profilePhoneNumber-parentBean" />
+  <bean id="PickListLine-salesInstance.customerProfile.profilePhoneNumber-parentBean" parent="Profile-profilePhoneNumber" abstract="true"
+        p:name="salesInstance.customerProfile.profilePhoneNumber" >
+  </bean>
+  
+  <bean id="PickListLine-salesInstance.customerProfile.customer.customerName" parent="PickListLine-salesInstance.customerProfile.customer.customerName-parentBean" />
+  <bean id="PickListLine-salesInstance.customerProfile.customer.customerName-parentBean" parent="Customer-customerName" abstract="true"
+        p:name="salesInstance.customerProfile.customer.customerName" >
+  </bean>
+
+  <bean id="PickListLine-route.routeCd" parent="PickListLine-route.routeCd-parentBean" />
+  <bean id="PickListLine-route.routeCd-parentBean" parent="Route-routeCd" abstract="true"
+        p:name="route.routeCd" >
+  </bean>
+
+  <bean id="PickListLine-stock.stockId" parent="PickListLine-stock.stockId-parentBean" />
+  <bean id="PickListLine-stock.stockId-parentBean" parent="Stock-stockId" abstract="true"
+        p:name="stock.stockId" >   
+  </bean>
+  
+  <bean id="PickListLine-stock.stockDistributorNbr" parent="PickListLine-stock.stockDistributorNbr-parentBean" />
+  <bean id="PickListLine-stock.stockDistributorNbr-parentBean" parent="Stock-stockDistributorNbr" abstract="true"
+        p:name="stock.stockDistributorNbr"
+        p:label="Distributor Number" >   
+  </bean>
+  
+  <bean id="PickListLine-stock.stockDesc" parent="PickListLine-stock.stockDesc-parentBean" />
+  <bean id="PickListLine-stock.stockDesc-parentBean" parent="Stock-stockDesc" abstract="true"
+        p:name="stock.stockDesc"  >
+  </bean>
+  
+  <bean id="PickListLine-createdDate" parent="PickListLine-createdDate-parentBean" />
+  <bean id="PickListLine-createdDate-parentBean" parent="GenericAttributes-genericDate" abstract="true"
+        p:name="createdDate"
+        p:forceUppercase="false"
+        p:label="Created Date"
+        p:shortLabel="Created Date"
+        p:required="false" >
+  </bean>
+  
+  <bean id="PickListLine-pickStockQty" parent="PickListLine-pickStockQty-parentBean" />
+  <bean id="PickListLine-pickStockQty-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="pickStockQty"
+        p:forceUppercase="false"
+        p:label="Pick Stock Quantity"
+        p:shortLabel="Qty Ship"
+        p:maxLength="8"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="FloatingPointValidationPattern" p:allowNegative="false" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="3" />
+    </property>
+  </bean>
+
+  <bean id="PickListLine-pickTubNbr" parent="PickListLine-pickTubNbr-parentBean" />
+  <bean id="PickListLine-pickTubNbr-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="pickTubNbr"
+        p:forceUppercase="false"
+        p:label="Pick Tub Number"
+        p:shortLabel="Tub"
+        p:maxLength="8"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="NumericValidationPattern"  />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="3" />
+    </property>
+  </bean>
+  
+  <bean id="PickListLine-stockQty" parent="PickListLine-stockQty-parentBean" />
+  <bean id="PickListLine-stockQty-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="stockQty"
+        p:forceUppercase="false"
+        p:label="Order Quantity"
+        p:shortLabel="Qty Order"
+        p:maxLength="8"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="FloatingPointValidationPattern" p:allowNegative="false" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="3" />
+    </property>
+  </bean>
+
+  <bean id="PickListLine-orderDetail.stockUnitOfIssueCd" parent="orderDetail.stockUnitOfIssueCd-parentBean" />
+  <bean id="orderDetail.stockUnitOfIssueCd-parentBean" parent="Stock-salesUnitOfIssueCd" abstract="true"
+        p:name="orderDetail.stockUnitOfIssueCd" >
+  </bean>
+  
+  <bean id="PickListLine-backOrderQty" parent="PickListLine-backOrderQty-parentBean" />
+  <bean id="PickListLine-backOrderQty-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="backOrderQty"
+        p:forceUppercase="false"
+        p:label="Back Order Quantity"
+        p:shortLabel="Qty B/O"
+        p:maxLength="8"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="FloatingPointValidationPattern" p:allowNegative="false" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="3" />
+    </property>
+  </bean>
+  
+	<bean id="PickListLine-itemLocation" parent="PickListLine-itemLocation-parentBean" />
+	<bean id="PickListLine-itemLocation-parentBean" parent="AttributeDefinition" abstract="true"
+	      p:name="itemLocation"
+	      p:forceUppercase="false"
+	      p:label="Warehouse / Zone / Bin / Shelf / Nbr"
+	      p:shortLabel="W / Zn / Bn / Shlf / Nbr"
+	      p:maxLength="30"
+	      p:required="false" >
+	  <property name="validationPattern" >
+	    <bean parent="AnyCharacterValidationPattern"
+	          p:allowWhitespace="true" />
+	  </property>
+	  <property name="control" >
+	    <bean parent="TextControlDefinition"
+	          p:size="25" />
+	  </property>
+	</bean>
+
+<!--    <bean id="PickListLine-backOrderId" parent="PickListLine-backOrderId-parentBean" />-->
+<!--  <bean id="PickListLine-backOrderId-parentBean" parent="AttributeDefinition" abstract="true"-->
+<!--        p:name="backOrderId"-->
+<!--        p:forceUppercase="false"-->
+<!--        p:label="Back Order ID"-->
+<!--        p:shortLabel="Back Order ID"-->
+<!--        p:maxLength="10"-->
+<!--        p:required="false" >-->
+<!--    <property name="validationPattern" >-->
+<!--      <bean parent="AnyCharacterValidationPattern"-->
+<!--            p:allowWhitespace="true" />-->
+<!--    </property>-->
+<!--    <property name="control" >-->
+<!--      <bean parent="TextControlDefinition"-->
+<!--            p:size="10" />-->
+<!--    </property>-->
+<!--  </bean>-->
+
+ 
+  
+  
+
+<!---->
+<!--  <bean id="PickListLine-pickListLineId" parent="PickListLine-pickListLineId-parentBean" />-->
+<!--  <bean id="PickListLine-pickListLineId-parentBean" parent="AttributeDefinition" abstract="true"-->
+<!--        p:name="pickListLineId"-->
+<!--        p:forceUppercase="false"-->
+<!--        p:label="Pick List Line Id"-->
+<!--        p:shortLabel="Pick List Line Id"-->
+<!--        p:maxLength="10"-->
+<!--        p:required="false" >-->
+<!--    <property name="validationPattern" >-->
+<!--      <bean parent="AnyCharacterValidationPattern"-->
+<!--            p:allowWhitespace="true" />-->
+<!--    </property>-->
+<!--    <property name="control" >-->
+<!--      <bean parent="TextControlDefinition"-->
+<!--            p:size="10" />-->
+<!--    </property>-->
+<!--  </bean>-->
+  
+  
+       
+
+<!--  <bean id="PickListLine-versionNumber" parent="PickListLine-versionNumber-parentBean" />-->
+<!--  <bean id="PickListLine-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" -->
+<!--        p:name="versionNumber"-->
+<!--        p:required="false" />-->
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="PickListLine-inquiryDefinition" parent="PickListLine-inquiryDefinition-parentBean" />
+
+  <bean id="PickListLine-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Pick List Line Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Pick List Line Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>              	
+              	<bean parent="FieldDefinition" p:attributeName="pickTicket.pickTicketNumber" />
+              	<bean parent="FieldDefinition" p:attributeName="pickTubNbr" />            	
+            	<bean parent="FieldDefinition" p:attributeName="pickStatusCode.pickStatusCode" />
+              	<bean parent="FieldDefinition" p:attributeName="itemLocation" />		
+				<bean parent="FieldDefinition" p:attributeName="stockQty" />
+				<bean parent="FieldDefinition" p:attributeName="pickStockQty" />
+				<bean parent="FieldDefinition" p:attributeName="backOrderQty" />
+				<bean parent="FieldDefinition" p:attributeName="stock.stockDistributorNbr" />
+				<bean parent="FieldDefinition" p:attributeName="stock.stockDesc" />	
+				<bean parent="FieldDefinition" p:attributeName="salesInstance.orderDocument.orderId" />
+				<bean parent="FieldDefinition" p:attributeName="salesInstance.orderDocument.campusCd" />
+		      	<bean parent="FieldDefinition" p:attributeName="salesInstance.orderDocument.deliveryBuildingCd" />
+		      	<bean parent="FieldDefinition" p:attributeName="salesInstance.customerProfile.customer.customerName" />
+		      	<bean parent="FieldDefinition" p:attributeName="salesInstance.customerProfile.profilePhoneNumber" />
+				<bean parent="FieldDefinition" p:attributeName="route.routeCd" />   
+			 	<bean parent="FieldDefinition" p:attributeName="orderDetail.willCall" p:noInquiry="true" />
+			 	<bean parent="FieldDefinition" p:attributeName="pickListDocument.documentNumber" />
+			 	<bean parent="FieldDefinition" p:attributeName="createdDate" />
+
+<!--				<bean parent="FieldDefinition" p:attributeName="orderDetail.stockUnitOfIssueCd" />		 	             -->
+		 	
+<!--              <bean parent="FieldDefinition" p:attributeName="backOrderId" />-->                            
+<!--              <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />-->
+<!--              <bean parent="FieldDefinition" p:attributeName="pickListLineId" />-->            
+
+<!--              <bean parent="FieldDefinition" p:attributeName="versionNumber" />-->
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="PickListLine-lookupDefinition" parent="PickListLine-lookupDefinition-parentBean" />
+
+  <bean id="PickListLine-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Pick List Line Lookup">
+    <property name="lookupableID" value="pickListLineLookupable" />
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+          	<value>createdDate</value>           
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>
+      	<bean parent="FieldDefinition" p:attributeName="bin.zone.warehouseCd" />
+      	<bean parent="FieldDefinition" p:attributeName="stock.stockDistributorNbr" />
+      	<bean parent="FieldDefinition" p:attributeName="salesInstance.orderDocument.orderId" />
+      	<bean parent="FieldDefinition" p:attributeName="salesInstance.orderDocument.campusCd" />
+      	<bean parent="FieldDefinition" p:attributeName="salesInstance.orderDocument.deliveryBuildingCd" />  	
+      	<bean parent="FieldDefinition" p:attributeName="route.routeCd" />
+      	<bean parent="FieldDefinition" p:attributeName="orderDetail.willCall" p:noLookup="true"/>
+        <bean parent="FieldDefinition" p:attributeName="bin.zone.zoneCd" />
+        <bean parent="FieldDefinition" p:attributeName="bin.binNbr" />
+        <bean parent="FieldDefinition" p:attributeName="bin.shelfId" p:noLookup="true" />
+        <bean parent="FieldDefinition" p:attributeName="bin.shelfIdNbr" p:noLookup="true" />
+       	<bean parent="FieldDefinition" p:attributeName="pickStatusCode.pickStatusCode" />    
+       	     
+<!--        <bean parent="FieldDefinition" p:attributeName="backOrderId" />-->
+<!--        <bean parent="FieldDefinition" p:attributeName="backOrderQty" />-->
+<!--        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />-->
+<!--        <bean parent="FieldDefinition" p:attributeName="pickListDocumentNumber" />-->
+<!--        <bean parent="FieldDefinition" p:attributeName="pickListLineId" />-->
+<!--        <bean parent="FieldDefinition" p:attributeName="pickStockQty" />-->
+<!--        <bean parent="FieldDefinition" p:attributeName="pickTubNbr" />-->
+<!--        <bean parent="FieldDefinition" p:attributeName="stockQty" />-->
+<!--        <bean parent="FieldDefinition" p:attributeName="orderDetail.stockUnitOfIssueCd" />-->
+<!--        <bean parent="FieldDefinition" p:attributeName="versionNumber" />-->
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+		<bean parent="FieldDefinition" p:attributeName="bin.zone.warehouseCd" />
+      	<bean parent="FieldDefinition" p:attributeName="stock.stockDistributorNbr" />
+      	<bean parent="FieldDefinition" p:attributeName="salesInstance.orderDocument.orderId" />
+      	<bean parent="FieldDefinition" p:attributeName="salesInstance.orderDocument.campusCd" />
+      	<bean parent="FieldDefinition" p:attributeName="salesInstance.orderDocument.deliveryBuildingCd" />  	
+      	<bean parent="FieldDefinition" p:attributeName="route.routeCd" />       
+        <bean parent="FieldDefinition" p:attributeName="bin.zone.zoneCd" />
+        <bean parent="FieldDefinition" p:attributeName="bin.binNbr" />
+        <bean parent="FieldDefinition" p:attributeName="bin.shelfId" />
+        <bean parent="FieldDefinition" p:attributeName="bin.shelfIdNbr" />
+        <bean parent="FieldDefinition" p:attributeName="orderDetail.willCall" />
+        <bean parent="FieldDefinition" p:attributeName="createdDate" />
+        
+        
+        
+<!--        <bean parent="FieldDefinition" p:attributeName="backOrderId" />-->
+<!--        <bean parent="FieldDefinition" p:attributeName="backOrderQty" />-->
+<!--        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />-->
+<!--        <bean parent="FieldDefinition" p:attributeName="pickListDocumentNumber" />-->
+<!--        <bean parent="FieldDefinition" p:attributeName="pickListLineId" />-->
+<!--        <bean parent="FieldDefinition" p:attributeName="pickStockQty" />-->
+<!--        <bean parent="FieldDefinition" p:attributeName="pickTubNbr" />-->
+<!--        <bean parent="FieldDefinition" p:attributeName="stockQty" />-->
+<!--        <bean parent="FieldDefinition" p:attributeName="orderDetail.stockUnitOfIssueCd" />-->
+<!--        <bean parent="FieldDefinition" p:attributeName="versionNumber" />-->
+      </list>
+    </property>
+  </bean>
+
+</beans>

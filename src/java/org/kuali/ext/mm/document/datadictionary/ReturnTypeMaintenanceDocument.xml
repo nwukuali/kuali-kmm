@@ -1,0 +1,56 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="StoresReturnTypeMaintenanceDocument" parent="StoresReturnTypeMaintenanceDocument-parentBean" />
+
+  <bean id="StoresReturnTypeMaintenanceDocument-parentBean" abstract="true" parent="MaintenanceDocumentEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.ReturnType"
+        p:maintainableClass="org.kuali.rice.kns.maintenance.KualiMaintainableImpl"
+        p:documentTypeName="SRTE"
+        p:documentAuthorizerClass="org.kuali.rice.kns.document.authorization.MaintenanceDocumentAuthorizerBase" >
+    <property name="lockingKeys" >
+      <list>
+        <value>returnTypeCode</value>
+      </list>
+    </property>
+    <property name="defaultExistenceChecks" >
+      <list>
+      </list>
+    </property>
+    <property name="workflowAttributes" >
+        <ref bean="StoresReturnTypeMaintenanceDocument-workflowAttributes" />
+    </property>
+    <property name="maintainableSections" >
+      <list>
+        <ref bean="StoresReturnTypeMaintenanceDocument-MainSection" />
+      </list>
+    </property>
+  </bean>
+
+ <!-- Maintenance Section Definitions -->
+  <bean id="StoresReturnTypeMaintenanceDocument-MainSection" parent="StoresReturnTypeMaintenanceDocument-MainSection-parentBean" />
+
+  <bean id="StoresReturnTypeMaintenanceDocument-MainSection-parentBean" abstract="true" parent="MaintainableSectionDefinition"
+        p:title="Edit Return Type" >
+    <property name="maintainableItems" >
+      <list>
+        <bean parent="MaintainableFieldDefinition"
+              p:name="returnTypeCode"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="returnTypeName"
+              p:required="false" />
+		<bean parent="MaintainableFieldDefinition"
+              p:name="active"
+              p:defaultValue="true" />              
+      </list>
+    </property>
+  </bean>
+ <!-- workflow attributes -->
+  <bean id="StoresReturnTypeMaintenanceDocument-workflowAttributes" parent="StoresReturnTypeMaintenanceDocument-workflowAttributes-parentBean" />
+
+  <bean id="StoresReturnTypeMaintenanceDocument-workflowAttributes-parentBean" abstract="true" class="org.kuali.rice.kns.datadictionary.WorkflowAttributes" />
+</beans>

@@ -1,0 +1,190 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="OrderAutoLimit" parent="OrderAutoLimit-parentBean" />
+  <bean id="OrderAutoLimit-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.OrderAutoLimit"
+        p:titleAttribute="autoLimitId"
+        p:objectLabel="Order Auto Limit"
+        p:inquiryDefinition-ref="OrderAutoLimit-inquiryDefinition"
+        p:lookupDefinition-ref="OrderAutoLimit-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+		<ref bean="OrderAutoLimit-autoLimitId" />
+		<ref bean="OrderAutoLimit-chartCode" />
+		<ref bean="OrderAutoLimit-orgCode" />
+		<ref bean="OrderAutoLimit-accountNumber" />
+		<ref bean="OrderAutoLimit-verNbr" />
+		<ref bean="OrderAutoLimit-autoLimitAmount" />
+		<ref bean="OrderAutoLimit-active" />
+		<ref bean="OrderAutoLimit-lastUpdateDate" />
+
+      </list>
+    </property>
+    <property name="relationships">
+	      <list>
+	        <bean parent="RelationshipDefinition">
+	          <property name="objectAttributeName" value="financialChart"/>
+	          <property name="primitiveAttributes">
+	            <list>
+	              <bean parent="PrimitiveAttributeDefinition" p:sourceName="chartCode" p:targetName="chartOfAccountsCode"/>
+	            </list>
+	          </property>          
+	        </bean>
+	        <bean parent="RelationshipDefinition">
+	          <property name="objectAttributeName" value="financialOrganization"/>
+	          <property name="primitiveAttributes">
+	            <list>
+	              <bean parent="PrimitiveAttributeDefinition" p:sourceName="chartCode" p:targetName="chartOfAccountsCode"/>
+	              <bean parent="PrimitiveAttributeDefinition" p:sourceName="orgCode" p:targetName="organizationCode"/>
+	            </list>
+	          </property>          
+	        </bean>
+	        <bean parent="RelationshipDefinition">
+	          <property name="objectAttributeName" value="financialAccount"/>
+	          <property name="primitiveAttributes">
+	            <list>
+	              <bean parent="PrimitiveAttributeDefinition" p:sourceName="chartCode" p:targetName="chartOfAccountsCode"/>
+	              <bean parent="PrimitiveAttributeDefinition" p:sourceName="accountNumber" p:targetName="accountNumber"/>
+	            </list>
+	          </property>          
+	        </bean>
+	      </list>
+	      </property>
+  </bean>       
+	
+	<bean id="OrderAutoLimit-autoLimitId" parent="OrderAutoLimit-autoLimitId-parentBean" />
+	<bean id="OrderAutoLimit-autoLimitId-parentBean" parent="AttributeDefinition" abstract="true"
+	    p:name="autoLimitId"
+	    p:forceUppercase="false"
+	    p:label="Auto Limit Id"
+	    p:shortLabel="Id"
+	    p:maxLength="22"
+	    p:required="false" >
+		<property name="validationPattern" >
+		  <bean parent="NumericValidationPattern" />
+		</property>
+		<property name="control" >
+		  <bean parent="TextControlDefinition" p:size="10" />
+		</property>
+	</bean>
+	
+	<bean id="OrderAutoLimit-chartCode" parent="OrderAutoLimit-chartCode-parentBean" />
+	<bean id="OrderAutoLimit-chartCode-parentBean" parent="FinancialChart-chartOfAccountsCode" abstract="true"
+		p:name="chartCode" p:label="Chart Code"
+		p:shortLabel="Chart Code" p:required="true">
+	</bean>
+	
+	<bean id="OrderAutoLimit-orgCode" parent="OrderAutoLimit-orgCode-parentBean" />
+	<bean id="OrderAutoLimit-orgCode-parentBean" parent="FinancialOrganization-organizationCode" abstract="true"
+		p:name="orgCode" p:label="Organization Code"
+		p:shortLabel="Organization Code" p:required="false">
+	</bean>
+	
+	<bean id="OrderAutoLimit-accountNumber" parent="OrderAutoLimit-accountNumber-parentBean" />
+	<bean id="OrderAutoLimit-accountNumber-parentBean" parent="FinancialAccount-accountNumber" abstract="true"
+		p:name="accountNumber" p:label="Account Number"
+		p:shortLabel="Account Number" p:required="true">
+	</bean>
+	
+	<bean id="OrderAutoLimit-verNbr" parent="OrderAutoLimit-verNbr-parentBean" />
+	<bean id="OrderAutoLimit-verNbr-parentBean" abstract="true"
+		parent="AttributeReferenceDummy-versionNumber" p:name="versionNumber"
+		p:required="false" />
+
+	<bean id="OrderAutoLimit-autoLimitAmount" parent="OrderAutoLimit-autoLimitAmount-parentBean" />
+	<bean id="OrderAutoLimit-autoLimitAmount-parentBean" parent="AttributeDefinition" abstract="true"
+	    p:name="autoLimitAmount"
+	    p:forceUppercase="false"
+	    p:label="Limit Amount"
+	    p:shortLabel="Limit"
+	    p:maxLength="22"
+	    p:required="false" >
+		<property name="validationPattern" >
+		  <bean parent="FixedPointValidationPattern" p:precision="21" p:scale="4" p:allowNegative="false" />
+		</property>
+		<property name="control" >
+		  <bean parent="TextControlDefinition"
+		        p:size="10" />
+		</property>
+	</bean>
+	
+	<bean id="OrderAutoLimit-active" parent="OrderAutoLimit-active-parentBean" />
+	<bean id="OrderAutoLimit-active-parentBean" abstract="true"
+		parent="GenericAttributes-activeIndicator" p:name="active"
+		p:label="Active Indicator" p:shortLabel="Active Indicator"
+		p:required="false" />
+	
+	<bean id="OrderAutoLimit-lastUpdateDate" parent="OrderAutoLimit-lastUpdateDate-parentBean" />
+	<bean id="OrderAutoLimit-lastUpdateDate-parentBean" parent="GenericAttributes-genericTimestamp"
+		abstract="true" p:name="lastUpdateDate" p:forceUppercase="false"
+		p:label="Last Update Date" p:shortLabel="Last Update Date"
+		p:maxLength="10" p:required="false">
+	</bean>
+	<!-- Business Object Inquiry Definition -->
+
+  <bean id="OrderAutoLimit-inquiryDefinition" parent="OrderAutoLimit-inquiryDefinition-parentBean" />
+
+  <bean id="OrderAutoLimit-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Order Auto Limit Inquiry" p:inquirableClass="org.kuali.ext.mm.businessobject.inquiry.MmInquirableImpl" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Order Auto Limit"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+			<bean parent="FieldDefinition" p:attributeName="autoLimitId" />
+			<bean parent="FieldDefinition" p:attributeName="chartCode" />
+			<bean parent="FieldDefinition" p:attributeName="accountNumber" />
+			<bean parent="FieldDefinition" p:attributeName="autoLimitAmount" />
+			<bean parent="FieldDefinition" p:attributeName="active" />
+			<bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="OrderAutoLimit-lookupDefinition" parent="OrderAutoLimit-lookupDefinition-parentBean" />
+
+  <bean id="OrderAutoLimit-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Order Auto Limit Lookup" >
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>chartCode</value>
+            <value>accountNumber</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>        
+		<bean parent="FieldDefinition" p:attributeName="chartCode" />
+		<bean parent="FieldDefinition" p:attributeName="accountNumber" />
+		<bean parent="FieldDefinition" p:attributeName="autoLimitAmount" />
+		<bean parent="FieldDefinition" p:attributeName="active" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+		<bean parent="FieldDefinition" p:attributeName="autoLimitId" />
+		<bean parent="FieldDefinition" p:attributeName="chartCode" />
+		<bean parent="FieldDefinition" p:attributeName="accountNumber" />
+		<bean parent="FieldDefinition" p:attributeName="autoLimitAmount" />
+		<bean parent="FieldDefinition" p:attributeName="active" />
+		<bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+      </list>
+    </property>
+  </bean>
+  
+  
+</beans>

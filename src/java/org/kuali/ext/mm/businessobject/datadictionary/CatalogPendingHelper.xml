@@ -1,0 +1,226 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="CatalogPendingHelper" parent="CatalogPendingHelper-parentBean" />
+
+  <bean id="CatalogPendingHelper-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.CatalogPendingHelper"
+        p:titleAttribute="Document Number"
+        p:objectLabel="Catalog Pending Helper"
+        p:inquiryDefinition-ref="CatalogPendingHelper-inquiryDefinition"
+        p:lookupDefinition-ref="CatalogPendingHelper-lookupDefinition" >
+    <property name="attributes">
+      <list>
+        <ref bean="CatalogPendingHelper-agreementNbr" />
+        <ref bean="CatalogPendingHelper-catalogBeginDt" />
+        <ref bean="CatalogPendingHelper-catalogCd" />
+        <ref bean="CatalogPendingHelper-catalogDesc" />
+        <ref bean="CatalogPendingHelper-catalogEndDt" />
+        <ref bean="CatalogPendingHelper-catalogTimestamp" />   
+        <ref bean="CatalogPendingHelper-priorityNbr" />
+        <ref bean="CatalogPendingHelper-lastUpdateDate" />
+        <ref bean="CatalogPendingHelper-catalogUploadStatus" />
+      </list>
+    </property>
+  </bean>
+  
+  <bean id="CatalogPendingHelper-catalogUploadStatus" parent="CatalogPendingHelper-catalogUploadStatus-parentBean" />
+  <bean id="CatalogPendingHelper-catalogUploadStatus-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="catalogUploadStatus"
+        p:forceUppercase="false"
+        p:label="Catalog Pending Status"
+        p:shortLabel="Catalog Pending Status"
+        p:maxLength="12"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+     <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="12" />
+    </property>
+  </bean>
+  
+  <bean id="CatalogPendingHelper-agreementNbr" parent="CatalogPendingHelper-agreementNbr-parentBean" />
+  <bean id="CatalogPendingHelper-agreementNbr-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="agreementNbr"
+        p:forceUppercase="false"
+        p:label="Agreement Number"
+        p:shortLabel="Agreement Number"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CatalogPendingHelper-catalogBeginDt" parent="CatalogPendingHelper-catalogBeginDt-parentBean" />
+  <bean id="CatalogPendingHelper-catalogBeginDt-parentBean" parent="GenericAttributes-genericTimestamp" abstract="true"
+        p:name="catalogBeginDt"
+        p:forceUppercase="false"
+        p:label="Catalog Begin Date"
+        p:shortLabel="Catalog Begin Date"
+        p:maxLength="10"
+        p:required="false" >  
+  </bean>
+  
+  <bean id="CatalogPendingHelper-catalogCd" parent="CatalogPendingHelper-catalogCd-parentBean" />
+  <bean id="CatalogPendingHelper-catalogCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="catalogCd"
+        p:forceUppercase="false"
+        p:label="Catalog Code"
+        p:shortLabel="Catalog Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CatalogPendingHelper-catalogDesc" parent="CatalogPendingHelper-catalogDesc-parentBean" />
+  <bean id="CatalogPendingHelper-catalogDesc-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="catalogDesc"
+        p:forceUppercase="false"
+        p:label="Catalog Description"
+        p:shortLabel="Catalog Description"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CatalogPendingHelper-catalogEndDt" parent="CatalogPendingHelper-catalogEndDt-parentBean" />
+  <bean id="CatalogPendingHelper-catalogEndDt-parentBean" parent="GenericAttributes-genericTimestamp" abstract="true"
+        p:name="catalogEndDt"
+        p:forceUppercase="false"
+        p:label="Catalog End Date"
+        p:shortLabel="Catalog End Date"
+        p:maxLength="10"
+        p:required="false" >
+  </bean>
+
+  <bean id="CatalogPendingHelper-catalogTimestamp" parent="CatalogPendingHelper-catalogTimestamp-parentBean" />
+  <bean id="CatalogPendingHelper-catalogTimestamp-parentBean" parent="GenericAttributes-genericTimestamp" abstract="true"
+        p:name="catalogTimestamp"
+        p:forceUppercase="false"
+        p:label="Catalog Timestamp"
+        p:shortLabel="Catalog Timestamp"
+        p:maxLength="10"
+        p:required="false" >
+  </bean>
+
+  <bean id="CatalogPendingHelper-priorityNbr" parent="CatalogPendingHelper-priorityNbr-parentBean" />
+  <bean id="CatalogPendingHelper-priorityNbr-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="priorityNbr"
+        p:forceUppercase="false"
+        p:label="Priority Number"
+        p:shortLabel="Priority Number"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  
+ <bean id="CatalogPendingHelper-lastUpdateDate" parent="CatalogPendingHelper-lastUpdateDate-parentBean" />
+ <bean id="CatalogPendingHelper-lastUpdateDate-parentBean" parent="GenericAttributes-genericTimestamp" abstract="true"
+       p:name="lastUpdateDate"
+       p:forceUppercase="false"
+       p:label="Last Update Date"
+       p:shortLabel="Last Update Date"
+       p:maxLength="10"
+       p:required="false" >
+ </bean>
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="CatalogPendingHelper-inquiryDefinition" parent="CatalogPendingHelper-inquiryDefinition-parentBean" />
+
+  <bean id="CatalogPendingHelper-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Catalog Pending Helper Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Catalog Pending Helper Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+               <bean parent="FieldDefinition" p:attributeName="catalogCd" />
+		       <bean parent="FieldDefinition" p:attributeName="catalogDesc" />
+		       <bean parent="FieldDefinition" p:attributeName="catalogBeginDt" />
+		       <bean parent="FieldDefinition" p:attributeName="catalogEndDt" />    
+		       <bean parent="FieldDefinition" p:attributeName="priorityNbr" />
+		       <bean parent="FieldDefinition" p:attributeName="agreementNbr" />      
+		       <bean parent="FieldDefinition" p:attributeName="catalogTimestamp" />       
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="CatalogPendingHelper-lookupDefinition" parent="CatalogPendingHelper-lookupDefinition-parentBean" />
+
+  <bean id="CatalogPendingHelper-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Catalog Pending Helper Lookup" p:lookupableID="catalogPendingHelperLookupable">
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>lastUpdateDate</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>
+       <bean parent="FieldDefinition" p:attributeName="catalogCd" />
+       <bean parent="FieldDefinition" p:attributeName="catalogDesc" />
+       <bean parent="FieldDefinition" p:attributeName="catalogBeginDt" />
+       <bean parent="FieldDefinition" p:attributeName="catalogEndDt" />    
+       <bean parent="FieldDefinition" p:attributeName="priorityNbr" />
+       <bean parent="FieldDefinition" p:attributeName="agreementNbr" />      
+       <bean parent="FieldDefinition" p:attributeName="catalogTimestamp" />       
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+       <bean parent="FieldDefinition" p:attributeName="catalogCd" />
+       <bean parent="FieldDefinition" p:attributeName="catalogDesc" />
+       <bean parent="FieldDefinition" p:attributeName="catalogBeginDt" />
+       <bean parent="FieldDefinition" p:attributeName="catalogEndDt" />    
+       <bean parent="FieldDefinition" p:attributeName="priorityNbr" />
+       <bean parent="FieldDefinition" p:attributeName="agreementNbr" />      
+       <bean parent="FieldDefinition" p:attributeName="catalogTimestamp" />       
+      </list> 
+    </property>
+  </bean>
+
+</beans>

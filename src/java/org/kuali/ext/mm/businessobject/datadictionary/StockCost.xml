@@ -1,0 +1,284 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="StockCost" parent="StockCost-parentBean" />
+
+  <bean id="StockCost-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.StockCost"
+        p:titleAttribute="stockCostId"
+        p:objectLabel="Stock Cost"
+        p:inquiryDefinition-ref="StockCost-inquiryDefinition"
+        p:lookupDefinition-ref="StockCost-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="StockCost-stock.stockDistributorNbr" />
+        <ref bean="StockCost-stock.stockDesc"/>
+        <ref bean="StockCost-costCode.itemCostDesc"/>
+        <ref bean="StockCost-active" />
+        <ref bean="StockCost-costCd" />
+        <ref bean="StockCost-lastUpdateDate" />
+        <ref bean="StockCost-stockCostId" />
+        <ref bean="StockCost-stockCst" />
+        <ref bean="StockCost-stockId" />
+        <ref bean="StockCost-versionNumber" />
+        <ref bean="StockCost-stockTransReason.stockTransReasonCd"/>
+        <ref bean="StockCost-stockTransReason.stockTransReasonDesc"/>
+      </list>
+    </property>
+        <property name="relationships" >
+      <list>     
+        <bean parent="RelationshipDefinition">
+          <property name="objectAttributeName" value="stock" />
+          <property name="primitiveAttributes" >
+            <list>
+              <bean parent="PrimitiveAttributeDefinition"
+                    p:sourceName="stock.stockDistributorNbr"
+                    p:targetName="stockDistributorNbr" />
+            </list>
+          </property>
+          <property name="supportAttributes" >
+            <list>
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="stock.stockId"
+                    p:targetName="stockId" />
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="stock.stockDistributorNbr"
+                    p:targetName="distributorNbr" />      
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="stock.stockDesc"
+                    p:targetName="stockDesc" />          
+            </list>
+          </property>
+        </bean>       
+             
+          <bean parent="RelationshipDefinition">
+          <property name="objectAttributeName" value="stockTransReason" />
+          <property name="primitiveAttributes" >
+            <list>
+              <bean parent="PrimitiveAttributeDefinition"
+                    p:sourceName="stockTransReason.stockTransReasonCd"
+                    p:targetName="stockTransReasonCd" />
+            </list>
+          </property>
+           <property name="supportAttributes" >
+            <list>
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="stockTransReason.stockTransReasonDesc"
+                    p:targetName="stockTransReasonDesc" />            
+             </list>
+          </property>
+          </bean>          
+      </list>
+    </property>   
+  </bean>
+  
+  <bean id="StockCost-stock.stockDistributorNbr" parent="StockCost-stock.stockDistributorNbr-parentBean" />
+  <bean id="StockCost-stock.stockDistributorNbr-parentBean" parent="Stock-stockDistributorNbr" abstract="true"
+        p:name="stock.stockDistributorNbr"
+        p:forceUppercase="false"
+        p:label="Stock Distributor Number"
+        p:shortLabel="Stock Distributor Number"        
+        p:required="true" >
+  </bean>
+  
+  <bean id="StockCost-stock.stockDesc" parent="StockCost-stock.stockDesc-parentBean" />
+  <bean id="StockCost-stock.stockDesc-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="stock.stockDesc"
+        p:forceUppercase="false"
+        p:label="Stock Description"
+        p:shortLabel="Stock Description">
+      <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  
+  <bean id="StockCost-costCode.itemCostDesc" parent="StockCost-costCode.itemCostDesc-parentBean"/>
+  <bean id="StockCost-costCode.itemCostDesc-parentBean" abstract="true" parent="CostCode-itemCostDesc"
+    p:name="costCode.itemCostDesc" 
+    p:label= "Cost Code Description" 
+    p:required = "true"/>
+  
+  <bean id="StockCost-stockTransReason.stockTransReasonCd" parent="StockCost-stockTransReason.stockTransReasonCd-parentBean"/>
+  <bean id="StockCost-stockTransReason.stockTransReasonCd-parentBean" abstract="true" parent="StockTransReason-stockTransReasonCd"
+    p:name="stockTransReason.stockTransReasonCd" 
+    p:label= "Stock Transaction Reason Code"
+    p:required = "true"/>
+    
+  <bean id="StockCost-stockTransReason.stockTransReasonDesc" parent="StockCost-stockTransReason.stockTransReasonDesc-parentBean"/>
+  <bean id="StockCost-stockTransReason.stockTransReasonDesc-parentBean" abstract="true" parent="StockTransReason-stockTransReasonDesc"
+    p:name="stockTransReason.stockTransReasonDesc" 
+    p:label= "Stock Transaction Reason Name"
+    p:required = "true">
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="45" />
+    </property>
+    </bean>
+    
+  <bean id="StockCost-active" parent="StockCost-active-parentBean" />
+  <bean id="StockCost-active-parentBean" abstract="true" parent="GenericAttributes-activeIndicator" 
+        p:name="active"
+        p:required="false" />
+
+  <bean id="StockCost-costCd" parent="StockCost-costCd-parentBean" />
+  <bean id="StockCost-costCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="costCd"
+        p:forceUppercase="false"
+        p:label="Cost Cd"
+        p:shortLabel="Cost Cd"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="StockCost-lastUpdateDate" parent="StockCost-lastUpdateDate-parentBean" />
+  <bean id="StockCost-lastUpdateDate-parentBean" abstract="true" parent="GenericAttributes-genericTimestamp" 
+        p:name="lastUpdateDate"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:required="false" />
+
+  <bean id="StockCost-stockCostId" parent="StockCost-stockCostId-parentBean" />
+  <bean id="StockCost-stockCostId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="stockCostId"
+        p:forceUppercase="false"
+        p:label="Stock Cost Id"
+        p:shortLabel="Stock Cost Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="StockCost-stockCst" parent="StockCost-stockCst-parentBean" />
+  <bean id="StockCost-stockCst-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="stockCst"
+        p:forceUppercase="false"
+        p:label="Stock Cost"
+        p:shortLabel="Stock Cost"
+        p:required="false" >
+    <property name="maxLength" value="19" />
+    	<property name="validationPattern" >
+      		<bean parent="FixedPointValidationPattern"
+            	p:precision="19"
+            	p:scale="4"
+            	p:allowNegative="true" />
+    	</property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="StockCost-stockId" parent="StockCost-stockId-parentBean" />
+  <bean id="StockCost-stockId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="stockId"
+        p:forceUppercase="false"
+        p:label="Stock ID"
+        p:shortLabel="Stock ID"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="StockCost-versionNumber" parent="StockCost-versionNumber-parentBean" />
+  <bean id="StockCost-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="StockCost-inquiryDefinition" parent="StockCost-inquiryDefinition-parentBean" />
+
+  <bean id="StockCost-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Stock Cost Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Stock Cost Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="active" />
+              <bean parent="FieldDefinition" p:attributeName="costCd" />
+              <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+              <bean parent="FieldDefinition" p:attributeName="stockCostId" />
+              <bean parent="FieldDefinition" p:attributeName="stockCst" />
+              <bean parent="FieldDefinition" p:attributeName="stockId" />
+              <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="StockCost-lookupDefinition" parent="StockCost-lookupDefinition-parentBean" />
+
+  <bean id="StockCost-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Stock Cost Lookup" 
+ >
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>stockCostId</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="active" />
+        <bean parent="FieldDefinition" p:attributeName="costCd" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+        <bean parent="FieldDefinition" p:attributeName="stockCostId" />
+        <bean parent="FieldDefinition" p:attributeName="stockCst" />
+        <bean parent="FieldDefinition" p:attributeName="stockId" />
+        <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="active" />
+        <bean parent="FieldDefinition" p:attributeName="costCd" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+        <bean parent="FieldDefinition" p:attributeName="stockCostId" />
+        <bean parent="FieldDefinition" p:attributeName="stockCst" />
+        <bean parent="FieldDefinition" p:attributeName="stockId" />
+        <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+      </list>
+    </property>
+  </bean>
+
+</beans>

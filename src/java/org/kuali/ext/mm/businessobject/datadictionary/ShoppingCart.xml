@@ -1,0 +1,298 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="ShoppingCart" parent="ShoppingCart-parentBean" />
+
+  <bean id="ShoppingCart-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.ShoppingCart"
+        p:titleAttribute="shopCartHeaderName"
+        p:objectLabel="Shopping Cart"
+        p:inquiryDefinition-ref="ShoppingCart-inquiryDefinition"
+        p:lookupDefinition-ref="ShoppingCart-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="ShoppingCart-billingAddressId" />
+        <ref bean="ShoppingCart-customerProfileId" />
+        <ref bean="ShoppingCart-deliveryBuildingCode" />
+        <ref bean="ShoppingCart-deliveryBuildingRoomNumber" />
+        <ref bean="ShoppingCart-deliveryInstructionText" />
+        <ref bean="ShoppingCart-departmentReferenceText" />
+        <ref bean="ShoppingCart-lastUpdateDate" />
+        <ref bean="ShoppingCart-ordered" />
+        <ref bean="ShoppingCart-sessionCartSaved" />
+        <ref bean="ShoppingCart-shippingAddressId" />
+        <ref bean="ShoppingCart-shopCartHeaderName" />
+        <ref bean="ShoppingCart-shoppingCartId" />
+        <ref bean="ShoppingCart-versionNumber" />
+      </list>
+    </property>
+  </bean>
+
+  <bean id="ShoppingCart-billingAddressId" parent="ShoppingCart-billingAddressId-parentBean" />
+  <bean id="ShoppingCart-billingAddressId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="billingAddressId"
+        p:forceUppercase="false"
+        p:label="Billing Address Id"
+        p:shortLabel="Billing Address Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ShoppingCart-customerProfileId" parent="ShoppingCart-customerProfileId-parentBean" />
+  <bean id="ShoppingCart-customerProfileId-parentBean" parent="Profile-profileId" abstract="true"
+        p:name="customerProfileId" >        
+  </bean>
+
+  <bean id="ShoppingCart-deliveryBuildingCode" parent="ShoppingCart-deliveryBuildingCode-parentBean" />
+  <bean id="ShoppingCart-deliveryBuildingCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="deliveryBuildingCode"
+        p:forceUppercase="false"
+        p:label="Delivery Building Code"
+        p:shortLabel="Delivery Building Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ShoppingCart-deliveryBuildingRoomNumber" parent="ShoppingCart-deliveryBuildingRoomNumber-parentBean" />
+  <bean id="ShoppingCart-deliveryBuildingRoomNumber-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="deliveryBuildingRoomNumber"
+        p:forceUppercase="false"
+        p:label="Delivery Building Room Number"
+        p:shortLabel="Delivery Building Room Number"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ShoppingCart-deliveryInstructionText" parent="ShoppingCart-deliveryInstructionText-parentBean" />
+  <bean id="ShoppingCart-deliveryInstructionText-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="deliveryInstructionText"
+        p:forceUppercase="false"
+        p:label="Delivery Instruction Text"
+        p:shortLabel="Delivery Instruction Text"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ShoppingCart-departmentReferenceText" parent="ShoppingCart-departmentReferenceText-parentBean" />
+  <bean id="ShoppingCart-departmentReferenceText-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="departmentReferenceText"
+        p:forceUppercase="false"
+        p:label="Department Reference Text"
+        p:shortLabel="Department Reference Text"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ShoppingCart-lastUpdateDate" parent="ShoppingCart-lastUpdateDate-parentBean" />
+  <bean id="ShoppingCart-lastUpdateDate-parentBean" parent="GenericAttributes-genericTimestamp" abstract="true"
+        p:name="lastUpdateDate"
+        p:forceUppercase="false"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:maxLength="10"
+        p:required="false" >
+  </bean>
+
+  <bean id="ShoppingCart-ordered" parent="ShoppingCart-ordered-parentBean" />
+  <bean id="ShoppingCart-ordered-parentBean" parent="GenericAttributes-genericBoolean" abstract="true"
+        p:name="ordered"
+        p:label="Ordered"
+        p:shortLabel="Ordered"
+        p:required="false" >   
+  </bean>
+
+  <bean id="ShoppingCart-sessionCartSaved" parent="ShoppingCart-sessionCartSaved-parentBean" />
+  <bean id="ShoppingCart-sessionCartSaved-parentBean" parent="GenericAttributes-genericBoolean" abstract="true"
+        p:name="sessionCartSaved"
+        p:label="Session Cart Saved"
+        p:shortLabel="Session Cart Saved"
+        p:required="false" >
+  </bean>
+
+  <bean id="ShoppingCart-shippingAddressId" parent="ShoppingCart-shippingAddressId-parentBean" />
+  <bean id="ShoppingCart-shippingAddressId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="shippingAddressId"
+        p:forceUppercase="false"
+        p:label="Shipping Address Id"
+        p:shortLabel="Shipping Address Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ShoppingCart-shopCartHeaderName" parent="ShoppingCart-shopCartHeaderName-parentBean" />
+  <bean id="ShoppingCart-shopCartHeaderName-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="shopCartHeaderName"
+        p:forceUppercase="false"
+        p:label="Shopping Cart Name"
+        p:shortLabel="Shopping Cart Name"
+        p:maxLength="40"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="20" />
+    </property>
+  </bean>
+
+  <bean id="ShoppingCart-shoppingCartId" parent="ShoppingCart-shoppingCartId-parentBean" />
+  <bean id="ShoppingCart-shoppingCartId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="shoppingCartId"
+        p:forceUppercase="false"
+        p:label="Shopping Cart Id"
+        p:shortLabel="Shopping Cart Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ShoppingCart-versionNumber" parent="ShoppingCart-versionNumber-parentBean" />
+  <bean id="ShoppingCart-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="ShoppingCart-inquiryDefinition" parent="ShoppingCart-inquiryDefinition-parentBean" />
+
+  <bean id="ShoppingCart-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Shopping Cart Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Shopping Cart Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="billingAddressId" />
+              <bean parent="FieldDefinition" p:attributeName="customerProfileId" />
+              <bean parent="FieldDefinition" p:attributeName="deliveryBuildingCode" />
+              <bean parent="FieldDefinition" p:attributeName="deliveryBuildingRoomNumber" />
+              <bean parent="FieldDefinition" p:attributeName="deliveryInstructionText" />
+              <bean parent="FieldDefinition" p:attributeName="departmentReferenceText" />
+              <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+              <bean parent="FieldDefinition" p:attributeName="ordered" />
+              <bean parent="FieldDefinition" p:attributeName="sessionCartSaved" />
+              <bean parent="FieldDefinition" p:attributeName="shippingAddressId" />
+              <bean parent="FieldDefinition" p:attributeName="shopCartHeaderName" />
+              <bean parent="FieldDefinition" p:attributeName="shoppingCartId" />
+              <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="ShoppingCart-lookupDefinition" parent="ShoppingCart-lookupDefinition-parentBean" />
+
+  <bean id="ShoppingCart-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Shopping Cart Lookup"  >
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>shopCartHeaderName</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="billingAddressId" />
+        <bean parent="FieldDefinition" p:attributeName="customerProfileId" />
+        <bean parent="FieldDefinition" p:attributeName="deliveryBuildingCode" />
+        <bean parent="FieldDefinition" p:attributeName="deliveryBuildingRoomNumber" />
+        <bean parent="FieldDefinition" p:attributeName="deliveryInstructionText" />
+        <bean parent="FieldDefinition" p:attributeName="departmentReferenceText" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+        <bean parent="FieldDefinition" p:attributeName="ordered" />
+        <bean parent="FieldDefinition" p:attributeName="sessionCartSaved" />
+        <bean parent="FieldDefinition" p:attributeName="shippingAddressId" />
+        <bean parent="FieldDefinition" p:attributeName="shopCartHeaderName" />
+        <bean parent="FieldDefinition" p:attributeName="shoppingCartId" />
+        <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="billingAddressId" />
+        <bean parent="FieldDefinition" p:attributeName="customerProfileId" />
+        <bean parent="FieldDefinition" p:attributeName="deliveryBuildingCode" />
+        <bean parent="FieldDefinition" p:attributeName="deliveryBuildingRoomNumber" />
+        <bean parent="FieldDefinition" p:attributeName="deliveryInstructionText" />
+        <bean parent="FieldDefinition" p:attributeName="departmentReferenceText" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+        <bean parent="FieldDefinition" p:attributeName="ordered" />
+        <bean parent="FieldDefinition" p:attributeName="sessionCartSaved" />
+        <bean parent="FieldDefinition" p:attributeName="shippingAddressId" />
+        <bean parent="FieldDefinition" p:attributeName="shopCartHeaderName" />
+        <bean parent="FieldDefinition" p:attributeName="shoppingCartId" />
+        <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+      </list>
+    </property>
+  </bean>
+
+</beans>

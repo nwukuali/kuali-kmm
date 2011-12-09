@@ -1,0 +1,82 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="StoresCatalogSubgroupMaintenanceDocument" parent="StoresCatalogSubgroupMaintenanceDocument-parentBean" />
+
+  <bean id="StoresCatalogSubgroupMaintenanceDocument-parentBean" abstract="true" parent="MaintenanceDocumentEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.CatalogSubgroup"
+        p:maintainableClass="org.kuali.rice.kns.maintenance.KualiMaintainableImpl"
+        p:documentTypeName="SCSG"
+        p:documentAuthorizerClass="org.kuali.rice.kns.document.authorization.MaintenanceDocumentAuthorizerBase" >
+        
+        <!-- ****** Business Rule Validation ******************************** -->
+    	<property name="businessRulesClass" value="org.kuali.ext.mm.document.validation.impl.CatalogSubgroupBusinessRule" />
+   		<!-- **************************************************************** -->
+   		
+    <property name="lockingKeys" >
+      <list>
+        <value>catalogSubgroupId</value>
+      </list>
+    </property>
+    <property name="defaultExistenceChecks" >
+      <list>
+        <bean parent="ReferenceDefinition"
+              p:attributeName="catalogGroup"
+              p:attributeToHighlightOnFail="catalogGroupCd" />
+      </list>
+    </property>
+    <property name="workflowAttributes" >
+        <ref bean="StoresCatalogSubgroupMaintenanceDocument-workflowAttributes" />
+    </property>
+    <property name="maintainableSections" >
+      <list>
+        <ref bean="StoresCatalogSubgroupMaintenanceDocument-MainSection" />
+      </list>
+    </property>
+  </bean>
+
+ <!-- Maintenance Section Definitions -->
+  <bean id="StoresCatalogSubgroupMaintenanceDocument-MainSection" parent="StoresCatalogSubgroupMaintenanceDocument-MainSection-parentBean" />
+
+  <bean id="StoresCatalogSubgroupMaintenanceDocument-MainSection-parentBean" abstract="true" parent="MaintainableSectionDefinition"
+        p:title="Edit Catalog Subgroup" >
+    <property name="maintainableItems" >
+      <list>
+      	<bean parent="MaintainableFieldDefinition"
+              p:name="catalogGroupCd"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="catalogSubgroupCd"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="catalogSubgroupDesc"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="priorCatalogSubgroupId"
+              p:required="false" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="priorCatalogSubgroup.catalogGroupCd"
+              p:required="false"
+              p:unconditionallyReadOnly="true"
+              />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="priorCatalogSubgroup.catalogSubgroupCd"
+              p:required="false"
+              p:overrideLookupClass="org.kuali.ext.mm.businessobject.CatalogSubgroup"
+              p:overrideFieldConversions="catalogGroupCd:catalogGroupCd,catalogSubgroupId:priorCatalogSubgroupId"
+              p:lookupReadOnly="true"
+              />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="active"
+              p:defaultValue="true" />
+      </list>
+    </property>
+  </bean>
+ <!-- workflow attributes -->
+  <bean id="StoresCatalogSubgroupMaintenanceDocument-workflowAttributes" parent="StoresCatalogSubgroupMaintenanceDocument-workflowAttributes-parentBean" />
+
+  <bean id="StoresCatalogSubgroupMaintenanceDocument-workflowAttributes-parentBean" abstract="true" class="org.kuali.rice.kns.datadictionary.WorkflowAttributes" />
+</beans>

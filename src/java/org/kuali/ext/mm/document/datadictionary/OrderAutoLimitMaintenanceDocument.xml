@@ -1,0 +1,124 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="OrderAutoLimitMaintenanceDocument" parent="OrderAutoLimitMaintenanceDocument-parentBean" />
+
+  <bean id="OrderAutoLimitMaintenanceDocument-parentBean" abstract="true" parent="MaintenanceDocumentEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.OrderAutoLimit" 
+        p:maintainableClass="org.kuali.rice.kns.maintenance.KualiMaintainableImpl"        
+        p:documentTypeName="SOAL" 
+        p:documentAuthorizerClass="org.kuali.rice.kns.document.authorization.MaintenanceDocumentAuthorizerBase" >
+    <property name="businessRulesClass" value="org.kuali.ext.mm.document.validation.impl.OrderAutoLimitRule" />
+    <property name="lockingKeys" >
+      <list>
+        <value>autoLimitId</value>
+      </list>
+    </property>
+    
+    <property name="workflowAttributes" >
+        <ref bean="OrderAutoLimitMaintenanceDocument-workflowAttributes" />
+    </property>
+    <property name="maintainableSections" >
+      <list>
+        <ref bean="OrderAutoLimitMaintenanceDocument-MainSection" />
+      </list>
+    </property>
+  </bean>
+
+ <!-- Maintenance Section Definitions -->
+  <bean id="OrderAutoLimitMaintenanceDocument-MainSection" parent="OrderAutoLimitMaintenanceDocument-MainSection-parentBean" />
+
+  <bean id="OrderAutoLimitMaintenanceDocument-MainSection-parentBean" abstract="true" parent="MaintainableSectionDefinition"
+        p:title="Edit Order Auto Limit" >
+    <property name="maintainableItems" >
+      <list>
+        <bean parent="MaintainableFieldDefinition"
+              p:name="chartCode"
+              p:required="true" />        
+        <bean parent="MaintainableFieldDefinition"
+              p:name="accountNumber"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="autoLimitAmount"
+              p:required="true" />        
+        <bean parent="MaintainableFieldDefinition"
+              p:name="active"
+              p:defaultValue="true" />
+      </list>
+    </property>
+  </bean>
+ <!-- workflow attributes -->
+  <bean id="OrderAutoLimitMaintenanceDocument-workflowAttributes" parent="OrderAutoLimitMaintenanceDocument-workflowAttributes-parentBean" />
+
+  <bean id="OrderAutoLimitMaintenanceDocument-workflowAttributes-parentBean" abstract="true" parent="WorkflowAttributes">
+		<property name="searchingTypeDefinitions">
+			<list>
+				<bean class="org.kuali.rice.kns.datadictionary.SearchingTypeDefinition">
+					<property name="searchingAttribute">
+						<bean class="org.kuali.rice.kns.datadictionary.SearchingAttribute">
+							<property name="businessObjectClassName" value="org.kuali.ext.mm.bo.OrderAutoLimit" />
+							<property name="attributeName" value="chartCode" />
+						</bean>
+					</property>
+					<property name="documentValues">
+						<list>
+							<value>newMaintainableObject.businessObject.chartCode</value>
+						</list>
+					</property>
+				</bean>
+				<bean class="org.kuali.rice.kns.datadictionary.SearchingTypeDefinition">
+					<property name="searchingAttribute">
+						<bean class="org.kuali.rice.kns.datadictionary.SearchingAttribute">
+							<property name="businessObjectClassName" value="org.kuali.ext.mm.bo.OrderAutoLimit" />
+							<property name="attributeName" value="accountNumber" />
+						</bean>
+					</property>
+					<property name="documentValues">
+						<list>
+							<value>newMaintainableObject.businessObject.accountNumber</value>
+						</list>
+					</property>
+				</bean>
+			</list>
+		</property>
+		<property name="routingTypeDefinitions">
+	 		<map>
+	 			<entry key="Account" value-ref="RoutingType-OrderAutoLimitMaintenanceDocument-Account"/>
+	 		</map>
+	 	</property>
+	</bean>
+	<bean id="RoutingAttribute-chartOfAccountsCode" class="org.kuali.rice.kns.datadictionary.RoutingAttribute">
+		<property name="qualificationAttributeName" value="chartOfAccountsCode" />
+	</bean>
+    <bean id="RoutingAttribute-accountNumber" class="org.kuali.rice.kns.datadictionary.RoutingAttribute" >
+    	<property name="qualificationAttributeName" value="accountNumber" />
+    </bean>
+	<bean id="RoutingAttribute-autoLimitAmount"  class="org.kuali.rice.kns.datadictionary.RoutingAttribute" >
+		<property name="qualificationAttributeName" value="financialDocumentTotalAmount" />
+	</bean> 
+ 	<bean id="RoutingType-OrderAutoLimitMaintenanceDocument-Account" class="org.kuali.rice.kns.datadictionary.RoutingTypeDefinition">
+		<property name="routingAttributes">
+			<list>
+				<ref bean="RoutingAttribute-chartOfAccountsCode" />
+				<ref bean="RoutingAttribute-accountNumber" />
+				<ref bean="RoutingAttribute-autoLimitAmount" />
+			</list>
+		</property>
+		<property name="documentValuePathGroups">
+			<list>
+				<bean class="org.kuali.rice.kns.datadictionary.DocumentValuePathGroup">
+					<property name="documentValues">
+						<list>
+							<value>newMaintainableObject.businessObject.chartCode</value>
+							<value>newMaintainableObject.businessObject.accountNumber</value>
+							<value>newMaintainableObject.businessObject.autoLimitAmount</value>
+						</list>
+					</property>
+				</bean>
+			</list>
+		</property>
+	</bean>
+</beans>

@@ -1,0 +1,177 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="VendorReturnStatusCode" parent="VendorReturnStatusCode-parentBean" />
+
+  <bean id="VendorReturnStatusCode-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.VendorReturnStatusCode"
+        p:titleAttribute="returnStatusCode"
+        p:objectLabel="Vendor Return Status Code"
+        p:inquiryDefinition-ref="VendorReturnStatusCode-inquiryDefinition"
+        p:lookupDefinition-ref="VendorReturnStatusCode-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="VendorReturnStatusCode-active" />
+        <ref bean="VendorReturnStatusCode-lastUpdateDate" />
+        <ref bean="VendorReturnStatusCode-returnStatusCode" />
+        <ref bean="VendorReturnStatusCode-returnStatusCodeLookable" />
+        <ref bean="VendorReturnStatusCode-returnStatusCodeName" />
+        <ref bean="VendorReturnStatusCode-customerVendorReturnInd" />
+        <ref bean="VendorReturnStatusCode-versionNumber" />
+      </list>
+    </property>
+  </bean>
+
+  <bean id="VendorReturnStatusCode-active" parent="VendorReturnStatusCode-active-parentBean" />
+  <bean id="VendorReturnStatusCode-active-parentBean" abstract="true" parent="GenericAttributes-activeIndicator" p:name="active" />
+
+  <bean id="VendorReturnStatusCode-lastUpdateDate" parent="VendorReturnStatusCode-lastUpdateDate-parentBean" />
+  <bean id="VendorReturnStatusCode-lastUpdateDate-parentBean" parent="GenericAttributes-genericTimestamp" abstract="true"
+        p:name="lastUpdateDate"
+        p:forceUppercase="false"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:maxLength="10"
+        p:required="false" >
+  </bean>
+
+  <bean id="VendorReturnStatusCode-returnStatusCodeName" parent="VendorReturnStatusCode-returnStatusCodeName-parentBean" />
+  <bean id="VendorReturnStatusCode-returnStatusCodeName-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="returnStatusCodeName"
+        p:forceUppercase="true"
+        p:label="Return Status Code Name"
+        p:shortLabel="Return Status Code Name"
+        p:maxLength="45"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="50" />
+    </property>
+  </bean>
+
+  <bean id="VendorReturnStatusCode-returnStatusCode" parent="VendorReturnStatusCode-VendorReturnStatusCode-parentBean" />
+  <bean id="VendorReturnStatusCode-VendorReturnStatusCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="returnStatusCode"
+        p:forceUppercase="true"
+        p:label="Return Status Code"
+        p:shortLabel="Return Status Code"
+        p:maxLength="4"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AlphaNumericValidationPattern"/>
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="6" />
+    </property>
+  </bean>
+
+  <bean id="VendorReturnStatusCode-customerVendorReturnInd" parent="VendorReturnStatusCode-customerVendorReturnInd-parentBean" />
+  <bean id="VendorReturnStatusCode-customerVendorReturnInd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="customerVendorReturnInd"
+        p:forceUppercase="true"
+        p:label="Customer Vendor Return Indicator"
+        p:shortLabel="Customer Vendor Return Indicator"
+        p:maxLength="1"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AlphaNumericValidationPattern"/>
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="1" />
+    </property>
+  </bean>
+
+  <bean id="VendorReturnStatusCode-returnStatusCodeLookable" parent="VendorReturnStatusCode-returnStatusCodeLookable-parentBean" />
+  <bean id="VendorReturnStatusCode-returnStatusCodeLookable-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="returnStatusCodeLookable"
+        p:forceUppercase="true"
+        p:label="Return Status"
+        p:shortLabel="Return Status"
+        p:maxLength="4"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="SelectControlDefinition"
+            p:valuesFinderClass="org.kuali.ext.mm.businessobject.options.VendorReturnDetailStatusCodeFinder"
+            p:includeKeyInLabel="false" />
+    </property>
+  </bean>
+
+  <bean id="VendorReturnStatusCode-versionNumber" parent="VendorReturnStatusCode-versionNumber-parentBean" />
+  <bean id="VendorReturnStatusCode-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="VendorReturnStatusCode-inquiryDefinition" parent="VendorReturnStatusCode-inquiryDefinition-parentBean" />
+
+  <bean id="VendorReturnStatusCode-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Return Status Code Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Return Status Code Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+              <bean parent="FieldDefinition" p:attributeName="returnStatusCode" />
+              <bean parent="FieldDefinition" p:attributeName="returnStatusCodeName" />
+              <bean parent="FieldDefinition" p:attributeName="customerVendorReturnInd" />
+              <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+              <bean parent="FieldDefinition" p:attributeName="active" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="VendorReturnStatusCode-lookupDefinition" parent="VendorReturnStatusCode-lookupDefinition-parentBean" />
+
+  <bean id="VendorReturnStatusCode-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Return Status Code Lookup">
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>returnStatusCode</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="returnStatusCode" />
+	    <bean parent="FieldDefinition" p:attributeName="returnStatusCodeName" />
+        <bean parent="FieldDefinition" p:attributeName="customerVendorReturnInd" />
+        <bean parent="FieldDefinition" p:attributeName="active" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="returnStatusCode" />
+        <bean parent="FieldDefinition" p:attributeName="returnStatusCodeName" />
+        <bean parent="FieldDefinition" p:attributeName="customerVendorReturnInd" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+        <bean parent="FieldDefinition" p:attributeName="active" />
+      </list>
+    </property>
+  </bean>
+
+</beans>

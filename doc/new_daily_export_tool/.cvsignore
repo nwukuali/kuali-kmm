@@ -1,0 +1,5 @@
+checkout
+temp
+ant-local.properties
+velocity.log
+*.complete

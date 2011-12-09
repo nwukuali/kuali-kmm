@@ -1,0 +1,179 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="ShopCartDetailAdditionalCost" parent="ShopCartDetailAdditionalCost-parentBean" />
+
+  <bean id="ShopCartDetailAdditionalCost-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.ShopCartDetailAdditionalCost"
+        p:titleAttribute="shopCartDetailAdditionalCostId"
+        p:objectLabel="Shop Cart Detail Additional Cost"
+        p:inquiryDefinition-ref="ShopCartDetailAdditionalCost-inquiryDefinition"
+        p:lookupDefinition-ref="ShopCartDetailAdditionalCost-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="ShopCartDetailAdditionalCost-additionalCost" />
+        <ref bean="ShopCartDetailAdditionalCost-additionalCostTypeCode" />
+        <ref bean="ShopCartDetailAdditionalCost-lastUpdateDate" />
+        <ref bean="ShopCartDetailAdditionalCost-shopCartDetailAdditionalCostId" />
+        <ref bean="ShopCartDetailAdditionalCost-shopCartDetailId" />
+        <ref bean="ShopCartDetailAdditionalCost-versionNumber" />
+      </list>
+    </property>
+  </bean>
+
+  <bean id="ShopCartDetailAdditionalCost-additionalCost" parent="ShopCartDetailAdditionalCost-additionalCost-parentBean" />
+  <bean id="ShopCartDetailAdditionalCost-additionalCost-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="additionalCost"
+        p:forceUppercase="false"
+        p:label="Additional Cost"
+        p:shortLabel="Additional Cost"
+        p:maxLength="8"
+        p:required="false" >
+    <property name="validationPattern" >
+    	<bean parent="FixedPointValidationPattern"
+            p:precision="8"
+            p:scale="2"
+            p:allowNegative="false" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ShopCartDetailAdditionalCost-additionalCostTypeCode" parent="ShopCartDetailAdditionalCost-additionalCostTypeCode-parentBean" />
+  <bean id="ShopCartDetailAdditionalCost-additionalCostTypeCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="additionalCostTypeCode"
+        p:forceUppercase="false"
+        p:label="Additional Cost Type Code"
+        p:shortLabel="Additional Cost Type Code"
+        p:maxLength="12"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="12" />
+    </property>
+  </bean>
+
+  <bean id="ShopCartDetailAdditionalCost-lastUpdateDate" parent="ShopCartDetailAdditionalCost-lastUpdateDate-parentBean" />
+  <bean id="ShopCartDetailAdditionalCost-lastUpdateDate-parentBean" parent="GenericAttributes-genericTimestamp" abstract="true"
+        p:name="lastUpdateDate"
+        p:forceUppercase="false"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:maxLength="10"
+        p:required="false" >
+  </bean>
+
+  <bean id="ShopCartDetailAdditionalCost-shopCartDetailAdditionalCostId" parent="ShopCartDetailAdditionalCost-shopCartDetailAdditionalCostId-parentBean" />
+  <bean id="ShopCartDetailAdditionalCost-shopCartDetailAdditionalCostId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="shopCartDetailAdditionalCostId"
+        p:forceUppercase="false"
+        p:label="Shop Cart Detail Additional Cost Id"
+        p:shortLabel="Shop Cart Detail Additional Cost Id"
+        p:maxLength="36"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ShopCartDetailAdditionalCost-shopCartDetailId" parent="ShopCartDetailAdditionalCost-shopCartDetailId-parentBean" />
+  <bean id="ShopCartDetailAdditionalCost-shopCartDetailId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="shopCartDetailId"
+        p:forceUppercase="false"
+        p:label="Shop Cart Detail Id"
+        p:shortLabel="Shop Cart Detail Id"
+        p:maxLength="36"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ShopCartDetailAdditionalCost-versionNumber" parent="ShopCartDetailAdditionalCost-versionNumber-parentBean" />
+  <bean id="ShopCartDetailAdditionalCost-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="ShopCartDetailAdditionalCost-inquiryDefinition" parent="ShopCartDetailAdditionalCost-inquiryDefinition-parentBean" />
+
+  <bean id="ShopCartDetailAdditionalCost-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Shop Cart Detail Additional Cost Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Shop Cart Detail Additional Cost Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="shopCartDetailAdditionalCostId" />
+              <bean parent="FieldDefinition" p:attributeName="shopCartDetailId" />
+              <bean parent="FieldDefinition" p:attributeName="additionalCost" />
+              <bean parent="FieldDefinition" p:attributeName="additionalCostTypeCode" />
+              <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+              <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="ShopCartDetailAdditionalCost-lookupDefinition" parent="ShopCartDetailAdditionalCost-lookupDefinition-parentBean" />
+
+  <bean id="ShopCartDetailAdditionalCost-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Shop Cart Detail Additional Cost Lookup" >
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>shopCartDetailAdditionalCostId</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>
+       <bean parent="FieldDefinition" p:attributeName="shopCartDetailAdditionalCostId" />
+       <bean parent="FieldDefinition" p:attributeName="shopCartDetailId" />
+       <bean parent="FieldDefinition" p:attributeName="additionalCost" />
+       <bean parent="FieldDefinition" p:attributeName="additionalCostTypeCode" />
+       <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+       <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="shopCartDetailAdditionalCostId" />
+        <bean parent="FieldDefinition" p:attributeName="shopCartDetailId" />
+        <bean parent="FieldDefinition" p:attributeName="additionalCost" />
+        <bean parent="FieldDefinition" p:attributeName="additionalCostTypeCode" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+        <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+      </list>
+    </property>
+  </bean>
+
+</beans>

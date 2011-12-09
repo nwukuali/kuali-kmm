@@ -1,0 +1,159 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="CheckinDocument" parent="CheckinDocument-parentBean" />
+
+  <bean id="CheckinDocument-parentBean" abstract="true" parent="TransactionalDocumentEntry">
+		<property name="documentTypeName" value="SCHK" />
+		<property name="sessionDocument" value="true" />
+		<property name="documentClass" value="org.kuali.ext.mm.document.CheckinDocument" />
+		<property name="businessRulesClass" value="org.kuali.ext.mm.document.validation.impl.CheckinDocumentRule"/>
+		<property name="documentPresentationControllerClass" value="org.kuali.ext.mm.document.authorization.CheckinDocumentPresentationController"/>
+		<property name="workflowAttributes">
+    	<ref bean="CheckinDocument-workflowAttributes"/>
+     </property>
+		<property name="allowsCopy" value="true" />
+    <property name="attributes" >
+      <list>
+        <ref bean="CheckinDocument-checkinDetails" />
+        <ref bean="CheckinDocument-fdocNbr" />
+        <ref bean="CheckinDocument-lastUpdateDate" />
+        <ref bean="CheckinDocument-orderDocNumber" />
+        <ref bean="CheckinDocument-vendorRefNbr" />
+        <ref bean="CheckinDocument-vendorShipmentNbr" />
+        <ref bean="CheckinDocument-warehouseCode" />
+        <ref bean="CheckinDocument-versionNumber" />
+        <ref bean="CheckinDocument-orderDocument.vendorNm" />
+        <ref bean="CheckinDocument-orderDocument.reqsId" />        
+      </list>
+    </property>
+
+  </bean>
+
+  <bean id="CheckinDocument-orderDocument.vendorNm" parent="CheckinDocument-orderDocument.vendorNm-parentBean" />
+  <bean id="CheckinDocument-orderDocument.vendorNm-parentBean" parent="OrderDocument-vendorNm" abstract="true"
+        p:name="orderDocument.vendorNm"
+        p:label="Vendor Name"
+        p:shortLabel="Vendor Name">
+  </bean>
+
+  <bean id="CheckinDocument-orderDocument.reqsId" parent="CheckinDocument-orderDocument.reqsId-parentBean" />
+  <bean id="CheckinDocument-orderDocument.reqsId-parentBean" parent="OrderDocument-reqsId" abstract="true"
+        p:name="orderDocument.reqsId"
+		>
+  </bean>
+
+  <bean id="CheckinDocument-checkinDetails" parent="CheckinDocument-checkinDetails-parentBean" />
+  <bean id="CheckinDocument-checkinDetails-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="checkinDetails"
+        p:forceUppercase="false"
+        p:label="Checkin Details"
+        p:shortLabel="Checkin Details"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CheckinDocument-fdocNbr" parent="CheckinDocument-fdocNbr-parentBean" />
+  <bean id="CheckinDocument-fdocNbr-parentBean" parent="DocumentHeader-documentNumber" abstract="true"
+        p:name="documentNumber"
+	>
+  </bean>
+
+  <bean id="CheckinDocument-warehouseCode" parent="CheckinDocument-warehouseCode-parentBean" />
+  <bean id="CheckinDocument-warehouseCode-parentBean" parent="Warehouse-warehouseCd" abstract="true"
+  		p:name="warehouseCode"
+		>
+  </bean>
+
+  <bean id="CheckinDocument-lastUpdateDate" parent="CheckinDocument-lastUpdateDate-parentBean" />
+  <bean id="CheckinDocument-lastUpdateDate-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="lastUpdateDate"
+        p:forceUppercase="false"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="HiddenControlDefinition" />
+    </property>
+  </bean>
+
+  <bean id="CheckinDocument-orderDocNumber" parent="CheckinDocument-orderDocNumber-parentBean" />
+  <bean id="CheckinDocument-orderDocNumber-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="orderDocNumber"
+        p:forceUppercase="false"
+        p:label="Order Doc Number"
+        p:shortLabel="Order Doc Number"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CheckinDocument-vendorRefNbr" parent="CheckinDocument-vendorRefNbr-parentBean" />
+  <bean id="CheckinDocument-vendorRefNbr-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorRefNbr"
+        p:forceUppercase="false"
+        p:label="Vendor Reference Number"
+        p:shortLabel="Vendor Reference Number"
+        p:maxLength="20"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="45" />
+    </property>
+  </bean>
+
+  <bean id="CheckinDocument-vendorShipmentNbr" parent="CheckinDocument-vendorShipmentNbr-parentBean" />
+  <bean id="CheckinDocument-vendorShipmentNbr-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorShipmentNbr"
+        p:forceUppercase="false"
+        p:label="Vendor Shipment Nbr"
+        p:shortLabel="Vendor Shipment Nbr"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CheckinDocument-versionNumber" parent="CheckinDocument-versionNumber-parentBean" />
+  <bean id="CheckinDocument-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+	<bean id="CheckinDocument-workflowAttributes" parent="CheckinDocument-workflowAttributes-parentBean"/>
+	
+	<bean id="CheckinDocument-workflowAttributes-parentBean" abstract="true" parent="WorkflowAttributes"/>
+
+</beans>

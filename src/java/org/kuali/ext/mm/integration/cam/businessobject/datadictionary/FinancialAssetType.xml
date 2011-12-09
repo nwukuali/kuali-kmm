@@ -1,0 +1,111 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="FinancialAssetType" parent="FinancialAssetType-parentBean" />
+
+  <bean id="FinancialAssetType-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.integration.cam.businessobject.FinancialAssetType"
+        p:titleAttribute="Asset Type"
+        p:objectLabel="Financial Asset Type"
+        p:inquiryDefinition-ref="FinancialAssetType-inquiryDefinition"
+        p:lookupDefinition-ref="FinancialAssetType-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="FinancialAssetType-capitalAssetTypeCode" />
+        <ref bean="FinancialAssetType-capitalAssetTypeDescription" />
+      </list>
+    </property>
+  </bean>
+
+  <bean id="FinancialAssetType-capitalAssetTypeCode" parent="FinancialAssetType-capitalAssetTypeCode-parentBean" />
+  <bean id="FinancialAssetType-capitalAssetTypeCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="capitalAssetTypeCode"
+        p:forceUppercase="false"
+        p:label="Capital Asset Type Code"
+        p:shortLabel="Capital Asset Type Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialAssetType-capitalAssetTypeDescription" parent="FinancialAssetType-capitalAssetTypeDescription-parentBean" />
+  <bean id="FinancialAssetType-capitalAssetTypeDescription-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="capitalAssetTypeDescription"
+        p:forceUppercase="false"
+        p:label="Capital Asset Type Description"
+        p:shortLabel="Capital Asset Type Description"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="FinancialAssetType-inquiryDefinition" parent="FinancialAssetType-inquiryDefinition-parentBean" />
+
+  <bean id="FinancialAssetType-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Financial Asset Type Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Financial Asset Type Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="capitalAssetTypeCode" />
+              <bean parent="FieldDefinition" p:attributeName="capitalAssetTypeDescription" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="FinancialAssetType-lookupDefinition" parent="FinancialAssetType-lookupDefinition-parentBean" />
+
+  <bean id="FinancialAssetType-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Financial Asset Type Lookup" 
+ >
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>capitalAssetTypeCode</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="capitalAssetTypeCode" />
+        <bean parent="FieldDefinition" p:attributeName="capitalAssetTypeDescription" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="capitalAssetTypeCode" />
+        <bean parent="FieldDefinition" p:attributeName="capitalAssetTypeDescription" />
+      </list>
+    </property>
+  </bean>
+
+</beans>

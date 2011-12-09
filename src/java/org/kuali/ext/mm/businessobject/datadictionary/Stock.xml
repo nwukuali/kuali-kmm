@@ -1,0 +1,829 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="Stock" parent="Stock-parentBean" />
+
+  <bean id="Stock-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.Stock"
+        p:titleAttribute="stockId"
+        p:objectLabel="Stock"
+        p:inquiryDefinition-ref="Stock-inquiryDefinition"
+        p:lookupDefinition-ref="Stock-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="Stock-active" />
+        <ref bean="Stock-removeUntilDate" />    
+        <ref bean="Stock-distributorNbr" />     
+        <ref bean="Stock-lastUpdateDate" />
+        <ref bean="Stock-manufacturerNbr" />
+        <ref bean="Stock-minimumOrderQty" />
+        <ref bean="Stock-stockPrice"/>
+        <ref bean="Stock-obsoleteInd" />
+        <ref bean="Stock-packagingUnitDesc" />
+        <ref bean="Stock-perishableInd" />
+        <ref bean="Stock-recycledInd" />
+        <ref bean="Stock-rentals" />
+        <ref bean="Stock-reorderPointQty" />
+        <ref bean="Stock-restrictedRouteCd" />
+        <ref bean="Stock-safetyStockDays" />
+        <ref bean="Stock-safetyStockQty" />
+        <ref bean="Stock-salesUnitOfIssueCd" />
+        <ref bean="Stock-salesUnitOfIssueRt" />
+        <ref bean="Stock-buyUnitOfIssueCd" />
+        <ref bean="Stock-buyUnitOfIssueRt" />
+        <ref bean="Stock-shippingHt" />
+        <ref bean="Stock-shippingLh" />
+        <ref bean="Stock-shippingWd" />
+        <ref bean="Stock-shippingWgt" />     
+        <ref bean="Stock-stockDesc" />
+        <ref bean="Stock-stockDistributorNbr" />
+        <ref bean="Stock-stockId" />
+        <ref bean="Stock-surchargeInd" />
+        <ref bean="Stock-taxableInd" />
+        <ref bean="Stock-upcCd" />
+        <ref bean="Stock-versionNumber" />    
+        <ref bean="Stock-agreementNbr"/>
+        <ref bean="Stock-stockTypeCode"/>
+        <ref bean="Stock-cycleCntCd" />
+        <ref bean="Stock-rentalObjectCode" />   
+        <ref bean="Stock-stockHistory.residualTag"/>
+        <ref bean="Stock-stockPackNotes.stockPackNoteId"/>     
+        <ref bean="Stock-stockBalances.stockBalanceId"/>    
+        <ref bean="Stock-hazardousMateriels.hazardousMaterielId"/>    
+        <ref bean="Stock-hazardousMateriels.hazardousUnCode"/>
+        <ref bean="Stock-stockAttributes.stockAttributeId"/>        
+        <ref bean="Stock-stockPackNotes"/>
+        <ref bean="Stock-stockBalances"/>    
+         <ref bean="Stock-stockAttributes"/>    
+        <ref bean="Stock-lastChangeActvIndDt"/>	
+		<ref bean="Stock-soleSourceInd"/>		
+		<ref bean="Stock-maximumOrderQty" />
+	    <ref bean="Stock-stockTransReason.stockTransReasonCd"/>
+  		<ref bean="Stock-stockTransReason.stockTransReasonDesc"/>
+      </list>
+    </property>
+    <property name="relationships" >
+      <list>     
+          <bean parent="RelationshipDefinition">
+          <property name="objectAttributeName" value="stockTransReason" />
+          <property name="primitiveAttributes" >
+            <list>
+              <bean parent="PrimitiveAttributeDefinition"
+                    p:sourceName="stockTransReason.stockTransReasonCd"
+                    p:targetName="stockTransReasonCd" />
+            </list>
+          </property>
+           <property name="supportAttributes" >
+            <list>
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="stockTransReason.stockTransReasonDesc"
+                    p:targetName="stockTransReasonDesc" />            
+             </list>
+          </property>
+          </bean>         
+          <bean parent="RelationshipDefinition">
+          <property name="objectAttributeName" value="stockHistory" />
+          <property name="primitiveAttributes" >
+            <list>
+              <bean parent="PrimitiveAttributeDefinition"
+                    p:sourceName="stockHistory.residualTag"
+                    p:targetName="residualTag" />
+            </list>
+          </property>
+          </bean>
+          <bean parent="RelationshipDefinition">
+	          <property name="objectAttributeName" value="buyUnitOfIssue"/>
+	          <property name="primitiveAttributes">
+	            <list>
+	              <bean parent="PrimitiveAttributeDefinition"
+	              	p:sourceName="buyUnitOfIssueCd"
+	              	p:targetName="itemUnitOfMeasureCode" />
+	            </list>
+	          </property>          
+	        </bean>
+        </list>
+    </property>   
+  </bean>  
+  
+  <bean id="Stock-stockHistory.residualTag" parent="Stock-stockHistory.residualTag-parentBean" />
+  <bean id="Stock-stockHistory.residualTag-parentBean" parent="StockHistory-residualTag" abstract="true"
+        p:name="stockHistory.residualTag"
+        p:forceUppercase="false"
+        p:label="Residual Tag"
+        p:shortLabel="Residual Tag"
+        p:maxLength="18"
+        p:required="true" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="18" />
+    </property>
+  </bean>      
+  
+  <bean id="Stock-stockTransReason.stockTransReasonDesc" parent="Stock-stockTransReason.stockTransReasonDesc-parentBean"/>
+  <bean id="Stock-stockTransReason.stockTransReasonDesc-parentBean" abstract="true" parent="StockTransReason-stockTransReasonDesc"
+    p:name="stockTransReason.stockTransReasonDesc" 
+    p:label= "Stock Transaction Reason Name"
+    p:required = "true">
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="45" />
+    </property>
+    </bean>
+       
+  <bean id="Stock-stockTransReason.stockTransReasonCd" parent="Stock-stockTransReason.stockTransReasonCd-parentBean"/>
+  <bean id="Stock-stockTransReason.stockTransReasonCd-parentBean" abstract="true" parent="StockTransReason-stockTransReasonCd"
+    p:name="stockTransReason.stockTransReasonCd" 
+    p:label= "Stock Transaction Reason Code"
+    p:required = "true"/>
+  
+  <bean id="Stock-lastChangeActvIndDt" parent="Stock-lastChangeActvIndDt-parentBean" />
+  <bean id="Stock-lastChangeActvIndDt-parentBean" parent="GenericAttributes-genericTimestamp" abstract="true"
+        p:name="lastChangeActvIndDt"
+        p:forceUppercase="false"
+        p:label="Active Indicator Last Change Date"
+        p:shortLabel="Active Indicator Last Change Date"
+        p:maxLength="10"
+        p:required="false" >
+  </bean>
+
+  <bean id="Stock-removeUntilDate" parent="Stock-removeUntilDate-parentBean" />
+  <bean id="Stock-removeUntilDate-parentBean" parent="GenericAttributes-genericDate" abstract="true"
+        p:name="removeUntilDate"
+        p:forceUppercase="false"
+        p:label="Remove Until"
+        p:shortLabel="Remove Until"
+        p:maxLength="10"
+        p:required="false" >
+  </bean>
+  
+  <bean id="Stock-stockPackNotes" parent="Stock-stockPackNotes-parentBean" />
+  <bean id="Stock-stockPackNotes-parentBean" abstract="true" parent="AttributeDefinition">
+    <property name="name" value="stockPackNotes" />
+    <property name="forceUppercase" value="true" />
+    <property name="label" value="Stock Pack Notes" />
+    <property name="shortLabel" value="Stock Pack Notes" />
+    <property name="maxLength" value="45" />
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern" p:allowWhitespace="true"/>
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition" p:size="45"/>
+    </property>
+  </bean>
+  
+  <bean id="Stock-stockBalances" parent="Stock-stockBalances-parentBean" />
+  <bean id="Stock-stockBalances-parentBean" abstract="true" parent="AttributeDefinition">
+    <property name="name" value="stockBalances" />
+    <property name="forceUppercase" value="true" />
+    <property name="label" value="Stock Balance" />
+    <property name="shortLabel" value="Stock Balance" />
+    <property name="maxLength" value="45" />
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern" p:allowWhitespace="true"/>
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition" p:size="45"/>
+    </property>
+  </bean>
+  
+  <bean id="Stock-stockAttributes" parent="Stock-stockAttributes-parentBean" />
+  <bean id="Stock-stockAttributes-parentBean" abstract="true" parent="AttributeDefinition">
+    <property name="name" value="stockAttributes" />
+    <property name="forceUppercase" value="true" />
+    <property name="label" value="Stock Attribute" />
+    <property name="shortLabel" value="Stock Attribute" />
+    <property name="maxLength" value="45" />
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern" p:allowWhitespace="true"/>
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition" p:size="45"/>
+    </property>
+  </bean>
+  
+  <bean id="Stock-stockBalances.stockBalanceId" parent="Stock-stockBalances.stockBalanceId-parentBean" /> 
+  <bean id="Stock-stockBalances.stockBalanceId-parentBean" abstract="true" parent="StockBalance-stockBalanceId">
+  <property name="name" value="stockBalances.stockBalanceId" /> 
+  <property name="shortLabel" value="Stock Balance" /> 
+  </bean>  
+  
+  <bean id="Stock-stockAttributes.stockAttributeId" parent="Stock-stockAttributes.stockAttributeId-parentBean" /> 
+  <bean id="Stock-stockAttributes.stockAttributeId-parentBean" abstract="true" parent="StockAttribute-stockAttributeId">
+  <property name="name" value="stockAttributes.stockAttributeId" /> 
+  <property name="shortLabel" value="Stock Attribute" /> 
+  </bean>  
+    
+  <bean id="Stock-stockPackNotes.stockPackNoteId" parent="Stock-stockPackNotes.stockPackNoteId-parentBean" /> 
+  <bean id="Stock-stockPackNotes.stockPackNoteId-parentBean" abstract="true" parent="StockPackNote-stockPackNoteId">
+  <property name="name" value="stockPackNotes.stockPackNoteId" /> 
+  <property name="shortLabel" value="Stock Pack Note" /> 
+  </bean>
+   
+  <bean id="Stock-hazardousMateriels.hazardousMaterielId" parent="Stock-hazardousMateriels.hazardousMaterielId-parentBean" /> 
+  <bean id="Stock-hazardousMateriels.hazardousMaterielId-parentBean" abstract="true" parent="HazardousMateriel-hazardousMaterielId">
+  <property name="name" value="hazardousMateriels.hazardousMaterielId" /> 
+  <property name="shortLabel" value="Hazardous Materiel" /> 
+  </bean>
+  
+  <bean id="Stock-hazardousMateriels.hazardousUnCode" parent="Stock-hazardousMateriels.hazardousUnCode-parentBean" /> 
+  <bean id="Stock-hazardousMateriels.hazardousUnCode-parentBean" abstract="true" parent="HazardousMateriel-hazardousUnCode">
+  <property name="name" value="hazardousMateriels.hazardousUnCode" /> 
+  <property name="shortLabel" value="Hazardous Materiel" /> 
+  </bean>
+  
+      
+  <bean id="Stock-agreementNbr" parent="Stock-agreementNbr-parentBean"/>
+  <bean id="Stock-agreementNbr-parentBean" abstract="true" parent="AttributeDefinition"
+    p:name="agreementNbr" 
+    p:label= "Agreement Number"
+    p:maxLength="15"
+    p:required = "false">
+       <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="15" />
+    </property>
+  </bean>
+    
+  <bean id="Stock-stockTypeCode" parent="Stock-stockTypeCode-parentBean"/>
+  <bean id="Stock-stockTypeCode-parentBean" abstract="true" parent="AttributeDefinition"
+    p:name="stockTypeCode" 
+    p:label= "Stock Type Code"
+     p:maxLength="2"
+    p:required = "false">
+       <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="2" />
+    </property>
+  </bean>   
+    
+  <bean id="Stock-rentalObjectCode" parent="Stock-rentalObjectCode-parentBean"/>
+  <bean id="Stock-rentalObjectCode-parentBean" abstract="true" parent="RentalObjectCode-rentalObjectCode"
+    p:name="rentalObjectCode" >
+  </bean>
+    
+  <bean id="Stock-cycleCntCd" parent="Stock-cycleCntCd-parentBean"/>
+  <bean id="Stock-cycleCntCd-parentBean" abstract="true" parent="AttributeDefinition"
+   p:name="cycleCntCd" 
+    p:maxLength="1"
+    p:label= "Cycle Count Code"
+    p:required = "false">
+       <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="1" />
+    </property>
+  </bean>
+    
+  <bean id="Stock-active" parent="Stock-active-parentBean" />
+  <bean id="Stock-active-parentBean" abstract="true" parent="GenericAttributes-activeIndicator" 
+        p:name="active"
+        p:label="Active"
+        p:shortLabel="Active"
+        p:required="false" />
+
+  <bean id="Stock-buyUnitOfIssueCd" parent="Stock-buyUnitOfIssueCd-parentBean" />
+  <bean id="Stock-buyUnitOfIssueCd-parentBean" parent="FinancialUnitOfMeasure-itemUnitOfMeasureCode" abstract="true"
+        p:name="buyUnitOfIssueCd"
+        p:label="Buy Unit Of Issue Code"
+        p:shortLabel="Buy Unit Of Issue Code"
+        p:required="false" >
+  </bean>
+
+  <bean id="Stock-buyUnitOfIssueRt" parent="Stock-buyUnitOfIssueRt-parentBean" />
+  <bean id="Stock-buyUnitOfIssueRt-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="buyUnitOfIssueRt"
+        p:forceUppercase="false"
+        p:label="Buy Unit Of Issue Rate"
+        p:shortLabel="Buy Unit Of Issue Rate"
+        p:required="false" >
+     <property name="maxLength" value="8" />
+    	<property name="validationPattern" >
+      		<bean parent="FixedPointValidationPattern"
+            	p:precision="8"
+            	p:scale="4"
+            	p:allowNegative="true" />
+    	</property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="8" />
+    </property>
+  </bean>
+
+  <bean id="Stock-rentals" parent="Stock-rentals-parentBean" />
+  <bean id="Stock-rentals-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="rentals"
+        p:forceUppercase="false"
+        p:label="Rentals"
+        p:shortLabel="Rentals"
+        p:maxLength="10"
+        p:required="false" >
+   <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="Stock-distributorNbr" parent="Stock-distributorNbr-parentBean" />
+  <bean id="Stock-distributorNbr-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="distributorNbr"
+        p:forceUppercase="false"
+        p:label="Agreement Distributor Number"
+        p:shortLabel="Agreement Distributor Number"
+        p:maxLength="30"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="30" />
+    </property>
+  </bean>
+
+  <bean id="Stock-lastUpdateDate" parent="Stock-lastUpdateDate-parentBean" />
+  <bean id="Stock-lastUpdateDate-parentBean" parent="GenericAttributes-genericTimestamp" abstract="true"
+        p:name="lastUpdateDate"
+        p:forceUppercase="false"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:maxLength="10"
+        p:required="false" >
+  </bean>
+
+  <bean id="Stock-manufacturerNbr" parent="Stock-manufacturerNbr-parentBean" />
+  <bean id="Stock-manufacturerNbr-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="manufacturerNbr"
+        p:forceUppercase="false"
+        p:label="Manufacturer Number"
+        p:shortLabel="Manufacturer Number"
+       p:maxLength="30"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="30" />
+    </property>
+  </bean>
+
+  <bean id="Stock-stockPrice" parent="Stock-stockPrice-parentBean" />
+  <bean id="Stock-stockPrice-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="stockPrice"
+        p:forceUppercase="false"
+        p:label="Stock Price"
+        p:shortLabel="Stock Price"
+        p:required="false" >
+     <property name="maxLength" value="19" />
+    	<property name="validationPattern" >
+      		<bean parent="FixedPointValidationPattern"
+            	p:precision="19"
+            	p:scale="4"
+            	p:allowNegative="true" />
+    	</property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="8" />
+    </property>
+  </bean>
+
+  <bean id="Stock-minimumOrderQty" parent="Stock-minimumOrderQty-parentBean" />
+  <bean id="Stock-minimumOrderQty-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="minimumOrderQty"
+        p:forceUppercase="false"
+        p:label="Minimum Order Quantity"
+        p:shortLabel="Minimum Order Quantity"
+        p:maxLength="8"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="8" />
+    </property>
+  </bean>
+
+  <bean id="Stock-maximumOrderQty" parent="Stock-maximumOrderQty-parentBean" />
+  <bean id="Stock-maximumOrderQty-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="maximumOrderQty"
+        p:forceUppercase="false"
+        p:label="Maximum Order Quantity"
+        p:shortLabel="Maximum Order Quantity"
+        p:maxLength="8"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="8" />
+    </property>
+  </bean>
+
+  <bean id="Stock-obsoleteInd" parent="Stock-obsoleteInd-parentBean" />
+  <bean id="Stock-obsoleteInd-parentBean" abstract="true" parent="GenericAttributes-genericBoolean" 
+        p:name="obsoleteInd"
+        p:label="Obsolete Indicator"        
+        p:required="false" />
+        
+        
+  <bean id="Stock-soleSourceInd" parent="Stock-soleSourceInd-parentBean" />
+  <bean id="Stock-soleSourceInd-parentBean" abstract="true" parent="GenericAttributes-genericBoolean" 
+        p:name="soleSourceInd"
+        p:label="Sole Source Indicator"        
+        p:required="false" />
+        
+  <bean id="Stock-packagingUnitDesc" parent="Stock-packagingUnitDesc-parentBean" />
+  <bean id="Stock-packagingUnitDesc-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="packagingUnitDesc"
+        p:forceUppercase="false"
+        p:label="Packaging Unit Description"
+        p:shortLabel="Packaging Unit Description"
+        p:maxLength="80"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+   <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="40" />
+    </property>
+  </bean>
+
+  <bean id="Stock-perishableInd" parent="Stock-perishableInd-parentBean" />
+  <bean id="Stock-perishableInd-parentBean" abstract="true" parent="GenericAttributes-genericBoolean" 
+        p:name="perishableInd"
+        p:label="Perishable Indicator"
+        p:required="false" />
+
+  <bean id="Stock-recycledInd" parent="Stock-recycledInd-parentBean" />
+  <bean id="Stock-recycledInd-parentBean" abstract="true" parent="GenericAttributes-genericBoolean" 
+        p:name="recycledInd"
+        p:label="Recycled Indicator"
+        p:required="false" />
+
+  <bean id="Stock-reorderPointQty" parent="Stock-reorderPointQty-parentBean" />
+  <bean id="Stock-reorderPointQty-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="reorderPointQty"
+        p:forceUppercase="false"
+        p:label="Reorder Point Quantity"
+        p:shortLabel="Reorder Point Quantity"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="Stock-restrictedRouteCd" parent="Stock-restrictedRouteCd-parentBean" />
+  <bean id="Stock-restrictedRouteCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="restrictedRouteCd"
+        p:forceUppercase="false"
+        p:label="Restricted Route Code"
+        p:shortLabel="Restricted Route Code"
+        p:maxLength="2"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+           p:size="2" />
+    </property>
+  </bean>
+
+  <bean id="Stock-safetyStockDays" parent="Stock-safetyStockDays-parentBean" />
+  <bean id="Stock-safetyStockDays-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="safetyStockDays"
+        p:forceUppercase="false"
+        p:label="Safety Stock Days"
+        p:shortLabel="Safety Stock Days"
+        p:maxLength="8"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="8" />
+    </property>
+  </bean>
+
+  <bean id="Stock-safetyStockQty" parent="Stock-safetyStockQty-parentBean" />
+  <bean id="Stock-safetyStockQty-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="safetyStockQty"
+        p:forceUppercase="false"
+        p:label="Safety Stock Quantity"
+        p:shortLabel="Safety Stock Quantity"
+        p:maxLength="8"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="8" />
+    </property>
+  </bean>
+
+  <bean id="Stock-salesUnitOfIssueCd" parent="Stock-salesUnitOfIssueCd-parentBean" />
+  <bean id="Stock-salesUnitOfIssueCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="salesUnitOfIssueCd"
+        p:forceUppercase="false"
+        p:label="Sales Unit Of Issue Code"
+        p:shortLabel="U/I"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="Stock-salesUnitOfIssueRt" parent="Stock-salesUnitOfIssueRt-parentBean" />
+  <bean id="Stock-salesUnitOfIssueRt-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="salesUnitOfIssueRt"
+        p:forceUppercase="false"
+        p:label="Sales Unit Of Issue Rate"
+        p:shortLabel="Sales Unit Of Issue Rate"
+        p:required="false" >
+   <property name="maxLength" value="8" />
+    	<property name="validationPattern" >
+      		<bean parent="FixedPointValidationPattern"
+            	p:precision="8"
+            	p:scale="4"
+            	p:allowNegative="true" />
+    	</property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="8" />
+    </property>
+  </bean>
+
+  <bean id="Stock-shippingHt" parent="Stock-shippingHt-parentBean" />
+  <bean id="Stock-shippingHt-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="shippingHt"
+        p:forceUppercase="false"
+        p:label="Shipping Height"
+        p:shortLabel="Shipping Height"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="Stock-shippingLh" parent="Stock-shippingLh-parentBean" />
+  <bean id="Stock-shippingLh-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="shippingLh"
+        p:forceUppercase="false"
+        p:label="Shipping Length"
+        p:shortLabel="Shipping Length"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="Stock-shippingWd" parent="Stock-shippingWd-parentBean" />
+  <bean id="Stock-shippingWd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="shippingWd"
+        p:forceUppercase="false"
+        p:label="Shipping Width"
+        p:shortLabel="Shipping Width"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="Stock-shippingWgt" parent="Stock-shippingWgt-parentBean" />
+  <bean id="Stock-shippingWgt-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="shippingWgt"
+        p:forceUppercase="false"
+        p:label="Shipping Weight"
+        p:shortLabel="Shipping Weight"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="Stock-stockDesc" parent="Stock-stockDesc-parentBean" />
+  <bean id="Stock-stockDesc-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="stockDesc"
+        p:forceUppercase="false"
+        p:label="Stock Description"
+        p:shortLabel="Description"
+        p:maxLength="400"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+     <property name="control" >
+       <bean parent="TextareaControlDefinition" p:rows="5" p:cols="60"/>
+    </property>
+  </bean>
+
+  <bean id="Stock-stockDistributorNbr" parent="Stock-stockDistributorNbr-parentBean" />
+  <bean id="Stock-stockDistributorNbr-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="stockDistributorNbr"
+        p:forceUppercase="false"
+        p:label="Stock Distributor Number"
+        p:shortLabel="Stock Distributor Number"
+        p:maxLength="30"
+        p:required="true" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="Stock-stockId" parent="Stock-stockId-parentBean" />
+  <bean id="Stock-stockId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="stockId"
+        p:forceUppercase="false"
+        p:label="Stock ID"
+        p:shortLabel="Stock ID"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+  </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="Stock-surchargeInd" parent="Stock-surchargeInd-parentBean" />
+  <bean id="Stock-surchargeInd-parentBean" abstract="true" parent="GenericAttributes-genericBoolean" 
+        p:name="surchargeInd"
+        p:label="Surcharge Indicator"
+        p:required="false" />
+
+  <bean id="Stock-taxableInd" parent="Stock-taxableInd-parentBean" />
+  <bean id="Stock-taxableInd-parentBean" abstract="true" parent="GenericAttributes-genericBoolean" 
+        p:name="taxableInd"
+        p:label="Taxable Indicator"
+        p:required="false" />
+
+  <bean id="Stock-upcCd" parent="Stock-upcCd-parentBean" />
+  <bean id="Stock-upcCd-parentBean" parent="AttributeDefinition" abstract="true"
+       p:name="upcCd"
+        p:forceUppercase="false"
+        p:label="UPC Code"
+        p:shortLabel="UPC Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="Stock-versionNumber" parent="Stock-versionNumber-parentBean" />
+  <bean id="Stock-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="Stock-inquiryDefinition" parent="Stock-inquiryDefinition-parentBean" />
+
+  <bean id="Stock-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Stock Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Stock Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+     	 		<bean parent="FieldDefinition" p:attributeName="stockDistributorNbr" />
+		        <bean parent="FieldDefinition" p:attributeName="distributorNbr" />
+		        <bean parent="FieldDefinition" p:attributeName="stockDesc" />
+		   		<bean parent="FieldDefinition" p:attributeName="stockTypeCode" /> 
+		   		<bean parent="FieldDefinition" p:attributeName="agreementNbr" /> 
+		   		<bean parent="FieldDefinition" p:attributeName="rentalObjectCode" /> 
+		   		<bean parent="FieldDefinition" p:attributeName="cycleCntCd" /> 
+		        <bean parent="FieldDefinition" p:attributeName="restrictedRouteCd" />
+		        <bean parent="FieldDefinition" p:attributeName="buyUnitOfIssueCd" />
+		        <bean parent="FieldDefinition" p:attributeName="salesUnitOfIssueCd" />
+		        <bean parent="FieldDefinition" p:attributeName="upcCd" />		   
+		     </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="Stock-lookupDefinition" parent="Stock-lookupDefinition-parentBean" />
+
+  <bean id="Stock-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Stock Lookup" >
+        
+  <!-- ********************************************************************************** --> 
+    <property name="lookupableID" value="stockManualAdjustmentLookupable"/>
+  <!-- ********************************************************************************** --> 
+    
+        
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>stockId</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>
+     	 		<bean parent="FieldDefinition" p:attributeName="stockDistributorNbr" />
+		        <bean parent="FieldDefinition" p:attributeName="distributorNbr" />
+		        <bean parent="FieldDefinition" p:attributeName="stockDesc" />
+		   		<bean parent="FieldDefinition" p:attributeName="stockTypeCode" /> 
+		   		<bean parent="FieldDefinition" p:attributeName="agreementNbr" /> 
+		   		<bean parent="FieldDefinition" p:attributeName="rentalObjectCode" /> 
+		   		<bean parent="FieldDefinition" p:attributeName="cycleCntCd" /> 
+		        <bean parent="FieldDefinition" p:attributeName="restrictedRouteCd" />
+		        <bean parent="FieldDefinition" p:attributeName="buyUnitOfIssueCd" />
+		        <bean parent="FieldDefinition" p:attributeName="salesUnitOfIssueCd" />
+		        <bean parent="FieldDefinition" p:attributeName="upcCd" />		  
+	 </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+      			<bean parent="FieldDefinition" p:attributeName="stockDistributorNbr" />
+		        <bean parent="FieldDefinition" p:attributeName="distributorNbr" />
+		        <bean parent="FieldDefinition" p:attributeName="stockDesc" />
+		   		<bean parent="FieldDefinition" p:attributeName="stockTypeCode" /> 
+		   		<bean parent="FieldDefinition" p:attributeName="agreementNbr" /> 		   		
+		</list>
+    </property>
+  </bean>
+</beans>

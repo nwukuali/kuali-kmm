@@ -1,0 +1,116 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="DeliveryLabelDocument" parent="DeliveryLabelDocument-parentBean" />
+  
+  <bean id="DeliveryLabelDocument-parentBean" abstract="true" parent="TransactionalDocumentEntry">
+  	<property name="documentTypeName" value="SPDL"/>
+   	<property name="sessionDocument" value="true"/>
+    <property name="documentClass" value="org.kuali.ext.mm.document.DeliveryLabelDocument"/>  
+    <property name="businessRulesClass" value="org.kuali.ext.mm.document.validation.impl.DeliveryLabelDocumentRule"/>   
+    <property name="documentPresentationControllerClass" value="org.kuali.ext.mm.document.authorization.DeliveryLabelDocumentPresentationController"/>
+    <property name="documentAuthorizerClass" value="org.kuali.rice.kns.document.authorization.TransactionalDocumentAuthorizerBase"/>
+    <property name="allowsCopy" value="true"/>  
+
+  <property name="attributes" >
+    <list>
+      <ref bean="DeliveryLabelDocument-versionNumber" />
+      <ref bean="DeliveryLabelDocument-nbrOfCartons" />
+      <ref bean="DeliveryLabelDocument-pickListLines" />
+      <ref bean="DeliveryLabelDocument-pickTicketNumber" />
+      <ref bean="DeliveryLabelDocument-pickStatusCodeCd" />    
+      <ref bean="DeliveryLabelDocument-packStatusCodeCd"/>
+    </list>
+  </property>
+  
+  <property name="defaultExistenceChecks" >
+   <list><!--
+      <bean parent="ReferenceDefinition"
+              p:attributeName="pickStatusCode"
+              p:attributeToHighlightOnFail="pickStatusCode" />
+      --><bean parent="ReferenceDefinition"
+              p:attributeName="packStatusCode"
+              p:attributeToHighlightOnFail="packStatusCode" />
+   </list>
+  </property>
+    
+  <property name="workflowAttributes">
+  	<ref bean="DeliveryLabelDocument-workflowAttributes" />
+  </property>
+  </bean>
+  
+  <bean id="DeliveryLabelDocument-versionNumber" parent="DeliveryLabelDocument-versionNumber-parentBean" />
+  <bean id="DeliveryLabelDocument-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+  <bean id="DeliveryLabelDocument-nbrOfCartons" parent="DeliveryLabelDocument-nbrOfCartons-parentBean" />
+  <bean id="DeliveryLabelDocument-nbrOfCartons-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="nbrOfCartons" 
+        p:label="Number Of Cartons"
+        p:maxLength="8"
+        p:required= "false">
+        <property name="validationPattern" >
+      	<bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    	</property>
+    	<property name="control" >
+      	<bean parent="TextControlDefinition"
+            p:size="8" />
+    </property>
+  </bean>
+        
+  <bean id="DeliveryLabelDocument-pickStatusCodeCd" parent="DeliveryLabelDocument-pickStatusCodeCd-parentBean" />
+  <bean id="DeliveryLabelDocument-pickStatusCodeCd-parentBean" parent="PickStatusCode-pickStatusCode" abstract="true"
+        p:name="pickStatusCodeCd">
+  </bean>
+  
+  <bean id="DeliveryLabelDocument-packStatusCodeCd" parent="DeliveryLabelDocument-packStatusCodeCd-parentBean" />
+  <bean id="DeliveryLabelDocument-packStatusCodeCd-parentBean" parent="PackStatusCode-packStatusCode" abstract="true"
+        p:name="packStatusCodeCd">
+  </bean>
+  
+  <bean id="DeliveryLabelDocument-pickListLines" parent="DeliveryLabelDocument-pickListLines-parentBean" />
+  <bean id="DeliveryLabelDocument-pickListLines-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="pickListLines"
+        p:forceUppercase="false"
+        p:label="Pick List Lines"
+        p:shortLabel="Pick List Lines"
+        p:maxLength="10"
+        p:required="true" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  
+  <bean id="DeliveryLabelDocument-pickTicketNumber" parent="DeliveryLabelDocument-pickTicketNumber-parentBean" />
+  <bean id="DeliveryLabelDocument-pickTicketNumber-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="pickTicketNumber"
+        p:forceUppercase="false"
+        p:label="Pick Ticket Number"
+        p:shortLabel="Pick Ticket Number"
+        p:maxLength="36"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="NumericValidationPattern" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="15" />
+    </property>
+  </bean>
+  
+
+  
+  <bean id="DeliveryLabelDocument-workflowAttributes" parent="DeliveryLabelDocument-workflowAttributes-parentBean"/>
+  <bean id="DeliveryLabelDocument-workflowAttributes-parentBean" abstract="true" parent="WorkflowAttributes" />
+
+</beans>

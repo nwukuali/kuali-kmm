@@ -1,0 +1,391 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="StockBalance" parent="StockBalance-parentBean" />
+
+  <bean id="StockBalance-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.StockBalance"
+        p:titleAttribute="stockBalanceId"
+        p:objectLabel="Stock Balance"
+        p:inquiryDefinition-ref="StockBalance-inquiryDefinition"
+        p:lookupDefinition-ref="StockBalance-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="StockBalance-stockId" />
+        <ref bean="StockBalance-stock.stockDistributorNbr" />
+        <ref bean="StockBalance-stock.stockDesc"/>
+        <ref bean="StockBalance-bin.binNbr" />
+        <ref bean="StockBalance-bin.shelfId" />
+        <ref bean="StockBalance-bin.zone.zoneCd" />
+        <ref bean="StockBalance-bin.zone.warehouse.warehouseNme" />
+        <ref bean="StockBalance-bin.shelfIdNbr" />
+        <ref bean="StockBalance-binId" />
+        <ref bean="StockBalance-binFull" />
+        <ref bean="StockBalance-quantityBeingAdjusted"/>
+        <ref bean="StockBalance-quantityBeingAdjustedFromOldToNew"/>
+        <ref bean="StockBalance-lastCheckinDt" />
+        <ref bean="StockBalance-lastUpdateDate" />
+        <ref bean="StockBalance-qtyOnHand" />
+        <ref bean="StockBalance-stockBalanceId" />
+        <ref bean="StockBalance-stockTransReason.stockTransReasonCd"/>
+        <ref bean="StockBalance-versionNumber" />
+        <ref bean="StockBalance-stockPerishableDt"/>
+        <ref bean="StockBalance-stockTransReason.incrementDecrementInd" />
+        <ref bean="StockBalance-stockTransReason.stockTransReasonDesc"/>
+        <ref bean="StockBalance-bin.binDisDesc" />
+        <ref bean="StockBalance-unassign" />
+         
+      </list>
+    </property>
+    <property name="relationships" >
+      <list>
+        <bean parent="RelationshipDefinition">
+          <property name="objectAttributeName" value="stock" />
+          <property name="primitiveAttributes" >
+            <list>
+              <bean parent="PrimitiveAttributeDefinition"
+                    p:sourceName="stockId"
+                    p:targetName="stockId" />
+            </list>
+          </property>
+          <property name="supportAttributes" >
+            <list>
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="stock.stockDistributorNbr"
+                    p:targetName="stockDistributorNbr" />      
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="false"
+                    p:sourceName="stock.stockDesc"
+                    p:targetName="stockDesc" />            
+            </list>
+          </property>
+        </bean>        
+        
+          <bean parent="RelationshipDefinition">
+          <property name="objectAttributeName" value="stockTransReason" />
+          <property name="primitiveAttributes" >
+            <list>
+              <bean parent="PrimitiveAttributeDefinition"
+                    p:sourceName="stockTransReason.stockTransReasonCd"
+                    p:targetName="stockTransReasonCd" />
+            </list>
+          </property>
+           <property name="supportAttributes" >
+            <list>
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="stockTransReason.stockTransReasonDesc"
+                    p:targetName="stockTransReasonDesc" />     
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="stockTransReason.incrementDecrementInd"
+                    p:targetName="incrementDecrementInd" />                       
+             </list>
+          </property>
+          </bean>          
+          
+          <bean parent="RelationshipDefinition">
+          <property name="objectAttributeName" value="bin" />
+          <property name="primitiveAttributes" >
+            <list>
+              <bean parent="PrimitiveAttributeDefinition"
+                    p:sourceName="binId"
+                    p:targetName="binId" />
+            </list>
+          </property>      
+           <property name="supportAttributes" >
+            <list>
+              <bean parent="SupportAttributeDefinition"
+               		p:identifier="false"
+              		p:sourceName="bin.binDisDesc"
+                    p:targetName="binDisDesc" />
+              <bean parent="SupportAttributeDefinition"
+               		p:identifier="true"
+              		p:sourceName="bin.binNbr"
+                    p:targetName="binNbr" />
+            </list>              
+          </property>    
+          </bean>          
+      </list>
+    </property>        
+  </bean>
+  
+  <bean id="StockBalance-bin.binDisDesc" parent="StockBalance-bin.binDisDesc-parentBean"/>
+  <bean id="StockBalance-bin.binDisDesc-parentBean" abstract="true" parent="Bin-binDisDesc"
+    p:name="bin.binDisDesc" 
+    p:label= "Zone/Bin/Shelf ID/Shelf Number"
+    p:required = "true"/>
+     
+  <bean id="StockBalance-stock.stockDesc" parent="StockBalance-stock.stockDesc-parentBean" />
+  <bean id="StockBalance-stock.stockDesc-parentBean" parent="Stock-stockDesc" abstract="true"
+        p:name="stock.stockDesc"
+        p:forceUppercase="false"
+        p:label="Stock Description"
+        p:shortLabel="Stock Description">
+  </bean>
+  
+  <bean id="StockBalance-stockTransReason.stockTransReasonCd" parent="StockBalance-stockTransReason.stockTransReasonCd-parentBean"/>
+  <bean id="StockBalance-stockTransReason.stockTransReasonCd-parentBean" abstract="true" parent="StockTransReason-stockTransReasonCd"
+    p:name="stockTransReason.stockTransReasonCd" 
+    p:label= "Stock Transaction Reason Code"
+    p:required = "true">
+    <property name="control" >
+      <bean parent="LookupReadonlyControlDefinition"/>
+    </property>
+  </bean>  
+    
+  <bean id="StockBalance-stockTransReason.stockTransReasonDesc" parent="StockBalance-stockTransReason.stockTransReasonDesc-parentBean"/>
+  <bean id="StockBalance-stockTransReason.stockTransReasonDesc-parentBean" abstract="true" parent="StockTransReason-stockTransReasonDesc"
+    p:name="stockTransReason.stockTransReasonDesc" 
+    p:label= "Stock Transaction Reason Name"
+    p:required = "true">
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="45" />
+    </property>
+    </bean>
+       
+  <bean id="StockBalance-stockTransReason.incrementDecrementInd" parent="StockBalance-stockTransReason.incrementDecrementInd-parentBean"/>
+  <bean id="StockBalance-stockTransReason.incrementDecrementInd-parentBean" abstract="true" parent="StockTransReason-incrementDecrementInd"
+    p:name="stockTransReason.incrementDecrementInd" 
+    p:forceUppercase="true"
+    p:label= "Increment Decrement Indicator"
+    p:required = "false"/>
+      
+  <bean id="StockBalance-stock.stockDistributorNbr" parent="StockBalance-stock.stockDistributorNbr-parentBean" />
+  <bean id="StockBalance-stock.stockDistributorNbr-parentBean" parent="Stock-stockDistributorNbr" abstract="true"
+        p:name="stock.stockDistributorNbr">
+  </bean>
+
+  <bean id="StockBalance-bin.zone.warehouse.warehouseNme" parent="StockBalance-bin.zone.warehouse.warehouseNme-parentBean" />
+  <bean id="StockBalance-bin.zone.warehouse.warehouseNme-parentBean" parent="Warehouse-warehouseNme" abstract="true"
+        p:name="bin.zone.warehouse.warehouseNme"
+        p:required="true" >
+  </bean>
+
+  <bean id="StockBalance-bin.binNbr" parent="StockBalance-bin.binNbr-parentBean" />
+  <bean id="StockBalance-bin.binNbr-parentBean" parent="Bin-binNbr" abstract="true"
+        p:name="bin.binNbr"
+        p:required="true" >
+  </bean>
+
+  <bean id="StockBalance-bin.shelfId" parent="StockBalance-bin.shelfId-parentBean" />
+  <bean id="StockBalance-bin.shelfId-parentBean" parent="Bin-shelfId" abstract="true"
+        p:name="bin.shelfId" >
+  </bean>
+
+  <bean id="StockBalance-bin.zone.zoneCd" parent="StockBalance-bin.zone.zoneCd-parentBean" />
+  <bean id="StockBalance-bin.zone.zoneCd-parentBean" parent="Zone-zoneCd" abstract="true"
+        p:name="bin.zone.zoneCd"
+	>
+  </bean>
+
+  <bean id="StockBalance-bin.shelfIdNbr" parent="StockBalance-bin.shelfIdNbr-parentBean" />
+  <bean id="StockBalance-bin.shelfIdNbr-parentBean" parent="Bin-shelfIdNbr" abstract="true"
+        p:name="bin.shelfIdNbr">
+  </bean>
+
+  <bean id="StockBalance-binFull" parent="StockBalance-binFull-parentBean" />
+  <bean id="StockBalance-binFull-parentBean" abstract="true" parent="GenericAttributes-genericBoolean" 
+        p:name="binFull"
+        p:label="Bin Full Indicator"
+        p:shortLabel="Bin Full"
+        p:required="false" />
+         
+  <bean id="StockBalance-quantityBeingAdjusted" parent="StockBalance-quantityBeingAdjusted-parentBean" />
+  <bean id="StockBalance-quantityBeingAdjusted-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="quantityBeingAdjusted"
+        p:forceUppercase="false"
+        p:label="Quantity to Adjust"
+        p:shortLabel="Quantity to Adjust"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="NumericValidationPattern" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>      
+  
+
+  <bean id="StockBalance-quantityBeingAdjustedFromOldToNew" parent="StockBalance-quantityBeingAdjustedFromOldToNew-parentBean" />
+  <bean id="StockBalance-quantityBeingAdjustedFromOldToNew-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="quantityBeingAdjustedFromOldToNew"
+        p:forceUppercase="false"
+        p:label="Quantity to Transfer from Old to New"
+        p:shortLabel="Quantity to Transfer from Old to New"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="NumericValidationPattern" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>      
+  
+  <bean id="StockBalance-lastCheckinDt" parent="StockBalance-lastCheckinDt-parentBean" />
+  <bean id="StockBalance-lastCheckinDt-parentBean" abstract="true" parent="GenericAttributes-genericDate" 
+        p:name="lastCheckinDt"
+        p:label="Last Checkin Date"
+        p:shortLabel="Last Checkin Date"
+        p:required="false" />
+        
+  <bean id="StockBalance-stockPerishableDt" parent="StockBalance-stockPerishableDt-parentBean" />
+  <bean id="StockBalance-stockPerishableDt-parentBean" abstract="true" parent="GenericAttributes-genericDate" 
+        p:name="stockPerishableDt"
+        p:label="Stock Perishable Date"
+        p:shortLabel="Stock Perishable Date" 
+        p:required="false" />
+
+  <bean id="StockBalance-lastUpdateDate" parent="StockBalance-lastUpdateDate-parentBean" />
+  <bean id="StockBalance-lastUpdateDate-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="lastUpdateDate"
+        p:forceUppercase="false"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="HiddenControlDefinition" />
+    </property>
+  </bean>
+
+  <bean id="StockBalance-qtyOnHand" parent="StockBalance-qtyOnHand-parentBean" />
+  <bean id="StockBalance-qtyOnHand-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="qtyOnHand"
+        p:forceUppercase="false"
+        p:label="Quantity On Hand"
+        p:shortLabel="Quantity On Hand"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="NumericValidationPattern" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  
+  <bean id="StockBalance-binId" parent="StockBalance-binId-parentBean" />
+  <bean id="StockBalance-binId-parentBean" parent="Bin-binId" abstract="true"
+        p:name="binId"
+        p:label="Bin ID">
+	<property name="control" >
+      <bean parent="HiddenControlDefinition" />              
+    </property>   
+  </bean> 
+  
+
+  <bean id="StockBalance-stockId" parent="StockBalance-stockId-parentBean" />
+  <bean id="StockBalance-stockId-parentBean" parent="Stock-stockId" abstract="true"
+        p:name="stockId">
+  </bean>
+
+  <bean id="StockBalance-stockBalanceId" parent="StockBalance-stockBalanceId-parentBean" />
+  <bean id="StockBalance-stockBalanceId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="stockBalanceId"
+        p:forceUppercase="false"
+        p:label="Stock Balance Id"
+        p:shortLabel="Stock Balance Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="StockBalance-versionNumber" parent="StockBalance-versionNumber-parentBean" />
+  <bean id="StockBalance-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+  
+  <bean id="StockBalance-unassign" parent="StockBalance-unassign-parentBean" />
+  <bean id="StockBalance-unassign-parentBean" abstract="true" parent="GenericAttributes-genericBoolean-parentBean" 
+        p:name="unassign"
+        p:required="false" />
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="StockBalance-inquiryDefinition" parent="StockBalance-inquiryDefinition-parentBean" />
+
+  <bean id="StockBalance-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Stock Balance Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Stock Balance Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="binId" />
+              <bean parent="FieldDefinition" p:attributeName="stock.stockDistributorNbr" />
+              <bean parent="FieldDefinition" p:attributeName="stockId" />
+              <bean parent="FieldDefinition" p:attributeName="binFull" />
+              <bean parent="FieldDefinition" p:attributeName="lastCheckinDt" />
+              <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+              <bean parent="FieldDefinition" p:attributeName="qtyOnHand" />
+              <bean parent="FieldDefinition" p:attributeName="stockBalanceId" />
+           
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="StockBalance-lookupDefinition" parent="StockBalance-lookupDefinition-parentBean" />
+
+  <bean id="StockBalance-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Stock Balance Lookup"  >
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>lastUpdateDate</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="bin.binNbr" />          
+        <bean parent="FieldDefinition" p:attributeName="stock.stockDistributorNbr" />      
+        <bean parent="FieldDefinition" p:attributeName="binFull" />
+        <bean parent="FieldDefinition" p:attributeName="qtyOnHand" />
+        <bean parent="FieldDefinition" p:attributeName="lastCheckinDt" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />        
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="bin.binNbr" />                
+        <bean parent="FieldDefinition" p:attributeName="binFull" />
+        <bean parent="FieldDefinition" p:attributeName="stock.stockDistributorNbr" />
+        <bean parent="FieldDefinition" p:attributeName="qtyOnHand" />
+        <bean parent="FieldDefinition" p:attributeName="lastCheckinDt" />  
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />      
+      </list>
+    </property>
+  </bean>
+
+</beans>

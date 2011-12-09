@@ -1,0 +1,56 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="StoresEhsHazardousStateMaintenanceDocument" parent="StoresEhsHazardousStateMaintenanceDocument-parentBean" />
+
+  <bean id="StoresEhsHazardousStateMaintenanceDocument-parentBean" abstract="true" parent="MaintenanceDocumentEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.EhsHazardousState"
+        p:maintainableClass="org.kuali.rice.kns.maintenance.KualiMaintainableImpl"
+        p:documentTypeName="SEZS"
+        p:documentAuthorizerClass="org.kuali.rice.kns.document.authorization.MaintenanceDocumentAuthorizerBase" >
+    <property name="lockingKeys" >
+      <list>
+        <value>ehsHazardousStateCode</value>
+      </list>
+    </property>
+    <property name="defaultExistenceChecks" >
+      <list>
+      </list>
+    </property>
+    <property name="workflowAttributes" >
+        <ref bean="StoresEhsHazardousStateMaintenanceDocument-workflowAttributes" />
+    </property>
+    <property name="maintainableSections" >
+      <list>
+        <ref bean="StoresEhsHazardousStateMaintenanceDocument-MainSection" />
+      </list>
+    </property>
+  </bean>
+
+ <!-- Maintenance Section Definitions -->
+  <bean id="StoresEhsHazardousStateMaintenanceDocument-MainSection" parent="StoresEhsHazardousStateMaintenanceDocument-MainSection-parentBean" />
+
+  <bean id="StoresEhsHazardousStateMaintenanceDocument-MainSection-parentBean" abstract="true" parent="MaintainableSectionDefinition"
+        p:title="Edit EHS Hazardous State" >
+    <property name="maintainableItems" >
+      <list>
+        <bean parent="MaintainableFieldDefinition"
+              p:name="ehsHazardousStateCode"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="ehsHazardousStateName"
+              p:required="false" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="active"
+              p:defaultValue="true" />
+      </list>
+    </property>
+  </bean>
+ <!-- workflow attributes -->
+  <bean id="StoresEhsHazardousStateMaintenanceDocument-workflowAttributes" parent="StoresEhsHazardousStateMaintenanceDocument-workflowAttributes-parentBean" />
+
+  <bean id="StoresEhsHazardousStateMaintenanceDocument-workflowAttributes-parentBean" abstract="true" class="org.kuali.rice.kns.datadictionary.WorkflowAttributes" />
+</beans>

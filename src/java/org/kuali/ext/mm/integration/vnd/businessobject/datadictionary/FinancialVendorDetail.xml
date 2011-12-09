@@ -1,0 +1,706 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="FinancialVendorDetail" parent="FinancialVendorDetail-parentBean" />
+
+  <bean id="FinancialVendorDetail-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.integration.vnd.businessobject.FinancialVendorDetail"
+        p:titleAttribute="Financial Vendor Detail"
+        p:objectLabel="Financial Vendor Detail"
+        p:inquiryDefinition-ref="FinancialVendorDetail-inquiryDefinition"
+        p:lookupDefinition-ref="FinancialVendorDetail-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="FinancialVendorDetail-activeIndicator" />
+        <ref bean="FinancialVendorDetail-vendorHeaderGeneratedIdentifier" />
+        <ref bean="FinancialVendorDetail-vendorDetailAssignedIdentifier" />
+        <ref bean="FinancialVendorDetail-vendorName" />
+        <ref bean="FinancialVendorDetail-vendorNumber" />
+        <!-- Unused attributes below this line -->
+        <ref bean="FinancialVendorDetail-taxableIndicator" />
+        <ref bean="FinancialVendorDetail-vendorConfirmationIndicator" />
+        <ref bean="FinancialVendorDetail-vendorCreditCardIndicator" />
+        <ref bean="FinancialVendorDetail-vendorDunsNumber" />
+        <ref bean="FinancialVendorDetail-vendorFirstLastNameIndicator" />
+        <ref bean="FinancialVendorDetail-vendorFirstName" />
+        <ref bean="FinancialVendorDetail-vendorInactiveReasonCode" />
+        <ref bean="FinancialVendorDetail-vendorLastName" />
+        <ref bean="FinancialVendorDetail-vendorMinimumOrderAmount" />
+        <ref bean="FinancialVendorDetail-vendorParentIndicator" />
+        <ref bean="FinancialVendorDetail-vendorPaymentTermsCode" />
+        <ref bean="FinancialVendorDetail-vendorPrepaymentIndicator" />
+        <ref bean="FinancialVendorDetail-vendorRemitName" />
+        <ref bean="FinancialVendorDetail-vendorRestrictedDate" />
+        <ref bean="FinancialVendorDetail-vendorRestrictedIndicator" />
+        <ref bean="FinancialVendorDetail-vendorRestrictedPersonIdentifier" />
+        <ref bean="FinancialVendorDetail-vendorRestrictedReasonText" />
+        <ref bean="FinancialVendorDetail-vendorShippingPaymentTermsCode" />
+        <ref bean="FinancialVendorDetail-vendorShippingTitleCode" />
+        <ref bean="FinancialVendorDetail-vendorSoldToAssignedIdentifier" />
+        <ref bean="FinancialVendorDetail-vendorSoldToGeneratedIdentifier" />
+        <ref bean="FinancialVendorDetail-vendorSoldToName" />
+        <ref bean="FinancialVendorDetail-vendorSoldToNumber" />
+        <ref bean="FinancialVendorDetail-vendorStateForLookup" />
+        <ref bean="FinancialVendorDetail-vendorUrlAddress" />
+      </list>
+    </property>
+  </bean>
+
+  <bean id="FinancialVendorDetail-activeIndicator" parent="FinancialVendorDetail-activeIndicator-parentBean"/>
+
+  <bean id="FinancialVendorDetail-activeIndicator-parentBean" abstract="true" parent="GenericAttributes-activeIndicator">
+  </bean>
+
+  <bean id="FinancialVendorDetail-taxableIndicator" parent="FinancialVendorDetail-taxableIndicator-parentBean" />
+  <bean id="FinancialVendorDetail-taxableIndicator-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="taxableIndicator"
+        p:forceUppercase="false"
+        p:label="Taxable Indicator"
+        p:shortLabel="Taxable Indicator"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialVendorDetail-vendorConfirmationIndicator" parent="FinancialVendorDetail-vendorConfirmationIndicator-parentBean" />
+  <bean id="FinancialVendorDetail-vendorConfirmationIndicator-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorConfirmationIndicator"
+        p:forceUppercase="false"
+        p:label="Vendor Confirmation Indicator"
+        p:shortLabel="Vendor Confirmation Indicator"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialVendorDetail-vendorCreditCardIndicator" parent="FinancialVendorDetail-vendorCreditCardIndicator-parentBean" />
+  <bean id="FinancialVendorDetail-vendorCreditCardIndicator-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorCreditCardIndicator"
+        p:forceUppercase="false"
+        p:label="Vendor Credit Card Indicator"
+        p:shortLabel="Vendor Credit Card Indicator"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialVendorDetail-vendorDetailAssignedIdentifier" parent="FinancialVendorDetail-vendorDetailAssignedIdentifier-parentBean"/>
+
+  <bean id="FinancialVendorDetail-vendorDetailAssignedIdentifier-parentBean" abstract="true" parent="AttributeDefinition">
+    <property name="name" value="vendorDetailAssignedIdentifier"/>
+    <property name="forceUppercase" value="true"/>
+    <property name="label" value="Vendor Detail Assigned Identifier"/>
+    <property name="shortLabel" value="Detail Assigned ID"/>
+    <property name="maxLength" value="10"/>
+    <property name="validationPattern">
+      <bean parent="NumericValidationPattern"/>
+    </property>
+    <property name="control">
+      <bean parent="HiddenControlDefinition"/>
+    </property>
+  </bean>
+
+  <bean id="FinancialVendorDetail-vendorDunsNumber" parent="FinancialVendorDetail-vendorDunsNumber-parentBean" />
+  <bean id="FinancialVendorDetail-vendorDunsNumber-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorDunsNumber"
+        p:forceUppercase="false"
+        p:label="Vendor Duns Number"
+        p:shortLabel="Vendor Duns Number"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialVendorDetail-vendorFirstLastNameIndicator" parent="FinancialVendorDetail-vendorFirstLastNameIndicator-parentBean" />
+  <bean id="FinancialVendorDetail-vendorFirstLastNameIndicator-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorFirstLastNameIndicator"
+        p:forceUppercase="false"
+        p:label="Vendor First Last Name Indicator"
+        p:shortLabel="Vendor First Last Name Indicator"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialVendorDetail-vendorFirstName" parent="FinancialVendorDetail-vendorFirstName-parentBean" />
+  <bean id="FinancialVendorDetail-vendorFirstName-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorFirstName"
+        p:forceUppercase="false"
+        p:label="Vendor First Name"
+        p:shortLabel="Vendor First Name"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialVendorDetail-vendorHeaderGeneratedIdentifier" parent="FinancialVendorDetail-vendorHeaderGeneratedIdentifier-parentBean"/>
+
+  <bean id="FinancialVendorDetail-vendorHeaderGeneratedIdentifier-parentBean" abstract="true" parent="AttributeDefinition">
+    <property name="name" value="vendorHeaderGeneratedIdentifier"/>
+    <property name="forceUppercase" value="true"/>
+    <property name="label" value="Vendor Header Generated Identifier"/>
+    <property name="shortLabel" value="Header Generated ID"/>
+    <property name="maxLength" value="10"/>
+    <property name="validationPattern">
+      <bean parent="NumericValidationPattern"/>
+    </property>
+    <property name="control">
+      <bean parent="HiddenControlDefinition"/>
+    </property>
+  </bean>
+
+  <bean id="FinancialVendorDetail-vendorInactiveReasonCode" parent="FinancialVendorDetail-vendorInactiveReasonCode-parentBean" />
+  <bean id="FinancialVendorDetail-vendorInactiveReasonCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorInactiveReasonCode"
+        p:forceUppercase="false"
+        p:label="Vendor Inactive Reason Code"
+        p:shortLabel="Vendor Inactive Reason Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialVendorDetail-vendorLastName" parent="FinancialVendorDetail-vendorLastName-parentBean" />
+  <bean id="FinancialVendorDetail-vendorLastName-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorLastName"
+        p:forceUppercase="false"
+        p:label="Vendor Last Name"
+        p:shortLabel="Vendor Last Name"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialVendorDetail-vendorMinimumOrderAmount" parent="FinancialVendorDetail-vendorMinimumOrderAmount-parentBean" />
+  <bean id="FinancialVendorDetail-vendorMinimumOrderAmount-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorMinimumOrderAmount"
+        p:forceUppercase="false"
+        p:label="Vendor Minimum Order Amount"
+        p:shortLabel="Vendor Minimum Order Amount"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialVendorDetail-vendorName" parent="FinancialVendorDetail-vendorName-parentBean"/>
+
+  <bean id="FinancialVendorDetail-vendorName-parentBean" abstract="true" parent="AttributeDefinition">
+    <property name="name" value="vendorName"/>
+    <property name="forceUppercase" value="false"/>
+    <property name="label" value="Vendor Name"/>
+    <property name="shortLabel" value="Vendor Name"/>
+    <property name="maxLength" value="45"/>
+    <property name="validationPattern">
+      <bean parent="AnyCharacterValidationPattern" p:allowWhitespace="true"/>
+    </property>
+    <property name="control">
+      <bean parent="TextControlDefinition" p:size="45"/>
+    </property>
+  </bean>
+
+  <bean id="FinancialVendorDetail-vendorNumber" parent="FinancialVendorDetail-vendorNumber-parentBean"/>
+
+  <bean id="FinancialVendorDetail-vendorNumber-parentBean" abstract="true" parent="AttributeDefinition">
+    <property name="name" value="vendorNumber"/>
+    <property name="label" value="Vendor #"/>
+    <property name="shortLabel" value="Vendor #"/>
+    <property name="maxLength" value="20"/>
+    <property name="validationPattern">
+      <bean parent="AnyCharacterValidationPattern"/>
+    </property>
+    <property name="control">
+      <bean parent="TextControlDefinition" p:size="22"/>
+    </property>
+  </bean>
+
+  <bean id="FinancialVendorDetail-vendorParentIndicator" parent="FinancialVendorDetail-vendorParentIndicator-parentBean" />
+  <bean id="FinancialVendorDetail-vendorParentIndicator-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorParentIndicator"
+        p:forceUppercase="false"
+        p:label="Vendor Parent Indicator"
+        p:shortLabel="Vendor Parent Indicator"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialVendorDetail-vendorPaymentTermsCode" parent="FinancialVendorDetail-vendorPaymentTermsCode-parentBean" />
+  <bean id="FinancialVendorDetail-vendorPaymentTermsCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorPaymentTermsCode"
+        p:forceUppercase="false"
+        p:label="Vendor Payment Terms Code"
+        p:shortLabel="Vendor Payment Terms Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialVendorDetail-vendorPrepaymentIndicator" parent="FinancialVendorDetail-vendorPrepaymentIndicator-parentBean" />
+  <bean id="FinancialVendorDetail-vendorPrepaymentIndicator-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorPrepaymentIndicator"
+        p:forceUppercase="false"
+        p:label="Vendor Prepayment Indicator"
+        p:shortLabel="Vendor Prepayment Indicator"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialVendorDetail-vendorRemitName" parent="FinancialVendorDetail-vendorRemitName-parentBean" />
+  <bean id="FinancialVendorDetail-vendorRemitName-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorRemitName"
+        p:forceUppercase="false"
+        p:label="Vendor Remit Name"
+        p:shortLabel="Vendor Remit Name"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialVendorDetail-vendorRestrictedDate" parent="FinancialVendorDetail-vendorRestrictedDate-parentBean" />
+  <bean id="FinancialVendorDetail-vendorRestrictedDate-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorRestrictedDate"
+        p:forceUppercase="false"
+        p:label="Vendor Restricted Date"
+        p:shortLabel="Vendor Restricted Date"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialVendorDetail-vendorRestrictedIndicator" parent="FinancialVendorDetail-vendorRestrictedIndicator-parentBean" />
+  <bean id="FinancialVendorDetail-vendorRestrictedIndicator-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorRestrictedIndicator"
+        p:forceUppercase="false"
+        p:label="Vendor Restricted Indicator"
+        p:shortLabel="Vendor Restricted Indicator"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialVendorDetail-vendorRestrictedPersonIdentifier" parent="FinancialVendorDetail-vendorRestrictedPersonIdentifier-parentBean" />
+  <bean id="FinancialVendorDetail-vendorRestrictedPersonIdentifier-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorRestrictedPersonIdentifier"
+        p:forceUppercase="false"
+        p:label="Vendor Restricted Person Identifier"
+        p:shortLabel="Vendor Restricted Person Identifier"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialVendorDetail-vendorRestrictedReasonText" parent="FinancialVendorDetail-vendorRestrictedReasonText-parentBean" />
+  <bean id="FinancialVendorDetail-vendorRestrictedReasonText-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorRestrictedReasonText"
+        p:forceUppercase="false"
+        p:label="Vendor Restricted Reason Text"
+        p:shortLabel="Vendor Restricted Reason Text"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialVendorDetail-vendorShippingPaymentTermsCode" parent="FinancialVendorDetail-vendorShippingPaymentTermsCode-parentBean" />
+  <bean id="FinancialVendorDetail-vendorShippingPaymentTermsCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorShippingPaymentTermsCode"
+        p:forceUppercase="false"
+        p:label="Vendor Shipping Payment Terms Code"
+        p:shortLabel="Vendor Shipping Payment Terms Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialVendorDetail-vendorShippingTitleCode" parent="FinancialVendorDetail-vendorShippingTitleCode-parentBean" />
+  <bean id="FinancialVendorDetail-vendorShippingTitleCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorShippingTitleCode"
+        p:forceUppercase="false"
+        p:label="Vendor Shipping Title Code"
+        p:shortLabel="Vendor Shipping Title Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialVendorDetail-vendorSoldToAssignedIdentifier" parent="FinancialVendorDetail-vendorSoldToAssignedIdentifier-parentBean" />
+  <bean id="FinancialVendorDetail-vendorSoldToAssignedIdentifier-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorSoldToAssignedIdentifier"
+        p:forceUppercase="false"
+        p:label="Vendor Sold To Assigned Identifier"
+        p:shortLabel="Vendor Sold To Assigned Identifier"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialVendorDetail-vendorSoldToGeneratedIdentifier" parent="FinancialVendorDetail-vendorSoldToGeneratedIdentifier-parentBean" />
+  <bean id="FinancialVendorDetail-vendorSoldToGeneratedIdentifier-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorSoldToGeneratedIdentifier"
+        p:forceUppercase="false"
+        p:label="Vendor Sold To Generated Identifier"
+        p:shortLabel="Vendor Sold To Generated Identifier"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialVendorDetail-vendorSoldToName" parent="FinancialVendorDetail-vendorSoldToName-parentBean" />
+  <bean id="FinancialVendorDetail-vendorSoldToName-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorSoldToName"
+        p:forceUppercase="false"
+        p:label="Vendor Sold To Name"
+        p:shortLabel="Vendor Sold To Name"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialVendorDetail-vendorSoldToNumber" parent="FinancialVendorDetail-vendorSoldToNumber-parentBean" />
+  <bean id="FinancialVendorDetail-vendorSoldToNumber-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorSoldToNumber"
+        p:forceUppercase="false"
+        p:label="Vendor Sold To Number"
+        p:shortLabel="Vendor Sold To Number"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialVendorDetail-vendorStateForLookup" parent="FinancialVendorDetail-vendorStateForLookup-parentBean" />
+  <bean id="FinancialVendorDetail-vendorStateForLookup-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorStateForLookup"
+        p:forceUppercase="false"
+        p:label="Vendor State For Lookup"
+        p:shortLabel="Vendor State For Lookup"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialVendorDetail-vendorUrlAddress" parent="FinancialVendorDetail-vendorUrlAddress-parentBean" />
+  <bean id="FinancialVendorDetail-vendorUrlAddress-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorUrlAddress"
+        p:forceUppercase="false"
+        p:label="Vendor Url Address"
+        p:shortLabel="Vendor Url Address"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="FinancialVendorDetail-inquiryDefinition" parent="FinancialVendorDetail-inquiryDefinition-parentBean" />
+
+  <bean id="FinancialVendorDetail-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Financial Vendor Detail Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Financial Vendor Detail Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="activeIndicator" />
+              <bean parent="FieldDefinition" p:attributeName="taxableIndicator" />
+              <bean parent="FieldDefinition" p:attributeName="vendorConfirmationIndicator" />
+              <bean parent="FieldDefinition" p:attributeName="vendorCreditCardIndicator" />
+              <bean parent="FieldDefinition" p:attributeName="vendorDetailAssignedIdentifier" />
+              <bean parent="FieldDefinition" p:attributeName="vendorDunsNumber" />
+              <bean parent="FieldDefinition" p:attributeName="vendorFirstLastNameIndicator" />
+              <bean parent="FieldDefinition" p:attributeName="vendorFirstName" />
+              <bean parent="FieldDefinition" p:attributeName="vendorHeaderGeneratedIdentifier" />
+              <bean parent="FieldDefinition" p:attributeName="vendorInactiveReasonCode" />
+              <bean parent="FieldDefinition" p:attributeName="vendorLastName" />
+              <bean parent="FieldDefinition" p:attributeName="vendorMinimumOrderAmount" />
+              <bean parent="FieldDefinition" p:attributeName="vendorName" />
+              <bean parent="FieldDefinition" p:attributeName="vendorNumber" />
+              <bean parent="FieldDefinition" p:attributeName="vendorParentIndicator" />
+              <bean parent="FieldDefinition" p:attributeName="vendorPaymentTermsCode" />
+              <bean parent="FieldDefinition" p:attributeName="vendorPrepaymentIndicator" />
+              <bean parent="FieldDefinition" p:attributeName="vendorRemitName" />
+              <bean parent="FieldDefinition" p:attributeName="vendorRestrictedDate" />
+              <bean parent="FieldDefinition" p:attributeName="vendorRestrictedIndicator" />
+              <bean parent="FieldDefinition" p:attributeName="vendorRestrictedPersonIdentifier" />
+              <bean parent="FieldDefinition" p:attributeName="vendorRestrictedReasonText" />
+              <bean parent="FieldDefinition" p:attributeName="vendorShippingPaymentTermsCode" />
+              <bean parent="FieldDefinition" p:attributeName="vendorShippingTitleCode" />
+              <bean parent="FieldDefinition" p:attributeName="vendorSoldToAssignedIdentifier" />
+              <bean parent="FieldDefinition" p:attributeName="vendorSoldToGeneratedIdentifier" />
+              <bean parent="FieldDefinition" p:attributeName="vendorSoldToName" />
+              <bean parent="FieldDefinition" p:attributeName="vendorSoldToNumber" />
+              <bean parent="FieldDefinition" p:attributeName="vendorStateForLookup" />
+              <bean parent="FieldDefinition" p:attributeName="vendorUrlAddress" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="FinancialVendorDetail-lookupDefinition" parent="FinancialVendorDetail-lookupDefinition-parentBean" />
+
+  <bean id="FinancialVendorDetail-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Financial Vendor Detail Lookup" 
+ >
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>vendorName</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="vendorName" />
+        <bean parent="FieldDefinition" p:attributeName="activeIndicator" />
+        <bean parent="FieldDefinition" p:attributeName="taxableIndicator" />
+        <bean parent="FieldDefinition" p:attributeName="vendorConfirmationIndicator" />
+        <bean parent="FieldDefinition" p:attributeName="vendorCreditCardIndicator" />
+        <bean parent="FieldDefinition" p:attributeName="vendorDetailAssignedIdentifier" />
+        <bean parent="FieldDefinition" p:attributeName="vendorDunsNumber" />
+        <bean parent="FieldDefinition" p:attributeName="vendorFirstLastNameIndicator" />
+        <bean parent="FieldDefinition" p:attributeName="vendorFirstName" />
+        <bean parent="FieldDefinition" p:attributeName="vendorHeaderGeneratedIdentifier" />
+        <bean parent="FieldDefinition" p:attributeName="vendorInactiveReasonCode" />
+        <bean parent="FieldDefinition" p:attributeName="vendorLastName" />
+        <bean parent="FieldDefinition" p:attributeName="vendorMinimumOrderAmount" />
+        <bean parent="FieldDefinition" p:attributeName="vendorNumber" />
+        <bean parent="FieldDefinition" p:attributeName="vendorParentIndicator" />
+        <bean parent="FieldDefinition" p:attributeName="vendorPaymentTermsCode" />
+        <bean parent="FieldDefinition" p:attributeName="vendorPrepaymentIndicator" />
+        <bean parent="FieldDefinition" p:attributeName="vendorRemitName" />
+        <bean parent="FieldDefinition" p:attributeName="vendorRestrictedDate" />
+        <bean parent="FieldDefinition" p:attributeName="vendorRestrictedIndicator" />
+        <bean parent="FieldDefinition" p:attributeName="vendorRestrictedPersonIdentifier" />
+        <bean parent="FieldDefinition" p:attributeName="vendorRestrictedReasonText" />
+        <bean parent="FieldDefinition" p:attributeName="vendorShippingPaymentTermsCode" />
+        <bean parent="FieldDefinition" p:attributeName="vendorShippingTitleCode" />
+        <bean parent="FieldDefinition" p:attributeName="vendorSoldToAssignedIdentifier" />
+        <bean parent="FieldDefinition" p:attributeName="vendorSoldToGeneratedIdentifier" />
+        <bean parent="FieldDefinition" p:attributeName="vendorSoldToName" />
+        <bean parent="FieldDefinition" p:attributeName="vendorSoldToNumber" />
+        <bean parent="FieldDefinition" p:attributeName="vendorStateForLookup" />
+        <bean parent="FieldDefinition" p:attributeName="vendorUrlAddress" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="activeIndicator" />
+        <bean parent="FieldDefinition" p:attributeName="taxableIndicator" />
+        <bean parent="FieldDefinition" p:attributeName="vendorConfirmationIndicator" />
+        <bean parent="FieldDefinition" p:attributeName="vendorCreditCardIndicator" />
+        <bean parent="FieldDefinition" p:attributeName="vendorDetailAssignedIdentifier" />
+        <bean parent="FieldDefinition" p:attributeName="vendorDunsNumber" />
+        <bean parent="FieldDefinition" p:attributeName="vendorFirstLastNameIndicator" />
+        <bean parent="FieldDefinition" p:attributeName="vendorFirstName" />
+        <bean parent="FieldDefinition" p:attributeName="vendorHeaderGeneratedIdentifier" />
+        <bean parent="FieldDefinition" p:attributeName="vendorInactiveReasonCode" />
+        <bean parent="FieldDefinition" p:attributeName="vendorLastName" />
+        <bean parent="FieldDefinition" p:attributeName="vendorMinimumOrderAmount" />
+        <bean parent="FieldDefinition" p:attributeName="vendorName" />
+        <bean parent="FieldDefinition" p:attributeName="vendorNumber" />
+        <bean parent="FieldDefinition" p:attributeName="vendorParentIndicator" />
+        <bean parent="FieldDefinition" p:attributeName="vendorPaymentTermsCode" />
+        <bean parent="FieldDefinition" p:attributeName="vendorPrepaymentIndicator" />
+        <bean parent="FieldDefinition" p:attributeName="vendorRemitName" />
+        <bean parent="FieldDefinition" p:attributeName="vendorRestrictedDate" />
+        <bean parent="FieldDefinition" p:attributeName="vendorRestrictedIndicator" />
+        <bean parent="FieldDefinition" p:attributeName="vendorRestrictedPersonIdentifier" />
+        <bean parent="FieldDefinition" p:attributeName="vendorRestrictedReasonText" />
+        <bean parent="FieldDefinition" p:attributeName="vendorShippingPaymentTermsCode" />
+        <bean parent="FieldDefinition" p:attributeName="vendorShippingTitleCode" />
+        <bean parent="FieldDefinition" p:attributeName="vendorSoldToAssignedIdentifier" />
+        <bean parent="FieldDefinition" p:attributeName="vendorSoldToGeneratedIdentifier" />
+        <bean parent="FieldDefinition" p:attributeName="vendorSoldToName" />
+        <bean parent="FieldDefinition" p:attributeName="vendorSoldToNumber" />
+        <bean parent="FieldDefinition" p:attributeName="vendorStateForLookup" />
+        <bean parent="FieldDefinition" p:attributeName="vendorUrlAddress" />
+      </list>
+    </property>
+  </bean>
+
+</beans>

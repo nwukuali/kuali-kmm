@@ -1,0 +1,307 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="Profile" parent="Profile-parentBean" />
+
+  <bean id="Profile-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.Profile"
+        p:titleAttribute="profileId"
+        p:objectLabel="Profile"
+        p:inquiryDefinition-ref="Profile-inquiryDefinition"
+        p:lookupDefinition-ref="Profile-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="Profile-profileId" />
+        <ref bean="Profile-profileName" />
+        <ref bean="Profile-principalName" />
+        <ref bean="Profile-profileEmail" />
+        <ref bean="Profile-profilePhoneNumber" />
+        <ref bean="Profile-accountNumber" />
+        <ref bean="Profile-billingBuildingCode" />
+        <ref bean="Profile-campusCode" />
+       	<ref bean="Profile-organizationCode" />
+       	<ref bean="Profile-projectCode" />
+        <ref bean="Profile-finacialChartOfAccountsCode" />
+        <ref bean="Profile-deliveryBuildingCode" />
+        <ref bean="Profile-deliveryBuildingRoomNumber" />
+        <ref bean="Profile-lastUpdateDate" />
+        <ref bean="Profile-subAccountNumber" />
+        <ref bean="Profile-versionNumber" />
+        <ref bean="Profile-profileDefaultIndicator" />
+        <ref bean="Profile-notifyIndicator" />
+        <ref bean="Profile-personalUseIndicator" />
+        <ref bean="Profile-active" />        
+      </list>
+    </property>
+  </bean>
+
+
+  <bean id="Profile-profileId" parent="Profile-profileId-parentBean" />
+  <bean id="Profile-profileId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="profileId"
+        p:forceUppercase="true"
+        p:label="Profile ID"
+        p:shortLabel="User ID"
+        p:maxLength="20"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="20" />
+    </property>
+  </bean>
+  
+  <bean id="Profile-profileName" parent="Profile-profileName-parentBean" />
+  <bean id="Profile-profileName-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="profileName"
+        p:forceUppercase="false"
+        p:label="Profile  Name"
+        p:shortLabel="Profile  Name"
+        p:maxLength="40"
+        p:required="true" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="40" />
+    </property>
+  </bean>
+
+  <bean id="Profile-principalName" parent="Profile-principalName-parentBean" />
+  <bean id="Profile-principalName-parentBean" parent="Customer-principalName" abstract="true"
+        p:name="principalName" >       
+  </bean>
+
+  <bean id="Profile-profilePhoneNumber" parent="Profile-profilePhoneNumber-parentBean" />
+  <bean id="Profile-profilePhoneNumber-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="profilePhoneNumber"
+        p:forceUppercase="false"
+        p:label="Profile Phone Number"
+        p:shortLabel="Phone"
+        p:maxLength="25"
+        p:required="true" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="16" />
+    </property>
+  </bean>
+
+  <bean id="Profile-profileEmail" parent="Profile-profileEmail-parentBean" />
+  <bean id="Profile-profileEmail-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="profileEmail"
+        p:forceUppercase="false"
+        p:label="Profile  Email Address"
+        p:shortLabel="Profile  Email Address"
+        p:maxLength="200"
+        p:required="true" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="25" />
+    </property>
+  </bean>
+
+  <bean id="Profile-accountNumber" parent="Profile-accountNumber-parentBean" />
+  <bean id="Profile-accountNumber-parentBean" parent="FinancialAccount-accountNumber" abstract="true"
+        p:name="accountNumber"
+        p:required="false" >
+  </bean>
+
+  <bean id="Profile-billingBuildingCode" parent="Profile-billingBuildingCode-parentBean" />
+  <bean id="Profile-billingBuildingCode-parentBean" parent="FinancialBuilding-buildingCode" abstract="true"
+        p:name="billingBuildingCode"
+        p:label="Billing Building Code"
+        p:shortLabel="Billing Building Code"
+        p:required="false" >
+  </bean>
+
+  <bean id="Profile-campusCode" parent="Profile-campusCode-parentBean" />
+  <bean id="Profile-campusCode-parentBean" parent="Campus-campusCode" abstract="true"
+        p:name="campusCode"
+        p:required="false" >
+  </bean>
+  
+  <bean id="Profile-organizationCode" parent="Profile-organizationCode-parentBean" />
+  <bean id="Profile-organizationCode-parentBean" parent="FinancialOrganization-organizationCode" abstract="true"
+        p:name="organizationCode"
+        p:required="false" >         
+  </bean>
+  
+   <bean id="Profile-projectCode" parent="Profile-projectCode-parentBean" />
+  <bean id="Profile-projectCode-parentBean" parent="FinancialProjectCode-code" abstract="true"
+        p:name="projectCode" 
+        p:required="false" >      
+  </bean>
+
+  <bean id="Profile-finacialChartOfAccountsCode" parent="Profile-finacialChartOfAccountsCode-parentBean" />
+  <bean id="Profile-finacialChartOfAccountsCode-parentBean" parent="FinancialChart-chartOfAccountsCode" abstract="true"
+        p:name="finacialChartOfAccountsCode" 
+        p:required="false" >
+  </bean>
+
+  <bean id="Profile-deliveryBuildingCode" parent="Profile-deliveryBuildingCode-parentBean" />
+  <bean id="Profile-deliveryBuildingCode-parentBean" parent="FinancialBuilding-buildingCode" abstract="true"
+        p:name="deliveryBuildingCode"
+        p:forceUppercase="true"
+        p:label="Delivery Building Code"
+        p:shortLabel="Delivery Building Code"
+        p:required="false" >
+  </bean>
+
+  <bean id="Profile-deliveryBuildingRoomNumber" parent="Profile-deliveryBuildingRoomNumber-parentBean" />
+  <bean id="Profile-deliveryBuildingRoomNumber-parentBean" parent="FinancialRoom-buildingRoomNumber" abstract="true"
+        p:name="deliveryBuildingRoomNumber"
+        p:label="Delivery Building Room Number"
+        p:shortLabel="Delivery Building Room Number"
+        p:required="false" >
+  </bean>
+
+  <bean id="Profile-lastUpdateDate" parent="Profile-lastUpdateDate-parentBean" />
+  <bean id="Profile-lastUpdateDate-parentBean" parent="GenericAttributes-genericTimestamp" abstract="true"
+        p:name="lastUpdateDate"
+        p:forceUppercase="false"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:maxLength="10"
+        p:required="false" >
+  </bean>
+
+  <bean id="Profile-subAccountNumber" parent="Profile-subAccountNumber-parentBean" />
+  <bean id="Profile-subAccountNumber-parentBean" parent="FinancialSubAccount-subAccountNumber" abstract="true"
+        p:name="subAccountNumber"
+        p:required="false" >
+  </bean>
+  
+  <bean id="Profile-profileDefaultIndicator" parent="Profile-profileDefaultIndicator-parentBean" />
+  <bean id="Profile-profileDefaultIndicator-parentBean" abstract="true" parent="GenericAttributes-genericBoolean" 
+        p:name="profileDefaultIndicator"
+        p:label="Default Profile"
+        p:shortLabel="Default Profile"
+        p:required="false" />
+        
+  <bean id="Profile-notifyIndicator" parent="Profile-notifyIndicator-parentBean" />
+  <bean id="Profile-notifyIndicator-parentBean" abstract="true" parent="GenericAttributes-genericBoolean" 
+        p:name="notifyIndicator"
+        p:label="Receive Email Notifications"
+        p:shortLabel="Email Notifications"
+        p:required="false" />
+        
+  <bean id="Profile-personalUseIndicator" parent="Profile-personalUseIndicator-parentBean" />
+  <bean id="Profile-personalUseIndicator-parentBean" abstract="true" parent="GenericAttributes-genericBoolean" 
+        p:name="personalUseIndicator"
+        p:label="Personal Use"
+        p:shortLabel="Personal Use"
+        p:required="false" />
+
+  <bean id="Profile-active" parent="Profile-active-parentBean" />
+  <bean id="Profile-active-parentBean" abstract="true" parent="GenericAttributes-activeIndicator" 
+        p:name="active"
+        p:label="Active Indicator"
+        p:shortLabel="Active"
+        p:required="false" />
+
+  <bean id="Profile-versionNumber" parent="Profile-versionNumber-parentBean" />
+  <bean id="Profile-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="Profile-inquiryDefinition" parent="Profile-inquiryDefinition-parentBean" />
+
+  <bean id="Profile-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Profile Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Profile Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="profileId" />
+              <bean parent="FieldDefinition" p:attributeName="profileName" />
+              <bean parent="FieldDefinition" p:attributeName="principalName" />
+              <bean parent="FieldDefinition" p:attributeName="profilePhoneNumber" />
+              <bean parent="FieldDefinition" p:attributeName="profileEmail" />
+              <bean parent="FieldDefinition" p:attributeName="deliveryBuildingCode" />
+              <bean parent="FieldDefinition" p:attributeName="deliveryBuildingRoomNumber" />
+              <bean parent="FieldDefinition" p:attributeName="billingBuildingCode" />
+              <bean parent="FieldDefinition" p:attributeName="campusCode" />
+              <bean parent="FieldDefinition" p:attributeName="finacialChartOfAccountsCode" />
+              <bean parent="FieldDefinition" p:attributeName="accountNumber" />
+              <bean parent="FieldDefinition" p:attributeName="subAccountNumber" />              
+              <bean parent="FieldDefinition" p:attributeName="active" />
+              <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+              <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="Profile-lookupDefinition" parent="Profile-lookupDefinition-parentBean" />
+
+  <bean id="Profile-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Profile Lookup" >
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>profileName</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>
+
+        <bean parent="FieldDefinition" p:attributeName="principalName" />
+        <bean parent="FieldDefinition" p:attributeName="profileName" />
+        <bean parent="FieldDefinition" p:attributeName="profileEmail" />
+        <bean parent="FieldDefinition" p:attributeName="deliveryBuildingCode" />
+        <bean parent="FieldDefinition" p:attributeName="deliveryBuildingRoomNumber" />
+        <bean parent="FieldDefinition" p:attributeName="billingBuildingCode" />
+        <bean parent="FieldDefinition" p:attributeName="campusCode" />
+        <bean parent="FieldDefinition" p:attributeName="finacialChartOfAccountsCode" />
+        <bean parent="FieldDefinition" p:attributeName="accountNumber" />
+        <bean parent="FieldDefinition" p:attributeName="subAccountNumber" />
+        <bean parent="FieldDefinition" p:attributeName="active" />      
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>       
+        <bean parent="FieldDefinition" p:attributeName="principalName" />
+        <bean parent="FieldDefinition" p:attributeName="profileName" />
+        <bean parent="FieldDefinition" p:attributeName="profileEmail" />
+        <bean parent="FieldDefinition" p:attributeName="deliveryBuildingCode" />
+        <bean parent="FieldDefinition" p:attributeName="deliveryBuildingRoomNumber" />
+        <bean parent="FieldDefinition" p:attributeName="billingBuildingCode" />
+        <bean parent="FieldDefinition" p:attributeName="campusCode" />
+        <bean parent="FieldDefinition" p:attributeName="finacialChartOfAccountsCode" />
+        <bean parent="FieldDefinition" p:attributeName="accountNumber" />
+        <bean parent="FieldDefinition" p:attributeName="subAccountNumber" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+        <bean parent="FieldDefinition" p:attributeName="active" />
+      </list>
+    </property>
+  </bean>
+
+</beans>

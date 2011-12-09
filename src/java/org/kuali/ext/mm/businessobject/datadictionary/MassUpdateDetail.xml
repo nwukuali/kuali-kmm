@@ -1,0 +1,151 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="MassUpdateDetail" parent="MassUpdateDetail-parentBean" />
+  <bean id="MassUpdateDetail-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.MassUpdateDetail"
+        p:titleAttribute="massUpdateDetailId"
+        p:objectLabel="Mass Update Detail"
+        p:inquiryDefinition-ref="MassUpdateDetail-inquiryDefinition"
+        p:lookupDefinition-ref="MassUpdateDetail-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+		<ref bean="MassUpdateDetail-massUpdateDetailId" />
+		<ref bean="MassUpdateDetail-versionNumber" />
+		<ref bean="MassUpdateDetail-massUpdateDocumentNumber" />
+		<ref bean="MassUpdateDetail-stockId" />
+		<ref bean="MassUpdateDetail-stockCost" />
+		<ref bean="MassUpdateDetail-cycleCountCode" />
+		<ref bean="MassUpdateDetail-lastUpdateDate" />
+
+      </list>
+    </property>
+  </bean>       
+	
+	<bean id="MassUpdateDetail-massUpdateDetailId" parent="MassUpdateDetail-massUpdateDetailId-parentBean" />
+	<bean id="MassUpdateDetail-massUpdateDetailId-parentBean" parent="AttributeDefinition" abstract="true"
+	    p:name="massUpdateDetailId"
+	    p:forceUppercase="false"
+	    p:label="Mass Update Detail ID"
+	    p:shortLabel="Detail ID"
+	    p:maxLength="18"
+	    p:required="false" >
+		<property name="validationPattern" >
+		  <bean parent="AnyCharacterValidationPattern"
+		        p:allowWhitespace="true" />
+		</property>
+		<property name="control" >
+		  <bean parent="TextControlDefinition"
+		        p:size="10" />
+		</property>
+	</bean>
+	
+	<bean id="MassUpdateDetail-versionNumber" parent="MassUpdateDetail-versionNumber-parentBean" />
+	<bean id="MassUpdateDetail-versionNumber-parentBean" parent="GenericAttributes-versionNumber" abstract="true"
+	    p:name="versionNumber">
+	</bean>
+	
+	<bean id="MassUpdateDetail-massUpdateDocumentNumber" parent="MassUpdateDetail-massUpdateDocumentNumber-parentBean" />
+	<bean id="MassUpdateDetail-massUpdateDocumentNumber-parentBean" parent="MassUpdateDocument-documentNumber" abstract="true"
+	    p:name="massUpdateDocumentNumber"
+	    p:forceUppercase="false"
+	    p:label="Update Document Number"
+	    p:shortLabel="Update Doc #">
+	</bean>
+	
+	<bean id="MassUpdateDetail-stockId" parent="MassUpdateDetail-stockId-parentBean" />
+	<bean id="MassUpdateDetail-stockId-parentBean" parent="Stock-stockId" abstract="true"
+	    p:name="stockId">
+	</bean>
+	
+	<bean id="MassUpdateDetail-stockCost" parent="MassUpdateDetail-stockCost-parentBean" />
+	<bean id="MassUpdateDetail-stockCost-parentBean" parent="StockCost-stockCst" abstract="true"
+	    p:name="stockCost">
+	</bean>
+	
+	<bean id="MassUpdateDetail-cycleCountCode" parent="MassUpdateDetail-cycleCountCode-parentBean" />
+	<bean id="MassUpdateDetail-cycleCountCode-parentBean" parent="CycleCount-cycleCntCd" abstract="true"
+	    p:name="cycleCountCode"
+	    p:label="Cycle Count Code"
+	    p:shortLabel="Count Code" >
+	</bean>
+	
+	<bean id="MassUpdateDetail-lastUpdateDate" parent="MassUpdateDetail-lastUpdateDate-parentBean" />
+	<bean id="MassUpdateDetail-lastUpdateDate-parentBean" parent="GenericAttributes-genericTimestamp" abstract="true"
+	    p:name="lastUpdateDate">
+	</bean>
+  
+  <!-- Business Object Inquiry Definition -->
+
+  <bean id="MassUpdateDetail-inquiryDefinition" parent="MassUpdateDetail-inquiryDefinition-parentBean" />
+
+  <bean id="MassUpdateDetail-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Mass Update Detail Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Mass Update Detail Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+		<bean parent="FieldDefinition" p:attributeName="massUpdateDetailId" />
+		<bean parent="FieldDefinition" p:attributeName="versionNumber" />
+		<bean parent="FieldDefinition" p:attributeName="massUpdateDocumentNumber" />
+		<bean parent="FieldDefinition" p:attributeName="stockId" />
+		<bean parent="FieldDefinition" p:attributeName="stockCost" />
+		<bean parent="FieldDefinition" p:attributeName="cycleCountCode" />
+		<bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="MassUpdateDetail-lookupDefinition" parent="MassUpdateDetail-lookupDefinition-parentBean" />
+
+  <bean id="MassUpdateDetail-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Mass Update Detail Lookup" >
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>massUpdateDocumentNumber</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>        
+		<bean parent="FieldDefinition" p:attributeName="massUpdateDetailId" />
+		<bean parent="FieldDefinition" p:attributeName="versionNumber" />
+		<bean parent="FieldDefinition" p:attributeName="massUpdateDocumentNumber" />
+		<bean parent="FieldDefinition" p:attributeName="stockId" />
+		<bean parent="FieldDefinition" p:attributeName="stockCost" />
+		<bean parent="FieldDefinition" p:attributeName="cycleCountCode" />
+		<bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+		<bean parent="FieldDefinition" p:attributeName="massUpdateDetailId" />
+		<bean parent="FieldDefinition" p:attributeName="versionNumber" />
+		<bean parent="FieldDefinition" p:attributeName="massUpdateDocumentNumber" />
+		<bean parent="FieldDefinition" p:attributeName="stockId" />
+		<bean parent="FieldDefinition" p:attributeName="stockCost" />
+		<bean parent="FieldDefinition" p:attributeName="cycleCountCode" />
+		<bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+
+      </list>
+    </property>
+  </bean>
+  
+  
+</beans>

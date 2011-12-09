@@ -1,0 +1,135 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="RestrictedRouteCode" parent="RestrictedRouteCode-parentBean" />
+
+  <bean id="RestrictedRouteCode-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.RestrictedRouteCode"
+        p:titleAttribute="restrictedRouteCd"
+        p:objectLabel="Restricted Route Code"
+        p:inquiryDefinition-ref="RestrictedRouteCode-inquiryDefinition"
+        p:lookupDefinition-ref="RestrictedRouteCode-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="RestrictedRouteCode-active" />
+        <ref bean="RestrictedRouteCode-lastUpdateDate" />
+        <ref bean="RestrictedRouteCode-nm" />
+        <ref bean="RestrictedRouteCode-restrictedRouteCd" />
+        <ref bean="RestrictedRouteCode-versionNumber" />
+      </list>
+    </property>
+  </bean>
+
+  <bean id="RestrictedRouteCode-active" parent="RestrictedRouteCode-active-parentBean" />
+  <bean id="RestrictedRouteCode-active-parentBean" abstract="true" parent="GenericAttributes-activeIndicator" p:name="active" />
+
+  <bean id="RestrictedRouteCode-lastUpdateDate" parent="RestrictedRouteCode-lastUpdateDate-parentBean" />
+  <bean id="RestrictedRouteCode-lastUpdateDate-parentBean" parent="GenericAttributes-genericTimestamp" abstract="true"
+        p:name="lastUpdateDate"
+        p:forceUppercase="false"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:maxLength="10"
+        p:required="false" >
+  </bean>
+
+  <bean id="RestrictedRouteCode-nm" parent="RestrictedRouteCode-nm-parentBean" />
+  <bean id="RestrictedRouteCode-nm-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="nm"
+        p:forceUppercase="true"
+        p:label="Restricted Route Code Name"
+        p:shortLabel="Name"
+        p:maxLength="45"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="45" />
+    </property>
+  </bean>
+
+  <bean id="RestrictedRouteCode-restrictedRouteCd" parent="RestrictedRouteCode-restrictedRouteCd-parentBean" />
+  <bean id="RestrictedRouteCode-restrictedRouteCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="restrictedRouteCd"
+        p:forceUppercase="true"
+        p:label="Restricted Route Code"
+        p:shortLabel="Restricted Route Code"
+        p:maxLength="2"        
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AlphaNumericValidationPattern"/>
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="2" />
+    </property>        
+  </bean>
+  
+  <bean id="RestrictedRouteCode-versionNumber" parent="RestrictedRouteCode-versionNumber-parentBean" />
+  <bean id="RestrictedRouteCode-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="RestrictedRouteCode-inquiryDefinition" parent="RestrictedRouteCode-inquiryDefinition-parentBean" />
+
+  <bean id="RestrictedRouteCode-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Restricted Route Code Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Restricted Route Code Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="restrictedRouteCd" />
+              <bean parent="FieldDefinition" p:attributeName="nm" />              
+              <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+              <bean parent="FieldDefinition" p:attributeName="active" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="RestrictedRouteCode-lookupDefinition" parent="RestrictedRouteCode-lookupDefinition-parentBean" />
+
+  <bean id="RestrictedRouteCode-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Restricted Route Code Lookup"  >
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>restrictedRouteCd</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>
+      	<bean parent="FieldDefinition" p:attributeName="restrictedRouteCd" />        
+        <bean parent="FieldDefinition" p:attributeName="nm" />        
+        <bean parent="FieldDefinition" p:attributeName="active" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+		<bean parent="FieldDefinition" p:attributeName="restrictedRouteCd" />
+        <bean parent="FieldDefinition" p:attributeName="nm" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+        <bean parent="FieldDefinition" p:attributeName="active" />      
+      </list>
+    </property>
+  </bean>
+
+</beans>

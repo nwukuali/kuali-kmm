@@ -1,0 +1,480 @@
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd"> 
+
+  <bean id="StoresCatalogItemMaintenanceDocument" parent="StoresCatalogItemMaintenanceDocument-parentBean" />
+
+  <bean id="StoresCatalogItemMaintenanceDocument-parentBean" abstract="true" parent="MaintenanceDocumentEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.CatalogItem"      
+        p:documentTypeName="SCIT"
+        p:documentAuthorizerClass="org.kuali.rice.kns.document.authorization.MaintenanceDocumentAuthorizerBase" >
+       
+       <property name="allowsCopy" value="true"></property>
+       <property name="allowsNewOrCopy" value="true"></property>
+       
+   <!-- ****** Does the Custom Presentation ***********************************   -->
+   <property name="documentPresentationControllerClass" value="org.kuali.ext.mm.document.authorization.CatalogItemPresentationController"/>
+   <!-- ***********************************************************************   -->
+   
+   <!-- ***** Does the Custom Save in two tables ******************************** -->
+   <property name="maintainableClass" value="org.kuali.ext.mm.service.impl.CatalogItemMaintainableImpl" /> 
+   <!-- ************************************************************************* -->  
+   
+   <!-- ****** Business Rule Validation ******************************** -->
+    <property name="businessRulesClass" value="org.kuali.ext.mm.document.validation.impl.CatalogItemBusinessRule" />
+   <!-- **************************************************************** -->
+    
+   <property name="lockingKeys" >
+      <list>
+        <value>catalogItemId</value> 
+      </list>
+    </property>
+    <property name="defaultExistenceChecks" >
+      <list>
+        <bean parent="ReferenceDefinition" 
+        	  p:attributeName="catalog" 
+        	  p:attributeToHighlightOnFail="catalogId" />
+        <bean parent="ReferenceDefinition" p:attributeName="catalogImage" p:collection="catalogItemImages" p:attributeToHighlightOnFail="catalogImageId"/>	  
+        <bean parent="ReferenceDefinition" p:attributeName="markup" p:collection="catalogItemMarkups" p:attributeToHighlightOnFail="markupCd"/>
+        <bean parent="ReferenceDefinition" p:attributeName="catalogSubgroup" p:collection="catalogSubgroupItems" p:attributeToHighlightOnFail="catalogSubgroupId"/>
+     </list>
+    </property>
+    
+    <property name="workflowAttributes" >
+        <ref bean="StoresCatalogItemMaintenanceDocument-workflowAttributes" />
+    </property>
+     <property name="maintainableSections" >
+      <list>
+        <ref bean="StoresCatalogItemMaintenanceDocument-MainSection" />
+        <ref bean="StoresCatalogItemMaintenanceDocument-CatalogSubgroupItem" />
+        <ref bean="StoresCatalogItemMaintenanceDocument-CatalogItemMarkup" />   
+        <ref bean="StoresCatalogItemMaintenanceDocument-CatalogItemImages" />     
+        <ref bean="StoresCatalogItemMaintenenceDocument-StockPackNote" />
+        <ref bean="StoresCatalogItemMaintenanceDocument-StockAttribute"/>
+        <ref bean="StoresCatalogItemMaintenenceDocument-HazardousMateriel" />      
+        <ref bean="StoresCatalogItemMaintenanceDocument-StockBalance"/>       
+      </list>
+    </property>
+  </bean>
+
+ <!-- Maintenance Section Definitions -->
+  <bean id="StoresCatalogItemMaintenanceDocument-MainSection" parent="StoresCatalogItemMaintenanceDocument-MainSection-parentBean" />
+
+  <bean id="StoresCatalogItemMaintenanceDocument-MainSection-parentBean" abstract="true" parent="MaintainableSectionDefinition"
+        p:title="Edit Catalog Item" >
+    <property name="id" value="CatalogItemMainSection"/>
+    <property name="maintainableItems" >
+      <list>
+     <!--      <bean parent="MaintainableFieldDefinition"
+              p:name="catalogId"
+              p:required="true">
+             <property name="unconditionallyReadOnly" value="true"></property>
+             <property name="noLookup" value="true"></property>
+        </bean>   
+       <bean parent="MaintainableFieldDefinition"
+              p:name="catalog.catalogCd"
+              p:required="true">
+             <property name="unconditionallyReadOnly" value="true"></property>
+        </bean>   
+         --><bean parent="MaintainableFieldDefinition"
+              p:name="catalog.catalogDesc"
+              p:required="true">
+             <property name="unconditionallyReadOnly" value="true"></property>
+        </bean>      
+        <bean parent="MaintainableFieldDefinition"
+              p:name="catalog.catalogType.catalogTypeName"
+              p:required="true">
+             <property name="unconditionallyReadOnly" value="true"></property>
+        </bean>      
+        <bean parent="MaintainableFieldDefinition"
+              p:name="distributorNbr"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="catalogDesc"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="catalogPrc"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="catalogUnitOfIssueCd"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+        	  p:name="substituteDistributorNbr"
+        	  p:required="false" />      
+        <bean parent="MaintainableFieldDefinition"
+              p:name="manufacturerNbr"
+              p:required="false" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="shippingHt"
+              p:required="false" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="shippingLh"
+              p:required="false" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="shippingWd"
+              p:required="false" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="shippingWgt"
+              p:required="false" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="unspscCd"
+              p:required="false" />   
+        <bean parent="MaintainableFieldDefinition"
+              p:name="spaidId"
+              p:required="false"/>      
+        <bean parent="MaintainableFieldDefinition"
+        	  p:name="taxableInd"
+        	  p:required="false"/>      
+        <bean parent="MaintainableFieldDefinition"
+        	  p:name="displayableInd"
+        	  p:required="false"/>      
+        <bean parent="MaintainableFieldDefinition"
+              p:name="willcallInd"
+              p:required="false" />
+        <bean parent="MaintainableFieldDefinition"
+        	  p:name="recycledInd"
+        	  p:required="false">         	  
+        </bean> 	
+        <bean parent="MaintainableFieldDefinition"
+        	  p:name="stock.distributorNbr"
+        	  p:required="false" >
+        	  <property name="noLookup" value="true"></property>
+        </bean>	    
+        <bean parent="MaintainableFieldDefinition"
+        	  p:name="stock.obsoleteInd"
+        	  p:required="false">
+         	  <property name="noLookup" value="true"></property>
+        </bean> 	  
+        <bean parent="MaintainableFieldDefinition"
+        	  p:name="stock.perishableInd"
+        	  p:required="false">
+         	  <property name="noLookup" value="true"></property>
+        </bean> 	     
+        <bean parent="MaintainableFieldDefinition"
+        	  p:name="stock.reorderPointQty"
+        	  p:required="false" >
+         	  <property name="noLookup" value="true"></property>
+        </bean> 	  	        	  
+        <bean parent="MaintainableFieldDefinition"
+        	  p:name="stock.safetyStockDays"
+        	  p:required="false" >
+         	  <property name="noLookup" value="true"></property>
+        </bean> 	  
+        <bean parent="MaintainableFieldDefinition"
+        	  p:name="stock.safetyStockQty"
+        	  p:required="false" >
+         	  <property name="noLookup" value="true"></property>
+        </bean> 	    	      	     
+        <bean parent="MaintainableFieldDefinition"
+        	  p:name="stock.surchargeInd"
+        	  p:required="false" >
+         	  <property name="noLookup" value="true"></property>
+        </bean> 	       
+        <bean parent="MaintainableFieldDefinition"
+        	  p:name="stock.packagingUnitDesc"
+        	  p:required="false" >
+         	  <property name="noLookup" value="true"></property>
+        </bean>                
+        <bean parent="MaintainableFieldDefinition"
+        	  p:name="stock.upcCd"
+        	  p:required="false" >
+         	  <property name="noLookup" value="true"></property>
+        </bean> 	  	      
+        <bean parent="MaintainableFieldDefinition"
+        	  p:name="stock.minimumOrderQty"
+         	  p:required="false" >
+         	  <property name="noLookup" value="true"></property>
+        </bean> 	      
+		<bean parent="MaintainableFieldDefinition"
+        	  p:name="stock.agreementNbr"
+         	  p:required="false" />	    
+        <bean parent="MaintainableFieldDefinition"
+        	  p:name="stock.cycleCntCd"
+         	  p:required="false" />	  
+        <bean parent="MaintainableFieldDefinition"
+        	  p:name="stock.stockTypeCode"
+         	  p:required="false" />
+        <bean parent="MaintainableFieldDefinition"
+        	  p:name="stock.restrictedRouteCd"
+         	  p:required="false" />	    
+		<bean parent="MaintainableFieldDefinition"
+        	  p:name="stock.rentalObjectCode"
+         	  p:required="false" />	    
+        <bean parent="MaintainableFieldDefinition"
+        	  p:name="stock.buyUnitOfIssueCd"
+         	  p:required="false" />
+        <bean parent="MaintainableFieldDefinition"
+        	  p:name="stock.buyUnitOfIssueRt"
+         	  p:required="false" >
+         	  <property name="noLookup" value="true"></property>
+        </bean>	    
+       	<bean parent="MaintainableFieldDefinition"
+        	  p:name="stock.salesUnitOfIssueRt"
+        	  p:required="false">
+         	  <property name="noLookup" value="true"></property>
+        </bean> 	  
+		<bean parent="MaintainableFieldDefinition"
+        	  p:name="stock.lastChangeActvIndDt"
+        	  p:required="false">
+              <property name="noLookup" value="true"></property>
+              <property name="unconditionallyReadOnly" value="true"/>
+        </bean>
+        <bean parent="MaintainableFieldDefinition"
+        	  p:name="stock.soleSourceInd"
+        	  p:required="false">
+         	  <property name="noLookup" value="true"></property>
+        </bean>
+        <bean parent="MaintainableFieldDefinition"
+        	  p:name="stock.maximumOrderQty"
+        	  p:required="false">
+         	  <property name="noLookup" value="true"></property>
+        </bean>
+        <bean parent="MaintainableFieldDefinition"
+        	  p:name="stock.removeUntilDate"
+        	  p:required="false">
+        	  <property name="noLookup" value="true"></property>
+        </bean>        
+        <bean parent="MaintainableFieldDefinition"
+              p:name="active"
+              p:required="false" />           
+	 </list>
+  </property>
+  </bean>
+  
+  <bean id="StoresCatalogItemMaintenanceDocument-CatalogSubgroupItem" parent="StoresCatalogItemMaintenanceDocument-CatalogSubgroupItem-parentBean"/>
+  <bean id="StoresCatalogItemMaintenanceDocument-CatalogSubgroupItem-parentBean" abstract="true" parent="MaintainableSectionDefinition">
+    <property name="id" value="CatalogSubgroupItems"/>
+    <property name="title" value="Catalog Item Subgroups"/>
+    <property name="maintainableItems">
+      <list>
+        <bean parent="MaintainableCollectionDefinition">
+          <property name="name" value="catalogSubgroupItems"/>
+          <property name="businessObjectClass" value="org.kuali.ext.mm.businessobject.CatalogSubgroupItem"/>
+          <property name="alwaysAllowCollectionDeletion" value="true"/>
+          <property name="maintainableFields">
+            <list>               
+               <bean parent="MaintainableFieldDefinition" p:name="catalogSubgroup.catalogSubgroupCd" p:template="catalogSubgroupId" p:required="true" p:lookupReadOnly="true" />                     	           
+               <bean parent="MaintainableFieldDefinition" p:name="catalogSubgroup.catalogGroup.catalogGroupNm"  p:unconditionallyReadOnly="true"/>
+               <bean parent="MaintainableFieldDefinition" p:name="catalogSubgroup.catalogSubgroupDesc" p:unconditionallyReadOnly="true" />                               
+            </list>
+          </property>
+          <property name="duplicateIdentificationFields">
+          <list>
+          	<bean parent="MaintainableFieldDefinition" p:name="catalogSubgroup.catalogSubgroupCd" />
+          </list>
+          </property>  
+        </bean>
+      </list>
+    </property>
+  </bean>
+  
+  <bean id="StoresCatalogItemMaintenanceDocument-CatalogItemImages" parent="StoresCatalogItemMaintenanceDocument-CatalogItemImages-parentBean"/>
+  <bean id="StoresCatalogItemMaintenanceDocument-CatalogItemImages-parentBean" abstract="true" parent="MaintainableSectionDefinition">
+    <property name="id" value="CatalogItemImages"/>
+    <property name="title" value="Catalog Item Images"/>  
+    <property name="defaultOpen" value="true"/>
+    <property name="maintainableItems">
+      <list>
+        <bean parent="MaintainableCollectionDefinition">
+          <property name="name" value="catalogItemImages"/>
+          <property name="businessObjectClass" value="org.kuali.ext.mm.businessobject.CatalogItemImage"/>
+            <property name="alwaysAllowCollectionDeletion" value="true"/>
+           <property name="summaryTitle" value="Catalog Item Image"/>
+           <property name="maintainableFields">
+            <list>
+                <bean parent="MaintainableFieldDefinition" p:name="catalogImage.catalogImageName" p:template="catalogImageId" p:required="true" p:lookupReadOnly="true" />                       	            
+                <bean parent="MaintainableFieldDefinition" p:name="catalogImage.catalogImageUrl" p:unconditionallyReadOnly="true" p:template="catalogImageId"/>                                      	
+            </list>
+          </property>       
+          <property name="duplicateIdentificationFields">
+          <list>
+            <bean parent="MaintainableFieldDefinition" p:name="catalogImage.catalogImageName" />
+          </list>
+          </property>
+          <property name="summaryFields">
+          <list>
+            <bean parent="MaintainableFieldDefinition" p:name="catalogImage.catalogImageName" />
+          </list>
+          </property>  
+        </bean>
+      </list>
+    </property>
+  </bean>
+  
+  <bean id="StoresCatalogItemMaintenanceDocument-CatalogItemMarkup" parent="StoresCatalogItemMaintenanceDocument-CatalogItemMarkup-parentBean"/>
+  <bean id="StoresCatalogItemMaintenanceDocument-CatalogItemMarkup-parentBean" abstract="true" parent="MaintainableSectionDefinition">
+    <property name="id" value="CatalogItemMarkups"/>
+    <property name="title" value="Catalog Item Markup"/>
+    <property name="defaultOpen" value="true"/>
+    <property name="maintainableItems">
+      <list>
+        <bean parent="MaintainableCollectionDefinition">
+          <property name="name" value="catalogItemMarkups"/>
+          <property name="businessObjectClass" value="org.kuali.ext.mm.businessobject.CatalogItemMarkup"/>
+          <property name="alwaysAllowCollectionDeletion" value="true"/>
+          <property name="summaryTitle" value="Catalog Item Markup"/>
+          <property name="maintainableFields">
+            <list>    
+                <bean parent="MaintainableFieldDefinition" p:name="markupCd" p:required="true" p:readOnlyAfterAdd="true"  p:template="markupCd" p:lookupReadOnly="true" />              	      
+              	<bean parent="MaintainableFieldDefinition" p:name="markup.markupNm" p:required="false" p:unconditionallyReadOnly="true" p:template="markupCd"/>                             	
+              	<bean parent="MaintainableFieldDefinition" p:name="markup.markupType.markupTypeCd" p:unconditionallyReadOnly="true" p:template="markupCd"/>  
+              	<bean parent="MaintainableFieldDefinition" p:name="markup.markupRt" p:unconditionallyReadOnly="true" p:template="markupCd"/>  
+              	<bean parent="MaintainableFieldDefinition" p:name="markup.markupFixed" p:unconditionallyReadOnly="true" p:template="markupCd"/>                          	           
+               	<bean parent="MaintainableFieldDefinition" p:name="markup.markupBeginDt" p:unconditionallyReadOnly="true" p:template="markupCd"/>                          	           
+                <bean parent="MaintainableFieldDefinition" p:name="markup.markupEndDt" p:unconditionallyReadOnly="true" p:template="markupCd"/>                                	         
+            </list>
+          </property>
+          
+          <property name="duplicateIdentificationFields">
+          <list>
+            <bean parent="MaintainableFieldDefinition" p:name="markupCd" />
+          </list>
+          </property> 
+        </bean>
+      </list>
+    </property>
+  </bean>
+ 
+  <bean id="StoresCatalogItemMaintenenceDocument-StockPackNote" parent="StoresCatalogItemMaintenenceDocument-StockPackNote-parentBean"/>
+  <bean id="StoresCatalogItemMaintenenceDocument-StockPackNote-parentBean" abstract="true" parent="MaintainableSectionDefinition">
+    <property name="id" value="StockPackNotes"/>
+    <property name="title" value="Stock Pack Note"/>
+    <property name="maintainableItems">
+      <list>
+        <bean parent="MaintainableCollectionDefinition">
+          <property name="name" value="stock.stockPackNotes"/>
+          <property name="businessObjectClass" value="org.kuali.ext.mm.businessobject.StockPackNote"/>
+            <property name="alwaysAllowCollectionDeletion" value="true"/>
+           <property name="summaryTitle" value="Stock Pack Note"/>
+           <property name="maintainableFields">
+            <list>
+             <bean parent="MaintainableFieldDefinition" p:name="packListAnnouncementCode" p:required="false" p:template="packListAnnouncementCode" p:lookupReadOnly="true" />
+             <bean parent="MaintainableFieldDefinition" p:name="packListAnnouncement.packListAnnouncementDesc" p:unconditionallyReadOnly="true" p:template="packListAnnouncementCode"/>                        	           
+            </list>
+          </property>
+          
+          <property name="duplicateIdentificationFields">
+          <list>
+            <bean parent="MaintainableFieldDefinition" p:name="packListAnnouncementCode" />
+          </list>
+          </property>
+          <property name="summaryFields">
+          <list>
+            <bean parent="MaintainableFieldDefinition" p:name="packListAnnouncementCode" />
+          </list>
+          </property> 
+        </bean>
+      </list>
+    </property>
+  </bean>
+ 
+ <bean id="StoresCatalogItemMaintenenceDocument-HazardousMateriel" parent="StoresCatalogItemMaintenenceDocument-HazardousMateriel-parentBean"/>
+  <bean id="StoresCatalogItemMaintenenceDocument-HazardousMateriel-parentBean" abstract="true" parent="MaintainableSectionDefinition">
+    <property name="id" value="HazardousMateriel"/>
+    <property name="title" value="Hazardous Materiel"/>
+    <property name="maintainableItems">
+      <list>
+        <bean parent="MaintainableCollectionDefinition">
+          <property name="name" value="stock.hazardousMateriels"/>
+          <property name="businessObjectClass" value="org.kuali.ext.mm.businessobject.HazardousMateriel"/>
+           <property name="alwaysAllowCollectionDeletion" value="true"/>         
+           <property name="summaryTitle" value="Hazardous Materiel"/>
+          <property name="summaryFields">
+            <list>
+              <bean parent="MaintainableFieldDefinition" p:name="hazardousUnCode"/>
+              <bean parent="MaintainableFieldDefinition" p:name="ehsHazardousCd"/>              
+           	  <bean parent="MaintainableFieldDefinition" p:name="ehsContainerCode"/>
+           	  <bean parent="MaintainableFieldDefinition" p:name="ehsCasNbr"/>
+              <bean parent="MaintainableFieldDefinition" p:name="ehsHazardousStateCode"/>
+              <bean parent="MaintainableFieldDefinition" p:name="ehsUnitOfIssueCd"/>
+              <bean parent="MaintainableFieldDefinition" p:name="ehsConversionUnitFactor"/>
+              <bean parent="MaintainableFieldDefinition" p:name="dotHazardousCd"/>
+              <bean parent="MaintainableFieldDefinition" p:name="typeOfUse"/>
+              <bean parent="MaintainableFieldDefinition" p:name="hazardousPressure"/>
+              <bean parent="MaintainableFieldDefinition" p:name="hazardousTemperature"/>
+            </list>
+          </property>
+          <property name="maintainableFields">
+            <list>
+	          <bean parent="MaintainableFieldDefinition" p:name="hazardousUnCode" p:readOnlyAfterAdd="false"  p:required="false" p:template="hazardousUnCode"/>
+	          <bean parent="MaintainableFieldDefinition" p:name="ehsHazardousCd" p:readOnlyAfterAdd="false"  p:required="false" p:template="hazardousUnCode"/>
+	          <bean parent="MaintainableFieldDefinition" p:name="ehsContainerCode" p:readOnlyAfterAdd="false"  p:required="false" p:template="hazardousUnCode"/>
+	          <bean parent="MaintainableFieldDefinition" p:name="ehsCasNbr" p:readOnlyAfterAdd="false"  p:required="false" p:template="hazardousUnCode"/>
+	          <bean parent="MaintainableFieldDefinition" p:name="ehsHazardousStateCode" p:readOnlyAfterAdd="false"  p:required="false" p:template="hazardousUnCode"/>
+	          <bean parent="MaintainableFieldDefinition" p:name="ehsUnitOfIssueCd" p:readOnlyAfterAdd="false"  p:required="false" p:template="hazardousUnCode"/>
+	          <bean parent="MaintainableFieldDefinition" p:name="ehsConversionUnitFactor" p:readOnlyAfterAdd="false"  p:required="false" p:template="hazardousUnCode"/>
+	          <bean parent="MaintainableFieldDefinition" p:name="dotHazardousCd" p:readOnlyAfterAdd="false"  p:required="false" p:template="hazardousUnCode"/>
+	          <bean parent="MaintainableFieldDefinition" p:name="typeOfUse" p:readOnlyAfterAdd="false"  p:required="false" p:template="hazardousUnCode"/>
+              <bean parent="MaintainableFieldDefinition" p:name="hazardousPressure" p:readOnlyAfterAdd="false"  p:required="false" p:template="hazardousUnCode"/>
+              <bean parent="MaintainableFieldDefinition" p:name="hazardousTemperature" p:readOnlyAfterAdd="false"  p:required="false" p:template="hazardousUnCode"/>                      	                          
+	         </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean> 
+ 
+  <bean id="StoresCatalogItemMaintenanceDocument-StockBalance" parent="StoresCatalogItemMaintenanceDocument-StockBalance-parentBean"/>
+  <bean id="StoresCatalogItemMaintenanceDocument-StockBalance-parentBean" abstract="true" parent="MaintainableSectionDefinition">
+    <property name="id" value="stockBalance"/>
+    <property name="title" value="Stock Balance"/>
+    <property name="maintainableItems">
+      <list>
+        <bean parent="MaintainableCollectionDefinition">
+          <property name="name" value="stock.stockBalances"/>
+          <property name="businessObjectClass" value="org.kuali.ext.mm.businessobject.StockBalance"/>
+           <property name="summaryTitle" value="Stock Balance"/>
+          <property name="summaryFields">
+            <list>
+              <bean parent="MaintainableFieldDefinition" p:name="stockBalanceId"/>                   
+              <bean parent="MaintainableFieldDefinition" p:name="bin.binDisDesc" p:unconditionallyReadOnly="true" /> 
+              <bean parent="MaintainableFieldDefinition" p:name="stockPerishableDt"/>                
+            </list>
+          </property>
+          <property name="maintainableFields">
+            <list>
+              <bean parent="MaintainableFieldDefinition" p:name="qtyOnHand" p:required="false" />
+              <bean parent="MaintainableFieldDefinition" p:name="bin.binDisDesc" p:unconditionallyReadOnly="true" />
+              <bean parent="MaintainableFieldDefinition" p:name="stockPerishableDt" p:required="false" />
+            </list>
+          </property>         
+        </bean>
+      </list>
+    </property>
+  </bean>
+  
+  <bean id="StoresCatalogItemMaintenanceDocument-StockAttribute" parent="StoresCatalogItemMaintenanceDocument-StockAttribute-parentBean"/>
+  <bean id="StoresCatalogItemMaintenanceDocument-StockAttribute-parentBean" abstract="true" parent="MaintainableSectionDefinition">
+    <property name="id" value="stockAttribute"/>
+    <property name="title" value="Stock Attribute"/>
+    <property name="maintainableItems">
+      <list>
+        <bean parent="MaintainableCollectionDefinition">
+          <property name="name" value="stock.stockAttributes"/>
+          <property name="businessObjectClass" value="org.kuali.ext.mm.businessobject.StockAttribute"/>
+          <property name="alwaysAllowCollectionDeletion" value="true"/>
+          <property name="summaryTitle" value="Stock Attribute"/>        
+          <property name="maintainableFields">
+            <list>
+              <bean parent="MaintainableFieldDefinition" p:name="stockAttributeCd" p:template="stockAttributeCd" p:required="false" p:lookupReadOnly="true" />            
+              <bean parent="MaintainableFieldDefinition" p:name="stockAttributeCode.nm" p:unconditionallyReadOnly="true"/> 
+            </list>
+          </property>
+          <property name="duplicateIdentificationFields">
+          <list>
+          	  <bean parent="MaintainableFieldDefinition" p:name="stockAttributeCd" />           	            	
+          </list>
+          </property>
+          <property name="summaryFields">
+          <list>
+          	  <bean parent="MaintainableFieldDefinition" p:name="stockAttributeCd" />           	            	
+          </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+  
+  <!-- workflow attributes -->
+  <bean id="StoresCatalogItemMaintenanceDocument-workflowAttributes" parent="StoresCatalogItemMaintenanceDocument-workflowAttributes-parentBean" />
+
+  <bean id="StoresCatalogItemMaintenanceDocument-workflowAttributes-parentBean" abstract="true" class="org.kuali.rice.kns.datadictionary.WorkflowAttributes" />
+</beans>

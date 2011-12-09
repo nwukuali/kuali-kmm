@@ -1,0 +1,448 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="CheckinDetailForReceipts" parent="CheckinDetailForReceipts-parentBean" />
+
+  <bean id="CheckinDetailForReceipts-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.CheckinDetailForReceipts"
+        p:titleAttribute="Checkin Detail"
+        p:objectLabel="Checkin Detail"
+        p:inquiryDefinition-ref="CheckinDetailForReceipts-inquiryDefinition"
+        p:lookupDefinition-ref="CheckinDetailForReceipts-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="CheckinDetailForReceipts-acceptedItemQty" />
+        <ref bean="CheckinDetailForReceipts-checkinDoc-orderDocument.documentNumber" />
+        <ref bean="CheckinDetailForReceipts-OrderLineClosed" />        
+        <ref bean="CheckinDetailForReceipts-checkinDetailId" />
+        <ref bean="CheckinDetailForReceipts-binId" />
+        <ref bean="CheckinDetailForReceipts-checkinDoc.fdocNbr" />
+        <ref bean="CheckinDetailForReceipts-stockPerishableDate"/>
+        <ref bean="CheckinDetailForReceipts-checkinDocumentNumber" />
+        <ref bean="CheckinDetailForReceipts-stock.distributorNbr" />
+        <ref bean="CheckinDetailForReceipts-returnStockUnitOfIssueCd" />
+        <ref bean="CheckinDetailForReceipts-reasonCode" />
+        <ref bean="CheckinDetailForReceipts-stockId" />
+        <ref bean="CheckinDetailForReceipts-lastUpdateDate" />
+        <ref bean="CheckinDetailForReceipts-checkinDoc.vendorRefNbr" />
+        <ref bean="CheckinDetailForReceipts-checkinDoc.vendorShipmentNbr" />
+        <ref bean="CheckinDetailForReceipts-checkinDoc.warehouseCode" />
+        <ref bean="CheckinDetailForReceipts-checkinDoc-orderDocument.vendorNm" />
+        <ref bean="CheckinDetailForReceipts-checkinDoc-orderDocument.reqsId" />
+        <ref bean="CheckinDetailForReceipts-poId" />
+        <ref bean="CheckinDetailForReceipts-binZoneDesc" />        
+        <ref bean="CheckinDetailForReceipts-rejectedItemQty" />
+        <ref bean="CheckinDetailForReceipts-versionNumber" />
+      </list>
+    </property>
+    <property name="relationships" >
+      <list>
+        <bean parent="RelationshipDefinition">
+          <property name="objectAttributeName" value="checkinDoc" />
+          <property name="primitiveAttributes" >
+            <list>
+              <bean parent="PrimitiveAttributeDefinition"
+                    p:sourceName="checkinDoc.documentNumber"
+                    p:targetName="documentNumber" />
+            </list>
+          </property>
+          <property name="supportAttributes" >
+            <list>
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="checkinDoc.documentNumber"
+                    p:targetName="documentNumber" />
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="checkinDoc.vendorRefNbr"
+                    p:targetName="vendorRefNbr" />
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="checkinDoc.vendorShipmentNbr"
+                    p:targetName="vendorShipmentNbr" />
+            </list>
+          </property> 
+        </bean>
+        <bean parent="RelationshipDefinition">
+          <property name="objectAttributeName" value="checkinDoc.orderDocument" />
+          <property name="primitiveAttributes" >
+            <list>
+              <bean parent="PrimitiveAttributeDefinition"
+                    p:sourceName="checkinDoc.orderDocument.documentNumber"
+                    p:targetName="documentNumber" />
+            </list>
+          </property>
+          <property name="supportAttributes" >
+            <list>
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="checkinDoc.orderDocument.documentNumber"
+                    p:targetName="documentNumber" />
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="checkinDoc.orderDocument.vendorNm"
+                    p:targetName="vendorNm" />
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="checkinDoc.orderDocument.reqsId"
+                    p:targetName="reqsId" />
+            </list>
+          </property> 
+        </bean>        
+        <bean parent="RelationshipDefinition">
+          <property name="objectAttributeName" value="stock" />
+          <property name="primitiveAttributes" >
+            <list>
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="stock.distributorNbr"
+                    p:targetName="stock.distributorNbr" />
+            </list>
+          </property>
+          <property name="supportAttributes" >
+            <list>
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="stock.distributorNbr"
+                    p:targetName="stock.distributorNbr" />
+            </list>
+          </property> 
+        </bean>   
+             
+      </list>
+    </property>
+    <property name="collections" >
+      <list>
+        <bean parent="CollectionDefinition"
+              p:name="checkinDoc.orderDocument.orderDetails"
+              p:label="Order Details"
+              p:shortLabel="Order Details" />      
+        <bean parent="CollectionDefinition"
+              p:name="rentals"
+              p:label="Rentals"
+              p:shortLabel="Rentals" />
+      </list>
+    </property>
+    
+  </bean>
+
+  <bean id="CheckinDetailForReceipts-stockId" parent="CheckinDetailForReceipts-stockId-parentBean" />
+  <bean id="CheckinDetailForReceipts-stockId-parentBean" parent="Stock-stockId-parentBean" abstract="true"
+        p:name="stockId"
+        p:required="true" />
+
+
+  <bean id="CheckinDetailForReceipts-binId" parent="CheckinDetailForReceipts-binId-parentBean" />
+  <bean id="CheckinDetailForReceipts-binId-parentBean" parent="Bin-binId-parentBean" abstract="true"
+        p:name="binId"
+        p:required="true" />
+
+  <bean id="CheckinDetailForReceipts-OrderLineClosed" parent="CheckinDetailForReceipts-OrderLineClosed-parentBean" />
+  <bean id="CheckinDetailForReceipts-OrderLineClosed-parentBean" abstract="true" parent="GenericAttributes-activeIndicator" 
+        p:name="closedInd"
+        p:label="Line Close"
+        p:shortLabel="Line Close"
+        p:required="false" />
+<!-- 
+  <bean id="OrderDetail-orderOpen" parent="OrderDetail-orderOpen-parentBean"/>
+  <bean id="OrderDetail-orderOpen-parentBean" abstract="true" parent="AttributeDefinition">
+    <property name="name" value="orderOpen"/>
+    <property name="forceUppercase" value="false"/>
+    <property name="label" value="Close/Complete"/>
+    <property name="shortLabel" value="Close/Complete"/>
+    <property name="maxLength" value="1"/>
+    <property name="control">
+      <bean parent="CheckboxControlDefinition"/>
+    </property>
+  </bean> -->
+          
+  <bean id="CheckinDetailForReceipts-acceptedItemQty" parent="CheckinDetailForReceipts-acceptedItemQty-parentBean" />
+  <bean id="CheckinDetailForReceipts-acceptedItemQty-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="acceptedItemQty"
+        p:forceUppercase="false"
+        p:label="Accepted Item Quantity"
+        p:shortLabel="Accepted Item Quantity"
+        p:maxLength="10" 
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CheckinDetailForReceipts-stock.distributorNbr" parent="CheckinDetailForReceipts-stock.distributorNbr-parentBean" />
+  <bean id="CheckinDetailForReceipts-stock.distributorNbr-parentBean" parent="Stock-stockDistributorNbr" abstract="true"
+        p:name="stock.distributorNbr"
+        p:required="false" >
+  </bean>
+
+  <bean id="CheckinDetailForReceipts-checkinDoc.fdocNbr" parent="CheckinDetailForReceipts-checkinDoc.fdocNbr-parentBean" />
+  <bean id="CheckinDetailForReceipts-checkinDoc.fdocNbr-parentBean" parent="CheckinDocument-fdocNbr" abstract="true"
+        p:name="checkinDoc.documentNumber"
+        p:label="Checkin Doc"
+        p:shortLabel="Checkin Doc">
+  </bean>
+
+  <bean id="CheckinDetailForReceipts-checkinDoc.vendorRefNbr" parent="CheckinDetailForReceipts-checkinDoc.vendorRefNbr-parentBean" />
+  <bean id="CheckinDetailForReceipts-checkinDoc.vendorRefNbr-parentBean" parent="CheckinDocument-vendorRefNbr" abstract="true"
+        p:name="checkinDoc.vendorRefNbr"
+        p:required="false" >
+  </bean>
+  
+  <bean id="CheckinDetailForReceipts-checkinDoc.vendorShipmentNbr" parent="CheckinDetailForReceipts-checkinDoc.vendorShipmentNbr-parentBean" />
+  <bean id="CheckinDetailForReceipts-checkinDoc.vendorShipmentNbr-parentBean" parent="CheckinDocument-vendorShipmentNbr" abstract="true"
+        p:name="checkinDoc.vendorShipmentNbr"
+        p:required="false" >
+  </bean>
+
+  <bean id="CheckinDetailForReceipts-checkinDoc.warehouseCode" parent="CheckinDetailForReceipts-checkinDoc.warehouseCode-parentBean" />
+  <bean id="CheckinDetailForReceipts-checkinDoc.warehouseCode-parentBean" parent="Warehouse-warehouseCd" abstract="true"
+         p:name="checkinDoc.warehouseCode"
+        p:required="false" >
+  </bean>
+
+  <bean id="CheckinDetailForReceipts-checkinDoc-orderDocument.vendorNm" parent="CheckinDetailForReceipts-checkinDoc-orderDocument.vendorNm-parentBean" />
+  <bean id="CheckinDetailForReceipts-checkinDoc-orderDocument.vendorNm-parentBean" parent="OrderDocument-vendorNm" abstract="true"
+        p:name="checkinDoc.orderDocument.vendorNm">
+  </bean>
+
+  <bean id="CheckinDetailForReceipts-checkinDoc-orderDocument.documentNumber" parent="CheckinDetailForReceipts-checkinDoc-orderDocument.documentNumber-parentBean" />
+  <bean id="CheckinDetailForReceipts-checkinDoc-orderDocument.documentNumber-parentBean" parent="OrderDocument-vendorNm" abstract="true"
+        p:name="checkinDoc.orderDocument.documentNumber">
+  </bean>
+
+  <bean id="CheckinDetailForReceipts-checkinDoc-orderDocument.reqsId" parent="CheckinDetailForReceipts-checkinDoc-orderDocument.reqsId-parentBean" />
+  <bean id="CheckinDetailForReceipts-checkinDoc-orderDocument.reqsId-parentBean" parent="OrderDocument-reqsId" abstract="true"
+        p:name="checkinDoc.orderDocument.reqsId">
+  </bean>
+
+  <bean id="CheckinDetailForReceipts-checkinDetailId" parent="CheckinDetailForReceipts-checkinDetailId-parentBean" />
+  <bean id="CheckinDetailForReceipts-checkinDetailId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="checkinDetailId"
+        p:forceUppercase="false"
+        p:label="Checkin Detail Id"
+        p:shortLabel="Checkin Detail Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CheckinDetailForReceipts-checkinDocumentNumber" parent="CheckinDetailForReceipts-checkinDocumentNumber-parentBean" />
+  <bean id="CheckinDetailForReceipts-checkinDocumentNumber-parentBean" parent="CheckinDocument-fdocNbr" abstract="true"
+        p:name="checkinDocumentNumber">
+  </bean>
+
+  <bean id="CheckinDetailForReceipts-lastUpdateDate" parent="CheckinDetailForReceipts-lastUpdateDate-parentBean" />
+  <bean id="CheckinDetailForReceipts-lastUpdateDate-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="lastUpdateDate"
+        p:forceUppercase="false"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="HiddenControlDefinition" />
+    </property>
+  </bean>
+
+  <bean id="CheckinDetailForReceipts-stockPerishableDate" parent="CheckinDetailForReceipts-stockPerishableDate-parentBean" />
+  <bean id="CheckinDetailForReceipts-stockPerishableDate-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="stockPerishableDate"
+        p:forceUppercase="false"
+        p:label="Perishable Date"
+        p:shortLabel="Perishable Date"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="HiddenControlDefinition" />
+    </property>
+  </bean>
+
+  <bean id="CheckinDetailForReceipts-poId" parent="CheckinDetailForReceipts-poId-parentBean" />
+  <bean id="CheckinDetailForReceipts-poId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="poId"
+        p:forceUppercase="false"
+        p:label="PO"
+        p:shortLabel="PO"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CheckinDetailForReceipts-binZoneDesc" parent="CheckinDetailForReceipts-binZoneDesc-parentBean" />
+  <bean id="CheckinDetailForReceipts-binZoneDesc-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="binZoneDesc"
+        p:forceUppercase="false"
+        p:label="Zone/Bin/Shelf ID/Shelf Number"
+        p:shortLabel="Zone/Bin/Shelf ID/Shelf Number"
+        p:maxLength="40"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>  </bean>
+
+  <bean id="CheckinDetailForReceipts-returnStockUnitOfIssueCd" parent="CheckinDetailForReceipts-returnStockUnitOfIssueCd-parentBean" />
+  <bean id="CheckinDetailForReceipts-returnStockUnitOfIssueCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="returnStockUnitOfIssueCd"
+        p:forceUppercase="false"
+        p:label="PO"
+        p:shortLabel="PO"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CheckinDetailForReceipts-reasonCode" parent="CheckinDetailForReceipts-reasonCode-parentBean" />
+  <bean id="CheckinDetailForReceipts-reasonCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="reasonCode"
+        p:forceUppercase="false"
+        p:label="PO"
+        p:shortLabel="PO"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CheckinDetailForReceipts-rejectedItemQty" parent="CheckinDetailForReceipts-rejectedItemQty-parentBean" />
+  <bean id="CheckinDetailForReceipts-rejectedItemQty-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="rejectedItemQty"
+        p:forceUppercase="false"
+        p:label="Rejected Item Qunatity"
+        p:shortLabel="Rejected Item Quantity"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CheckinDetailForReceipts-versionNumber" parent="CheckinDetailForReceipts-versionNumber-parentBean" />
+  <bean id="CheckinDetailForReceipts-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="CheckinDetailForReceipts-inquiryDefinition" parent="CheckinDetailForReceipts-inquiryDefinition-parentBean" />
+
+  <bean id="CheckinDetailForReceipts-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Checkin Detail Inquiry" 
+        >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Checkin Detail Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+	        <bean parent="FieldDefinition" p:attributeName="checkinDoc.vendorShipmentNbr" />
+	        <bean parent="FieldDefinition" p:attributeName="checkinDoc.vendorRefNbr" />
+	        <bean parent="FieldDefinition" p:attributeName="poId" />
+	        <bean parent="FieldDefinition" p:attributeName="stock.distributorNbr" />	        
+	        <bean parent="FieldDefinition" p:attributeName="checkinDoc.warehouseCode" />
+	        <bean parent="FieldDefinition" p:attributeName="checkinDoc.orderDocument.vendorNm" />
+			<bean parent="FieldDefinition" p:attributeName="checkinDoc.orderDocument.reqsId" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="CheckinDetailForReceipts-lookupDefinition" parent="CheckinDetailForReceipts-lookupDefinition-parentBean" />
+
+  <bean id="CheckinDetailForReceipts-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Checkin Detail Lookup"
+ >
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>lastUpdateDate</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="checkinDoc.vendorShipmentNbr" />
+        <bean parent="FieldDefinition" p:attributeName="checkinDoc.documentNumber"/>
+        <bean parent="FieldDefinition" p:attributeName="checkinDoc.vendorRefNbr" />
+        <bean parent="FieldDefinition" p:attributeName="poId" />
+        <bean parent="FieldDefinition" p:attributeName="stock.distributorNbr" />
+        <bean parent="FieldDefinition" p:attributeName="checkinDoc.warehouseCode" />
+        <bean parent="FieldDefinition" p:attributeName="checkinDoc.orderDocument.vendorNm" />
+        <bean parent="FieldDefinition" p:attributeName="checkinDoc.orderDocument.documentNumber"/>
+		<bean parent="FieldDefinition" p:attributeName="checkinDoc.orderDocument.reqsId" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="checkinDoc.vendorShipmentNbr" />
+        <bean parent="FieldDefinition" p:attributeName="checkinDoc.vendorRefNbr" />
+        <bean parent="FieldDefinition" p:attributeName="poId" />
+        <bean parent="FieldDefinition" p:attributeName="checkinDoc.warehouseCode" />
+        <bean parent="FieldDefinition" p:attributeName="stock.distributorNbr" />
+        <bean parent="FieldDefinition" p:attributeName="checkinDoc.orderDocument.vendorNm" />
+		<bean parent="FieldDefinition" p:attributeName="checkinDoc.orderDocument.reqsId" />
+		<bean parent="FieldDefinition" p:attributeName="checkinDocumentNumber" />
+      </list>
+    </property>
+  </bean>
+
+</beans>

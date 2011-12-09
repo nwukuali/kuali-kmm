@@ -1,0 +1,162 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="FinancialAccount" parent="FinancialAccount-parentBean" />
+
+  <bean id="FinancialAccount-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.integration.coa.businessobject.FinancialAccount"
+        p:titleAttribute="Financial Account"
+        p:objectLabel="Financial Account"
+        p:inquiryDefinition-ref="FinancialAccount-inquiryDefinition"
+        p:lookupDefinition-ref="FinancialAccount-lookupDefinition" >
+	<property name="primaryKeys">
+    	<list>
+    		<value>chartOfAccountsCode</value>
+    		<value>accountNumber</value>
+    	</list>
+    </property>        
+    <property name="attributes" >
+      <list>
+        <ref bean="FinancialAccount-accountName" />
+        <ref bean="FinancialAccount-accountNumber" />
+        <ref bean="FinancialAccount-active" />
+        <ref bean="FinancialAccount-chartOfAccountsCode" />
+      </list>
+    </property>
+  </bean>
+
+  <bean id="FinancialAccount-accountName" parent="FinancialAccount-accountName-parentBean" />
+  <bean id="FinancialAccount-accountName-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="accountName"
+        p:forceUppercase="false"
+        p:label="Account Name"
+        p:shortLabel="Acct Nm"
+        p:maxLength="40"
+        p:required="false" >
+    <property name="validationPattern">
+			<bean parent="AnyCharacterValidationPattern" p:allowWhitespace="true" />
+	</property>
+    <property name="control" >
+      <bean parent="TextControlDefinition" p:size="40" />
+    </property>
+  </bean>
+
+  <bean id="FinancialAccount-accountNumber" parent="FinancialAccount-accountNumber-parentBean" />
+	<!-- MSU uses 8 digit account numbers -->
+  <bean id="FinancialAccount-accountNumber-msu-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="accountNumber"
+        p:forceUppercase="true"
+        p:label="Account Number"
+        p:shortLabel="Account Number"
+        p:maxLength="8"
+        p:required="true" >
+    <property name="validationPattern">
+			<bean parent="AlphaNumericValidationPattern" p:exactLength="8" />
+	</property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialAccount-accountNumber-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="accountNumber"
+        p:forceUppercase="true"
+        p:label="Account Number"
+        p:shortLabel="Account Number"
+        p:maxLength="7"
+        p:required="true" >
+    <property name="validationPattern">
+			<bean parent="AlphaNumericValidationPattern" p:exactLength="7" />
+	</property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialAccount-active" parent="FinancialAccount-active-parentBean" />
+  <bean id="FinancialAccount-active-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="active"
+        p:forceUppercase="false"
+        p:label="Active"
+        p:shortLabel="Active"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialAccount-chartOfAccountsCode" parent="FinancialAccount-chartOfAccountsCode-parentBean" />
+  <bean id="FinancialAccount-chartOfAccountsCode-parentBean" parent="FinancialChart-chartOfAccountsCode" abstract="true"
+        p:name="chartOfAccountsCode"
+        p:required="true" >
+  </bean>
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="FinancialAccount-inquiryDefinition" parent="FinancialAccount-inquiryDefinition-parentBean" />
+
+  <bean id="FinancialAccount-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Financial Account Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Financial Account Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="accountName" />
+              <bean parent="FieldDefinition" p:attributeName="accountNumber" />
+              <bean parent="FieldDefinition" p:attributeName="active" />
+              <bean parent="FieldDefinition" p:attributeName="chartOfAccountsCode" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="FinancialAccount-lookupDefinition" parent="FinancialAccount-lookupDefinition-parentBean" />
+
+  <bean id="FinancialAccount-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Financial Account Lookup">
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>accountNumber</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="accountName" />
+        <bean parent="FieldDefinition" p:attributeName="accountNumber" />
+        <bean parent="FieldDefinition" p:attributeName="active" />
+        <bean parent="FieldDefinition" p:attributeName="chartOfAccountsCode" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="accountName" />
+        <bean parent="FieldDefinition" p:attributeName="accountNumber" />
+        <bean parent="FieldDefinition" p:attributeName="active" />
+        <bean parent="FieldDefinition" p:attributeName="chartOfAccountsCode" />
+      </list>
+    </property>
+  </bean>
+
+</beans>

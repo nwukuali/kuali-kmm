@@ -1,0 +1,47 @@
+<%--
+ Copyright 2005-2007 The Kuali Foundation.
+ 
+ Licensed under the Educational Community License, Version 1.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ 
+ http://www.opensource.org/licenses/ecl1.php
+ 
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+--%>
+<%@ include file="/mm/WEB-INF/jsp/mmCartTldHeader.jsp"%>
+
+<%@ attribute name="baseUrlAction" required="true" %>
+
+<div id="browsePanel_container"  class="browseBox">
+	<h5>Categories</h5>
+	<ul class="browseBox_list">
+		<c:choose>
+			<c:when test="${empty KualiForm.browseManager.selectedGroup }" >
+				<c:forEach var="catalogGroup" items="${KualiForm.browseManager.catalogGroups}" varStatus="rowCounter" >
+					<li >-<a href="${baseUrl}?methodToCall=expandCatalogGroup&groupId=${catalogGroup.catalogGroupCd}" alt="${catalogGroup.catalogGroupNm}" title="${catalogGroup.catalogGroupNm}">${catalogGroup.catalogGroupNm}</a></li>
+				</c:forEach>
+			</c:when>
+			<c:otherwise>
+				<li ><a href="${baseUrl}?methodToCall=expandCatalogGroup&groupId=${catalogGroup.catalogGroupCd}" alt="${catalogGroup.catalogGroupNm}" title="${catalogGroup.catalogGroupNm}">${catalogGroup.catalogGroupNm}</li>
+				<c:forEach var="catalogSubgroup" items="${KualiForm.browseManager.selectedSubgroups}" varStatus="rowCounter" >
+				<li>
+					<ul class="browseBox_list">
+						<li >-<a href="${baseUrl}?methodToCall=expandCatalogSubgroup&subgroupId=${catalogSubgroup.catalogSubgroupCd}" alt="${catalogSubgroup.catalogSubgroupDesc}" title="${catalogSubgroup.catalogSubgroupDesc}">${catalogSubgroup.catalogSubgroupDesc}</a></li>
+				</c:forEach>
+						<c:forEach var="catalogSubgroup" items="${KualiForm.browseManager.catalogSubgroups}" varStatus="rowCounter" >
+							<li >-<a href="${baseUrl}?methodToCall=expandCatalogSubgroup&subgroupId=${catalogSubgroup.catalogSubgroupCd}" alt="${catalogSubgroup.catalogSubgroupDesc}" title="${catalogSubgroup.catalogSubgroupDesc}">${catalogSubgroup.catalogSubgroupDesc}</a></li>
+						</c:forEach>
+				<c:forEach var="catalogSubgroup" items="${KualiForm.browseManager.selectedSubgroups}" varStatus="rowCounter" >
+						
+					</ul>
+						<li >-<a href="${baseUrl}?methodToCall=expandCatalogSubgroup&subgroupId=${catalogSubgroup.catalogSubgroupCd}" alt="${catalogSubgroup.catalogSubgroupDesc}" title="${catalogSubgroup.catalogSubgroupDesc}">${catalogSubgroup.catalogSubgroupDesc}</a></li>
+				</c:forEach>
+			</c:otherwise>
+		</c:choose>	
+	</ul>
+</div>

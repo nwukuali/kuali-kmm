@@ -1,0 +1,403 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="Bin" parent="Bin-parentBean" />
+
+  <bean id="Bin-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.Bin"
+        p:titleAttribute="binId"
+        p:objectLabel="Bin"
+        p:inquiryDefinition-ref="Bin-inquiryDefinition"
+        p:lookupDefinition-ref="Bin-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="Bin-active" />
+        <ref bean="Bin-binId" />
+        <ref bean="Bin-zone.warehouseCd" />
+        <ref bean="Bin-zone.zoneCd" />
+        <ref bean="Bin-binNbr" />
+        <ref bean="Bin-shelfId" />
+        <ref bean="Bin-shelfIdNbr" />
+        <ref bean="Bin-maximumShelfQty" />
+        <ref bean="Bin-binHeight" />
+        <ref bean="Bin-binWidth" />
+        <ref bean="Bin-binLength" />
+        <ref bean="Bin-availableQty" />
+        <ref bean="Bin-versionNumber" />
+        <ref bean="Bin-lastUpdateDate" />
+        <ref bean="Bin-zoneId" />
+        <ref bean="Bin-binDisDesc" />
+        <ref bean="Bin-stockLocation" />
+        <ref bean="Bin-qtyOnHand"/>
+        
+      </list>
+    </property>
+    <property name="relationships" >
+      <list>
+        <bean parent="RelationshipDefinition">
+          <property name="objectAttributeName" value="zone" />
+          <property name="primitiveAttributes" >
+            <list>
+              <bean parent="PrimitiveAttributeDefinition"
+                    p:sourceName="zoneId"
+                    p:targetName="zoneId" />
+            </list>
+          </property>
+          <property name="supportAttributes" >
+            <list>
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="zone.zoneCd"
+                    p:targetName="zoneCd" />
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="zone.warehouseCd"
+                    p:targetName="warehouseCd" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+  
+  <bean id="Bin-qtyOnHand" parent="Bin-qtyOnHand-parentBean" />
+  <bean id="Bin-qtyOnHand-parentBean" abstract="true" parent="StockBalance-qtyOnHand" 
+        p:name="stockBalance.qtyOnHand"
+        p:label="Qunatity on Hand"
+        p:shortLabel="Quantity on Hand"
+        p:required="false" />
+        
+        
+  <bean id="Bin-active" parent="Bin-active-parentBean" />
+  <bean id="Bin-active-parentBean" abstract="true" parent="GenericAttributes-activeIndicator" 
+        p:name="active"
+        p:label="Active Indicator"
+        p:shortLabel="Active Indicator"
+        p:required="false" />
+
+  <bean id="Bin-binNbr" parent="Bin-binNbr-parentBean" />
+  <bean id="Bin-binNbr-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="binNbr"
+        p:forceUppercase="true"
+        p:label="Bin Number"
+        p:shortLabel="Bin Number"
+        p:maxLength="6"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AlphaNumericValidationPattern"/>
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="6" />
+    </property>
+  </bean>
+
+  <bean id="Bin-binId" parent="Bin-binId-parentBean" />
+  <bean id="Bin-binId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="binId"
+        p:forceUppercase="false"
+        p:label="Bin Id"
+        p:shortLabel="Bin Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AlphaNumericValidationPattern"/>
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  
+  <bean id="Bin-zoneId" parent="Bin-zoneId-parentBean" />
+  <bean id="Bin-zoneId-parentBean" parent="Zone-zoneId" abstract="true"
+        p:name="zoneId"
+        p:forceUppercase="false"
+        p:label="Zone Id"
+        p:shortLabel="Zone Id"
+        p:required="false" >
+    <property name="control" >
+      <bean parent="HiddenControlDefinition" />
+    </property>
+    <property name="displayLabelAttribute" value="zone.zoneCd" />
+  </bean>
+
+  <bean id="Bin-binDisDesc" parent="Bin-binDisDesc-parentBean" />
+  <bean id="Bin-binDisDesc-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="binDisDesc"
+        p:forceUppercase="true"
+        p:label="Zone/Bin/Shelf ID/Shelf Number"
+        p:shortLabel="Zone/Bin/Shelf ID/Shelf Number"
+        p:maxLength="20"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="20" />
+    </property>
+  </bean>
+    
+  <bean id="Bin-stockLocation" parent="Bin-stockLocation-parentBean" />
+  <bean id="Bin-stockLocation-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="stockLocation"
+        p:forceUppercase="true"
+        p:label="Bin Location"
+        p:shortLabel="Location"
+        p:maxLength="20"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="20" />
+    </property>
+  </bean> 
+  
+  <bean id="Bin-zone.zoneCd" parent="Bin-zone.zoneCd-parentBean" />
+  <bean id="Bin-zone.zoneCd-parentBean" parent="Zone-zoneCd" abstract="true"
+        p:name="zone.zoneCd"
+        p:forceUppercase="true"
+        p:label="Zone Code"
+        p:shortLabel="Zone Code"
+        p:required="false" >
+  </bean>
+  
+  <bean id="Bin-zone.warehouseCd" parent="Bin-zone.warehouseCd-parentBean" />
+  <bean id="Bin-zone.warehouseCd-parentBean" parent="Zone-warehouseCd" abstract="true"
+        p:name="zone.warehouseCd"
+        p:forceUppercase="true"
+        p:label="Warehouse Code"
+        p:shortLabel="Warehouse Code"
+        p:required="false" >
+  </bean>
+
+  <bean id="Bin-lastUpdateDate" parent="Bin-lastUpdateDate-parentBean" />
+  <bean id="Bin-lastUpdateDate-parentBean" parent="GenericAttributes-genericTimestamp" abstract="true"
+        p:name="lastUpdateDate"
+        p:forceUppercase="false"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:maxLength="10"
+        p:required="false" >
+  </bean>
+
+  <bean id="Bin-availableQty" parent="Bin-availableQty-parentBean" />
+  <bean id="Bin-availableQty-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="availableQty"
+        p:forceUppercase="false"
+        p:label="Available Quantity"
+        p:shortLabel="Available Shelf Quantity"
+        p:maxLength="8"
+        p:required="false" >
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="8" />
+    </property>
+  </bean>
+
+  <bean id="Bin-maximumShelfQty" parent="Bin-maximumShelfQty-parentBean" />
+  <bean id="Bin-maximumShelfQty-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="maximumShelfQty"
+        p:forceUppercase="false"
+        p:label="Maximum Shelf Quantity"
+        p:shortLabel="Maximum Shelf Qty"
+        p:maxLength="8"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="NumericValidationPattern" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="8" />
+    </property>
+  </bean>
+
+  <bean id="Bin-shelfId" parent="Bin-shelfId-parentBean" />
+  <bean id="Bin-shelfId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="shelfId"
+        p:forceUppercase="true"
+        p:label="Shelf ID"
+        p:shortLabel="Shelf ID"
+        p:maxLength="2"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AlphaNumericValidationPattern"/>
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="2" />
+    </property>
+  </bean>
+
+  <bean id="Bin-shelfIdNbr" parent="Bin-shelfIdNbr-parentBean" />
+  <bean id="Bin-shelfIdNbr-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="shelfIdNbr"
+        p:forceUppercase="true"
+        p:label="Shelf ID Number"
+        p:shortLabel="Shelf ID Number"
+        p:maxLength="2"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="NumericValidationPattern" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="2" />
+    </property>
+  </bean>
+
+  <bean id="Bin-binHeight" parent="Bin-binHeight-parentBean" />
+  <bean id="Bin-binHeight-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="binHeight"
+        p:forceUppercase="false"
+        p:label="Bin Height"
+        p:shortLabel="Bin Height"
+        p:maxLength="8"
+        p:required="false" >
+   	<property name="validationPattern" >
+    	<bean parent="FixedPointValidationPattern"
+            p:precision="8"
+            p:scale="2"
+            p:allowNegative="false" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  
+  <bean id="Bin-binWidth" parent="Bin-binWidth-parentBean" />
+  <bean id="Bin-binWidth-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="binWidth"
+        p:forceUppercase="false"
+        p:label="Bin Width"
+        p:shortLabel="Bin Width"
+        p:maxLength="8"
+        p:required="false" >
+    <property name="validationPattern" >
+    	<bean parent="FixedPointValidationPattern"
+            p:precision="8"
+            p:scale="2"
+            p:allowNegative="false" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  
+  <bean id="Bin-binLength" parent="Bin-binLength-parentBean" />
+  <bean id="Bin-binLength-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="binLength"
+        p:forceUppercase="false"
+        p:label="Bin Length"
+        p:shortLabel="Bin Length"
+        p:maxLength="8"
+        p:required="false" >
+    <property name="validationPattern" >
+    	<bean parent="FixedPointValidationPattern"
+            p:precision="8"
+            p:scale="2"
+            p:allowNegative="false" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="Bin-versionNumber" parent="Bin-versionNumber-parentBean" />
+  <bean id="Bin-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="Bin-inquiryDefinition" parent="Bin-inquiryDefinition-parentBean" />
+
+  <bean id="Bin-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Bin Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Bin Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="active" />
+              <bean parent="FieldDefinition" p:attributeName="zone.warehouseCd" />
+              <bean parent="FieldDefinition" p:attributeName="zone.zoneCd" />
+              <bean parent="FieldDefinition" p:attributeName="binNbr" />
+              <bean parent="FieldDefinition" p:attributeName="shelfId" />
+              <bean parent="FieldDefinition" p:attributeName="shelfIdNbr" />
+              <bean parent="FieldDefinition" p:attributeName="maximumShelfQty" />
+              <bean parent="FieldDefinition" p:attributeName="binHeight" />  
+		      <bean parent="FieldDefinition" p:attributeName="binWidth" />
+		      <bean parent="FieldDefinition" p:attributeName="binLength" />            
+              <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+              <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="Bin-lookupDefinition" parent="Bin-lookupDefinition-parentBean" />
+
+  <bean id="Bin-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Bin Lookup">
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>binId</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>
+        
+        <bean parent="FieldDefinition" p:attributeName="zone.warehouseCd" />
+        <bean parent="FieldDefinition" p:attributeName="zone.zoneCd" />
+        <bean parent="FieldDefinition" p:attributeName="binNbr" />
+        <bean parent="FieldDefinition" p:attributeName="zoneId" />
+        <bean parent="FieldDefinition" p:attributeName="shelfId" />
+        <bean parent="FieldDefinition" p:attributeName="shelfIdNbr" />
+        <bean parent="FieldDefinition" p:attributeName="maximumShelfQty" />
+        <bean parent="FieldDefinition" p:attributeName="binHeight" />
+        <bean parent="FieldDefinition" p:attributeName="binWidth" />
+        <bean parent="FieldDefinition" p:attributeName="binLength" />   
+        <bean parent="FieldDefinition" p:attributeName="active" />   
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list> 
+          
+        <bean parent="FieldDefinition" p:attributeName="zone.warehouseCd" />
+        <bean parent="FieldDefinition" p:attributeName="zone.zoneCd" />
+        <bean parent="FieldDefinition" p:attributeName="binNbr" />
+        <bean parent="FieldDefinition" p:attributeName="shelfId" />
+        <bean parent="FieldDefinition" p:attributeName="shelfIdNbr" />
+        <bean parent="FieldDefinition" p:attributeName="maximumShelfQty" />
+        <bean parent="FieldDefinition" p:attributeName="binHeight" />
+        <bean parent="FieldDefinition" p:attributeName="binWidth" />
+        <bean parent="FieldDefinition" p:attributeName="binLength" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+        <bean parent="FieldDefinition" p:attributeName="active" />
+      </list>
+    </property>
+  </bean>
+
+</beans>

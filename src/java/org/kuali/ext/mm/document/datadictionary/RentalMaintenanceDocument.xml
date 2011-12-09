@@ -1,0 +1,145 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="StoresRentalMaintenanceDocument" parent="StoresRentalMaintenanceDocument-parentBean" />
+
+  <bean id="StoresRentalMaintenanceDocument-parentBean" abstract="true" parent="MaintenanceDocumentEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.Rental"
+        p:maintainableClass="org.kuali.ext.mm.service.impl.RentalMaintainableImpl"
+        p:documentTypeName="SRNT"
+        p:documentAuthorizerClass="org.kuali.rice.kns.document.authorization.MaintenanceDocumentAuthorizerBase" 
+        p:documentPresentationControllerClass="org.kuali.ext.mm.document.authorization.RentalPresentationController"
+        p:businessRulesClass="org.kuali.ext.mm.document.validation.impl.RentalBusinessRule"
+        p:promptBeforeValidationClass="org.kuali.ext.mm.document.validation.impl.RentalPreRules" >
+    <property name="lockingKeys" >
+      <list>
+        <value>rentalId</value>
+      </list>
+    </property>
+    <property name="defaultExistenceChecks" >
+      <list>
+      	   <bean parent="ReferenceDefinition"
+              p:attributeName="rentalType"
+              p:attributeToHighlightOnFail="rentalTypeCode" />
+           <bean parent="ReferenceDefinition"
+              p:attributeName="stock"
+              p:attributeToHighlightOnFail="stock.stockDistributorNbr" />
+      </list>
+    </property>
+    <property name="workflowAttributes" >
+        <ref bean="StoresRentalMaintenanceDocument-workflowAttributes" />
+    </property>
+    <property name="maintainableSections" >
+      <list>
+        <ref bean="StoresRentalMaintenanceDocument-MainSection" />
+        <ref bean="StoresRentalMaintenanceDocument-Accounts" />
+      </list>
+    </property>
+  </bean>
+
+ <!-- Maintenance Section Definitions -->
+  <bean id="StoresRentalMaintenanceDocument-MainSection" parent="StoresRentalMaintenanceDocument-MainSection-parentBean" />
+
+  <bean id="StoresRentalMaintenanceDocument-MainSection-parentBean" abstract="true" parent="MaintainableSectionDefinition"
+        p:title="Edit Rental Item" >
+    <property name="maintainableItems" >
+      <list>
+        <bean parent="MaintainableFieldDefinition"
+              p:name="rentalTypeCode"
+              p:required="true"
+              p:unconditionallyReadOnly="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="stock.stockDistributorNbr"
+              p:required="true" 
+              p:lookupReadOnly="true"/>
+        <bean parent="MaintainableFieldDefinition"
+              p:name="rentalSerialNumber"
+              p:required="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="stock.rentalObject.dailyDemurragePrice"
+              p:required="false"
+              p:unconditionallyReadOnly="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="rentalStatusCode"
+              p:required="true" 
+              p:unconditionallyReadOnly="true" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="issueDate"
+              p:required="false" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="returnDate"
+              p:required="false" />
+        <bean parent="MaintainableFieldDefinition"
+              p:name="lastChargeDate"
+              p:required="false" />         
+      </list>
+    </property>
+  </bean>
+  
+  <bean id="StoresRentalMaintenanceDocument-Accounts" parent="StoresRentalMaintenanceDocument-Accounts-parentBean"/>
+  <bean id="StoresRentalMaintenanceDocument-Accounts-parentBean" abstract="true" parent="MaintainableSectionDefinition">
+    <property name="id" value="accountingLines"/>
+    <property name="title" value="Accounts"/>
+    <property name="maintainableItems">
+      <list>
+        <bean parent="MaintainableCollectionDefinition">
+          <property name="name" value="accountingLines"/>
+          <property name="businessObjectClass" value="org.kuali.ext.mm.businessobject.Accounts"/>
+          <property name="includeAddLine" value="true"/>
+          <property name="alwaysAllowCollectionDeletion" value="true"/>
+          <property name="summaryTitle" value="Accounting Lines"/>
+          <property name="maintainableFields">
+            <list>          	      
+          		<bean parent="MaintainableFieldDefinition"
+		              p:name="finCoaCd"
+		              p:required="true" 
+		              p:overrideLookupClass="org.kuali.ext.mm.integration.coa.businessobject.FinancialChart"
+		              p:overrideFieldConversions="finCoaCd:chartOfAccountsCode" />
+		        <bean parent="MaintainableFieldDefinition"
+		              p:name="accountNbr"
+		              p:required="true"
+		              p:overrideLookupClass="org.kuali.ext.mm.integration.coa.businessobject.FinancialAccount" 
+		              p:overrideFieldConversions="finCoaCd:chartOfAccountsCode,accountNbr:accountNumber" />
+		        <bean parent="MaintainableFieldDefinition"
+		              p:name="subAcctNbr"
+		              p:required="false"
+		              p:overrideLookupClass="org.kuali.ext.mm.integration.coa.businessobject.FinancialSubAccount" 
+		              p:overrideFieldConversions="finCoaCd:chartOfAccountsCode,accountNbr:accountNumber,subAcctNbr:subAccountNumber"/>
+		        <bean parent="MaintainableFieldDefinition"
+		              p:name="finObjectCd"
+		              p:required="true" 
+		              p:overrideLookupClass="org.kuali.ext.mm.integration.coa.businessobject.FinancialObjectCode" 
+		              p:overrideFieldConversions="finCoaCd:chartOfAccountsCode,finObjectCd:financialObjectCode" />
+		        <bean parent="MaintainableFieldDefinition"
+		              p:name="finSubObjectCd"
+		              p:required="false" 
+		              p:overrideLookupClass="org.kuali.ext.mm.integration.coa.businessobject.FinancialSubObjectCode"
+		              p:overrideFieldConversions="finCoaCd:chartOfAccountsCode,finObjectCd:financialObjectCode,finSubObjectCd:financialSubObjectCode" />      
+		        <bean parent="MaintainableFieldDefinition"
+		              p:name="projectCd"
+		              p:required="false" 
+		              p:overrideLookupClass="org.kuali.ext.mm.integration.coa.businessobject.FinancialProjectCode"/>
+		        <bean parent="MaintainableFieldDefinition"
+		              p:name="departmentReferenceText"
+		              p:required="false" />
+		        <bean parent="MaintainableFieldDefinition"
+		              p:name="amountType"
+		              p:required="true" />
+		        <bean parent="MaintainableFieldDefinition"
+		              p:name="formAmount"
+		              p:required="true" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+  
+ <!-- workflow attributes -->
+  <bean id="StoresRentalMaintenanceDocument-workflowAttributes" parent="StoresRentalMaintenanceDocument-workflowAttributes-parentBean" />
+
+  <bean id="StoresRentalMaintenanceDocument-workflowAttributes-parentBean" abstract="true" class="org.kuali.rice.kns.datadictionary.WorkflowAttributes" />
+</beans>

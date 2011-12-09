@@ -1,0 +1,66 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="PickVerifyDocument" parent="PickVerifyDocument-parentBean" />
+
+  <bean id="PickVerifyDocument-parentBean" abstract="true" parent="TransactionalDocumentEntry">
+    <property name="documentTypeName" value="SPKV"/>
+    <property name="sessionDocument" value="true"/>
+    <property name="documentClass" value="org.kuali.ext.mm.document.PickVerifyDocument"/>
+    <property name="businessRulesClass" value="org.kuali.ext.mm.document.validation.impl.PickVerifyDocumentRule"/>        
+    <property name="documentAuthorizerClass" value="org.kuali.rice.kns.document.authorization.TransactionalDocumentAuthorizerBase"/>
+    <property name="documentPresentationControllerClass" value="org.kuali.ext.mm.document.authorization.PickVerifyDocumentPresentationController"/>
+ 	<property name="promptBeforeValidationClass" value="org.kuali.ext.mm.document.validation.impl.PickVerifyDocumentPreRules"/>
+<!--    <property name="attachmentTypesValuesFinderClass" value="org.kuali.kfs.module.purap.businessobject.options.PurchaseOrderAttachmentTypeValuesFinder"/>-->
+    <property name="allowsCopy" value="true"/>
+    
+    <property name="attributes" >
+      <list>
+        <ref bean="PickVerifyDocument-pickTicketNumber" />
+        <ref bean="PickVerifyDocument-versionNumber" />
+      </list>
+    </property>
+    
+    <property name="defaultExistenceChecks">
+      <list>
+        <bean parent="ReferenceDefinition" p:attributeName="pickTicket" p:attributeToHighlightOnFail="pickTicketNumber"/>    
+      </list>
+   </property>
+   <property name="relationships" >
+      <list>
+        <bean parent="RelationshipDefinition">
+          <property name="objectAttributeName" value="pickTicket" />
+          <property name="primitiveAttributes" >
+            <list>
+              <bean parent="PrimitiveAttributeDefinition"
+                    p:sourceName="pickTicketNumber"
+                    p:targetName="pickTicketNumber" />
+            </list>
+          </property>          
+        </bean>
+      </list>
+    </property>  
+    
+    <property name="workflowAttributes">
+    	<ref bean="PickVerifyDocument-workflowAttributes" />
+    </property>  
+  </bean>
+  
+  <bean id="PickVerifyDocument-pickTicketNumber" parent="PickVerifyDocument-pickTicketNumber-parentBean" />
+  <bean id="PickVerifyDocument-pickTicketNumber-parentBean" parent="PickTicket-pickTicketNumber" abstract="true"
+        p:name="pickTicketNumber"
+        p:required="true" >       
+  </bean>
+  
+  <bean id="PickVerifyDocument-versionNumber" parent="PickVerifyDocument-versionNumber-parentBean" />
+  <bean id="PickVerifyDocument-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+	<bean id="PickVerifyDocument-workflowAttributes" parent="PickVerifyDocument-workflowAttributes-parentBean"/>
+	
+	<bean id="PickVerifyDocument-workflowAttributes-parentBean" abstract="true" parent="WorkflowAttributes" />
+</beans>

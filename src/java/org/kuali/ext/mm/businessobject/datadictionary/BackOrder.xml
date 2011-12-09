@@ -1,0 +1,278 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="BackOrder" parent="BackOrder-parentBean" />
+
+  <bean id="BackOrder-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.BackOrder"
+        p:titleAttribute="backOrderId"
+        p:objectLabel="Back Order"
+        p:inquiryDefinition-ref="BackOrder-inquiryDefinition"
+        p:lookupDefinition-ref="BackOrder-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="BackOrder-backOrderId" />
+        <ref bean="BackOrder-backOrderStockQty" />
+        <ref bean="BackOrder-filled" />
+        <ref bean="BackOrder-canceled" />
+        <ref bean="BackOrder-actionCode" />
+        <ref bean="BackOrder-fromPickListLineId" />
+        <ref bean="BackOrder-lastUpdateDate" />
+        <ref bean="BackOrder-stockId" />
+        <ref bean="BackOrder-stock.stockDistributorNbr" />
+        <ref bean="BackOrder-stock.stockDesc" />
+        <ref bean="BackOrder-fromPickListLine.salesInstance.orderDocument.orderId" />
+        <ref bean="BackOrder-fromPickListLine.salesInstance.orderDocument.creationDate" />
+        <ref bean="BackOrder-fromPickListLine.salesInstance.orderDocumentNbr" />
+        <ref bean="BackOrder-versionNumber" />
+      </list>
+    </property>
+   <property name="relationships" >
+      <list>
+        <bean parent="RelationshipDefinition">
+          <property name="objectAttributeName" value="stock" />
+          <property name="primitiveAttributes" >
+            <list>
+              <bean parent="PrimitiveAttributeDefinition"
+                    p:sourceName="stockId"
+                    p:targetName="stockId" />
+            </list>
+          </property>
+          <property name="supportAttributes" >
+            <list>
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="stock.stockDistributorNbr"
+                    p:targetName="stockDistributorNbr" />              
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+  <bean id="BackOrder-backOrderId" parent="BackOrder-backOrderId-parentBean" />
+  <bean id="BackOrder-backOrderId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="backOrderId"
+        p:forceUppercase="false"
+        p:label="Back Order Id"
+        p:shortLabel="Back Order Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="BackOrder-backOrderStockQty" parent="BackOrder-backOrderStockQty-parentBean" />
+  <bean id="BackOrder-backOrderStockQty-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="backOrderStockQty"
+        p:forceUppercase="false"
+        p:label="Back Order Quantity"
+        p:shortLabel="B/O Qty"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="NumericValidationPattern" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="5" />
+    </property>
+  </bean>
+
+  <bean id="BackOrder-filled" parent="BackOrder-filled-parentBean" />
+  <bean id="BackOrder-filled-parentBean" parent="GenericAttributes-genericBoolean" abstract="true"
+        p:name="filled"
+        p:forceUppercase="false"
+        p:label="Back Order Released"
+        p:shortLabel="Released">
+  </bean>
+  
+  <bean id="BackOrder-actionCode" parent="BackOrder-actionCode-parentBean" />
+  <bean id="BackOrder-actionCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="actionCode"
+        p:forceUppercase="false"
+        p:label="Action"
+        p:shortLabel="Action"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="control" >
+      <bean parent="SelectControlDefinition" p:valuesFinderClass="org.kuali.ext.mm.businessobject.options.BackOrderActionValuesFinder" p:includeKeyInLabel="false"/>
+    </property>
+  </bean>
+  
+  <bean id="BackOrder-canceled" parent="BackOrder-canceled-parentBean" />
+  <bean id="BackOrder-canceled-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="canceled"
+        p:forceUppercase="false"
+        p:label="Canceled"
+        p:shortLabel="Canceled"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="control" >
+      <bean parent="CheckboxControlDefinition" />
+    </property>
+    <property name="formatterClass" value="org.kuali.rice.kns.web.format.BooleanFormatter" />
+  </bean>
+
+  <bean id="BackOrder-fromPickListLineId" parent="BackOrder-fromPickListLineId-parentBean" />
+  <bean id="BackOrder-fromPickListLineId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="fromPickListLineId"
+        p:forceUppercase="false"
+        p:label="From Pick List Line Id"
+        p:shortLabel="From Pick List Line Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="BackOrder-lastUpdateDate" parent="BackOrder-lastUpdateDate-parentBean" />
+  <bean id="BackOrder-lastUpdateDate-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="lastUpdateDate"
+        p:forceUppercase="false"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="HiddenControlDefinition" />
+    </property>
+  </bean>
+  
+  <bean id="BackOrder-fromPickListLine.salesInstance.orderDocument.creationDate" parent="BackOrder-fromPickListLine.salesInstance.orderDocument.creationDate-parentBean" />
+  <bean id="BackOrder-fromPickListLine.salesInstance.orderDocument.creationDate-parentBean" parent="OrderDocument-creationDate" abstract="true"
+        p:name="fromPickListLine.salesInstance.orderDocument.creationDate" >        
+  </bean>
+
+  <bean id="BackOrder-stockId" parent="BackOrder-stockId-parentBean" />
+  <bean id="BackOrder-stockId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="stockId"
+        p:forceUppercase="false"
+        p:label="Stock Id"
+        p:shortLabel="Stock Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  
+  <bean id="BackOrder-stock.stockDistributorNbr" parent="BackOrder-stock.stockDistributorNbr-parentBean" />
+  <bean id="BackOrder-stock.stockDistributorNbr-parentBean" parent="Stock-stockDistributorNbr" abstract="true"
+        p:name="stock.stockDistributorNbr" >        
+  </bean>
+  
+  <bean id="BackOrder-stock.stockDesc" parent="BackOrder-stock.stockDesc-parentBean" />
+  <bean id="BackOrder-stock.stockDesc-parentBean" parent="Stock-stockDesc" abstract="true"
+        p:name="stock.stockDesc" >        
+  </bean>
+  
+  <bean id="BackOrder-fromPickListLine.salesInstance.orderDocument.orderId" parent="BackOrder-fromPickListLine.salesInstance.orderDocument.orderId-parentBean" />
+  <bean id="BackOrder-fromPickListLine.salesInstance.orderDocument.orderId-parentBean" parent="OrderDocument-orderId" abstract="true"
+        p:name="fromPickListLine.salesInstance.orderDocument.orderId" >        
+  </bean>
+  
+  <bean id="BackOrder-fromPickListLine.salesInstance.orderDocumentNbr" parent="BackOrder-fromPickListLine.salesInstance.orderDocumentNbr-parentBean" />
+  <bean id="BackOrder-fromPickListLine.salesInstance.orderDocumentNbr-parentBean" parent="OrderDocument-documentNumber" abstract="true"
+        p:name="fromPickListLine.salesInstance.orderDocumentNbr" >        
+  </bean>
+
+  <bean id="BackOrder-versionNumber" parent="BackOrder-versionNumber-parentBean" />
+  <bean id="BackOrder-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="BackOrder-inquiryDefinition" parent="BackOrder-inquiryDefinition-parentBean" />
+
+  <bean id="BackOrder-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Back Order Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Back Order Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="backOrderId" />
+              <bean parent="FieldDefinition" p:attributeName="fromPickListLine.salesInstance.orderDocument.orderId" />
+              <bean parent="FieldDefinition" p:attributeName="fromPickListLine.salesInstance.orderDocumentNbr" />
+              <bean parent="FieldDefinition" p:attributeName="stock.stockDistributorNbr" />
+              <bean parent="FieldDefinition" p:attributeName="stock.stockDesc" />
+              <bean parent="FieldDefinition" p:attributeName="backOrderStockQty" />              
+              <bean parent="FieldDefinition" p:attributeName="filled" />
+              <bean parent="FieldDefinition" p:attributeName="canceled" />
+              <bean parent="FieldDefinition" p:attributeName="fromPickListLine.salesInstance.orderDocument.creationDate" />
+              <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="BackOrder-lookupDefinition" parent="BackOrder-lookupDefinition-parentBean" />
+
+  <bean id="BackOrder-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Back Order Lookup" >
+    <property name="lookupableID" value="backOrderLookupable" />
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>fromPickListLine.salesInstanceId</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="fromPickListLine.salesInstance.orderDocument.orderId" />
+        <bean parent="FieldDefinition" p:attributeName="stock.stockDistributorNbr" />
+        <bean parent="FieldDefinition" p:attributeName="filled" />    
+        <bean parent="FieldDefinition" p:attributeName="canceled" />
+        <bean parent="FieldDefinition" p:attributeName="fromPickListLine.salesInstance.orderDocument.creationDate" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+      	<bean parent="FieldDefinition" p:attributeName="backOrderId" />
+        <bean parent="FieldDefinition" p:attributeName="fromPickListLine.salesInstance.orderDocument.orderId" />
+        <bean parent="FieldDefinition" p:attributeName="stock.stockDistributorNbr" />
+        <bean parent="FieldDefinition" p:attributeName="backOrderStockQty" />        
+        <bean parent="FieldDefinition" p:attributeName="filled" />
+        <bean parent="FieldDefinition" p:attributeName="canceled" />
+        <bean parent="FieldDefinition" p:attributeName="fromPickListLine.salesInstance.orderDocument.creationDate" />
+      </list>
+    </property>
+  </bean>
+
+</beans>

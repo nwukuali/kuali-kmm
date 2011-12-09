@@ -1,0 +1,241 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="CatalogPending" parent="CatalogPending-parentBean" />
+
+  <bean id="CatalogPending-parentBean" abstract="true" parent="TransactionalDocumentEntry">
+        
+    <property name="documentTypeName" value="SUPC"/>
+    <property name="sessionDocument" value="true"/>
+    <property name="documentClass" value="org.kuali.ext.mm.document.CatalogPending"/>
+    <property name="documentAuthorizerClass" value="org.kuali.rice.kns.document.authorization.TransactionalDocumentAuthorizerBase"/>
+    <property name="documentPresentationControllerClass" value="org.kuali.ext.mm.document.authorization.CatalogPendingPresentationController"/> 
+    <property name="businessRulesClass" value="org.kuali.ext.mm.document.validation.impl.UploadDocumentRule"/>         
+       
+    <property name="attributes" >
+      <list>      
+        <ref bean="CatalogPending-agreementNbr" />
+        <ref bean="CatalogPending-batchLog" />
+        <ref bean="CatalogPending-catalogBeginDt" />
+        <ref bean="CatalogPending-catalogCd" />
+        <ref bean="CatalogPending-catalogDesc" />
+        <ref bean="CatalogPending-catalogEndDt" />        
+        <ref bean="CatalogPending-catalogTimestamp" />
+        <ref bean="CatalogPending-lastUpdateDate" />
+        <ref bean="CatalogPending-priorityNbr" />
+        <ref bean="CatalogPending-versionNumber" />
+        <ref bean="CatalogPending-fileContent"/>
+        <ref bean="CatalogPending-catalogUploadStatus"/>
+      </list>
+    </property>
+     <property name="workflowAttributes" >
+        <ref bean="CatalogPending-workflowAttributes" />
+    </property>
+  </bean>
+  
+  <bean id="CatalogPending-fileContent" parent="CatalogPending-fileContent-parentBean" />
+  <bean id="CatalogPending-fileContent-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="fileContent"
+        p:forceUppercase="false"
+        p:label="Catalog File"
+        p:shortLabel="Catalog File"
+        p:maxLength="100"
+        p:required="true" >
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+       
+  <bean id="CatalogPending-agreementNbr" parent="CatalogPending-agreementNbr-parentBean" />
+  <bean id="CatalogPending-agreementNbr-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="agreementNbr"
+        p:forceUppercase="false"
+        p:label="Agreement Number"
+        p:shortLabel="Agreement Number"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CatalogPending-batchLog" parent="CatalogPending-batchLog-parentBean" />
+  <bean id="CatalogPending-batchLog-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="batchLog"
+        p:forceUppercase="false"
+        p:label="Uploaded File Name"
+        p:shortLabel="Uploaded File Name"
+        p:maxLength="50"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="50" />
+    </property>
+  </bean>
+
+  <bean id="CatalogPending-catalogBeginDt" parent="CatalogPending-catalogBeginDt-parentBean" />
+  <bean id="CatalogPending-catalogBeginDt-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="catalogBeginDt"
+        p:forceUppercase="false"
+        p:label="Catalog Begin Date"
+        p:shortLabel="Catalog Begin Date"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CatalogPending-catalogCd" parent="CatalogPending-catalogCd-parentBean" />
+  <bean id="CatalogPending-catalogCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="catalogCd"
+        p:forceUppercase="false"
+        p:label="Catalog Code"
+        p:shortLabel="Catalog Code"
+        p:maxLength="2"
+        p:required="true" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="2" />
+    </property>
+  </bean>
+
+  <bean id="CatalogPending-catalogDesc" parent="CatalogPending-catalogDesc-parentBean" />
+  <bean id="CatalogPending-catalogDesc-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="catalogDesc"
+        p:forceUppercase="false"
+        p:label="Catalog Description"
+        p:shortLabel="Catalog Description"
+        p:maxLength="200"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+     <property name="control" >
+       <bean parent="TextareaControlDefinition" p:rows="4" p:cols="51"/>
+    </property>
+  </bean>
+  
+  <bean id="CatalogPending-catalogUploadStatus" parent="CatalogPending-catalogUploadStatus-parentBean" />
+  <bean id="CatalogPending-catalogUploadStatus-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="catalogUploadStatus"
+        p:forceUppercase="false"
+        p:label="Catalog Pending Status"
+        p:shortLabel="Catalog Pending Status"
+        p:maxLength="12"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+     <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="12" />
+    </property>
+  </bean>
+
+  <bean id="CatalogPending-catalogEndDt" parent="CatalogPending-catalogEndDt-parentBean" />
+  <bean id="CatalogPending-catalogEndDt-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="catalogEndDt"
+        p:forceUppercase="false"
+        p:label="Catalog End Date"
+        p:shortLabel="Catalog End Date"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CatalogPending-catalogTimestamp" parent="CatalogPending-catalogTimestamp-parentBean" />
+  <bean id="CatalogPending-catalogTimestamp-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="catalogTimestamp"
+        p:forceUppercase="false"
+        p:label="Catalog Timestamp"
+        p:shortLabel="Catalog Timestamp"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CatalogPending-lastUpdateDate" parent="CatalogPending-lastUpdateDate-parentBean" />
+  <bean id="CatalogPending-lastUpdateDate-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="lastUpdateDate"
+        p:forceUppercase="false"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="HiddenControlDefinition" />
+    </property>
+  </bean>
+
+  <bean id="CatalogPending-priorityNbr" parent="CatalogPending-priorityNbr-parentBean" />
+  <bean id="CatalogPending-priorityNbr-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="priorityNbr"
+        p:forceUppercase="false"
+        p:label="Priority Number"
+        p:shortLabel="Priority Number"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CatalogPending-versionNumber" parent="CatalogPending-versionNumber-parentBean" />
+  <bean id="CatalogPending-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+        
+        
+  <bean id="CatalogPending-workflowAttributes" parent="CatalogPending-workflowAttributes-parentBean" />
+
+  <bean id="CatalogPending-workflowAttributes-parentBean" abstract="true" class="org.kuali.rice.kns.datadictionary.WorkflowAttributes" />
+
+</beans>

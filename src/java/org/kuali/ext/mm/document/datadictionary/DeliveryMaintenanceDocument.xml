@@ -1,0 +1,97 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="StoresDeliveryMaintenanceDocument" parent="StoresDeliveryMaintenanceDocument-parentBean" />
+
+  <bean id="StoresDeliveryMaintenanceDocument-parentBean" abstract="true" parent="MaintenanceDocumentEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.Delivery"
+        p:maintainableClass="org.kuali.ext.mm.service.impl.DeliveryMaintainableImpl"
+        p:documentTypeName="DMDT"
+        p:documentAuthorizerClass="org.kuali.rice.kns.document.authorization.MaintenanceDocumentAuthorizerBase" >
+        <property name="allowsNewOrCopy" value="false"/>
+   <!-- ****** Does the Custom Presentation ***********************************   -->
+   <property name="documentPresentationControllerClass" value="org.kuali.ext.mm.document.authorization.DeliveryPresentationController"/>
+   <!-- ***********************************************************************   -->
+   
+   <!-- ****** Business Rule Validation ******************************** -->
+   <property name="businessRulesClass" value="org.kuali.ext.mm.document.validation.impl.DeliveryBusinessRule" />
+   <!-- **************************************************************** -->
+   
+    <property name="lockingKeys" >
+      <list>
+        <value>documentNumber</value>
+      </list>
+    </property>
+    <property name="defaultExistenceChecks" >
+      <list>
+        <bean parent="ReferenceDefinition"
+              p:attributeName="route"
+              p:attributeToHighlightOnFail="routeCd" />
+      </list>
+    </property>
+    <property name="workflowAttributes" >
+        <ref bean="StoresDeliveryMaintenanceDocument-workflowAttributes" />
+    </property>
+    <property name="maintainableSections" >
+      <list>
+        <ref bean="StoresDeliveryMaintenanceDocument-MainSection" />
+        <ref bean="StoresDeliveryMaintenanceDocument-DeliveryLine" />
+      </list>
+    </property>
+  </bean>
+
+ <!-- Maintenance Section Definitions -->
+  <bean id="StoresDeliveryMaintenanceDocument-MainSection" parent="StoresDeliveryMaintenanceDocument-MainSection-parentBean" />
+
+  <bean id="StoresDeliveryMaintenanceDocument-MainSection-parentBean" abstract="true" parent="MaintainableSectionDefinition"
+        p:title="Delivery Maintenance" >
+    <property name="id" value="DeliveryMainSection"/>   
+    <property name="maintainableItems" >
+      <list>		       
+        <bean parent="MaintainableFieldDefinition"
+              p:name="routeCd"
+              p:required="true" />
+      </list>
+    </property>
+  </bean>
+  
+  <bean id="StoresDeliveryMaintenanceDocument-DeliveryLine" parent="StoresDeliveryMaintenanceDocument-DeliveryLine-parentBean"/>
+  <bean id="StoresDeliveryMaintenanceDocument-DeliveryLine-parentBean" abstract="true" parent="MaintainableSectionDefinition">
+    <property name="id" value="deliveryLine"/>
+    <property name="title" value="Delivery Line"/>
+    <property name="maintainableItems">
+      <list>
+        <bean parent="MaintainableCollectionDefinition">
+          <property name="name" value="deliveryLines"/>
+          <property name="businessObjectClass" value="org.kuali.ext.mm.businessobject.DeliveryLine"/>
+          <property name="includeAddLine" value="false"/>
+          <property name="summaryTitle" value="Line"/>
+          
+          <property name="summaryFields">
+            <list>
+              <bean parent="MaintainableFieldDefinition" p:name="deliveryInfoSummary"/>                   
+            </list>
+          </property>
+          
+          <property name="maintainableFields">
+            <list>
+              <bean parent="MaintainableFieldDefinition" p:name="deliveryReasonCode"/>                           
+              <bean parent="MaintainableFieldDefinition" p:name="deliveryDate" />   
+              <bean parent="MaintainableFieldDefinition" p:name="departmentReceivedByName" />
+              <bean parent="MaintainableFieldDefinition" p:name="driverComment" />        
+              <bean parent="MaintainableFieldDefinition" p:name="deliveryInfoSummary"/>                                                                
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+  
+ <!-- workflow attributes -->
+  <bean id="StoresDeliveryMaintenanceDocument-workflowAttributes" parent="StoresDeliveryMaintenanceDocument-workflowAttributes-parentBean" />
+
+  <bean id="StoresDeliveryMaintenanceDocument-workflowAttributes-parentBean" abstract="true" class="org.kuali.rice.kns.datadictionary.WorkflowAttributes" />
+</beans>

@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="export_kuldev" default="help">
+
+	<!--
+	Check out the DB project
+export schema and data to other directory
+use ant file tasks to find missing files and perform a CVS remove on those files
+copy the new files on top of the versions in the CVS dir
+   (perhaps compare at this point)
+perform a CVS update to clear the modification flags for files which have not changed
+commit changes
+
+get the current time
+remove files not modified since that time (tables with no data)
+
+-->
+	<taskdef resource="net/sf/antcontrib/antlib.xml">
+		<classpath>
+			<pathelement location="ant-contrib-1.0b3.jar" />
+		</classpath>
+	</taskdef>
+	
+	<property file="ant-local.properties" />
+	<property file="ant.properties" />
+
+	<target name="clean">
+		<delete dir="${temp.dir}" />
+		<delete dir="${checkout.dir}" />
+		<delete dir="${basedir}" includes="*.complete" />
+	</target>
+	
+	<target name="init">
+		<mkdir dir="${temp.dir}" />
+		<mkdir dir="${checkout.dir}" />
+	</target>
+
+	<target name="checkout-tool" depends="init">
+		<cvspass cvsroot="${cvsroot}" password="${cvs.password}"
+			passfile="${temp.dir}/${passfile.name}" />
+		<cvs command="export" cvsRoot="${cvsroot}"
+			dest="${checkout.dir}" package="${impex.cvs.module}" failonerror="true"
+			tag="${impex.cvs.tag}"
+			passfile="${temp.dir}/${passfile.name}" />
+	</target>
+	
+	<target name="checkout-data" depends="init">
+		<cvspass cvsroot="${cvsroot}" password="${cvs.password}"
+			passfile="${temp.dir}/${passfile.name}" />
+		<cvs command="checkout" cvsRoot="${cvsroot}"
+			dest="${checkout.dir}" package="${data.cvs.module}" failonerror="true"
+			tag="${data.cvs.branch}" compressionlevel="6"
+			passfile="${temp.dir}/${passfile.name}" />
+	</target>
+
+	<target name="export-db">
+		<delete dir="${basedir}" includes="*.complete" />
+		<!-- create impex-build.properties file -->
+		<property name="daily.export.dir" value="new_export"/>
+		<property name="daily.export.jdbc.url" value="${database.jdbc.url}"/>	
+		<property name="daily.export.schema" value="${schema.source}"/>
+		<property name="daily.export.schema.password" value="${schema.source.password}"/>
+		<loadfile property="impex.build.properties" srcfile="impex-build.properties">
+			<filterchain>
+				<expandproperties />
+			</filterchain>
+		</loadfile>
+		<echo message="${user.home}/impex-build.properties" />
+		<echo file="${user.home}/impex-build.properties" message="${impex.build.properties}" />
+		<!-- run export command -->
+		<!-- need to run in a separate JVM due to the way that Clover finds its configuration files. -->
+		<java classname="org.apache.tools.ant.Main"
+		      fork="true"
+		      dir="${checkout.dir}/${impex.cvs.module}"
+		>
+		    <classpath path="${java.class.path}" />
+		    <jvmarg value="-Xmx1g" />
+		    <arg value="-Duser.home=${user.home}" />
+		    <arg value="export" />
+		</java>		
+	</target>
+	
+	<target name="fixcrlf">
+		<fixcrlf srcdir="${checkout.dir}/new_export" />
+	</target>
+
+	<target name="remove-cvs-files">
+		<!-- find, and cvs remove deleted files -->
+		<path id="removed.files">
+			<fileset dir="${checkout.dir}/${data.cvs.module}">
+				<include name="data/*.txt" />
+				<include name="dump/*.txt" />
+				<include name="formats/*.xml" />
+				<include name="graphs/*.xml" />
+				<exclude name="schema.xml" />
+				<exclude name=".#*" />
+				<not>
+					<present present="both" targetdir="${checkout.dir}/new_export" />
+				</not>
+			</fileset>
+		</path>
+		<pathconvert property="removed.files.prop" dirsep="/" pathsep=";">
+			<path refid="removed.files" />
+			<mapper type="regexp" from="^(.*[\\/]${data.cvs.module}[\\/])(.*)$$" to="\2" />
+		</pathconvert>
+	    <for param="data.file" list="${removed.files.prop}" delimiter=";">
+	    	<sequential>
+	    		<echo message="Removing: @{data.file}" />
+	    		<cvs command="remove -f @{data.file}"  dest="${checkout.dir}/${data.cvs.module}" />
+	    	</sequential>
+	    </for>
+	</target>
+
+	<target name="add-cvs-files">
+		<!-- find, copy and cvs add new files -->
+		<path id="new.files">
+			<fileset dir="${checkout.dir}/new_export">
+				<include name="data/*.txt" />
+				<include name="dump/*.txt" />
+				<include name="formats/*.xml" />
+				<include name="graphs/*.xml" />
+				<exclude name="schema.xml" />
+				<exclude name=".#*" />
+				<present present="srconly" targetdir="${checkout.dir}/${data.cvs.module}" />
+			</fileset>
+		</path>
+		<pathconvert property="new.files.prop" dirsep="/" pathsep=";">
+			<path refid="new.files" />
+			<mapper type="regexp" from="^(.*[\\/]new_export[\\/])(.*)$$" to="\2" />
+		</pathconvert>
+	    <for param="data.file" list="${new.files.prop}" delimiter=";">
+	    	<sequential>
+	    		<echo message="Adding: @{data.file}" />
+				<copy file="${checkout.dir}/new_export/@{data.file}" tofile="${checkout.dir}/${data.cvs.module}/@{data.file}" overwrite="true" verbose="true"/>
+				<cvs command="add @{data.file}"  dest="${checkout.dir}/${data.cvs.module}" />
+	    	</sequential>
+	    </for>
+	</target>
+
+	<target name="copy-changed-files">
+		<!-- copy files which are present in each directory and have changed -->
+		<copy todir="${checkout.dir}/${data.cvs.module}" overwrite="true" verbose="true">
+			<fileset dir="${checkout.dir}/new_export">
+				<include name="data/*.txt" />
+				<include name="dump/*.txt" />
+				<include name="formats/*.xml" />
+				<include name="graphs/*.xml" />
+				<include name="schema.xml" />
+				<exclude name=".#*" />
+				<and>
+					<present present="both" targetdir="${checkout.dir}/${data.cvs.module}" />
+					<different targetdir="${checkout.dir}/${data.cvs.module}" ignorefiletimes="true" ignoreContents="false" />
+				</and>
+			</fileset>
+		</copy>
+	</target>
+	
+	<target name="merge-export-to-cvs" depends="fixcrlf,remove-cvs-files,add-cvs-files,copy-changed-files">
+		<echo file="${basedir}/merge.complete" message="" />
+	</target>
+
+	<target name="commit-changes" depends="check-merge-complete">
+		<tstamp>
+			<format property="import.timestamp" pattern="MM/dd/yyyy hh:mm aa"/>
+		</tstamp>
+		<cvs command="commit -m &quot;Automated database schema update from ${schema.source} - ${import.timestamp}&quot;"
+			 dest="${checkout.dir}/${data.cvs.module}" failonerror="true" />
+	</target>
+
+	<target name="export" depends="export-phase1,export-phase2" />
+	<target name="export-phase1" depends="clean,init,checkout-tool,checkout-data,export-db">
+		<echo file="${basedir}/phase1.complete" message="" />
+	</target>
+	<target name="export-phase2" depends="check-phase-1,merge-export-to-cvs,commit-changes" />
+	
+	<target name="check-phase-1">
+		<available file="${basedir}/phase1.complete" property="phase1.complete" />
+		<fail unless="phase1.complete" message="Phase 1 did not complete - aborting."/>
+	</target>
+
+	<target name="check-merge-complete">
+		<available file="${basedir}/merge.complete" property="merge.complete" />
+		<fail unless="merge.complete" message="Merge step did not complete - aborting."/>
+	</target>
+	
+	<target name="help">
+		<echo>
+-- USAGE --
+This script will check out the ${data.cvs.module} project from CVS, export the named
+schema from the database, copy the file from the server, and commit the file to CVS.
+
+You will need to modify the values in ant.properties (preferrably override in ant-local.properties) 
+to match your local environment.  The main ones which you will NEED to change are the CVS password
+and the database administration password.
+
+-- TARGETS --
+export - main target, will perform all operations
+		</echo>
+	</target>
+	
+	
+	<target name="echo-file">
+		<echo>${data.file}</echo>
+	</target>
+	
+	<target name="test-for">
+		<path id="test.path">
+			<fileset dir="${checkout.dir}/new_export">
+				<include name="data/*.txt" />
+				<include name="formats/*.xml" />
+				<include name="graphs/*.xml" />
+				<exclude name="schema.xml" />
+				<exclude name=".#*" />
+				<present present="srconly" targetdir="${checkout.dir}/${data.cvs.module}" />
+			</fileset>
+		</path>
+		<pathconvert property="test.path.prop" dirsep="/" pathsep=";">
+			<path refid="test.path" />
+			<mapper type="regexp" from="^(.*[\\/]new_export[\\/])(.*)$$" to="\2" />
+		</pathconvert>
+		<echo>${test.path.prop}</echo>
+	    <for param="data.file" list="${test.path.prop}" delimiter=";">
+	    	<sequential>
+	    		<echo message="Adding: @{data.file}" />
+				<copy file="${checkout.dir}/new_export/@{data.file}" tofile="${checkout.dir}/${data.cvs.module}/@{data.file}" overwrite="true" verbose="true"/>
+				<cvs command="add @{data.file}"  dest="${checkout.dir}/${data.cvs.module}" />
+	    	</sequential>
+	    </for>
+	
+	</target>
+	
+</project>

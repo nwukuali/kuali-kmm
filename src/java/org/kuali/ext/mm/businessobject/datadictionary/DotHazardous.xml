@@ -1,0 +1,162 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="DotHazardous" parent="DotHazardous-parentBean" />
+
+  <bean id="DotHazardous-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.DotHazardous"
+        p:titleAttribute="dotHazardousCd"
+        p:objectLabel="DOT Hazardous"
+        p:inquiryDefinition-ref="DotHazardous-inquiryDefinition"
+        p:lookupDefinition-ref="DotHazardous-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="DotHazardous-active" />
+        <ref bean="DotHazardous-dotHazardousCd" />
+        <ref bean="DotHazardous-dotHazardousName" />
+        <ref bean="DotHazardous-driverManifestCd" />
+        <ref bean="DotHazardous-lastUpdateDate" />
+        <ref bean="DotHazardous-versionNumber" />
+      </list>
+    </property>
+  </bean>
+
+  <bean id="DotHazardous-active" parent="DotHazardous-active-parentBean" />
+  <bean id="DotHazardous-active-parentBean" abstract="true" parent="GenericAttributes-activeIndicator" 
+        p:name="active"
+        p:label="Active Indicator"
+        p:shortLabel="Active Indicator"
+        p:required="false" />
+
+  <bean id="DotHazardous-dotHazardousCd" parent="DotHazardous-dotHazardousCd-parentBean" />
+  <bean id="DotHazardous-dotHazardousCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="dotHazardousCd"
+        p:forceUppercase="true"
+        p:label="DOT Hazardous Code"
+        p:shortLabel="DOT Hazardous Code"
+        p:maxLength="5"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="5" />
+    </property>
+  </bean>
+
+  <bean id="DotHazardous-dotHazardousName" parent="DotHazardous-dotHazardousName-parentBean" />
+  <bean id="DotHazardous-dotHazardousName-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="dotHazardousName"
+        p:forceUppercase="true"
+        p:label="DOT Hazardous Name"
+        p:shortLabel="DOT Hazardous Name"
+        p:maxLength="45"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="45" />
+    </property>
+  </bean>
+
+  <bean id="DotHazardous-driverManifestCd" parent="DotHazardous-driverManifestCd-parentBean" />
+  <bean id="DotHazardous-driverManifestCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="driverManifestCd"
+        p:forceUppercase="true"
+        p:label="Driver Manifest Code"
+        p:shortLabel="Driver Manifest Code"
+        p:maxLength="2"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AlphaNumericValidationPattern"/>
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="2" />
+    </property>
+  </bean>
+
+  <bean id="DotHazardous-lastUpdateDate" parent="DotHazardous-lastUpdateDate-parentBean" />
+  <bean id="DotHazardous-lastUpdateDate-parentBean" parent="GenericAttributes-genericTimestamp" abstract="true"
+        p:name="lastUpdateDate"
+        p:forceUppercase="false"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:maxLength="10"
+        p:required="false" >
+  </bean>
+
+  <bean id="DotHazardous-versionNumber" parent="DotHazardous-versionNumber-parentBean" />
+  <bean id="DotHazardous-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="DotHazardous-inquiryDefinition" parent="DotHazardous-inquiryDefinition-parentBean" />
+
+  <bean id="DotHazardous-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="DOT Hazardous Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="DOT Hazardous Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="dotHazardousCd" />
+              <bean parent="FieldDefinition" p:attributeName="dotHazardousName" />
+              <bean parent="FieldDefinition" p:attributeName="driverManifestCd" />
+              <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+              <bean parent="FieldDefinition" p:attributeName="active" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="DotHazardous-lookupDefinition" parent="DotHazardous-lookupDefinition-parentBean" />
+
+  <bean id="DotHazardous-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="DOT Hazardous Lookup" >
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>dotHazardousCd</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="dotHazardousCd" />
+        <bean parent="FieldDefinition" p:attributeName="dotHazardousName" />
+        <bean parent="FieldDefinition" p:attributeName="driverManifestCd" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+        <bean parent="FieldDefinition" p:attributeName="active" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="dotHazardousCd" />
+        <bean parent="FieldDefinition" p:attributeName="dotHazardousName" />
+        <bean parent="FieldDefinition" p:attributeName="driverManifestCd" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+        <bean parent="FieldDefinition" p:attributeName="active" />
+      </list>
+    </property>
+  </bean>
+
+</beans>

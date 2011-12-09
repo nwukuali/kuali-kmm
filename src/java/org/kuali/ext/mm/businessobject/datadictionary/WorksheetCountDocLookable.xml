@@ -1,0 +1,232 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:p="http://www.springframework.org/schema/p"
+   xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+ <bean id="WorksheetCountDocLookable" parent="WorksheetCountDocLookable-parentBean" />
+
+ <bean id="WorksheetCountDocLookable-parentBean" abstract="true" parent="BusinessObjectEntry"
+       p:businessObjectClass="org.kuali.ext.mm.businessobject.WorksheetCountDocumentLookable"
+       p:titleAttribute="Worksheet Count"
+       p:objectLabel="Worksheet Count"
+       p:inquiryDefinition-ref="WorksheetCountDocLookable-inquiryDefinition"
+       p:lookupDefinition-ref="WorksheetCountDocLookable-lookupDefinition" >
+   <property name="attributes" >
+     <list>
+       <ref bean="WorksheetCountDocLookable-documentNumber" />
+       <ref bean="WorksheetCountDocLookable-warehouseCd" />
+       <ref bean="WorksheetCountDocLookable-balanced" />
+       <ref bean="WorksheetCountDocLookable-countPercentage" />
+       <ref bean="WorksheetCountDocLookable-worksheetCnt" />
+       <ref bean="WorksheetCountDocLookable-worksheetCntLength" />
+       <ref bean="WorksheetCountDocLookable-worksheetCntText" />
+       <ref bean="WorksheetCountDocLookable-worksheetCompletionDt" />
+       <ref bean="WorksheetCountDocLookable-worksheetOriginalDt" />
+       <ref bean="WorksheetCountDocLookable-worksheetStatusCode" />
+       <ref bean="WorksheetCountDocLookable-lastUpdateDate" />
+     </list>
+   </property>
+ </bean>
+
+ <bean id="WorksheetCountDocLookable-documentNumber" parent="WorksheetCountDocLookable-documentNumber-parentBean" />
+ <bean id="WorksheetCountDocLookable-documentNumber-parentBean" abstract="true" parent="DocumentHeader-documentNumber"
+ 	p:name="documentNumber"
+ 	p:label="Worksheet Number"
+   p:shortLabel="Worksheet Number"
+ 	>  
+ </bean>
+
+ <bean id="WorksheetCountDocLookable-balanced" parent="WorksheetCountDocLookable-balanced-parentBean" />
+ <bean id="WorksheetCountDocLookable-balanced-parentBean" abstract="true" parent="GenericAttributes-genericBoolean" 
+       p:name="balanced"
+	  	p:label="Balanced"
+   	p:shortLabel="Balanced"
+       p:required="false" />
+
+ <bean id="WorksheetCountDocLookable-lastUpdateDate" parent="WorksheetCountDocLookable-lastUpdateDate-parentBean" />
+ <bean id="WorksheetCountDocLookable-lastUpdateDate-parentBean" parent="GenericAttributes-genericTimestamp" abstract="true"
+       p:name="lastUpdateDate"
+       p:forceUppercase="false"
+       p:label="Last Update Date"
+       p:shortLabel="Last Update Date"
+       p:maxLength="10"
+       p:required="false" >
+ </bean>
+
+ <bean id="WorksheetCountDocLookable-countPercentage" parent="WorksheetCountDocLookable-countPercentage-parentBean" />
+ <bean id="WorksheetCountDocLookable-countPercentage-parentBean" parent="AttributeDefinition" abstract="true"
+       p:name="countPercentage"
+       p:forceUppercase="false"
+       p:label="Match Percentage"
+       p:shortLabel="Match Percentage"
+       p:maxLength="10"
+       p:required="false" >
+   <property name="validationPattern" >
+     <bean parent="AnyCharacterValidationPattern"
+           p:allowWhitespace="true" />
+   </property>
+   <property name="control" >
+     <bean parent="TextControlDefinition"
+           p:size="10" />
+   </property>
+ </bean>
+
+ <bean id="WorksheetCountDocLookable-worksheetCnt" parent="WorksheetCountDocLookable-worksheetCnt-parentBean" />
+ <bean id="WorksheetCountDocLookable-worksheetCnt-parentBean" parent="AttributeDefinition" abstract="true"
+       p:name="worksheetCnt"
+       p:forceUppercase="false"
+       p:label="Number of Counters"
+       p:shortLabel="Number of Counters"
+       p:maxLength="10"
+       p:required="true" >
+   <property name="validationPattern" >
+     <bean parent="NumericValidationPattern" />
+   </property>
+   <property name="control" >
+     <bean parent="TextControlDefinition"
+           p:size="10" />
+   </property>
+ </bean>
+
+ <bean id="WorksheetCountDocLookable-warehouseCd" parent="WorksheetCountDocLookable-warehouseCd-parentBean" />
+ <bean id="WorksheetCountDocLookable-warehouseCd-parentBean" parent="Warehouse-warehouseCd" abstract="true"
+       p:name="warehouseCd" />
+
+ <bean id="WorksheetCountDocLookable-worksheetCntLength" parent="WorksheetCountDocLookable-worksheetCntLength-parentBean" />
+ <bean id="WorksheetCountDocLookable-worksheetCntLength-parentBean" parent="AttributeDefinition" abstract="true"
+       p:name="worksheetCntLength"
+       p:forceUppercase="false"
+       p:label="Worksheet Cnt Length"
+       p:shortLabel="Worksheet Cnt Length"
+       p:maxLength="10"
+       p:required="false" >
+   <property name="validationPattern" >
+     <bean parent="AnyCharacterValidationPattern"
+           p:allowWhitespace="true" />
+   </property>
+   <property name="control" >
+     <bean parent="TextControlDefinition"
+           p:size="10" />
+   </property>
+ </bean>
+
+ <bean id="WorksheetCountDocLookable-worksheetCntText" parent="WorksheetCountDocLookable-worksheetCntText-parentBean" />
+ <bean id="WorksheetCountDocLookable-worksheetCntText-parentBean" parent="AttributeDefinition" abstract="true"
+       p:name="worksheetCntText"
+       p:forceUppercase="false"
+       p:label="Worksheet Cnt Text"
+       p:shortLabel="Worksheet Cnt Text"
+       p:maxLength="10"
+       p:required="false" >
+   <property name="validationPattern" >
+     <bean parent="AnyCharacterValidationPattern"
+           p:allowWhitespace="true" />
+   </property>
+   <property name="control" >
+     <bean parent="TextControlDefinition"
+           p:size="10" />
+   </property>
+ </bean>
+
+ <bean id="WorksheetCountDocLookable-worksheetCompletionDt" parent="WorksheetCountDocLookable-worksheetCompletionDt-parentBean" />
+ <bean id="WorksheetCountDocLookable-worksheetCompletionDt-parentBean" parent="GenericAttributes-genericTimestamp" abstract="true"
+       p:name="worksheetCompletionDt"
+       p:forceUppercase="false"
+       p:label="Worksheet Completion Date"
+       p:shortLabel="Worksheet Completion Date"
+       p:maxLength="10"
+       p:required="false" >
+ </bean>
+
+ <bean id="WorksheetCountDocLookable-worksheetOriginalDt" parent="WorksheetCountDocLookable-worksheetOriginalDt-parentBean" />
+ <bean id="WorksheetCountDocLookable-worksheetOriginalDt-parentBean" parent="GenericAttributes-genericTimestamp" abstract="true"
+       p:name="worksheetOriginalDt"
+       p:forceUppercase="false"
+       p:label="Worksheet Original Date"
+       p:shortLabel="Worksheet Original Date"
+       p:maxLength="10"
+       p:required="false" >
+ </bean>
+
+ <bean id="WorksheetCountDocLookable-worksheetStatusCode" parent="WorksheetCountDocLookable-worksheetStatusCode-parentBean" />
+ <bean id="WorksheetCountDocLookable-worksheetStatusCode-parentBean" parent="AttributeDefinition" abstract="true"
+       p:name="worksheetStatusCode"
+       p:forceUppercase="false"
+       p:label="Worksheet Status Code"
+       p:shortLabel="Worksheet Status Code"
+       p:maxLength="10"
+       p:required="false" >
+   <property name="validationPattern" >
+     <bean parent="AnyCharacterValidationPattern"
+           p:allowWhitespace="true" />
+   </property>
+   <property name="control" >
+     <bean parent="TextControlDefinition"
+           p:size="10" />
+   </property>
+ </bean>
+
+ <bean id="WorksheetCountDocLookable-inquiryDefinition" parent="WorksheetCountDocLookable-inquiryDefinition-parentBean" />
+
+ <bean id="WorksheetCountDocLookable-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+       p:title="Worksheet Count Inquiry" >
+   <property name="inquirySections" >
+     <list>
+       <bean parent="InquirySectionDefinition"
+             p:title="Worksheet Count Attributes"
+             p:numberOfColumns="1" >
+         <property name="inquiryFields" >
+           <list>
+             <bean parent="FieldDefinition" p:attributeName="balanced" />
+             <bean parent="FieldDefinition" p:attributeName="countPercentage" />
+             <bean parent="FieldDefinition" p:attributeName="worksheetCnt" />
+             <bean parent="FieldDefinition" p:attributeName="worksheetCntLength" />
+             <bean parent="FieldDefinition" p:attributeName="worksheetCntText" />
+             <bean parent="FieldDefinition" p:attributeName="worksheetCompletionDt" />
+             <bean parent="FieldDefinition" p:attributeName="worksheetOriginalDt" />
+             <bean parent="FieldDefinition" p:attributeName="worksheetStatusCode" />
+           </list>
+         </property>
+       </bean>
+     </list>
+   </property>
+ </bean>
+
+ <bean id="WorksheetCountDocLookable-lookupDefinition" parent="WorksheetCountDocLookable-lookupDefinition-parentBean" />
+
+ <bean id="WorksheetCountDocLookable-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+       p:title="Worksheet Count Lookup" 
+       p:lookupableID="worksheetCountDocLookable" >
+   <property name="defaultSort" >
+     <bean parent="SortDefinition">
+       <property name="attributeNames" >
+         <list>
+           <value>documentNumber</value>
+         </list>
+       </property>
+       <property name="sortAscending" value="false" />
+     </bean>
+   </property>
+   <property name="lookupFields" >
+     <list>
+       <bean parent="FieldDefinition" p:attributeName="documentNumber" />
+       <bean parent="FieldDefinition" p:attributeName="worksheetCnt" />
+       <bean parent="FieldDefinition" p:attributeName="worksheetCompletionDt" />
+       <bean parent="FieldDefinition" p:attributeName="worksheetOriginalDt" />
+       <bean parent="FieldDefinition" p:attributeName="worksheetStatusCode" />
+     </list>
+   </property>
+   <property name="resultFields" >
+     <list>
+       <bean parent="FieldDefinition" p:attributeName="documentNumber" />
+       <bean parent="FieldDefinition" p:attributeName="balanced" />
+       <bean parent="FieldDefinition" p:attributeName="countPercentage" />
+       <bean parent="FieldDefinition" p:attributeName="worksheetOriginalDt" />
+       <bean parent="FieldDefinition" p:attributeName="worksheetCompletionDt" />
+       <bean parent="FieldDefinition" p:attributeName="worksheetStatusCode" />
+     </list>
+   </property>
+ </bean>
+
+</beans>

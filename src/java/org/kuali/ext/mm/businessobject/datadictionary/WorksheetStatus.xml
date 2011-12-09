@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="WorksheetStatus" parent="WorksheetStatus-parentBean" />
+
+  <bean id="WorksheetStatus-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.WorksheetStatus"
+        p:titleAttribute="worksheetStatusCode"
+        p:objectLabel="WorksheetStatus"
+        p:inquiryDefinition-ref="WorksheetStatus-inquiryDefinition"
+        p:lookupDefinition-ref="WorksheetStatus-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="WorksheetStatus-active" />
+        <ref bean="WorksheetStatus-worksheetStatusCode" />
+        <ref bean="WorksheetStatus-worksheetStatusName" />
+        <ref bean="WorksheetStatus-lastUpdateDate" />
+        <ref bean="WorksheetStatus-versionNumber" />
+      </list>
+    </property>
+  </bean>
+
+  <bean id="WorksheetStatus-active" parent="WorksheetStatus-active-parentBean" />
+  <bean id="WorksheetStatus-active-parentBean" abstract="true" parent="GenericAttributes-activeIndicator" 
+        p:name="active"
+        p:label="Active Indicator"
+        p:shortLabel="Active"
+        p:required="false" />
+
+  <bean id="WorksheetStatus-worksheetStatusCode" parent="WorksheetStatus-worksheetStatusCode-parentBean" />
+  <bean id="WorksheetStatus-worksheetStatusCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="worksheetStatusCode"
+        p:forceUppercase="true"
+        p:label="Worksheet Status Code"
+        p:shortLabel="Worksheet Status Code"
+        p:maxLength="4"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AlphaNumericValidationPattern"/>
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="4" />
+    </property>
+  </bean>
+
+  <bean id="WorksheetStatus-worksheetStatusName" parent="WorksheetStatus-worksheetStatusName-parentBean" />
+  <bean id="WorksheetStatus-worksheetStatusName-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="worksheetStatusName"
+        p:forceUppercase="true"
+        p:label="Worksheet Status Description"
+        p:shortLabel="Worksheet Status Description"
+        p:maxLength="40"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="40" />
+    </property>
+  </bean>
+
+
+  <bean id="WorksheetStatus-lastUpdateDate" parent="WorksheetStatus-lastUpdateDate-parentBean" />
+  <bean id="WorksheetStatus-lastUpdateDate-parentBean" parent="GenericAttributes-genericTimestamp" abstract="true"
+        p:name="lastUpdateDate"
+        p:forceUppercase="false"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:maxLength="10"
+        p:required="false" >
+  </bean>
+
+  <bean id="WorksheetStatus-versionNumber" parent="WorksheetStatus-versionNumber-parentBean" />
+  <bean id="WorksheetStatus-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="WorksheetStatus-inquiryDefinition" parent="WorksheetStatus-inquiryDefinition-parentBean" />
+
+  <bean id="WorksheetStatus-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Worksheet Status Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Worksheet Status Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="active" />
+              <bean parent="FieldDefinition" p:attributeName="worksheetStatusCode" />
+              <bean parent="FieldDefinition" p:attributeName="worksheetStatusName" />
+              <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+              <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="WorksheetStatus-lookupDefinition" parent="WorksheetStatus-lookupDefinition-parentBean" />
+
+  <bean id="WorksheetStatus-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Worksheet Status Lookup" >
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>worksheetStatusCode</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>        
+        <bean parent="FieldDefinition" p:attributeName="worksheetStatusCode" />
+        <bean parent="FieldDefinition" p:attributeName="worksheetStatusName" />
+        <bean parent="FieldDefinition" p:attributeName="active" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>     
+        <bean parent="FieldDefinition" p:attributeName="worksheetStatusCode" />
+        <bean parent="FieldDefinition" p:attributeName="worksheetStatusName" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+        <bean parent="FieldDefinition" p:attributeName="active" />         
+      </list>
+    </property>
+  </bean>
+
+</beans>
+

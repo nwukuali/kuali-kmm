@@ -1,0 +1,748 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="OrderDocument" parent="OrderDocument-parentBean" />
+
+  <bean id="OrderDocument-parentBean" abstract="true" parent="TransactionalDocumentEntry">
+		<property name="documentTypeName" value="SORD" />
+		<property name="sessionDocument" value="true" />
+		<property name="documentClass" value="org.kuali.ext.mm.document.OrderDocument" />
+		<property name="documentAuthorizerClass" value="org.kuali.rice.kns.document.authorization.TransactionalDocumentAuthorizerBase" />
+		<property name="businessRulesClass" value="org.kuali.ext.mm.document.validation.impl.OrderDocumentRule"/>
+		<property name="documentPresentationControllerClass" value="org.kuali.ext.mm.document.authorization.OrderDocumentPresentationController"/>
+ 		<property name="promptBeforeValidationClass" value="org.kuali.ext.mm.document.validation.impl.OrderDocumentPreRules"/>
+			
+    <property name="attributes" >
+      <list>
+        <ref bean="OrderDocument-arId" />
+        <ref bean="OrderDocument-billingAddressId" />
+        <ref bean="OrderDocument-campusCd" />
+        <ref bean="OrderDocument-deliveryBuildingCd" />
+        <ref bean="OrderDocument-checkinDocs.vendorRefNbr" />
+        <ref bean="OrderDocument-orderDetails.catalogItem.stock.stockDistributorNbr" />
+        <ref bean="OrderDocument-checkinDocs.vendorShipmentNbr" />
+        <ref bean="OrderDocument-deliveryBuildingRmNbr" />
+        <ref bean="OrderDocument-documentNumber" />
+        <ref bean="OrderDocument-deliveryDepartmentNm" />
+        <ref bean="OrderDocument-deliveryInstructionTxt" />
+        <ref bean="OrderDocument-customerProfileId" />
+        <ref bean="OrderDocument-profileTypeCode" />
+        <ref bean="OrderDocument-customerProfile.principalName" />
+        <ref bean="OrderDocument-orderId" />
+        <ref bean="OrderDocument-orderStatusCd" />
+        <ref bean="OrderDocument-orderTypeCode" />
+        <ref bean="OrderDocument-recurringOrderId" />
+        <ref bean="OrderDocument-recurringOrderInd" />
+        <ref bean="OrderDocument-reqsId" />
+        <ref bean="OrderDocument-shippingAddressId" />
+        <ref bean="OrderDocument-shoppingCartId" />
+        <ref bean="OrderDocument-vendorDetailAssignedId" />
+        <ref bean="OrderDocument-vendorHeaderGeneratedId" />
+        <ref bean="OrderDocument-vendorNm" />
+        <ref bean="OrderDocument-versionNumber" />
+        <ref bean="OrderDocument-warehouseCd" />
+        <ref bean="OrderDocument-creationDate" />
+      </list>
+    </property>
+    <property name="collections" >
+      <list>
+		<bean parent="CollectionDefinition" 
+			  p:name="orderDetails"
+			  p:label="Order Details" 
+			  p:shortLabel="Order Details" />      
+        <bean parent="CollectionDefinition"
+              p:name="checkinDocs"
+              p:label="Checkin Docs"
+              p:shortLabel="Checkin Docs" />
+        <bean parent="CollectionDefinition"
+              p:name="accounts"
+              p:label="Accounts"
+              p:shortLabel="Accounts" />
+      </list>
+    </property>
+    
+    <property name="relationships" >
+      <list>
+        <bean parent="RelationshipDefinition">
+          <property name="objectAttributeName" value="billingAddress" />
+          <property name="primitiveAttributes" >
+            <list>
+              <bean parent="PrimitiveAttributeDefinition"
+                    p:sourceName="billingAddressId"
+                    p:targetName="addressId" />
+            </list>
+          </property>          
+        </bean>
+        <bean parent="RelationshipDefinition">
+          <property name="objectAttributeName" value="shippingAddress" />
+          <property name="primitiveAttributes" >
+            <list>
+              <bean parent="PrimitiveAttributeDefinition"
+                    p:sourceName="shippingAddressId"
+                    p:targetName="addressId" />
+            </list>
+          </property>          
+        </bean>
+      </list>
+    </property>
+    
+    <property name="workflowAttributes">
+    <ref bean="OrderDocument-workflowAttributes" />
+    </property>
+	
+  </bean>
+
+	<bean id="OrderDocument-orderDetails.catalogItem.stock.stockDistributorNbr"
+		parent="OrderDocument-orderDetails.catalogItem.stock.stockDistributorNbr-parentBean" />
+	<bean id="OrderDocument-orderDetails.catalogItem.stock.stockDistributorNbr-parentBean"
+		parent="Stock-stockDistributorNbr" abstract="true" p:name="orderDetails.catalogItem.stock.stockDistributorNbr"
+		p:forceUppercase="false" p:label="Item Number"
+		p:shortLabel="Item Number" p:maxLength="10" p:required="false">
+		<property name="validationPattern">
+			<bean parent="AnyCharacterValidationPattern" p:allowWhitespace="true" />
+		</property>
+		<property name="control">
+			<bean parent="TextControlDefinition" p:size="10" />
+		</property>
+	</bean>
+
+  <bean id="OrderDocument-checkinDocs.vendorRefNbr" parent="OrderDocument-checkinDocs.vendorRefNbr-parentBean" />
+  <bean id="OrderDocument-checkinDocs.vendorRefNbr-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="checkinDocs.vendorRefNbr"
+        p:forceUppercase="false"
+        p:label="Vendor Reference Number"
+        p:shortLabel="Vendor Reference Number"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="OrderDocument-checkinDocs.vendorShipmentNbr" parent="OrderDocument-checkinDocs.vendorShipmentNbr-parentBean" />
+  <bean id="OrderDocument-checkinDocs.vendorShipmentNbr-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="checkinDocs.vendorShipmentNbr"
+        p:forceUppercase="false"
+        p:label="Vendor Shipment Number"
+        p:shortLabel="Vendor Shipment Number"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  
+  <bean id="OrderDocument-arId" parent="OrderDocument-arId-parentBean" />
+  <bean id="OrderDocument-arId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="arId"
+        p:forceUppercase="false"
+        p:label="Ar Id"
+        p:shortLabel="Ar Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  
+  <bean id="OrderDocument-profileTypeCode" parent="OrderDocument-profileTypeCode-parentBean" />
+  <bean id="OrderDocument-profileTypeCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="profileTypeCode"
+        p:forceUppercase="true"
+        p:label="Profile Type"
+        p:shortLabel="Profile Type"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="false" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  
+  <bean id="OrderDocument-documentNumber" parent="OrderDocument-documentNumber-parentBean" />
+  <bean id="OrderDocument-documentNumber-parentBean" parent="DocumentHeader-documentNumber" abstract="true"
+        p:name="documentNumber" >
+  </bean>
+
+  <bean id="OrderDocument-billingAddressId" parent="OrderDocument-billingAddressId-parentBean" />
+  <bean id="OrderDocument-billingAddressId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="billingAddressId"
+        p:forceUppercase="false"
+        p:label="Billing Address Id"
+        p:shortLabel="Billing Address Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="OrderDocument-campusCd" parent="OrderDocument-campusCd-parentBean" />
+  <bean id="OrderDocument-campusCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="campusCd"
+        p:forceUppercase="false"
+        p:label="Campus Code"
+        p:shortLabel="Campus Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="OrderDocument-deliveryBuildingCd" parent="OrderDocument-deliveryBuildingCd-parentBean" />
+  <bean id="OrderDocument-deliveryBuildingCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="deliveryBuildingCd"
+        p:forceUppercase="false"
+        p:label="Delivery Building Code"
+        p:shortLabel="Delivery Building Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="OrderDocument-deliveryBuildingRmNbr" parent="OrderDocument-deliveryBuildingRmNbr-parentBean" />
+  <bean id="OrderDocument-deliveryBuildingRmNbr-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="deliveryBuildingRmNbr"
+        p:forceUppercase="false"
+        p:label="Delivery Building Room Number"
+        p:shortLabel="Delivery Building Room Number"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="OrderDocument-deliveryDepartmentNm" parent="OrderDocument-deliveryDepartmentNm-parentBean" />
+  <bean id="OrderDocument-deliveryDepartmentNm-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="deliveryDepartmentNm"
+        p:forceUppercase="false"
+        p:label="Delivery Department Name"
+        p:shortLabel="Delivery Department Name"
+        p:maxLength="45"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="12" />
+    </property>
+  </bean>
+
+  <bean id="OrderDocument-deliveryInstructionTxt" parent="OrderDocument-deliveryInstructionTxt-parentBean" />
+  <bean id="OrderDocument-deliveryInstructionTxt-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="deliveryInstructionTxt"
+        p:forceUppercase="false"
+        p:label="Delivery Instruction Text"
+        p:shortLabel="Delivery Instruction Txt"
+        p:maxLength="255"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextareaControlDefinition" p:rows="4" p:cols="60"/>
+    </property>
+  </bean>
+
+  <bean id="OrderDocument-documentPropertySerizabilityEvaluator" parent="OrderDocument-documentPropertySerizabilityEvaluator-parentBean" />
+  <bean id="OrderDocument-documentPropertySerizabilityEvaluator-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="documentPropertySerizabilityEvaluator"
+        p:forceUppercase="false"
+        p:label="Document Property Serizability Evaluator"
+        p:shortLabel="Document Property Serizability Evaluator"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="OrderDocument-customerProfileId" parent="OrderDocument-customerProfileId-parentBean" />
+  <bean id="OrderDocument-customerProfileId-parentBean" parent="Profile-profileId" abstract="true"
+        p:name="customerProfileId" >        
+  </bean>
+  
+  <bean id="OrderDocument-customerProfile.principalName" parent="OrderDocument-customerProfile.principalName-parentBean" />
+  <bean id="OrderDocument-customerProfile.principalName-parentBean" parent="Profile-principalName" abstract="true"
+        p:name="customerProfile.principalName" >        
+  </bean>
+  
+
+  <bean id="OrderDocument-orderId" parent="OrderDocument-orderId-parentBean" />
+  <bean id="OrderDocument-orderId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="orderId"
+        p:forceUppercase="false"
+        p:label="Order Number"
+        p:shortLabel="Order Nbr"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="OrderDocument-orderStatusCd" parent="OrderDocument-orderStatusCd-parentBean" />
+  <bean id="OrderDocument-orderStatusCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="orderStatusCd"
+        p:forceUppercase="false"
+        p:label="Order Status Code"
+        p:shortLabel="Order Status"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="OrderDocument-orderTypeCode" parent="OrderDocument-orderTypeCode-parentBean" />
+  <bean id="OrderDocument-orderTypeCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="orderTypeCode"
+        p:forceUppercase="false"
+        p:label="Order Type Code"
+        p:shortLabel="Order Type Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="OrderDocument-recurringOrderId" parent="OrderDocument-recurringOrderId-parentBean" />
+  <bean id="OrderDocument-recurringOrderId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="recurringOrderId"
+        p:forceUppercase="false"
+        p:label="Recurring Order ID"
+        p:shortLabel="Recurring Order ID"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="OrderDocument-recurringOrderInd" parent="OrderDocument-recurringOrderInd-parentBean" />
+  <bean id="OrderDocument-recurringOrderInd-parentBean" abstract="true" parent="GenericAttributes-genericBoolean" 
+        p:name="recurringOrderInd"
+        p:required="false" />
+
+  <bean id="OrderDocument-reqsId" parent="OrderDocument-reqsId-parentBean" />
+  <bean id="OrderDocument-reqsId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="reqsId"
+        p:forceUppercase="false"
+        p:label="Requisition Id"
+        p:shortLabel="Requisition"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="OrderDocument-shippingAddressId" parent="OrderDocument-shippingAddressId-parentBean" />
+  <bean id="OrderDocument-shippingAddressId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="shippingAddressId"
+        p:forceUppercase="false"
+        p:label="Shipping Address Id"
+        p:shortLabel="Shipping Address Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="OrderDocument-shoppingCartId" parent="OrderDocument-shoppingCartId-parentBean" />
+  <bean id="OrderDocument-shoppingCartId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="shoppingCartId"
+        p:forceUppercase="false"
+        p:label="Shopping Cart Doc Nbr"
+        p:shortLabel="Shopping Cart Doc Nbr"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="OrderDocument-vendorDetailAssignedId" parent="OrderDocument-vendorDetailAssignedId-parentBean" />
+  <bean id="OrderDocument-vendorDetailAssignedId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorDetailAssignedId"
+        p:forceUppercase="false"
+        p:label="Vendor Detail Assigned Id"
+        p:shortLabel="Vendor Detail Assigned Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="OrderDocument-vendorHeaderGeneratedId" parent="OrderDocument-vendorHeaderGeneratedId-parentBean" />
+  <bean id="OrderDocument-vendorHeaderGeneratedId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorHeaderGeneratedId"
+        p:forceUppercase="false"
+        p:label="Vendor Header Generated Id"
+        p:shortLabel="Vendor Header Generated Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="OrderDocument-vendorNm" parent="OrderDocument-vendorNm-parentBean" />
+  <bean id="OrderDocument-vendorNm-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorNm"
+        p:forceUppercase="false"
+        p:label="Vendor Name"
+        p:shortLabel="Vendor Name"
+        p:maxLength="45"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="45" />
+    </property>
+  </bean>
+  
+  <bean id="OrderDocument-creationDate" parent="OrderDocument-creationDate-parentBean" />
+  <bean id="OrderDocument-creationDate-parentBean" parent="GenericAttributes-genericTimestamp" abstract="true"
+        p:name="creationDate"
+        p:forceUppercase="false"
+        p:label="Ordered Date"
+        p:shortLabel="Ordered Date"
+        p:maxLength="10"
+        p:required="false" >
+  </bean>
+
+  <bean id="OrderDocument-versionNumber" parent="OrderDocument-versionNumber-parentBean" />
+  <bean id="OrderDocument-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+  <bean id="OrderDocument-warehouseCd" parent="OrderDocument-warehouseCd-parentBean" />
+  <bean id="OrderDocument-warehouseCd-parentBean" parent="Warehouse-warehouseCd" abstract="true"
+        p:name="warehouseCd"
+        p:required="false" >
+  </bean>
+  
+  <bean id="RoutingType-RoutingAttribute-OrderStatusCode" class="org.kuali.rice.kns.datadictionary.RoutingTypeDefinition">
+    	<property name="routingAttributes">
+    		<list>
+		        <bean class="org.kuali.rice.kns.datadictionary.RoutingAttribute">
+                    <property name="qualificationAttributeName" value="orderDocumentStatusCode"/>
+                </bean>
+    		</list>
+    	</property>
+    	<property name="documentValuePathGroups">
+    		<bean class="org.kuali.rice.kns.datadictionary.DocumentValuePathGroup">
+                    <property name="documentValues">
+                        <list>
+                            <value>orderStatusCd</value>
+                        </list>
+                    </property>
+             </bean>
+    	</property>
+    </bean>
+  
+	<bean id="OrderDocument-workflowAttributes" parent="OrderDocument-workflowAttributes-parentBean"/>
+
+	<bean id="OrderDocument-workflowAttributes-parentBean" abstract="true" parent="WorkflowAttributes">
+		<property name="searchingTypeDefinitions">
+			<list>
+				<bean class="org.kuali.rice.kns.datadictionary.SearchingTypeDefinition">
+					<property name="searchingAttribute">
+						<bean class="org.kuali.rice.kns.datadictionary.SearchingAttribute">
+							<property name="businessObjectClassName" value="org.kuali.ext.mm.document.OrderDocument" />
+							<property name="attributeName" value="orderStatusCd" />
+						</bean>
+					</property>
+					<property name="documentValues">
+						<list>
+							<value>orderStatusCd</value>
+						</list>
+					</property>
+				</bean>
+			</list>
+		</property>
+		<property name="routingTypeDefinitions">
+	 		<map>
+	 		    <entry key="Organization" value-ref="RoutingType-OrderDocument-Organization"/>
+	 		    <entry key="SubAccount" value-ref="RoutingType-OrderDocument-SubAccount"/>
+	 			<entry key="Account" value-ref="RoutingType-OrderDocument-Account"/>
+	 			<entry key="AccountingOrganizationHierarchy" value-ref="RoutingType-OrderDocument-AccountingOrganizationHierarchy"/>
+	          	<!-- <entry key="Commodity" value-ref="RoutingType-OrderDocument-Commodity"/>  -->
+	       		<!-- no qualifiers for separation of duties -->
+	 		</map>
+	 	</property>
+	</bean>  
+	<bean id="RoutingType-OrderDocument-Organization" class="org.kuali.rice.kns.datadictionary.RoutingTypeDefinition">
+		<property name="routingAttributes">
+			<list>
+				<ref bean="RoutingAttribute-chartOfAccountsCode" />
+				<ref bean="RoutingAttribute-organizationCode" />
+			</list>
+		</property>
+		<property name="documentValuePathGroups">
+			<list>
+				<bean class="org.kuali.rice.kns.datadictionary.DocumentValuePathGroup">
+					<property name="documentValues">
+						<list>
+							<value>chartOfAccountsCode</value>
+							<value>organizationCode</value>
+						</list>
+					</property>
+				</bean>
+			</list>
+		</property>
+	</bean>
+	<bean id="RoutingAttribute-chartOfAccountsCode" class="org.kuali.rice.kns.datadictionary.RoutingAttribute">
+		<property name="qualificationAttributeName" value="chartOfAccountsCode" />
+	</bean>
+	<bean id="RoutingAttribute-organizationCode" class="org.kuali.rice.kns.datadictionary.RoutingAttribute" >
+		<property name="qualificationAttributeName" value="organizationCode" />
+	</bean>
+    <bean id="RoutingAttribute-accountNumber" class="org.kuali.rice.kns.datadictionary.RoutingAttribute" >
+    	<property name="qualificationAttributeName" value="accountNumber" />
+    </bean>
+	<bean id="RoutingAttribute-financialDocumentTotalAmount"  class="org.kuali.rice.kns.datadictionary.RoutingAttribute" >
+		<property name="qualificationAttributeName" value="financialDocumentTotalAmount" />
+	</bean>
+	<bean id="RoutingType-OrderDocument-SubAccount" class="org.kuali.rice.kns.datadictionary.RoutingTypeDefinition">
+		<property name="routingAttributes">
+			<list>
+				<ref bean="RoutingAttribute-chartOfAccountsCode" />
+				<ref bean="RoutingAttribute-accountNumber" />
+				<bean class="org.kuali.rice.kns.datadictionary.RoutingAttribute">
+					<property name="qualificationAttributeName" value="subAccountNumber" />
+				</bean>
+			</list>
+		</property>
+		<property name="documentValuePathGroups">
+			<list>
+				<ref bean="DocumentValuePathGroup-OrderDocument-SubAccount-accountingLines" />
+			</list>
+		</property>
+	</bean>
+	<bean id="DocumentValuePathGroup-OrderDocument-SubAccount-accountingLines" class="org.kuali.rice.kns.datadictionary.DocumentValuePathGroup">
+	<property name="documentCollectionPath">
+		<bean class="org.kuali.rice.kns.datadictionary.DocumentCollectionPath">
+			<property name="collectionPath" value="accountsForRouting" />
+			<property name="documentValues">
+				<list>
+					<value>finCoaCd</value>
+					<value>accountNbr</value>
+					<value>subAcctNbr</value>
+				</list>
+			</property>
+		</bean>
+	</property>
+	</bean>
+	<bean id="RoutingType-OrderDocument-Account" class="org.kuali.rice.kns.datadictionary.RoutingTypeDefinition">
+		<property name="routingAttributes">
+			<list>
+				<ref
+					bean="RoutingAttribute-financialDocumentTotalAmount" />
+				<ref bean="RoutingAttribute-chartOfAccountsCode" />
+				<ref bean="RoutingAttribute-accountNumber" />
+			</list>
+		</property>
+		<property name="documentValuePathGroups">
+			<list>
+				<ref bean="DocumentValuePathGroup-OrderDocument-Account-accountingLines" />
+			</list>
+		</property>
+	</bean>
+	<bean id="DocumentValuePathGroup-OrderDocument-financialDocumentTotalAmount" class="org.kuali.rice.kns.datadictionary.DocumentValuePathGroup" abstract="true">
+		<property name="documentValues">
+			<list>
+				<value>
+					orderTotalAmount
+				</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="DocumentValuePathGroup-OrderDocument-Account-accountingLines" parent="DocumentValuePathGroup-OrderDocument-financialDocumentTotalAmount">
+		<property name="documentCollectionPath">
+			<bean parent="DocumentCollectionPath-AccountingLine-chartAndAccountNumber">
+				<property name="collectionPath" value="accountsForRouting" />
+			</bean>
+		</property>
+	</bean>
+	<bean id="DocumentCollectionPath-AccountingLine-chartAndAccountNumber" class="org.kuali.rice.kns.datadictionary.DocumentCollectionPath" abstract="true">
+		<property name="documentValues">
+			<list>
+				<value>finCoaCd</value>
+				<value>accountNbr</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="RoutingType-OrderDocument-AccountingOrganizationHierarchy" class="org.kuali.rice.kns.datadictionary.RoutingTypeDefinition">
+		<property name="routingAttributes">
+			<list>
+				<ref bean="RoutingAttribute-financialDocumentTotalAmount" />
+				<ref bean="RoutingAttribute-chartOfAccountsCode" />
+				<ref bean="RoutingAttribute-organizationCode" />
+				<ref bean="RoutingAttribute-overrideCode" />
+			</list>
+		</property>
+		<property name="documentValuePathGroups">
+			<list>
+				<ref bean="DocumentValuePathGroup-OrderDocument-AccountingOrganizationHierarchy-accountingLines" />
+			</list>
+		</property>
+	</bean>
+	<bean id="DocumentValuePathGroup-OrderDocument-AccountingOrganizationHierarchy-accountingLines" parent="DocumentValuePathGroup-OrderDocument-financialDocumentTotalAmount">
+		<property name="documentCollectionPath">
+			<bean class="org.kuali.rice.kns.datadictionary.DocumentCollectionPath">
+				<property name="collectionPath" value="accountsForRouting" />
+				<property name="documentValues">
+					<list>
+						<value>finCoaCd</value>
+						<value>accountOrganizationCode</value>
+						<value>overrideCode</value>
+					</list>
+				</property>
+			</bean>
+		</property>
+	</bean>
+	<bean id="RoutingAttribute-overrideCode" class="org.kuali.rice.kns.datadictionary.RoutingAttribute">
+		<property name="qualificationAttributeName" value="accountingLineOverrideCode" />
+	</bean>
+	<!-- TODO - I dont think we even need this node  -->
+	<bean id="RoutingType-OrderDocument-Commodity" class="org.kuali.rice.kns.datadictionary.RoutingTypeDefinition">
+		<property name="routingAttributes">
+			<list>
+				<ref bean="RoutingAttribute-campusCode" />
+				<bean class="org.kuali.rice.kns.datadictionary.RoutingAttribute">
+					<property name="qualificationAttributeName" value="purchasingCommodityCode" />
+				</bean>
+			</list>
+		</property>
+		<property name="documentValuePathGroups">
+			<list>
+				<bean class="org.kuali.rice.kns.datadictionary.DocumentValuePathGroup">
+					<property name="documentValues">
+						<list>
+							<value>campusCd</value>
+						</list>
+					</property>
+					<property name="documentCollectionPath">
+						<bean class="org.kuali.rice.kns.datadictionary.DocumentCollectionPath">
+							<property name="collectionPath" value="commodityCodesForRouting" />
+							<property name="documentValues">
+								<list>
+									<value>
+										purchasingCommodityCode
+									</value>
+								</list>
+							</property>
+						</bean>
+					</property>
+				</bean>
+			</list>
+		</property>
+	</bean>
+</beans>

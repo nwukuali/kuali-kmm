@@ -1,0 +1,137 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="FinancialProjectCode" parent="FinancialProjectCode-parentBean" />
+
+  <bean id="FinancialProjectCode-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.integration.coa.businessobject.FinancialProjectCode"
+        p:titleAttribute="Financial Project Code"
+        p:objectLabel="Financial Project Code"
+        p:inquiryDefinition-ref="FinancialProjectCode-inquiryDefinition"
+        p:lookupDefinition-ref="FinancialProjectCode-lookupDefinition" >
+    <property name="primaryKeys">
+    	<list>
+    		<value>code</value>
+    	</list>
+    </property>
+    <property name="attributes" >
+      <list>
+        <ref bean="FinancialProjectCode-active" />
+        <ref bean="FinancialProjectCode-code" />
+        <ref bean="FinancialProjectCode-name" />
+      </list>
+    </property>
+  </bean>
+
+  <bean id="FinancialProjectCode-active" parent="FinancialProjectCode-active-parentBean" />
+  <bean id="FinancialProjectCode-active-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="active"
+        p:forceUppercase="false"
+        p:label="Active"
+        p:shortLabel="Active"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="FinancialProjectCode-code" parent="FinancialProjectCode-code-parentBean"/>
+
+  <bean id="FinancialProjectCode-code-parentBean" abstract="true" parent="AttributeDefinition">
+    <property name="name" value="code"/>
+    <property name="forceUppercase" value="true"/>
+    <property name="label" value="Project Code"/>
+    <property name="shortLabel" value="Project"/>
+    <property name="maxLength" value="10"/>
+    <property name="validationPattern">
+      <bean parent="AnyCharacterValidationPattern" p:allowWhitespace="true"/>
+    </property>
+    <property name="required" value="true"/>
+    <property name="control">
+      <bean parent="TextControlDefinition" p:size="10"/>
+    </property>
+  </bean>
+
+  <bean id="FinancialProjectCode-name" parent="FinancialProjectCode-name-parentBean" />
+  <bean id="FinancialProjectCode-name-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="name"
+        p:forceUppercase="false"
+        p:label="Name"
+        p:shortLabel="Name"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+ <!-- Business Object Inquiry Definition -->
+
+  <bean id="FinancialProjectCode-inquiryDefinition" parent="FinancialProjectCode-inquiryDefinition-parentBean" />
+
+  <bean id="FinancialProjectCode-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Financial Project Code Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Financial Project Code Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="active" />
+              <bean parent="FieldDefinition" p:attributeName="code" />
+              <bean parent="FieldDefinition" p:attributeName="name" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="FinancialProjectCode-lookupDefinition" parent="FinancialProjectCode-lookupDefinition-parentBean" />
+
+  <bean id="FinancialProjectCode-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Financial Project Code Lookup" 
+ >
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>code</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="active" />
+        <bean parent="FieldDefinition" p:attributeName="code" />
+        <bean parent="FieldDefinition" p:attributeName="name" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="active" />
+        <bean parent="FieldDefinition" p:attributeName="code" />
+        <bean parent="FieldDefinition" p:attributeName="name" />
+      </list>
+    </property>
+  </bean>
+
+</beans>

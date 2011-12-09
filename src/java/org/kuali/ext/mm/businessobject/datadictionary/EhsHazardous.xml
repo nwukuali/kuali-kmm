@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="EhsHazardous" parent="EhsHazardous-parentBean" />
+
+  <bean id="EhsHazardous-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.EhsHazardous"
+        p:titleAttribute="ehsHazardousCd"
+        p:objectLabel="EhsHazardous"
+        p:inquiryDefinition-ref="EhsHazardous-inquiryDefinition"
+        p:lookupDefinition-ref="EhsHazardous-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="EhsHazardous-active" />
+        <ref bean="EhsHazardous-ehsHazardousCd" />
+        <ref bean="EhsHazardous-ehsHazardousDesc" />
+        <ref bean="EhsHazardous-lastUpdateDate" />
+        <ref bean="EhsHazardous-versionNumber" />
+      </list>
+    </property>
+  </bean>
+
+  <bean id="EhsHazardous-active" parent="EhsHazardous-active-parentBean" />
+  <bean id="EhsHazardous-active-parentBean" abstract="true" parent="GenericAttributes-activeIndicator" 
+        p:name="active"
+        p:label="Active Indicator"
+        p:shortLabel="Active Indicator"
+        p:required="false" />
+
+  <bean id="EhsHazardous-ehsHazardousCd" parent="EhsHazardous-ehsHazardousCd-parentBean" />
+  <bean id="EhsHazardous-ehsHazardousCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="ehsHazardousCd"
+        p:forceUppercase="true"
+        p:label="EHS Hazardous Code"
+        p:shortLabel="EHS Hazardous Code"
+        p:maxLength="3"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AlphaNumericValidationPattern"/>
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="3" />
+    </property>
+  </bean>
+
+  <bean id="EhsHazardous-ehsHazardousDesc" parent="EhsHazardous-ehsHazardousDesc-parentBean" />
+  <bean id="EhsHazardous-ehsHazardousDesc-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="ehsHazardousDesc"
+        p:forceUppercase="true"
+        p:label="EHS Hazardous Description"
+        p:shortLabel="Description"
+        p:maxLength="45"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="45" />
+    </property>
+  </bean>
+
+
+  <bean id="EhsHazardous-lastUpdateDate" parent="EhsHazardous-lastUpdateDate-parentBean" />
+  <bean id="EhsHazardous-lastUpdateDate-parentBean" parent="GenericAttributes-genericTimestamp" abstract="true"
+        p:name="lastUpdateDate"
+        p:forceUppercase="false"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:maxLength="10"
+        p:required="false" >
+  </bean>
+  
+  <bean id="EhsHazardous-versionNumber" parent="EhsHazardous-versionNumber-parentBean" />
+  <bean id="EhsHazardous-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="EhsHazardous-inquiryDefinition" parent="EhsHazardous-inquiryDefinition-parentBean" />
+
+  <bean id="EhsHazardous-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="EHS Hazardous Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="EHS Hazardous Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="ehsHazardousCd" />
+              <bean parent="FieldDefinition" p:attributeName="ehsHazardousDesc" />
+              <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+              <bean parent="FieldDefinition" p:attributeName="active" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="EhsHazardous-lookupDefinition" parent="EhsHazardous-lookupDefinition-parentBean" />
+
+  <bean id="EhsHazardous-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="EHS Hazardous Lookup">
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>ehsHazardousCd</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>        
+        <bean parent="FieldDefinition" p:attributeName="ehsHazardousCd" />
+        <bean parent="FieldDefinition" p:attributeName="ehsHazardousDesc" />
+        <bean parent="FieldDefinition" p:attributeName="active" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="ehsHazardousCd" />
+        <bean parent="FieldDefinition" p:attributeName="ehsHazardousDesc" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+        <bean parent="FieldDefinition" p:attributeName="active" />      
+      </list>
+    </property>
+  </bean>
+
+</beans>
+

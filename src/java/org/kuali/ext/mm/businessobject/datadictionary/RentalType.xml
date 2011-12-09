@@ -1,0 +1,137 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="RentalType" parent="RentalType-parentBean" />
+  <bean id="RentalType-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.RentalType"
+        p:titleAttribute="rentalTypeCode"
+        p:objectLabel="Rental Type"
+        p:inquiryDefinition-ref="RentalType-inquiryDefinition"
+        p:lookupDefinition-ref="RentalType-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+		<ref bean="RentalType-rentalTypeCode" />
+		<ref bean="RentalType-description" />
+		<ref bean="RentalType-active" />
+		<ref bean="RentalType-lastUpdateDate" />
+		<ref bean="RentalType-versionNumber" />
+      </list>
+    </property>
+  </bean>       
+	
+	<bean id="RentalType-rentalTypeCode" parent="RentalType-rentalTypeCode-parentBean" />
+	<bean id="RentalType-rentalTypeCode-parentBean" parent="AttributeDefinition" abstract="true"
+	    p:name="rentalTypeCode"
+	    p:forceUppercase="false"
+	    p:label="Rental Type Code"
+	    p:shortLabel="Rental Type"
+	    p:maxLength="4"
+	    p:required="false" >
+		<property name="validationPattern" >
+		  <bean parent="AlphaNumericValidationPattern" />
+		</property>
+		<property name="control" >
+		  <bean parent="TextControlDefinition"
+		        p:size="5" />
+		</property>
+	</bean>
+		
+	<bean id="RentalType-description" parent="RentalType-description-parentBean" />
+	<bean id="RentalType-description-parentBean" parent="AttributeDefinition" abstract="true"
+	    p:name="description"
+	    p:forceUppercase="false"
+	    p:label="Description"
+	    p:shortLabel="Description"
+	    p:maxLength="80"
+	    p:required="false" >
+		<property name="validationPattern" >
+		  <bean parent="AnyCharacterValidationPattern"
+		        p:allowWhitespace="true" />
+		</property>
+		<property name="control" >
+		  <bean parent="TextControlDefinition"
+		        p:size="30" />
+		</property>
+	</bean>
+	
+	<bean id="RentalType-active" parent="RentalType-active-parentBean" />
+	<bean id="RentalType-active-parentBean" parent="GenericAttributes-activeIndicator" abstract="true"
+	    p:name="active">
+	</bean>
+	
+	<bean id="RentalType-lastUpdateDate" parent="RentalType-lastUpdateDate-parentBean" />
+	<bean id="RentalType-lastUpdateDate-parentBean" parent="GenericAttributes-genericTimestamp" abstract="true"
+	    p:name="lastUpdateDate"
+	    p:forceUppercase="false"
+	    p:label="Last Update Date"
+	    p:shortLabel="Last Update">
+	</bean>
+	
+  <bean id="RentalType-versionNumber" parent="RentalType-versionNumber-parentBean" />
+  <bean id="RentalType-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />	
+  
+  <!-- Business Object Inquiry Definition -->
+
+  <bean id="RentalType-inquiryDefinition" parent="RentalType-inquiryDefinition-parentBean" />
+
+  <bean id="RentalType-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Rental Object Code Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Rental Object Code Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+		<bean parent="FieldDefinition" p:attributeName="rentalTypeCode" />
+		<bean parent="FieldDefinition" p:attributeName="description" />
+		<bean parent="FieldDefinition" p:attributeName="active" />
+		<bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="RentalType-lookupDefinition" parent="RentalType-lookupDefinition-parentBean" />
+
+  <bean id="RentalType-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Rental Type Lookup" >
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>rentalTypeCode</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>        
+		<bean parent="FieldDefinition" p:attributeName="rentalTypeCode" />
+		<bean parent="FieldDefinition" p:attributeName="description" />
+		<bean parent="FieldDefinition" p:attributeName="active" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+		<bean parent="FieldDefinition" p:attributeName="rentalTypeCode" />
+		<bean parent="FieldDefinition" p:attributeName="description" />
+		<bean parent="FieldDefinition" p:attributeName="active" />
+		<bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+
+      </list>
+    </property>
+  </bean>
+  
+  
+</beans>

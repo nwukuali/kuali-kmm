@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	Copyright 2007-2009 The Kuali Foundation
+	
+	Licensed under the Educational Community License, Version 2.0 (the "License");
+	you may not use this file except in compliance with the License.
+	You may obtain a copy of the License at
+	
+	http://www.opensource.org/licenses/ecl2.php
+	
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an "AS IS" BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	See the License for the specific language governing permissions and
+	limitations under the License.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+                           http://www.springframework.org/schema/tx
+                           http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+                           http://www.springframework.org/schema/aop
+                           http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+	
+	<bean id="kfsExtJavaService" class="org.kuali.rice.ksb.messaging.JavaServiceDefinition" abstract="true">
+		<property name="serviceNameSpaceURI" value="http://kuali.org/kfs" />
+		<property name="retryAttempts" value="1" />
+	</bean>
+	<bean class="org.kuali.rice.ksb.messaging.KSBExporter">
+		<property name="serviceDefinition">
+			<bean parent="kfsExtJavaService"
+				p:service-ref="chartService" p:localServiceName="kfsChartService" />
+		</property>
+	</bean>
+	<bean class="org.kuali.rice.ksb.messaging.KSBExporter">
+		<property name="serviceDefinition">
+			<bean parent="kfsExtJavaService"
+				p:service-ref="organizationService" p:localServiceName="kfsOrganizationService" />
+		</property>
+	</bean>
+	<bean class="org.kuali.rice.ksb.messaging.KSBExporter">
+		<property name="serviceDefinition">
+			<bean parent="kfsExtJavaService"
+				p:service-ref="accountService" p:localServiceName="kfsAccountService" />
+		</property>
+	</bean>
+	<bean class="org.kuali.rice.ksb.messaging.KSBExporter">
+		<property name="serviceDefinition">
+			<bean parent="kfsExtJavaService"
+				p:service-ref="subAccountService" p:localServiceName="kfsSubAccountService" />
+		</property>
+	</bean>
+	<bean class="org.kuali.rice.ksb.messaging.KSBExporter">
+		<property name="serviceDefinition">
+			<bean parent="kfsExtJavaService"
+				p:service-ref="objectCodeService" p:localServiceName="kfsObjectCodeService" />
+		</property>
+	</bean>
+	<bean class="org.kuali.rice.ksb.messaging.KSBExporter">
+		<property name="serviceDefinition">
+			<bean parent="kfsExtJavaService"
+				p:service-ref="projectCodeService" p:localServiceName="kfsProjectCodeService" />
+		</property>
+	</bean>
+	<bean class="org.kuali.rice.ksb.messaging.KSBExporter">
+		<property name="serviceDefinition">
+			<bean parent="kfsExtJavaService"
+				p:service-ref="subObjectCodeService" p:localServiceName="kfsSubObjectCodeService" />
+		</property>
+	</bean>
+	<bean class="org.kuali.rice.ksb.messaging.KSBExporter">
+		<property name="serviceDefinition">
+			<bean parent="kfsExtJavaService"
+				p:service-ref="businessObjectService" p:localServiceName="kfsBusinessObjectService" />
+		</property>
+	</bean>
+	<bean class="org.kuali.rice.ksb.messaging.KSBExporter">
+		<property name="serviceDefinition">
+			<bean parent="kfsExtJavaService"
+				p:service-ref="kfsDocumentService" p:localServiceName="kfsDocumentService" />
+		</property>
+	</bean>
+	<bean class="org.kuali.rice.ksb.messaging.KSBExporter">
+		<property name="serviceDefinition">
+			<bean parent="kfsExtJavaService"
+				p:service-ref="kfsPurchaseOrderService" p:localServiceName="kfsPurchaseOrderService" />
+		</property>
+	</bean>
+	<bean class="org.kuali.rice.ksb.messaging.KSBExporter">
+		<property name="serviceDefinition">
+			<bean parent="kfsExtJavaService"
+				p:service-ref="taxService" p:localServiceName="kfsTaxService" />
+		</property>
+	</bean>
+	<bean class="org.kuali.rice.ksb.messaging.KSBExporter">
+		<property name="serviceDefinition">
+			<bean parent="kfsExtJavaService"
+				p:service-ref="universityDateService" p:localServiceName="kfsUniversityDateService" />
+		</property>
+	</bean>
+	<bean class="org.kuali.rice.ksb.messaging.KSBExporter">
+		<property name="serviceDefinition">
+			<bean parent="kfsExtJavaService"
+				p:service-ref="vendorService" p:localServiceName="kfsVendorService" />
+		</property>
+	</bean>
+	<bean class="org.kuali.rice.ksb.messaging.KSBExporter">
+		<property name="serviceDefinition">
+			<bean parent="kfsExtJavaService"
+				p:service-ref="generalLedgerPendingEntryService" p:localServiceName="kfsGeneralLedgerPendingEntryService" />
+		</property>
+	</bean>
+	<bean class="org.kuali.rice.ksb.messaging.KSBExporter">
+		<property name="serviceDefinition">
+			<bean parent="kfsExtJavaService"
+				p:service-ref="assetService" p:localServiceName="kfsAssetService" />
+		</property>
+	</bean>
+	<bean class="org.kuali.rice.ksb.messaging.KSBExporter">
+		<property name="serviceDefinition">
+			<bean parent="kfsExtJavaService"
+				p:service-ref="parameterService" p:localServiceName="kfsParameterService" />
+		</property>
+	</bean>
+	<bean class="org.kuali.rice.ksb.messaging.KSBExporter">
+		<property name="serviceDefinition">
+			<bean parent="kfsExtJavaService"
+				p:service-ref="requisitionService" p:localServiceName="kfsRequisitionService" />
+		</property>
+	</bean>
+	<bean class="org.kuali.rice.ksb.messaging.KSBExporter">
+		<property name="serviceDefinition">
+			<bean parent="kfsExtJavaService" p:service-ref="glLedgerService" p:localServiceName="kfsGeneralLedgerService" />
+		</property>
+	</bean>
+	<bean id="kfsDocumentService" class="org.kuali.ext.mm.integration.kfs.adaptor.impl.KfsDocumentServiceImpl">
+		<property name="documentService" ref="documentService" />
+	</bean>
+	<bean id="purchasingDao" class="org.kuali.ext.mm.integration.kfs.adaptor.dao.jdbc.PurchasingDaoJdbc" parent="platformAwareDaoJdbc" />
+	<bean id="kfsPurchaseOrderService" class="org.kuali.ext.mm.integration.kfs.adaptor.impl.KfsPurchaseOrderServiceImpl" >
+		<property name="purchasingDao" ref="purchasingDao" />
+	</bean>
+	
+	<bean id="generalLedgerDao" class="org.kuali.ext.mm.integration.kfs.adaptor.dao.jdbc.GeneralLedgerDaoJdbc" parent="platformAwareDaoJdbc" />
+	<bean id="glLedgerService" class="org.kuali.ext.mm.integration.kfs.adaptor.impl.KfsGeneralLedgerServiceImpl" >
+		<property name="generalLedgerDao" ref="generalLedgerDao" />
+	</bean>
+</beans>

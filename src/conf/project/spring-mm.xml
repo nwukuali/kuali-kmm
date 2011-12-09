@@ -1,0 +1,1327 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+                           http://www.springframework.org/schema/tx
+                           http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+                           http://www.springframework.org/schema/aop
+                           http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+	
+	<import resource="classpath:spring-mm-rice-overrides.xml" />
+	<import resource="classpath:spring-mm-module-config.xml" />
+
+	<bean id="kimAuthenticationService" class="org.kuali.rice.kim.service.impl.AuthenticationServiceImpl"/>
+
+	<bean id="businessObjectLockingService" class="org.kuali.ext.mm.document.service.impl.BusinessObjectLockingServiceImpl" />
+		
+	<bean id="mmBusinessObjectDao" parent="platformAwareDao" class="org.kuali.ext.mm.dataaccess.impl.MMBusinessObjectDaoOjb" />
+	
+	<bean id="mmPersistenceStructureServiceOjb" parent="persistenceStructureServiceOjb" class="org.kuali.ext.mm.sys.service.impl.MMPersistenceStructureServiceOjbImpl" />
+
+	<!-- BEGIN Quartz Sceduling Setup -->
+
+	<bean id="batchControlDao" class="org.kuali.ext.mm.sys.batch.dataaccess.jdbc.BatchControlDaoJdbc"
+		parent="platformAwareDaoJdbc" />
+
+
+	<bean id="batchControlService"
+		class="org.kuali.ext.mm.sys.batch.service.impl.BatchControlServiceImpl">
+		<property name="dateTimeService" ref="dateTimeService" />
+		<property name="batchControlDao" ref="batchControlDao" />
+		<property name="txManager" ref="transactionManager"></property>
+	</bean>
+
+	<bean name="mmJobDescriptor" class="org.kuali.ext.mm.sys.batch.BatchJobDescriptor"
+		abstract="true">
+		<property name="group" value="KMM" />
+		<property name="jobClass" value="org.kuali.ext.mm.sys.batch.BatchJob" />
+	</bean>
+
+	<bean id="mmCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean"
+		abstract="true">
+		<property name="group" value="KMM-CRON"></property>
+	</bean>
+
+	<bean id="mmScheduler" class="org.kuali.ext.mm.sys.batch.scheduling.SchedulerFactoryBean">
+		<property name="batchEnabled" value="${batchEnabled}" />
+		<!--
+			Waits 5 minutes before starting the jobs first run, this
+			ensures that application is started fully
+		-->
+		<property name="startupDelay" value="300" />
+		<property name="dataSourceRef" ref="kmmApplicationDataSource" />
+		<property name="overwriteExistingJobs" value="true" />
+		<property name="useJdbcJobStore" value="${useJdbcJobStore}" />
+		<property name="quartzPropertiesRef">
+			<props>
+				<prop key="org.quartz.scheduler.instanceId">AUTO</prop>
+				<prop key="org.quartz.scheduler.instanceName">KMMScheduler</prop>
+				<prop key="org.quartz.scheduler.idleWaitTime">30000</prop>
+				<prop key="org.quartz.scheduler.jobFactory.class">org.quartz.simpl.SimpleJobFactory</prop>
+				<prop key="org.quartz.threadPool.threadCount">10</prop>
+				<prop key="org.quartz.threadPool.class">org.quartz.simpl.SimpleThreadPool</prop>
+			</props>
+		</property>
+		<property name="triggers">
+			<list>
+				<!-- Add your triggers here -->
+				<ref bean="stockCountDailyInsertTrigger" />
+				<ref bean="agreementUpdateTrigger" />
+				<ref bean="carouselDataBuilderTrigger" />
+				<ref bean="orderReconciliationTrigger" />
+	            <ref bean="rentalDemurrageChargeTrigger" />
+	            <ref bean="recurringOrderTrigger" />
+	            <ref bean="backOrderReleaseTrigger" />
+	            <!-- MSU does not need these jobs -->
+				<ref bean="loadPendingCatalogItemsTrigger" />
+				<ref bean="publishApprovedCatalogsTrigger" />
+			</list>
+		</property>
+	</bean>
+	<bean id="stockCountDailyInsertTrigger" parent="mmCronTrigger">
+		<property name="jobDetail" ref="stockCountDailyInsertJob" />
+		<!-- run every morning at 6 AM -->
+		<property name="cronExpression" value="0 0 6 * * ?" />
+	</bean>
+
+	<bean id="stockCountDailyInsertJob" parent="mmJobDescriptor">
+		<property name="steps">
+			<list>
+				<bean class="org.kuali.ext.mm.sys.batch.StockCountDailyInsertStep">
+					<property name="stockCountService" ref="stockCountService" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="agreementUpdateTrigger" parent="mmCronTrigger">
+		<property name="jobDetail" ref="agreementUpdateJob" />
+		<!-- run every morning at 6.30 AM -->
+		<property name="cronExpression" value="0 30 6 * * ?" />
+	</bean>
+
+	<bean id="agreementUpdateJob" parent="mmJobDescriptor">
+		<property name="steps">
+			<list>
+				<bean class="org.kuali.ext.mm.sys.batch.AgreementUpdateStep">
+					<property name="agreementUpdateService" ref="agreementUpdateService" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="orderReconciliationTrigger" parent="mmCronTrigger">
+		<property name="jobDetail" ref="orderReconciliationJob" />
+		<!-- run every morning at 6 AM -->
+		<property name="cronExpression" value="0 0 6 * * ?" />
+	</bean>
+
+	<bean id="orderReconciliationJob" parent="mmJobDescriptor">
+		<property name="steps">
+			<list>
+				<bean class="org.kuali.ext.mm.sys.batch.OrderReconciliationStep">
+					<property name="orderReconciliationService" ref="orderReconciliationService" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="rentalDemurrageChargeTrigger" parent="mmCronTrigger">
+		<property name="jobDetail" ref="rentalDemurrageChargeJob" />
+		<!-- run every morning at 7 AM -->
+		<property name="cronExpression" value="0 0 7 * * ?" />
+	</bean>
+
+	<bean id="rentalDemurrageChargeJob" parent="mmJobDescriptor">
+		<property name="steps">
+			<list>
+				<bean class="org.kuali.ext.mm.sys.batch.RentalDemurrageChargeStep">
+					<property name="rentalDemurrageService" ref="rentalDemurrageService" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="recurringOrderTrigger" parent="mmCronTrigger">
+		<property name="jobDetail" ref="recurringOrderJob" />
+		<!-- run every morning at 5 AM -->
+		<property name="cronExpression" value="0 0 5 * * ?" />
+	</bean>
+
+	<bean id="recurringOrderJob" parent="mmJobDescriptor">
+		<property name="steps">
+			<list>
+				<bean class="org.kuali.ext.mm.sys.batch.RecurringOrderStep">
+					<property name="recurringOrderService" ref="recurringOrderService" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="backOrderReleaseTrigger" parent="mmCronTrigger">
+		<property name="jobDetail" ref="backOrderReleaseJob" />
+		<!-- run every morning at 5 AM -->
+		<property name="cronExpression" value="0 0 5 * * ?" />
+	</bean>
+
+	<bean id="backOrderReleaseJob" parent="mmJobDescriptor">
+		<property name="steps">
+			<list>
+				<bean class="org.kuali.ext.mm.sys.batch.BackOrderReleaseStep">
+					<property name="backOrderService" ref="backOrderService" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	<bean id="glCollectorFeedTrigger" parent="mmCronTrigger">
+		<property name="jobDetail" ref="glCollectorFeedJob" />
+		<!-- run every morning at 1 AM -->
+		<property name="cronExpression" value="0 0 1 * * ?" />
+	</bean>
+	
+	<bean id="glCollectorFeedJob" parent="mmJobDescriptor">
+		<property name="steps">
+			<list>
+				<bean class="org.kuali.ext.mm.sys.batch.GlCollectorFeedStep">
+					<property name="glCollectorFeedService" ref="glCollectorFeedService" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- MSU only scheduling jobs -->
+
+	<bean id="carouselDataBuilderTrigger" parent="mmCronTrigger">
+		<property name="jobDetail" ref="carouselDataBuilderJob" />
+		<!-- run every 5 minutes -->
+		<property name="cronExpression" value="0 0 7 * * ?" />
+	</bean>
+
+	<bean id="carouselDataBuilderJob" parent="mmJobDescriptor">
+		<property name="steps">
+			<list>
+				<bean class="org.kuali.ext.mm.sys.batch.CarouselDataBuilderStep">
+					<property name="carouselDataBuilderService" ref="carouselDataBuilderService" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<!-- END Quartz Sceduling Setup -->
+
+
+	<!-- Begin Catalog Upload Batch Jobs -->
+
+	<bean id="loadPendingCatalogItemsTrigger" parent="mmCronTrigger">
+		<property name="jobDetail" ref="loadPendingCatalogItemsJob" />
+		<!-- run every morning at 6 AM -->
+		<property name="cronExpression" value="0 0 6 * * ?" />
+	</bean>
+
+	<bean id="loadPendingCatalogItemsJob" parent="mmJobDescriptor">
+		<property name="steps">
+			<list>
+				<bean class="org.kuali.ext.mm.sys.batch.LoadPendingCatalogItemsStep">
+					<property name="catalogPendingDocLoadService" ref="catalogPendingDocLoadService" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="publishApprovedCatalogsTrigger" parent="mmCronTrigger">
+		<property name="jobDetail" ref="publishApprovedCatalogsJob" />
+		<!-- run every morning at 6.30 AM -->
+		<property name="cronExpression" value="0 30 6 * * ?" />
+	</bean>
+
+	<bean id="publishApprovedCatalogsJob" parent="mmJobDescriptor">
+		<property name="steps">
+			<list>
+				<bean class="org.kuali.ext.mm.sys.batch.PublishApprovedCatalogsStep">
+					<property name="catalogItemPendingApprovedService" ref="catalogItemPendingApprovedService" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- End Catalog Upload Batch Jobs -->
+	
+	<bean id="financialSystemVerifyJob" parent="mmJobDescriptor">
+		<property name="steps">
+			<list>
+				<bean class="org.kuali.ext.mm.sys.batch.FinancialSystemVerifyStep" />
+			</list>
+		</property>
+	</bean>
+	
+		<!-- START B2B Invoice Batch beans -->
+	<bean id="b2bInvoiceDao" class="org.kuali.ext.mm.sys.batch.dataaccess.jdbc.B2bInvoiceDaoJdbc" parent="platformAwareDaoJdbc">
+	</bean>
+	<bean id="b2bInvoiceService" class="org.kuali.ext.mm.sys.batch.service.impl.B2bInvoiceServiceImpl">
+		<property name="b2bInvoiceDao" ref="b2bInvoiceDao"></property>
+		<property name="b2bPunchOutService" ref="b2BPunchOutService" ></property>
+		<property name="txManager" ref="transactionManager"></property>
+	</bean>
+		
+	<bean id="b2bInvoiceJob" parent="mmJobDescriptor">
+		<property name="steps">
+			<list>
+				<bean class="org.kuali.ext.mm.sys.batch.B2bInvoiceStep">
+					<property name="b2bInvoiceService" ref="b2bInvoiceService" />
+				</bean>
+			</list>
+		</property>
+	</bean>	
+	<!-- END B2B Invoice Batch beans -->
+	
+	<!-- START Lucene Indexer Batch Beans -->
+	<bean id="luceneIndexerDao" class="org.kuali.ext.mm.sys.batch.dataaccess.jdbc.LuceneIndexerDaoJdbc" parent="platformAwareDaoJdbc" />
+	
+	<bean id="searchIndexerService" class="org.kuali.ext.mm.sys.batch.service.impl.SearchIndexerServiceImpl">
+		<property name="luceneIndexerDao" ref="luceneIndexerDao"></property>
+	</bean>
+		
+	<bean id="searchIndexerJob" parent="mmJobDescriptor">
+		<property name="name" value="searchIndexerJob" />
+		<property name="clustered" value="false" />
+		<property name="group" value="KMM-LUCENE" />
+		<property name="steps">
+			<list>
+			<bean class="org.kuali.ext.mm.sys.batch.SearchIndexerStep">
+				<property name="searchIndexerService" ref="searchIndexerService" />				
+			</bean>
+			</list>
+		</property>
+	</bean>
+	<bean id="lucenIndexerSchedulerBean" class="org.kuali.ext.mm.sys.batch.scheduling.LuceneIndexerSchedulerBean">
+		<property name="enableLuceneIndexing" value="${enableLuceneIndexing}" />
+		<!--
+			It waits 5 minutes before to starting the jobs first run, this
+			ensures that application is started fully
+		-->
+		<property name="startupDelay" value="300" />
+		<property name="overwriteExistingJobs" value="true" />
+		<property name="quartzPropertiesRef">
+			<props>
+				<prop key="org.quartz.scheduler.instanceId">LUCENE</prop>
+				<prop key="org.quartz.scheduler.instanceName">LuceneScheduler</prop>
+			</props>
+		</property>
+		<property name="triggers">
+			<list>
+ 				<bean name="searchIndexerTriggerSimple" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+ 					<property name="jobDetail" ref="searchIndexerJob" />
+ 					<property name="repeatCount" value="0" />
+ 				</bean>
+				<bean name="searchIndexerTriggerCron" parent="mmCronTrigger">
+					<property name="jobDetail" ref="searchIndexerJob" />
+					<property name="cronExpression" value="0 30 23 * * ?" />
+				</bean>			
+			</list>
+		</property>
+	</bean>
+	<!-- END Lucene Indexer Batch Beans -->	
+	
+	<!-- START Catalog Item Searchable Data Builder batch beans -->
+	<bean id="catalogItemSearchDataDao" class="org.kuali.ext.mm.sys.batch.dataaccess.jdbc.CatalogItemSearchDataDaoJdbc" parent="platformAwareDaoJdbc" />
+	
+	<bean id="catalogItemSearchDataService" class="org.kuali.ext.mm.sys.batch.service.impl.CatalogItemSearchDataServiceImpl">
+		<property name="catalogItemSearchDataDao" ref="catalogItemSearchDataDao"></property>
+	</bean>
+	
+	<bean id="catalogItemSearchDataBuilderJob" parent="mmJobDescriptor">
+		<property name="steps">
+			<list>
+			<bean class="org.kuali.ext.mm.sys.batch.CatalogItemSearchDataBuilderStep">
+				<property name="catalogItemSearchDataService" ref="catalogItemSearchDataService" />				
+			</bean>
+			</list>
+		</property>
+	</bean>
+	<!-- END Catalog Item Searchable Data Builder batch beans -->
+
+	<!-- Begin MSU only beans -->
+
+	<bean id="carouselDataBuilderService"
+		class="org.kuali.ext.mm.sys.batch.service.impl.CarouselDataBuilderServiceImpl">
+		<property name="carouselDataBuilderDao">
+			<ref bean="carouselDataBuilderDao" />
+		</property>
+	</bean>
+
+	<bean id="carouselDataBuilderDao" parent="platformAwareDaoJdbc"
+		class="org.kuali.ext.mm.sys.batch.dataaccess.jdbc.CarouselDataBuilderDaoJdbc">
+	</bean>
+	
+	<bean id="famisDataBuilderJob" parent="mmJobDescriptor">
+		<property name="steps">
+			<list>
+				<ref bean="famisDataBuilderStep" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="famisDataBuilderStep" class="org.kuali.ext.mm.sys.batch.FamisDataBuilderStep">
+		<property name="famisDataBuilderService" ref="famisDataBuilderService" />
+	</bean>				
+	
+	<bean id="famisDataBuilderService" class="org.kuali.ext.mm.sys.batch.service.impl.FamisDataBuilderServiceImpl">
+		<property name="famisDataBuilderDao" ref="famisDataBuilderDao"></property>
+	</bean>	
+	
+	<bean id="famisDataBuilderDao" parent="platformAwareDaoJdbc" class="org.kuali.ext.mm.sys.batch.dataaccess.jdbc.FamisDataBuilderDaoJdbc" />
+	
+<!-- 	<bean id="pickListHelperService" class="edu.msu.ebsp.mm.service.impl.MSUPickListHelperServiceImpl" -->
+<!-- 		lazy-init="true" scope="prototype"> -->
+<!-- 		<property name="businessObjectService"> -->
+<!-- 			<ref bean="businessObjectService" /> -->
+<!-- 		</property> -->
+<!-- 		<property name="stockService"> -->
+<!-- 			<ref bean="stockService" /> -->
+<!-- 		</property> -->
+<!-- 	</bean> -->
+	<!-- End MSU only beans -->
+
+	<!-- new Return Actions start -->
+	<bean id="returnToVendorReturnActionService"
+		class="org.kuali.ext.mm.service.impl.ReturnToVendorReturnActionService">
+	</bean>
+
+	<bean id="bargainBarnActionService" class="org.kuali.ext.mm.service.impl.BargainBarnActionService">
+	</bean>
+
+	<bean id="vendorIssueCreditActionService"
+		class="org.kuali.ext.mm.service.impl.VendorIssueCreditActionService">
+	</bean>
+
+	<bean id="vendorReshipmentActionService"
+		class="org.kuali.ext.mm.service.impl.VendorReshipmentActionService">
+	</bean>
+
+	<bean id="hazardousActionService" class="org.kuali.ext.mm.service.impl.HazardousActionService">
+	</bean>
+
+	<bean id="returnToShelfActionService"
+		class="org.kuali.ext.mm.service.impl.ReturnToShelfActionService">
+	</bean>
+
+	<bean id="returnToVendorActionService"
+		class="org.kuali.ext.mm.service.impl.ReturnToVendorActionService">
+	</bean>
+
+	<bean id="trashActionService" class="org.kuali.ext.mm.service.impl.TrashActionService">
+	</bean>
+
+	<bean id="inventoryAdjustmentReturnActionService"
+		class="org.kuali.ext.mm.service.impl.InventoryAdjustmentReturnActionService">
+	</bean>
+
+	<bean id="departmentCreditActionService"
+		class="org.kuali.ext.mm.service.impl.DepartmentCreditActionService">
+	</bean>
+
+	<bean id="noAction" class="org.kuali.ext.mm.service.impl.NoAction">
+	</bean>
+
+	<bean id="reorderReturnActionService"
+		class="org.kuali.ext.mm.service.impl.ReorderReturnActionService">
+	</bean>
+
+	<!-- new return actions end here -->
+
+	<bean id="RTVPDFService" class="org.kuali.ext.mm.service.impl.RTVPDFServiceImpl" scope="prototype">
+		<property name="parameterService">
+			<ref bean="parameterService" />
+		</property>
+		<property name="kualiConfigurationService">
+			<ref bean="kualiConfigurationService" />
+		</property>
+	</bean>
+
+	<bean id="stockCountLookableHelperService"
+		class="org.kuali.ext.mm.businessobject.lookup.StockCountLookableHelperServiceImpl"
+		scope="prototype" parent="lookupableHelperService">
+	</bean>
+
+	<bean id="reorderItemLookupableHelperService"
+		class="org.kuali.ext.mm.businessobject.lookup.ReorderItemLookupableHelperServiceImpl"
+		scope="prototype" parent="lookupableHelperService">
+	</bean>
+
+	<bean id="CheckinDetailForReceiptsService"
+		class="org.kuali.ext.mm.businessobject.lookup.CheckinDetailReceiptsHelperServiceImpl"
+		scope="prototype" parent="lookupableHelperService">
+	</bean>
+
+	<bean id="OrderDetailLookableHelperService"
+		class="org.kuali.ext.mm.businessobject.lookup.OrderDetailLookableHelperServiceImpl"
+		scope="prototype" parent="lookupableHelperService">
+	</bean>
+
+	<bean id="OrderDetailForReturnsLookableHelperService"
+		class="org.kuali.ext.mm.businessobject.lookup.OrderDetailForReturnsLookableHelperServiceImpl"
+		scope="prototype" parent="lookupableHelperService">
+	</bean>
+
+	<bean id="OrderDocumentLookableLookableHelperService"
+		class="org.kuali.ext.mm.businessobject.lookup.OrderDocumentLookableLookableHelperServiceImpl"
+		scope="prototype" parent="lookupableHelperService">
+	</bean>
+
+	<bean id="VendorOrderDetailForReturnsLookableHelperService"
+		class="org.kuali.ext.mm.businessobject.lookup.VendorOrderDetailForReturnsLookableHelperServiceImpl"
+		scope="prototype" parent="lookupableHelperService">
+	</bean>
+
+	<bean id="BinLookableHelperService"
+		class="org.kuali.ext.mm.businessobject.lookup.BinLookableHelperServiceImpl"
+		scope="prototype" parent="lookupableHelperService">
+	</bean>
+
+	<bean id="orderDetailLookable" class="org.kuali.rice.kns.lookup.KualiLookupableImpl"
+		scope="prototype">
+		<property name="lookupableHelperService">
+			<ref bean="OrderDetailLookableHelperService" />
+		</property>
+	</bean>
+
+	<bean id="checkinDetailLookableForReceipts" class="org.kuali.rice.kns.lookup.KualiLookupableImpl"
+		scope="prototype">
+		<property name="lookupableHelperService">
+			<ref bean="CheckinDetailForReceiptsService" />
+		</property>
+	</bean>
+
+	<bean id="OrderDocumentVendorLookableHelperService"
+		class="org.kuali.ext.mm.businessobject.lookup.OrderDocumentVendorLookableHelperServiceImpl"
+		scope="prototype" parent="lookupableHelperService">
+	</bean>
+
+
+	<bean id="orderDocumentForReturnsLookableVendor" class="org.kuali.rice.kns.lookup.KualiLookupableImpl"
+		scope="prototype">
+		<property name="lookupableHelperService">
+			<ref bean="OrderDocumentVendorLookableHelperService" />
+		</property>
+	</bean>
+
+	<bean id="orderDocumentForReturnsLookable"
+		class="org.kuali.ext.mm.businessobject.lookup.OrderDetailForReturnsLookupableImpl"
+		scope="prototype">
+		<property name="lookupableHelperService">
+			<ref bean="OrderDocumentLookableLookableHelperService" />
+		</property>
+	</bean>
+
+	<bean id="orderDetailForReturnsLookable"
+		class="org.kuali.ext.mm.businessobject.lookup.OrderDetailForReturnsLookupableImpl"
+		scope="prototype">
+		<property name="lookupableHelperService">
+			<ref bean="OrderDetailForReturnsLookableHelperService" />
+		</property>
+	</bean>
+
+	<bean id="vendorOrderDetailForReturnsLookable" class="org.kuali.rice.kns.lookup.KualiLookupableImpl"
+		scope="prototype">
+		<property name="lookupableHelperService">
+			<ref bean="VendorOrderDetailForReturnsLookableHelperService" />
+		</property>
+	</bean>
+
+	<bean id="BinLookable" class="org.kuali.rice.kns.lookup.KualiLookupableImpl"
+		scope="prototype">
+		<property name="lookupableHelperService">
+			<ref bean="BinLookableHelperService" />
+		</property>
+	</bean>
+
+	<bean id="stockCountLookupable" class="org.kuali.rice.kns.lookup.KualiLookupableImpl"
+		scope="prototype">
+		<property name="lookupableHelperService">
+			<ref bean="stockCountLookableHelperService" />
+		</property>
+	</bean>
+
+	<bean id="reorderItemLookupable" class="org.kuali.rice.kns.lookup.KualiLookupableImpl"
+		scope="prototype">
+		<property name="lookupableHelperService">
+			<ref bean="reorderItemLookupableHelperService" />
+		</property>
+	</bean>
+
+	<bean id="worksheetCountDocLookableHelperService"
+		class="org.kuali.ext.mm.businessobject.lookup.WorksheetcountDocLookableHelperServiceImpl"
+		scope="prototype" parent="lookupableHelperService">
+	</bean>
+
+	<bean id="worksheetCountDocLookable" class="org.kuali.rice.kns.lookup.KualiLookupableImpl"
+		scope="prototype">
+		<property name="lookupableHelperService">
+			<ref bean="worksheetCountDocLookableHelperService" />
+		</property>
+	</bean>
+
+	<bean id="catalogPendingHelperLookupableHelperService"
+		class="org.kuali.ext.mm.businessobject.lookup.CatalogPendingLookableHelperServiceImpl"
+		scope="prototype" parent="lookupableHelperService">
+	</bean>
+
+	<bean id="catalogPendingHelperLookupable" class="org.kuali.rice.kns.lookup.KualiLookupableImpl"
+		scope="prototype">
+		<property name="lookupableHelperService">
+			<ref bean="catalogPendingHelperLookupableHelperService" />
+		</property>
+	</bean>
+
+	<bean id="deliveryLabelHelperLookupable" class="org.kuali.rice.kns.lookup.KualiLookupableImpl"
+		scope="prototype">
+		<property name="lookupableHelperService">
+			<ref bean="deliveryLabelHelperLookupableHelperService" />
+		</property>
+	</bean>
+	
+	<bean id="deliveryLabelHelperLookupableHelperService"
+		class="org.kuali.ext.mm.businessobject.lookup.DeliveryLabelLookableHelperServiceImpl"
+		scope="prototype" parent="lookupableHelperService">
+	</bean>
+	
+	
+	<bean id="deliveryLookupable" class="org.kuali.rice.kns.lookup.KualiLookupableImpl"
+		scope="prototype">
+		<property name="lookupableHelperService">
+			<ref bean="deliveryLookupableService" />
+		</property>
+	</bean>
+	
+	<bean id="deliveryLookupableService"
+		class="org.kuali.ext.mm.businessobject.lookup.DeliveryLookableServiceImpl"
+		scope="prototype" parent="lookupableHelperService">
+	</bean>
+	
+	<bean id="deliveryLabelLinesLookupable" class="org.kuali.rice.kns.lookup.KualiLookupableImpl"
+		scope="prototype">
+		<property name="lookupableHelperService">
+			<ref bean="deliveryLabelLinesLookupableService" />
+		</property>
+	</bean>
+	
+	<bean id="deliveryLabelLinesLookupableService"
+		class="org.kuali.ext.mm.businessobject.lookup.DeliveryLabelLinesLookupableServiceImpl"
+		scope="prototype" parent="lookupableHelperService">
+	</bean>
+	
+	<bean id="pickListLineLookupable" class="org.kuali.rice.kns.lookup.KualiLookupableImpl"
+		scope="prototype">
+		<property name="lookupableHelperService">
+			<ref bean="pickListLineLookupableService" />
+		</property>
+	</bean>
+	
+	<bean id="pickListLineLookupableService"
+		class="org.kuali.ext.mm.businessobject.lookup.PickListLineLookupableHelperServiceImpl"
+		scope="prototype" parent="lookupableHelperService">
+	</bean>
+	
+	<bean id="ojbConfigurer" class="org.kuali.rice.core.ojb.JtaOjbConfigurer">
+		<property name="transactionManager" ref="jtaTransactionManager" />
+	</bean>
+
+	<bean id="transactionManager"
+		class="org.springframework.transaction.jta.JtaTransactionManager"
+		lazy-init="true">
+		<property name="userTransaction">
+			<ref local="userTransaction" />
+		</property>
+		<property name="transactionManager">
+			<ref local="jtaTransactionManager" />
+		</property>
+	</bean>
+
+	<bean id="matchAllWithPropReq"
+		class="org.springframework.transaction.interceptor.MatchAlwaysTransactionAttributeSource">
+		<property name="transactionAttribute">
+			<value>PROPAGATION_REQUIRED</value>
+		</property>
+	</bean>
+
+	<bean id="StockItemLookupServiceDAO" parent="platformAwareDao"
+		class="org.kuali.ext.mm.dataaccess.impl.StockItemLookupDAOOjb">
+	</bean>
+
+	<bean id="StockItemLookupService"
+		class="org.kuali.ext.mm.service.impl.StockItemLookupServiceImpl">
+		<property name="stockItemLookupServiceDAO">
+			<ref bean="StockItemLookupServiceDAO" />
+		</property>
+	</bean>
+
+	<bean id="CheckinOrderDAO" parent="platformAwareDao"
+		class="org.kuali.ext.mm.dataaccess.impl.CheckinOrderDAOOJB">
+		<property name="businessObjectService">
+			<ref bean="businessObjectService" />
+		</property>
+	</bean>
+
+	<bean id="returnOrderDAO" parent="platformAwareDao"
+		class="org.kuali.ext.mm.dataaccess.impl.ReturnOrderDAOOJB">
+	</bean>
+
+	<bean id="stockHistoryDAO" parent="platformAwareDao"
+		class="org.kuali.ext.mm.dataaccess.impl.StockHistoryDAOOJB">
+	</bean>
+
+	<bean id="mmDocumentUtilService" class="org.kuali.ext.mm.service.impl.MMDocumentUtilServiceImpl">
+	</bean>
+
+	<bean id="CheckinOrderService" class="org.kuali.ext.mm.service.impl.CheckinOrderServiceImpl">
+		<property name="checkinOrderDAO">
+			<ref bean="CheckinOrderDAO" />
+		</property>
+		<property name="businessObjectService">
+			<ref bean="businessObjectService" />
+		</property>
+		<property name="stockService">
+			<ref bean="stockService" />
+		</property>
+		<property name="stockHistoryService">
+			<ref bean="stockHistoryService" />
+		</property>
+		<property name="orderStatusDao" ref="orderStatusDao"></property>
+
+	</bean>
+
+	<bean id="ReceiptCorrectionService"
+		class="org.kuali.ext.mm.service.impl.ReceiptCorrectionServiceImpl">
+		<property name="checkinOrderDAO">
+			<ref bean="CheckinOrderDAO" />
+		</property>
+		<property name="stockService">
+			<ref bean="stockService" />
+		</property>
+		<property name="checkinOrderService">
+			<ref bean="CheckinOrderService" />
+		</property>
+		<property name="orderStatusDao" ref="orderStatusDao"></property>
+	</bean>
+
+	<bean id="reOrderService" class="org.kuali.ext.mm.service.impl.ReorderServiceImpl">
+		<property name="returnOrderDAO">
+			<ref bean="returnOrderDAO" />
+		</property>
+		<property name="businessObjectService">
+			<ref bean="businessObjectService" />
+		</property>
+	</bean>
+
+	<bean id="returnOrderService" class="org.kuali.ext.mm.service.impl.ReturnOrderServiceImpl">
+		<property name="returnOrderDAO">
+			<ref bean="returnOrderDAO" />
+		</property>
+		<property name="stockService">
+			<ref bean="stockService" />
+		</property>
+		<property name="checkinOrderDAO">
+			<ref bean="CheckinOrderDAO" />
+		</property>
+		<property name="returnOrderBillingDao">
+			<ref bean="returnOrderBillingDao" />
+		</property>
+	</bean>
+
+	<bean id="historyLookupableHelperService"
+		class="org.kuali.ext.mm.service.impl.HistoryLookupableHelperServiceImpl"
+		scope="prototype" parent="lookupableHelperService" />
+	<bean id="historyLookupable" class="org.kuali.rice.kns.lookup.KualiLookupableImpl"
+		scope="prototype">
+		<property name="lookupableHelperService">
+			<ref bean="historyLookupableHelperService" />
+		</property>
+	</bean>
+
+	<!-- Begin CatalogCodeTypeLookupableHelperServiceImpl -->
+	<bean id="catalogLookupableHelperService"
+		class="org.kuali.ext.mm.service.impl.CatalogLookupableHelperServiceImpl"
+		scope="prototype" parent="lookupableHelperService" />
+		
+	<bean id="catalogLookupable" class="org.kuali.rice.kns.lookup.KualiLookupableImpl"
+		scope="prototype">
+		<property name="lookupableHelperService">
+			<ref bean="catalogLookupableHelperService" />
+		</property>
+	</bean>
+	<!-- End CatalogCodeTypeLookupableHelperServiceImpl -->
+
+	<!-- Begin StockManualAdjustmentLookupableService Impl -->
+	<bean id="stockManualAdjustmentLookupableService"
+		class="org.kuali.ext.mm.service.impl.StockLookupableHelperServiceImpl"
+		scope="prototype" parent="lookupableHelperService" />
+	<bean id="stockManualAdjustmentLookupable" class="org.kuali.rice.kns.lookup.KualiLookupableImpl"
+		scope="prototype">
+		<property name="lookupableHelperService">
+			<ref bean="stockManualAdjustmentLookupableService" />
+		</property>
+	</bean>
+	<!-- End StockManualAdjustmentLookupableService Impl -->
+
+
+	<!-- Begin CatalogPendingLookupableService Impl -->
+	<bean id="catalogPendingLookupableService"
+		class="org.kuali.ext.mm.service.impl.CatalogPendingHelperServiceImpl"
+		scope="prototype" parent="lookupableHelperService" />
+	<bean id="catalogPendingLookupable" class="org.kuali.rice.kns.lookup.KualiLookupableImpl"
+		scope="prototype">
+		<property name="lookupableHelperService">
+			<ref bean="catalogPendingLookupableService" />
+		</property>
+	</bean>
+	<!-- End CatalogPendingLookupableService Impl -->
+
+	<!-- Begin CatalogItemLookupableHelperServiceImpl -->
+	<bean id="catalogItemLookupableHelperService"
+		class="org.kuali.ext.mm.service.impl.CatalogItemLookupableHelperServiceImpl"
+		scope="prototype" parent="lookupableHelperService" />
+		
+	<bean id="catalogItemLookupable" class="org.kuali.rice.kns.lookup.KualiLookupableImpl"
+		scope="prototype">
+		<property name="lookupableHelperService">
+			<ref bean="catalogItemLookupableHelperService" />
+		</property>
+	</bean>
+	<!-- End CatalogItemLookupableHelperServiceImpl -->
+	
+	
+	<bean
+		class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+		<property name="interceptorNames">
+			<list>
+				<idref local="matchAllTxInterceptor" />
+			</list>
+		</property>
+		<property name="beanNames">
+			<list>
+				<idref local="StockItemLookupService" />
+			</list>
+		</property>
+	</bean>
+
+	<!--	Picking Process	beans	-->
+	<bean id="pickListService" class="org.kuali.ext.mm.service.impl.PickListServiceImpl"
+		lazy-init="true" scope="prototype">
+		<property name="parameterService">
+			<ref bean="parameterService" />
+		</property>
+		<property name="stockService">
+			<ref bean="stockService" />
+		</property>
+		<property name="pickListHelperService">
+			<ref bean="pickListHelperService" />
+		</property>
+	</bean>
+	
+	<bean id="pickListHelperService" class="org.kuali.ext.mm.service.impl.PickListHelperServiceImpl"
+		lazy-init="true" scope="prototype">
+		<property name="businessObjectService">
+			<ref bean="businessObjectService" />
+		</property>
+		<property name="stockService">
+			<ref bean="stockService" />
+		</property>
+	</bean>
+
+	<bean id="pickListPdfService" class="org.kuali.ext.mm.service.impl.PickListPdfServiceImpl"
+		lazy-init="true" scope="prototype" />
+
+	<bean id="pickTicketDao" parent="businessObjectDaoOjb"
+		class="org.kuali.ext.mm.dataaccess.impl.PickTicketDaoOjb" lazy-init="true"
+		scope="prototype">
+	</bean>
+
+	<bean id="pickTicketLookupableHelperService"
+		class="org.kuali.ext.mm.businessobject.lookup.PickTicketLookupableHelperServiceImpl"
+		scope="prototype" parent="lookupableHelperService">
+	</bean>
+
+	<bean id="pickTicketLookupable" class="org.kuali.rice.kns.lookup.KualiLookupableImpl"
+		scope="prototype">
+		<property name="lookupableHelperService">
+			<ref bean="pickTicketLookupableHelperService" />
+		</property>
+	</bean>
+	
+	<bean id="backOrderLookupable" class="org.kuali.rice.kns.lookup.KualiLookupableImpl"
+		scope="prototype">
+		<property name="lookupableHelperService">
+			<ref bean="backOrderLookupableHelperService" />
+		</property>
+	</bean>
+	
+	<bean id="backOrderLookupableHelperService"
+		class="org.kuali.ext.mm.businessobject.lookup.BackOrderLookupableHelperServiceImpl"
+		scope="prototype" parent="lookupableHelperService">
+	</bean>
+	<!--	End of Picking Process beans	-->
+	<!--   Verify Process beans -->
+	<bean id="pickVerifyService" class="org.kuali.ext.mm.service.impl.PickVerifyServiceImpl"
+		lazy-init="true">
+		<property name="backOrderService">
+			<ref bean="backOrderService" />
+		</property>
+		<property name="pickListService">
+			<ref bean="pickListService" />
+		</property>
+		<property name="rentalService">
+			<ref bean="rentalService" />
+		</property>
+		<property name="packListPdfService">
+			<ref bean="packListPdfService" />
+		</property>
+		<property name="pickVerifyBillingDao" ref="pickVerifyBillingDao" />
+		<property name="orderStatusDao" ref="orderStatusDao" />
+	</bean>
+
+	<bean id="backOrderService" class="org.kuali.ext.mm.service.impl.BackOrderServiceImpl" 
+		lazy-init="true">
+		<property name="businessObjectService">
+			<ref bean="businessObjectService" />
+		</property>
+	</bean>
+
+	<bean id="stockHistoryService" class="org.kuali.ext.mm.service.impl.StockHistoryServiceImpl"
+		lazy-init="true" >
+		<property name="stockHistoryDAO">
+			<ref bean="stockHistoryDAO" />
+		</property>
+	</bean>		
+	
+	<bean id="rentalLookupableHelperService"
+		class="org.kuali.ext.mm.businessobject.lookup.RentalLookupableHelperServiceImpl"
+		scope="prototype" parent="lookupableHelperService">
+	</bean>
+
+	<bean id="rentalLookupable" class="org.kuali.rice.kns.lookup.KualiLookupableImpl"
+		scope="prototype">
+		<property name="lookupableHelperService">
+			<ref bean="rentalLookupableHelperService" />
+		</property>
+	</bean>
+
+	<bean id="rentalService" class="org.kuali.ext.mm.service.impl.RentalServiceImpl"
+		lazy-init="true">
+		<property name="businessObjectService">
+			<ref bean="businessObjectService" />
+		</property>
+	</bean>
+
+	<bean id="packListPdfService" class="org.kuali.ext.mm.service.impl.PackListPdfServiceImpl"
+		lazy-init="true" scope="prototype">
+		<property name="parameterService">
+			<ref bean="parameterService" />
+		</property>
+		<property name="kualiConfigurationService">
+			<ref bean="kualiConfigurationService" />
+		</property>
+	</bean>
+	<!--	End of Verify Process beans	-->
+	
+	<bean id="catalogService"
+		class="org.kuali.ext.mm.service.impl.CatalogServiceImpl"
+		lazy-init="true">
+		<property name="businessObjectService">
+			<ref bean="businessObjectService" />
+		</property>
+		<property name="mmBusinessObjectDao">
+			<ref bean="mmBusinessObjectDao" />
+		</property>
+		<property name="markupService">
+			<ref bean="markupService" />
+		</property>
+	</bean>
+	
+	<bean id="markupService"
+		class="org.kuali.ext.mm.service.impl.MarkupServiceImpl"
+		lazy-init="true">
+		<property name="businessObjectService">
+			<ref bean="businessObjectService" />
+		</property>
+		<property name="mmBusinessObjectDao">
+			<ref bean="mmBusinessObjectDao" />
+		</property>
+		<property name="catalogService">
+			<ref bean="catalogService" />
+		</property>		
+	</bean>
+
+	<bean id="profileService"
+		class="org.kuali.ext.mm.service.impl.ProfileServiceImpl"
+		lazy-init="true">
+		<property name="businessObjectService">
+			<ref bean="businessObjectService" />
+		</property>
+		<property name="addressService">
+			<ref bean="addressService" />
+		</property>
+	</bean>
+
+	<bean id="addressService" class="org.kuali.ext.mm.service.impl.AddressServiceImpl"
+		lazy-init="true">
+		<property name="businessObjectService">
+			<ref bean="businessObjectService" />
+		</property>
+	</bean>
+
+	<bean id="stockService" class="org.kuali.ext.mm.service.impl.StockServiceImpl"
+		lazy-init="true">
+		<property name="businessObjectService">
+			<ref bean="businessObjectService" />
+		</property>
+	</bean>
+
+	<bean id="MassUpdateService" class="org.kuali.ext.mm.service.impl.MassUpdateServiceImpl"
+		lazy-init="true" >
+	</bean>
+	
+	<bean id="shoppingFrontPageService" class="org.kuali.ext.mm.service.impl.ShoppingFrontPageServiceImpl"
+		lazy-init="true">
+		<property name="businessObjectService">
+			<ref bean="businessObjectService" />
+		</property>
+	</bean>
+	
+	<bean id="trueBuyoutService" class="org.kuali.ext.mm.service.impl.TrueBuyoutServiceImpl"
+		lazy-init="true" >		
+		<property name="businessObjectService">
+			<ref bean="businessObjectService" />
+		</property>
+		<property name="documentService">
+			<ref bean="documentService" />
+		</property>
+	</bean>	
+		
+	<!--  Punch-out service beans -->
+	<bean id="punchOutVendorService"
+		class="org.kuali.ext.mm.service.impl.PunchOutVendorServiceImpl"
+		lazy-init="true">
+		<property name="businessObjectService">
+			<ref bean="businessObjectService" />
+		</property>
+	</bean>
+	
+	<bean id="b2BPunchOutService"
+		class="org.kuali.ext.mm.service.impl.B2BPunchOutServiceImpl"
+		lazy-init="true">
+		<property name="businessObjectService">
+			<ref bean="businessObjectService" />
+		</property>
+		<property name="punchOutVendorService">
+			<ref bean="punchOutVendorService" />
+		</property>
+	</bean>
+	
+	<bean id="b2BPunchOutServiceLocator"
+		class="org.kuali.ext.mm.service.impl.B2BPunchOutServiceLocatorImpl"
+		lazy-init="true">
+		<property name="defaultB2BPunchOutService">
+			<ref bean="b2BPunchOutService" />
+		</property>
+		<property name="serviceMap">
+			<map>
+				<entry key="DUNS-128293714">
+                    <ref bean="b2BPunchOutService" />
+                </entry>
+			</map>			
+		</property>
+	</bean>
+
+	<!-- End Punch-out service beans   -->
+
+	<bean id="salesInstanceService" class="org.kuali.ext.mm.service.impl.SalesInstanceServiceImpl"
+		lazy-init="true">
+		<property name="businessObjectService">
+			<ref bean="businessObjectService" />
+		</property>
+	</bean>
+
+	<bean id="orderService" class="org.kuali.ext.mm.service.impl.OrderServiceImpl"
+		lazy-init="true">
+		<property name="salesInstanceService">
+			<ref bean="salesInstanceService" />
+		</property>
+		<property name="pickListService">
+			<ref bean="pickListService" />
+		</property>
+		<property name="businessObjectService">
+			<ref bean="businessObjectService" />
+		</property>
+		<property name="mailService">
+			<ref bean="mailService" />
+		</property>
+	</bean>
+	
+	<bean id="recurringOrderService" class="org.kuali.ext.mm.service.impl.RecurringOrderServiceImpl"
+		lazy-init="true">
+		<property name="mmBusinessObjectDao">
+			<ref bean="mmBusinessObjectDao" />
+		</property>
+		<property name="businessObjectService">
+			<ref bean="businessObjectService" />
+		</property>
+		<property name="txManager" ref="transactionManager"></property>
+	</bean>
+
+	<bean id="userTransaction" class="org.kuali.rice.core.jta.UserTransactionFactoryBean"
+		lazy-init="true" />
+
+	<bean id="jtaTransactionManager" class="org.kuali.rice.core.jta.TransactionManagerFactoryBean"
+		lazy-init="true" />
+
+	<bean id="mmModuleService" parent="mmModuleService-parentBean" />
+
+	<bean id="mmModuleService-parentBean" class="org.kuali.ext.mm.sys.service.impl.MmModuleServiceImpl"
+		abstract="true">
+		<property name="moduleConfiguration" ref="mmModuleConfiguration" />
+		<property name="financialSystemConfiguration" ref="financialSystemConfiguration" />
+	</bean>
+
+	<bean id="transactionTemplate"
+		class="org.springframework.transaction.support.TransactionTemplate">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+	</bean>
+
+	<bean id="matchAllTxInterceptor"
+		class="org.springframework.transaction.interceptor.TransactionInterceptor">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="transactionAttributeSource">
+			<ref bean="matchAllWithPropReq" />
+		</property>
+	</bean>
+
+	<!--  beans added for reporting -->
+
+	<bean id="countworksheetReportInfo" class="org.kuali.ext.mm.report.ReportInfoHolder">
+		<property name="reportTitle" value="Inventory Count Sheets" />
+		<property name="reportFileName" value="count_worksheet_report" />
+		<property name="reportsDirectory" value="${external.reports.directory}/cw/" />
+		<property name="resourceBundleBaseName" value="org/kuali/ext/mm/report/messages" />
+		<property name="reportTemplateClassPath" value="org/kuali/ext/mm/report/" />
+		<property name="reportTemplateName" value="CountWorksheetReport" />
+		<property name="subReportTemplateClassPath" value="org/kuali/ext/mm/report/" />
+		<property name="subReports">
+			<map>
+				<entry key="stockReportDetails" value="StockReportDetails" />
+			</map>
+		</property>
+	</bean>
+
+	<bean id="rtvReportInfo" class="org.kuali.ext.mm.report.ReportInfoHolder">
+		<property name="reportTitle" value="RTVLabelReport" />
+		<property name="reportFileName" value="RTVLabelSubReport" />
+		<property name="reportsDirectory" value="${external.reports.directory}/cw/" />
+		<property name="resourceBundleBaseName" value="org/kuali/ext/mm/report/messages" />
+		<property name="reportTemplateClassPath" value="org/kuali/ext/mm/report/" />
+		<property name="reportTemplateName" value="RTVLabelSubReport" />
+		<!--
+			<property name="subReportTemplateClassPath"
+			value="org/kuali/ext/mm/report/" /> <property name="subReports">
+			<map> <entry key="rTVLabelSubReport" value="RTVLabelSubReport"/>
+			</map> </property>
+		-->
+	</bean>
+
+	<bean id="countWorksheetReportService"
+		class="org.kuali.ext.mm.service.impl.CountWorksheetReportServiceImpl">
+		<property name="dateTimeService">
+			<ref bean="dateTimeService" />
+		</property>
+		<property name="reportGenerationService">
+			<ref bean="reportGenerationService" />
+		</property>
+		<property name="countworksheetReportInfo">
+			<ref bean="countworksheetReportInfo" />
+		</property>
+	</bean>
+
+	<bean id="rtvReportService" class="org.kuali.ext.mm.service.impl.RTVReportServiceImpl">
+		<property name="dateTimeService">
+			<ref bean="dateTimeService" />
+		</property>
+		<property name="reportGenerationService">
+			<ref bean="reportGenerationService" />
+		</property>
+		<property name="rtvReportInfo">
+			<ref bean="rtvReportInfo" />
+		</property>
+	</bean>
+
+	<bean id="dateTimeService" class="org.kuali.rice.kns.service.impl.DateTimeServiceImpl"
+		lazy-init="true" />
+
+	<bean id="reportGenerationService"
+		class="org.kuali.ext.mm.sys.service.impl.ReportGenerationServiceImpl"
+		lazy-init="true" />
+
+	<!--   end beans for reporting   -->
+	<!-- begin GL related beans -->
+	<bean id="generalLedgerProcessor"
+		class="org.kuali.ext.mm.gl.service.impl.GeneralLedgerProcessorImpl" />
+	<!-- end GL related beans -->
+	<bean id="warehouseAccountingService"
+		class="org.kuali.ext.mm.service.impl.WarehouseAccountingServiceImpl">
+		<property name="businessObjectService" ref="businessObjectService" />
+	</bean>
+
+	<bean id="mmLookupableHelperService"
+		class="org.kuali.ext.mm.businessobject.lookup.MmLookupableHelperServiceImplBase"
+		scope="prototype" parent="lookupableHelperService">
+		<property name="reverseSortOrder" value="true" />
+	</bean>
+
+	<bean id="mmLookupable" parent="kualiLookupable">
+		<property name="lookupableHelperService">
+			<ref bean="mmLookupableHelperService" />
+		</property>
+	</bean>
+
+	<bean id="financialDataService"
+		class="org.kuali.ext.mm.fp.service.impl.FinancialDataServiceImpl" />
+
+	<bean id="returnOrderBillingDao"
+		class="org.kuali.ext.mm.document.dataaccess.impl.jdbc.ReturnOrderBillingDaoJdbc"
+		parent="platformAwareDaoJdbc" />
+
+	<bean id="pickVerifyBillingDao"
+		class="org.kuali.ext.mm.document.dataaccess.impl.jdbc.PickVerifyBillingDaoJdbc"
+		parent="platformAwareDaoJdbc" />
+
+	<bean id="orderStatusDao" class="org.kuali.ext.mm.document.dataaccess.impl.jdbc.OrderStatusDaoJdbc"
+		parent="platformAwareDaoJdbc" />
+
+	<bean id="stockCountDao" class="org.kuali.ext.mm.sys.batch.dataaccess.StockCountDaoFactoryBean">
+		<property name="dbPlatform" value="${datasource.ojb.platform}" />
+		<property name="stockCountDaoOracle"><bean class="org.kuali.ext.mm.sys.batch.dataaccess.jdbc.StockCountDaoJdbc" parent="platformAwareDaoJdbc" /></property>
+		<property name="stockCountDaoMysql"><bean class="org.kuali.ext.mm.sys.batch.dataaccess.jdbc.mysql.StockCountDaoJdbc" parent="platformAwareDaoJdbc" /></property>
+	</bean>
+	<bean id="stockCountService"
+		class="org.kuali.ext.mm.sys.batch.service.impl.StockCountServiceImpl">
+		<property name="stockCountDao" ref="stockCountDao" />
+	</bean>
+
+	<bean id="catalogItemPendingDao" class="org.kuali.ext.mm.sys.batch.dataaccess.CatalogItemPendingDaoFactoryBean" >	
+		<property name="dbPlatform" value="${datasource.ojb.platform}" />
+		<property name="catalogItemPendingDaoOracle"><bean class="org.kuali.ext.mm.sys.batch.dataaccess.jdbc.CatalogItemPendingDaoJdbc" parent="platformAwareDaoJdbc" /></property>
+		<property name="catalogItemPendingDaoMysql"><bean class="org.kuali.ext.mm.sys.batch.dataaccess.jdbc.mysql.CatalogItemPendingDaoJdbc" parent="platformAwareDaoJdbc" /></property>	
+	</bean>
+	<bean id="catalogItemService"
+		class="org.kuali.ext.mm.sys.batch.service.impl.CatalogItemServiceImpl">
+		<property name="catalogItemDao" ref="catalogItemDao" />
+	</bean>
+	<bean id="catalogItemDao" class="org.kuali.ext.mm.sys.batch.dataaccess.CatalogItemPendingDaoFactoryBean" />
+	
+	<bean id="orderDocumentDao" class="org.kuali.ext.mm.sys.batch.dataaccess.ojb.OrderDocumentDaoOjb" parent="platformAwareDao" />
+	<bean id="orderDocumentQueryService" class="org.kuali.ext.mm.sys.batch.service.impl.OrderDocumentQueryServiceImpl">
+		<property name="orderDocumentDao" ref="orderDocumentDao" />
+	</bean>
+
+	<bean id="agreementUpdateService"
+		class="org.kuali.ext.mm.sys.batch.service.impl.AgreementUpdateServiceImpl">
+	</bean>
+
+	<bean id="orderReconciliationService"
+		class="org.kuali.ext.mm.sys.batch.service.impl.OrderReconciliationServiceImpl">
+	</bean>
+
+
+	<bean id="catalogPendingDocLoadService" class="org.kuali.ext.mm.sys.batch.service.impl.CatalogPendingDocLoadServiceImpl">
+		<property name="txManager" ref="transactionManager"></property>
+	</bean>
+
+	<bean id="catalogItemPendingApprovedService" class="org.kuali.ext.mm.sys.batch.service.impl.CatalogItemPendingServiceImpl">
+		<property name="txManager" ref="transactionManager"></property>
+	</bean>
+
+	<bean id="catalogPendingDocDao"	class="org.kuali.ext.mm.sys.batch.dataaccess.CatalogPendingDocDaoFactoryBean" >
+		<property name="dbPlatform" value="${datasource.ojb.platform}" />
+		<property name="catalogPendingDocDaoOracle"><bean class="org.kuali.ext.mm.sys.batch.dataaccess.jdbc.CatalogPendingDocDaoJdbc" parent="platformAwareDaoJdbc" /></property>
+		<property name="catalogPendingDocDaoMysql"><bean class="org.kuali.ext.mm.sys.batch.dataaccess.jdbc.mysql.CatalogPendingDocDaoJdbc" parent="platformAwareDaoJdbc" /></property>	
+	</bean>
+	
+	<bean id="loadCatalogItemPendingService"
+		class="org.kuali.ext.mm.sys.batch.service.impl.CatalogPendingDocQueryServiceImpl">
+		<property name="catalogPendingDocDao" ref="catalogPendingDocDao" />
+	</bean>
+
+	
+	<bean id="catalogItemPendingService"
+		class="org.kuali.ext.mm.sys.batch.service.impl.CatalogItemPendingQueryServiceImpl">
+		<property name="catalogItemPendingDao" ref="catalogItemPendingDao" />
+	</bean>
+	
+	<bean id="generalLedgerService" class="org.kuali.ext.mm.gl.service.impl.GeneralLedgerServiceFactoryBean">
+		<property name="glImplementationType" value="${gl.implementation.type}" />
+		<property name="serviceMap">
+			<map>
+			<entry key="reportByObjectCode"><bean class="org.kuali.ext.mm.gl.service.impl.GeneralLedgerByObjectCodeServiceImpl" /></entry>
+			<entry key="reportByAccount"><bean class="org.kuali.ext.mm.gl.service.impl.GeneralLedgerByAccountServiceImpl" /></entry>
+			</map>
+		</property>
+	</bean>
+		
+	<bean id="taxLiabilityGeneralLedgerService"
+		class="org.kuali.ext.mm.gl.service.impl.TaxLiabilityGeneralLedgerServiceImpl" />
+
+	<bean id="rentalDemurrageDao"
+		class="org.kuali.ext.mm.sys.batch.dataaccess.jdbc.RentalDemurrageDaoJdbc"
+		parent="platformAwareDaoJdbc" />
+
+	<bean id="rentalDemurrageService"
+		class="org.kuali.ext.mm.sys.batch.service.impl.RentalDemurrageServiceImpl">
+		<property name="rentalDemurrageDao" ref="rentalDemurrageDao" />
+	</bean>
+	<bean id="segmentedLookupResultsService"
+		class="org.kuali.ext.mm.sys.service.impl.SegmentedLookupResultsServiceImpl">
+		<property name="businessObjectService">
+			<ref bean="businessObjectService" />
+		</property>
+		<property name="dateTimeService">
+			<ref bean="dateTimeService" />
+		</property>
+	</bean>
+	<bean class="org.springframework.remoting.rmi.RmiServiceExporter">
+		<property name="serviceName" value="${batch.rmi.service}" />
+		<property name="service" ref="batchControlService" />
+		<property name="serviceInterface"
+			value="org.kuali.ext.mm.sys.batch.service.BatchControlService" />
+		<property name="registryPort" value="${batch.rmi.port}" />
+	</bean>
+	<bean id="catalogItemMaintenanceService" class="org.kuali.ext.mm.document.service.impl.CatalogItemMaintenanceServiceImpl">
+	</bean>
+	
+	<bean id="checkInReceivableLookupable" class="org.kuali.rice.kns.lookup.KualiLookupableImpl" scope="prototype">
+		<property name="lookupableHelperService">
+			<bean class="org.kuali.ext.mm.businessobject.lookup.CheckInLookupableHelperServiceImpl" />
+		</property>
+	</bean>
+	
+	<bean id="checkInCorrectionLookupable" class="org.kuali.rice.kns.lookup.KualiLookupableImpl" scope="prototype">
+		<property name="lookupableHelperService">
+			<bean class="org.kuali.ext.mm.businessobject.lookup.CheckinCorrectionLookupableHelperServiceImpl" />
+		</property>
+	</bean>
+
+	<!-- Discrepancy Lines Lookup Service -->
+	<bean id="discrepancyLineDao" class="org.kuali.ext.mm.sys.batch.dataaccess.jdbc.DiscrepancyLineDaoJdbc" parent="platformAwareDaoJdbc" />
+	<bean id="discrepancyLineService" class="org.kuali.ext.mm.sys.batch.service.impl.DiscrepancyLineServiceImpl">
+		<property name="discrepancyLineDao" ref="discrepancyLineDao" />
+	</bean>
+	
+	<bean id="glCollectorFeedDao" class="org.kuali.ext.mm.sys.batch.dataaccess.jdbc.GlCollectorFeedDaoJdbc" parent="platformAwareDaoJdbc" />
+	<bean id="glCollectorFeedService" class="org.kuali.ext.mm.sys.batch.service.impl.GlCollectorFeedServiceImpl" >
+		<property name="glCollectorFeedDao" ref="glCollectorFeedDao" />
+		<property name="txManager" ref="transactionManager"></property>
+	</bean>
+	
+</beans>

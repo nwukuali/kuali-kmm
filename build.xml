@@ -1,0 +1,366 @@
+<?xml version="1.0"?>
+<project name="kmm" default="dist-local" basedir=".">
+	<target name="dist-local" if="is.local.build" depends="init,filter-local,make-source,conf-expand-properties-local" description="Prepare local configuration files and tokenized resources and deploy tomcat context file on development workstation">
+		<copy todir="${appserver.localhost.dir}">
+			<fileset dir="${build.metainf.directory}">
+				<different targetdir="${appserver.localhost.dir}">
+					<mapper type="glob" from="${context.file}" to="${ant.project.name}-${build.environment}.xml"/>
+				</different>
+			</fileset>
+			<globmapper from="${context.file}" to="${ant.project.name}-${build.environment}.xml"/>
+		</copy>
+	</target>
+	<target name="dist-local-jboss" if="is.local.build" depends="dist-war,conf-expand-properties-local, filter-local" description="Prepare local local jboss server">
+		<copy file="${dist.directory}/${ant.project.name}-${build.environment}.war" todir="${jboss.deploy.directory}"/>
+	</target>
+
+	<target name="dist-war" depends="init,make-source" description="Builds the war file for external deployment.">
+		<mkdir dir="${dist.directory}"/>
+		<jar jarfile="${dist.directory}/${ant.project.name}-${build.environment}.war" basedir="${build.web.directory}" compress="false" />
+	</target>
+
+	<target name="dist-msu-war" depends="init,make-source" description="Builds the war file for external deployment.">
+		<jar jarfile="${ant.project.name}-${build.environment}.war" basedir="${build.web.directory}" compress="false" />
+	</target>
+
+	<target name="dist-web" depends="init">
+		<copy todir="${build.web.directory}">
+			<fileset dir="${web.directory}" 
+				includes="
+				**/*.jsp,
+				**/*.tag,
+				**/*.css,
+				**/*.htm,
+				**/*.html,
+				**/*.gif,
+				**/*.jpg,
+				**/*.png,
+				**/*.js
+			"/>
+		</copy>
+	</target>
+
+	<target name="make-source" depends="init,conf-expand-properties-project,conf-expand-context-file">
+		<javac destdir="${build.classes.directory}" srcdir="${source.classes.directory}" debug="true" nowarn="true" optimize="true" fork="true" memoryinitialsize="${compile.min.memory}" memorymaximumsize="${compile.max.memory}">
+			<classpath refid="compile.source.classpath" />
+		</javac>
+		<copy todir="${build.classes.directory}">
+			<fileset dir="${source.classes.directory}" includes="${non.java.resources}" />
+		</copy>
+	</target>
+
+	<target name="clean" depends="init,clean-local" description="Deletes files related to various deployment methods.">
+		<delete dir="${build.web.directory}"/>
+		<delete dir="${build.test.directory}"/>
+		<delete dir="${dist.directory}"/>
+	</target>
+
+	<target name="clean-local" if="is.local.build" depends="init">
+		<delete dir="${external.configuration.directory}"/>
+		<delete dir="${external.log.directory}"/>
+		<delete dir="${external.security.directory}"/>
+		<delete dir="${external.work.directory}"/>
+		<delete dir="${external.attachments.directory}"/>
+		<delete dir="${external.reports.directory}"/>
+		<delete dir="${external.einvoice.directory}"/>
+		<delete dir="${external.staging.directory}"/>
+		<delete dir="${external.temp.directory}"/>
+		<delete dir="${external.carousel.directory}"/>
+		<!-- MSU Only -->
+		<delete file="${appserver.localhost.dir}/${ant.project.name}-${build.environment}.xml" failonerror="false"/>
+	</target>
+
+	<target name="unzip-rice" depends="init" unless="dont.unzip.rice">
+		<unzip dest="${build.web.directory}" src="${rice.web.file.directory}/${rice.web.file}" >
+			<patternset>
+				<exclude name="META-INF/**"/>
+				<exclude name="WEB-INF/*.xml"/>
+				<exclude name="WEB-INF/classes/**"/>
+				<exclude name="WEB-INF/lib/**"/>
+				<exclude name="portal.jsp"/>
+				<exclude name="index.jsp"/>
+				<exclude name="acknowledgments.jsp"/>
+			</patternset>
+		</unzip>
+	</target>
+
+	<target name="setup-build-directory" depends="init,unzip-rice,sync-rice-jars,sync-kfs-jar,copy-lib-jars">
+		<mkdir dir="${build.classes.directory}"/>
+		<mkdir dir="${build.lib.directory}"/>
+		<copy todir="${build.web.directory}">
+			<fileset dir="${web.directory}" 
+				excludes="**/${web.file},**/**.class"/>
+		</copy>
+		<copy todir="${build.classes.directory}">
+			<fileset dir="${source.configuration.project.directory}"/>
+		</copy>
+	</target>
+
+	<target name="setup-external-directory" depends="init">
+		<mkdir dir="${external.directory}"/>
+		<mkdir dir="${external.configuration.directory}"/>
+		<mkdir dir="${external.log.directory}"/>
+		<mkdir dir="${external.security.directory}"/>
+		<mkdir dir="${external.work.directory}"/>
+		<mkdir dir="${external.attachments.directory}"/>
+		<mkdir dir="${external.reports.directory}"/>
+		<mkdir dir="${external.einvoice.directory}"/>
+		<mkdir dir="${external.staging.directory}"/>
+		<mkdir dir="${external.temp.directory}"/>
+		<mkdir dir="${external.carousel.directory}"/>
+		<!-- MSU Only -->
+		<copy todir="${external.reports.directory}">
+			<fileset dir="${source.configuration.external.template.directory}" />
+		</copy>
+	</target>
+
+	<target name="init" depends="init-properties"/>
+
+	<target name="init-property-files">
+		<property name="build.properties.file" value="${user.home}/${ant.project.name}-build.properties" />
+		<property file="${build.properties.file}"/>
+		<property file="build.properties" />
+		<property file="${source.configuration.directory}/${sentinel.properties.file}" />
+	</target>
+
+	<target name="init-properties" depends="init-property-files">
+		<tstamp>
+			<format property="build.version" pattern="MM/dd/yyyy hh:mm aa" />
+		</tstamp>
+		<tstamp>
+			<format property="current.year" pattern="yyyy" locale="en,US" />
+		</tstamp>
+		<condition property="context.docbase" value=' docBase="${basedir}${file.separator}${build.web.directory}"'>
+			<equals arg1="${is.local.build}" arg2="true" />
+		</condition>
+		<property name="context.docbase" value="" />
+
+		<condition property="use.p6spy.local">
+			<and>
+				<equals arg1="${is.local.build}" arg2="true" />
+				<equals arg1="${use.p6spy}" arg2="true" />
+			</and>
+		</condition>
+		<condition property="datasource.driver.name" value="${p6spy.driver.name}">
+			<equals arg1="${use.p6spy.local}" arg2="true"/>
+		</condition>
+		<property name="datasource.driver.name" value="${oracle.driver.name}" />
+		<property name="p6spy.real.driver.name" value="${oracle.driver.name}" />
+
+		<condition property="use.quartz.jdbc.jobstore" value="false">
+			<equals arg1="${is.local.build}" arg2="true" />
+		</condition>
+		<property name="use.quartz.jdbc.jobstore" value="true" />
+
+		<condition property="rice.dev.mode" value="true">
+			<equals arg1="${is.local.build}" arg2="true" />
+		</condition>
+		<property name="rice.dev.mode" value="false" />
+
+		<condition property="rice.message.persistence" value="false">
+			<equals arg1="${is.local.build}" arg2="true" />
+		</condition>
+		<property name="rice.message.persistence" value="true" />
+
+		<condition property="rice.use.quartz.database" value="true">
+			<and>
+				<not>
+					<equals arg1="${use.quartz.scheduling}" arg2="true" />
+				</not>
+				<not>
+					<equals arg1="${is.local.build}" arg2="true" />
+				</not>
+			</and>
+		</condition>
+		<property name="rice.use.quartz.database" value="false" />
+		<condition property="rice.exception.routing.immediate" value="true">
+			<equals arg1="${use.quartz.scheduling}" arg2="false" />
+		</condition>
+		<property name="rice.exception.routing.immediate" value="false" />
+
+		<property name="dateformat" value="MM/dd/yyyy HH:mm:ss a" />
+		<tstamp>
+			<format property="noolderthan" unit="${sync.dependency.jars.older.than.unit}" offset="${sync.dependency.jars.older.than}" pattern="${dateformat}" />
+		</tstamp>
+		<condition property="is.set.kfs.classes.directory" >
+			<isset property="kfs.classes.directory" />
+		</condition>
+		<condition property="rice.jars.directory" else="${local.dependencies.directory}">
+			<isset property="rice.jars.directory" />
+		</condition>
+		<condition property="kfs.jar.directory" else="${local.dependencies.directory}">
+			<isset property="kfs.jar.directory" />
+		</condition>
+		<condition property="rice.web.file.directory" else="${local.dependencies.directory}">
+			<isset property="rice.web.file.directory" />
+		</condition>
+
+		<loadfile property="p6spy" srcfile="${source.configuration.external.directory}/${p6spy.file}">
+			<filterchain>
+				<expandproperties/>
+			</filterchain>
+		</loadfile>
+		<loadfile property="web" srcfile="${web.webinf.directory}/${web.file}">
+			<filterchain>
+				<expandproperties/>
+			</filterchain>
+		</loadfile>
+		<loadfile property="context" srcfile="${source.configuration.external.server.directory}/${context.file}">
+			<filterchain>
+				<expandproperties/>
+			</filterchain>
+		</loadfile>
+		<loadfile property="log4j" srcfile="${source.configuration.external.directory}/${log4j.file}">
+			<filterchain>
+				<expandproperties/>
+			</filterchain>
+		</loadfile>
+		<loadfile property="security" srcfile="${source.configuration.external.directory}/${security.file}">
+			<filterchain>
+				<expandproperties/>
+			</filterchain>
+		</loadfile>
+		<loadfile property="configuration" srcfile="${source.configuration.directory}/${configuration.file}">
+			<filterchain>
+				<expandproperties/>
+			</filterchain>
+		</loadfile>
+		<loadfile property="configuration.locations" srcfile="${source.configuration.directory}/configuration-locations.xml">
+			<filterchain>
+				<expandproperties/>
+			</filterchain>
+		</loadfile>
+		<loadfile property="configuration.service.data" srcfile="${source.configuration.directory}/configurationServiceData.xml">
+			<filterchain>
+				<expandproperties/>
+			</filterchain>
+		</loadfile>
+		<loadfile property="jboss.web" srcfile="${web.webinf.directory}/${jboss.web.file}">
+			<filterchain>
+				<expandproperties/>
+			</filterchain>
+		</loadfile>
+		<loadfile property="batch.client.config" srcfile="${source.configuration.directory}/kmm-batch-client.properties">
+			<filterchain>
+				<expandproperties/>
+			</filterchain>
+		</loadfile>
+		<!-- Path IDs -->
+		<path id="compile.source.classpath">
+			<fileset dir="${appserver.lib.dir}" includes="*.jar" />
+			<fileset dir="${web.lib.directory}" includes="*.jar" />
+			<fileset dir="${db.drivers.dir}" includes="*.jar" />
+		</path>
+	</target>
+
+	<target name="conf-expand-properties-project" depends="init,setup-build-directory">
+		<mkdir dir="${build.classes.directory}" />
+		<echo file="${build.classes.directory}/${p6spy.file}" message="${p6spy}" />
+		<echo file="${build.webinf.directory}/${web.file}" message="${web}" />
+		<!-- Comment out the following line for Deployment of War 		-->
+		<echo file="${build.classes.directory}/configuration-locations.xml" message="${configuration.locations}" />
+		<echo file="${build.classes.directory}/configurationServiceData.xml" message="${configuration.service.data}" />
+		<echo file="${build.classes.directory}/${configuration.file}" message="${configuration}" />
+		<echo file="${build.webinf.directory}/${jboss.web.file}" message="${jboss.web}" />
+	</target>
+	
+	<target name="conf-expand-context-file" if="requires.context.file" depends="init,setup-build-directory">
+		<echo file="${build.metainf.directory}/${context.file}" message="${context}" />
+	</target>
+
+	<target name="conf-expand-properties-local" if="is.local.build" depends="init,conf-expand-properties-project,setup-external-directory">
+		<echo file="${external.configuration.directory}/${log4j.file}" message="${log4j}" />
+		<echo file="${external.configuration.directory}/${configuration.file}" message="${configuration}" />
+		<echo file="${external.security.directory}/${security.file}" message="${security}" />
+		<echo file="${external.log.directory}/${ant.project.name}.log" message="" />
+	</target>
+
+	<target name="filter-local" if="is.local.build" depends="init">
+		<copy todir="${appserver.lib.dir}" overwrite="true">
+			<fileset dir="${source.configuration.external.server.directory}" includes="*.jar" />
+		</copy>
+		<copy todir="${appserver.lib.dir}" overwrite="true">
+			<fileset dir="${drivers.directory}" />
+		</copy>
+		<copy file="${source.configuration.external.directory}/${keystore.file}" tofile="${external.security.directory}/${keystore.file}"/>
+	</target>
+
+	<target name="echoprops" depends="init">
+		<echoproperties/>
+	</target>
+
+	<target name="deploy" depends="dist-war">
+		<scp file="${deploy.file}" todir="${deploy.todir}" passphrase="${deploy.passphrase}" keyfile="${deploy.keyfile}" verbose="true" trust="true" />
+		<scp todir="tomcat:tomcat@cnv.kmm.kuali.net:/opt/kmm/cnv" passphrase="${deploy.passphrase}" keyfile="${deploy.keyfile}" verbose="true" trust="true" >
+			<fileset dir="/opt/kmm/cnv">
+				<exclude name="tomcat5-instance/"/>
+				<exclude name="oracle/" />
+			</fileset>
+		</scp>
+	</target>
+
+	<target name="sync-kfs-jar" depends="init-properties,kfs-jar-copy,kfs-jar-build">
+		<!-- This is just used as a decision point for kfs-jar-copy or kfs-jar-build -->
+	</target>
+
+	<target name="kfs-jar-build" depends="init-properties" if="is.set.kfs.classes.directory">
+		<delete file="${web.lib.directory}/${kfs.jar.name}" />
+		<jar destfile="${web.lib.directory}/${kfs.jar.name}"  basedir="${kfs.classes.directory}" />
+	</target>
+
+	<target name="kfs-jar-copy" depends="init-properties" unless="is.set.kfs.classes.directory">
+		<delete file="${web.lib.directory}/${kfs.jar.name}" />
+		<echo message="KFS Jar file timestamp should be after ${noolderthan}" />
+
+		<copy tofile="${web.lib.directory}/${kfs.jar.name}" overwrite="true">
+			<fileset file="${kfs.jar.directory}/${kfs.jar.name}">
+				<date datetime="${noolderthan}" when="after" pattern="${dateformat}" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="sync-rice-jars" depends="init-properties">
+		<delete>
+			<fileset dir="${web.lib.directory}" includes="rice-*.jar" />
+		</delete>
+		<echo message="Rice Jar files timestamp should be after ${noolderthan}" />
+
+		<copy tofile="${web.lib.directory}/${rice.api.jar}" overwrite="true">
+			<fileset file="${rice.jars.directory}/${rice.api.jar}">
+				<date  datetime="${noolderthan}" when="after" pattern="${dateformat}" />
+			</fileset>
+		</copy>
+		<copy tofile="${web.lib.directory}/${rice.impl.jar}" overwrite="true">
+			<fileset file="${rice.jars.directory}/${rice.impl.jar}">
+				<date  datetime="${noolderthan}" when="after" pattern="${dateformat}" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="kmm-batch-client-jar" depends="make-source">
+		<mkdir dir="${dist.directory}/batch" />
+		<echo file="${dist.directory}/batch/kmm-batch-client.properties" message="${batch.client.config}" />
+		<jar destfile="${dist.directory}/batch/${kmm.batch.client.jar.name}" basedir="${build.classes.directory}">
+			<include name="**/BatchJobRmiInvokerClient*"/>
+			<include name="**/BatchClientApplication*"/>
+			<include name="**/BatchStatusVO*"/>
+			<include name="**/BatchRuntimeException*" />
+		</jar>
+	</target>
+
+	<target name="test-local-conf" depends="dist-local">
+		<copy todir="./test/conf" overwrite="true">
+			<fileset dir="${build.classes.directory}" includes="*.xml,*.properties" />
+		</copy>
+	</target>
+
+	<target name="copy-lib-jars" depends="init">
+		<copy todir="${web.lib.directory}">
+			<fileset dir="${rice.lib.directory}" includes="*.jar" />
+		</copy>
+		<copy todir="${web.lib.directory}">
+			<fileset dir="${kmm.lib.directory}" includes="*.jar" />
+		</copy>
+	</target>
+
+</project>

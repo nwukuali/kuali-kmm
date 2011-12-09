@@ -1,0 +1,465 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="CatalogItemPending" parent="CatalogItemPending-parentBean" />
+
+  <bean id="CatalogItemPending-parentBean" abstract="true" parent="TransactionalDocumentEntry">
+    
+    <property name="documentTypeName" value="StoresPreApproveSchedulerDocument"/>
+    <property name="sessionDocument" value="true"/>
+    <property name="documentClass" value="org.kuali.ext.mm.businessobject.CatalogItemPending"/>
+    <property name="documentAuthorizerClass" value="org.kuali.rice.kns.document.authorization.TransactionalDocumentAuthorizerBase"/>
+     
+        
+    <property name="attributes" >
+      <list>
+        <ref bean="CatalogItemPending-active" />
+        <ref bean="CatalogItemPending-catalogDesc" />
+        <ref bean="CatalogItemPending-catalogGroupCd" />
+        <ref bean="CatalogItemPending-catalogGroupNm" />
+        <ref bean="CatalogItemPending-catalogImageUrl" />
+        <ref bean="CatalogItemPending-catalogItemPndId" />
+        <ref bean="CatalogItemPending-catalogPendingDocNbr" />
+        <ref bean="CatalogItemPending-catalogPrc" />
+        <ref bean="CatalogItemPending-catalogSubgroupCd" />
+        <ref bean="CatalogItemPending-catalogSubgroupDesc" />
+        <ref bean="CatalogItemPending-catalogTimestamp" />
+        <ref bean="CatalogItemPending-catalogUnitOfIssueCd" />
+        <ref bean="CatalogItemPending-distributorNbr" />
+        <ref bean="CatalogItemPending-lastUpdateDate" />
+        <ref bean="CatalogItemPending-manufacturerNbr" />
+        <ref bean="CatalogItemPending-recycledInd" />
+        <ref bean="CatalogItemPending-shippingHt" />
+        <ref bean="CatalogItemPending-shippingLh" />
+        <ref bean="CatalogItemPending-shippingWd" />
+        <ref bean="CatalogItemPending-shippingWgt" />
+        <ref bean="CatalogItemPending-spaidId" />
+        <ref bean="CatalogItemPending-taxableInd" />
+        <ref bean="CatalogItemPending-unspscCd" />
+        <ref bean="CatalogItemPending-versionNumber" />
+      </list>
+    </property>
+  </bean>
+
+  <bean id="CatalogItemPending-active" parent="CatalogItemPending-active-parentBean" />
+  <bean id="CatalogItemPending-active-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="active"
+        p:forceUppercase="false"
+        p:label="Active"
+        p:shortLabel="Active"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CatalogItemPending-catalogDesc" parent="CatalogItemPending-catalogDesc-parentBean" />
+  <bean id="CatalogItemPending-catalogDesc-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="catalogDesc"
+        p:forceUppercase="false"
+        p:label="Catalog Desc"
+        p:shortLabel="Catalog Desc"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CatalogItemPending-catalogGroupCd" parent="CatalogItemPending-catalogGroupCd-parentBean" />
+  <bean id="CatalogItemPending-catalogGroupCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="catalogGroupCd"
+        p:forceUppercase="false"
+        p:label="Catalog Group Cd"
+        p:shortLabel="Catalog Group Cd"
+        p:maxLength="12"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="12" />
+    </property>
+  </bean>
+
+  <bean id="CatalogItemPending-catalogGroupNm" parent="CatalogItemPending-catalogGroupNm-parentBean" />
+  <bean id="CatalogItemPending-catalogGroupNm-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="catalogGroupNm"
+        p:forceUppercase="false"
+        p:label="Catalog Group Nm"
+        p:shortLabel="Catalog Group Nm"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CatalogItemPending-catalogImageUrl" parent="CatalogItemPending-catalogImageUrl-parentBean" />
+  <bean id="CatalogItemPending-catalogImageUrl-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="catalogImageUrl"
+        p:forceUppercase="false"
+        p:label="Catalog Image Url"
+        p:shortLabel="Catalog Image Url"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CatalogItemPending-catalogItemPndId" parent="CatalogItemPending-catalogItemPndId-parentBean" />
+  <bean id="CatalogItemPending-catalogItemPndId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="catalogItemPndId"
+        p:forceUppercase="false"
+        p:label="Catalog Item Pnd Id"
+        p:shortLabel="Catalog Item Pnd Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CatalogItemPending-catalogPendingDocNbr" parent="CatalogItemPending-catalogPendingDocNbr-parentBean" />
+  <bean id="CatalogItemPending-catalogPendingDocNbr-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="catalogPendingDocNbr"
+        p:forceUppercase="false"
+        p:label="Catalog Pending Doc Nbr"
+        p:shortLabel="Catalog Pending Doc Nbr"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CatalogItemPending-catalogPrc" parent="CatalogItemPending-catalogPrc-parentBean" />
+  <bean id="CatalogItemPending-catalogPrc-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="catalogPrc"
+        p:forceUppercase="false"
+        p:label="Catalog Prc"
+        p:shortLabel="Catalog Prc"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CatalogItemPending-catalogSubgroupCd" parent="CatalogItemPending-catalogSubgroupCd-parentBean" />
+  <bean id="CatalogItemPending-catalogSubgroupCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="catalogSubgroupCd"
+        p:forceUppercase="false"
+        p:label="Catalog Subgroup Cd"
+        p:shortLabel="Catalog Subgroup Cd"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CatalogItemPending-catalogSubgroupDesc" parent="CatalogItemPending-catalogSubgroupDesc-parentBean" />
+  <bean id="CatalogItemPending-catalogSubgroupDesc-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="catalogSubgroupDesc"
+        p:forceUppercase="false"
+        p:label="Catalog Subgroup Desc"
+        p:shortLabel="Catalog Subgroup Desc"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CatalogItemPending-catalogTimestamp" parent="CatalogItemPending-catalogTimestamp-parentBean" />
+  <bean id="CatalogItemPending-catalogTimestamp-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="catalogTimestamp"
+        p:forceUppercase="false"
+        p:label="Catalog Timestamp"
+        p:shortLabel="Catalog Timestamp"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CatalogItemPending-catalogUnitOfIssueCd" parent="CatalogItemPending-catalogUnitOfIssueCd-parentBean" />
+  <bean id="CatalogItemPending-catalogUnitOfIssueCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="catalogUnitOfIssueCd"
+        p:forceUppercase="false"
+        p:label="Catalog Unit Of Issue Cd"
+        p:shortLabel="Catalog Unit Of Issue Cd"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CatalogItemPending-distributorNbr" parent="CatalogItemPending-distributorNbr-parentBean" />
+  <bean id="CatalogItemPending-distributorNbr-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="distributorNbr"
+        p:forceUppercase="false"
+        p:label="Distributor Nbr"
+        p:shortLabel="Distributor Nbr"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CatalogItemPending-lastUpdateDate" parent="CatalogItemPending-lastUpdateDate-parentBean" />
+  <bean id="CatalogItemPending-lastUpdateDate-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="lastUpdateDate"
+        p:forceUppercase="false"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="HiddenControlDefinition" />
+    </property>
+  </bean>
+
+  <bean id="CatalogItemPending-manufacturerNbr" parent="CatalogItemPending-manufacturerNbr-parentBean" />
+  <bean id="CatalogItemPending-manufacturerNbr-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="manufacturerNbr"
+        p:forceUppercase="false"
+        p:label="Manufacturer Nbr"
+        p:shortLabel="Manufacturer Nbr"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CatalogItemPending-recycledInd" parent="CatalogItemPending-recycledInd-parentBean" />
+  <bean id="CatalogItemPending-recycledInd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="recycledInd"
+        p:forceUppercase="false"
+        p:label="Recycled Ind"
+        p:shortLabel="Recycled Ind"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CatalogItemPending-shippingHt" parent="CatalogItemPending-shippingHt-parentBean" />
+  <bean id="CatalogItemPending-shippingHt-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="shippingHt"
+        p:forceUppercase="false"
+        p:label="Shipping Ht"
+        p:shortLabel="Shipping Ht"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CatalogItemPending-shippingLh" parent="CatalogItemPending-shippingLh-parentBean" />
+  <bean id="CatalogItemPending-shippingLh-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="shippingLh"
+        p:forceUppercase="false"
+        p:label="Shipping Lh"
+        p:shortLabel="Shipping Lh"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CatalogItemPending-shippingWd" parent="CatalogItemPending-shippingWd-parentBean" />
+  <bean id="CatalogItemPending-shippingWd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="shippingWd"
+        p:forceUppercase="false"
+        p:label="Shipping Wd"
+        p:shortLabel="Shipping Wd"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CatalogItemPending-shippingWgt" parent="CatalogItemPending-shippingWgt-parentBean" />
+  <bean id="CatalogItemPending-shippingWgt-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="shippingWgt"
+        p:forceUppercase="false"
+        p:label="Shipping Wgt"
+        p:shortLabel="Shipping Wgt"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CatalogItemPending-spaidId" parent="CatalogItemPending-spaidId-parentBean" />
+  <bean id="CatalogItemPending-spaidId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="spaidId"
+        p:forceUppercase="false"
+        p:label="Spaid Id"
+        p:shortLabel="Spaid Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CatalogItemPending-taxableInd" parent="CatalogItemPending-taxableInd-parentBean" />
+  <bean id="CatalogItemPending-taxableInd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="taxableInd"
+        p:forceUppercase="false"
+        p:label="Taxable Ind"
+        p:shortLabel="Taxable Ind"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CatalogItemPending-unspscCd" parent="CatalogItemPending-unspscCd-parentBean" />
+  <bean id="CatalogItemPending-unspscCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="unspscCd"
+        p:forceUppercase="false"
+        p:label="Unspsc Cd"
+        p:shortLabel="Unspsc Cd"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CatalogItemPending-versionNumber" parent="CatalogItemPending-versionNumber-parentBean" />
+  <bean id="CatalogItemPending-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+</beans>

@@ -1,0 +1,785 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="CustomerOrderDetailForReturns" parent="CustomerOrderDetailForReturns-parentBean" />
+
+  <bean id="CustomerOrderDetailForReturns-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.CustomerOrderDetailForReturns"
+        p:titleAttribute="Order Detail"
+        p:objectLabel="Order Detail"
+        p:inquiryDefinition-ref="CustomerOrderDetailForReturns-inquiryDefinition"
+        p:lookupDefinition-ref="CustomerOrderDetailForReturns-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="CustomerOrderDetailForReturns-catalogItemId" />
+        <ref bean="CustomerOrderDetailForReturns-stockDistributorNumber" />
+        <ref bean="CustomerOrderDetailForReturns-orderDocumentLookable.orderStatusCd" />
+        <ref bean="CustomerOrderDetailForReturns-orderDocumentLookable.orderTypeCode" />
+        <ref bean="CustomerOrderDetailForReturns-orderDocumentLookable.warehouseCd" />
+        <ref bean="CustomerOrderDetailForReturns-orderDocumentLookable.vendorNm" />
+        <ref bean="CustomerOrderDetailForReturns-orderDocumentLookable.arId" />
+        <ref bean="CustomerOrderDetailForReturns-orderType" />
+        <ref bean="CustomerOrderDetailForReturns-orderDetailsSize" />
+        <ref bean="CustomerOrderDetailForReturns-creationDate" />
+        <ref bean="CustomerOrderDetailForReturns-lastUpdateDate" />
+        <ref bean="CustomerOrderDetailForReturns-distributorNbr" />
+        <ref bean="CustomerOrderDetailForReturns-vendorShipmentNumber" />
+        <ref bean="CustomerOrderDetailForReturns-vendorRefNumber" />
+        <ref bean="CustomerOrderDetailForReturns-orderDocument.reqsId" />
+        <ref bean="CustomerOrderDetailForReturns-orderDetailId" />
+        <ref bean="CustomerOrderDetailForReturns-orderDocument.fdocNbr" />
+        <ref bean="CustomerOrderDetailForReturns-orderDocumentNbr" />
+        <ref bean="CustomerOrderDetailForReturns-salesInstanceId" />
+        <ref bean="CustomerOrderDetailForReturns-orderItemCostAmt" />
+        <ref bean="CustomerOrderDetailForReturns-orderItemDetailDesc" />
+        <ref bean="CustomerOrderDetailForReturns-orderItemMarkupAmt" />
+        <ref bean="CustomerOrderDetailForReturns-orderItemPriceAmt" />
+        <ref bean="CustomerOrderDetailForReturns-orderItemQty" />
+        <ref bean="CustomerOrderDetailForReturns-orderItemTaxAmt" />
+        <ref bean="CustomerOrderDetailForReturns-orderStatusCd" />
+        <ref bean="CustomerOrderDetailForReturns-poId" />
+        <ref bean="CustomerOrderDetailForReturns-shippingHt" />
+        <ref bean="CustomerOrderDetailForReturns-shippingLh" />
+        <ref bean="CustomerOrderDetailForReturns-shippingWd" />
+        <ref bean="CustomerOrderDetailForReturns-shippingWgt" />
+        <ref bean="CustomerOrderDetailForReturns-stockUnitOfIssueCd" />
+        <ref bean="CustomerOrderDetailForReturns-vendorDetailAssignedId" />
+        <ref bean="CustomerOrderDetailForReturns-vendorHeaderGeneratedId" />
+        <ref bean="CustomerOrderDetailForReturns-vendorNm" />
+        <ref bean="CustomerOrderDetailForReturns-versionNumber" />
+        <ref bean="CustomerOrderDetailForReturns-willCall" />
+      </list>
+    </property>
+    
+    <property name="relationships" >
+      <list>
+        <bean parent="RelationshipDefinition">
+          <property name="objectAttributeName" value="orderDocumentLookable" />
+          <property name="primitiveAttributes" >
+            <list>
+              <bean parent="PrimitiveAttributeDefinition"
+                    p:sourceName="orderDocumentNbr"
+                    p:targetName="documentNumber" />
+              <bean parent="PrimitiveAttributeDefinition"
+                    p:sourceName="orderDocumentLookable.warehouseCd"
+                    p:targetName="warehouseCd" />
+              <bean parent="PrimitiveAttributeDefinition"
+                    p:sourceName="orderDocumentLookable.vendorNm"
+                    p:targetName="vendorNm" />
+              <bean parent="PrimitiveAttributeDefinition"
+                    p:sourceName="orderDocumentLookable.reqsId"
+                    p:targetName="reqsId" />
+
+            </list>
+          </property>
+          <property name="supportAttributes" >
+            <list>
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="orderDocumentNbr"
+                    p:targetName="documentNumber" />
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="orderDocumentLookable.warehouseCd"
+                    p:targetName="warehouseCd" />
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="orderDocumentLookable.reqsId"
+                    p:targetName="reqsId" />
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="orderDocumentLookable.vendorNm"
+                    p:targetName="vendorNm" />
+            </list>
+          </property> 
+        </bean>
+        <bean parent="RelationshipDefinition">
+          <property name="objectAttributeName" value="catalogItem" />
+          <property name="primitiveAttributes" >
+            <list>
+              <bean parent="PrimitiveAttributeDefinition"
+                    p:sourceName="catalogItem.stock.stockDistributorNbr"
+                    p:targetName="stock.stockDistributorNbr" />                    
+            </list>
+          </property>
+          <property name="supportAttributes" >
+            <list>
+              <bean parent="SupportAttributeDefinition"
+              		p:identifier="true"
+                    p:sourceName="catalogItem.stock.stockDistributorNbr"
+                    p:targetName="stock.stockDistributorNbr" />                    
+            </list>
+          </property> 
+        </bean>
+      </list>
+    </property> 
+  </bean>
+
+  <bean id="CustomerOrderDetailForReturns-stockDistributorNumber" parent="CustomerOrderDetailForReturns-stockDistributorNumber-parentBean" />
+  <bean id="CustomerOrderDetailForReturns-stockDistributorNumber-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="catalogItem.stock.stockDistributorNbr"
+        p:forceUppercase="false"
+        p:label="Item Number"
+        p:shortLabel="Item Number"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CustomerOrderDetailForReturns-catalogItemId" parent="CustomerOrderDetailForReturns-catalogItemId-parentBean" />
+  <bean id="CustomerOrderDetailForReturns-catalogItemId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="catalogItemId"
+        p:forceUppercase="false"
+        p:label="Catalog Item Id"
+        p:shortLabel="Catalog Item Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CustomerOrderDetailForReturns-orderType" parent="CustomerOrderDetailForReturns-orderType-parentBean" />
+  <bean id="CustomerOrderDetailForReturns-orderType-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="orderDocumentLookable.orderType.orderTypeName"
+        p:forceUppercase="false"
+        p:label="Order Type"
+        p:shortLabel="Order Type"
+        p:maxLength="30"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="30" />
+    </property>
+  </bean>
+
+  <bean id="CustomerOrderDetailForReturns-creationDate" parent="CustomerOrderDetailForReturns-creationDate-parentBean" />
+  <bean id="CustomerOrderDetailForReturns-creationDate-parentBean" parent="GenericAttributes-genericDate" abstract="true"
+        p:name="orderDocumentLookable.creationDate"
+        p:forceUppercase="false"
+        p:label="Order Creation Date"
+        p:shortLabel="Order Creation Date"
+        p:maxLength="30"
+        p:required="false" />
+
+  <bean id="CustomerOrderDetailForReturns-orderDetailsSize" parent="CustomerOrderDetailForReturns-orderDetailsSize-parentBean" />
+  <bean id="CustomerOrderDetailForReturns-orderDetailsSize-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="orderDocumentLookable.orderDetailsSize"
+        p:forceUppercase="false"
+        p:label="Lines"
+        p:shortLabel="Lines"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CustomerOrderDetailForReturns-orderDocument.fdocNbr" parent="CustomerOrderDetailForReturns-orderDocument.fdocNbr-parentBean" />
+  <bean id="CustomerOrderDetailForReturns-orderDocument.fdocNbr-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="orderDocumentLookable.documentNumber"
+        p:forceUppercase="false"
+        p:label="Document Nbr"
+        p:shortLabel="Document Nbr"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CustomerOrderDetailForReturns-orderDocument.reqsId" parent="CustomerOrderDetailForReturns-orderDocument.reqsId-parentBean" />
+  <bean id="CustomerOrderDetailForReturns-orderDocument.reqsId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="orderDocumentLookable.reqsId"
+        p:forceUppercase="false"
+        p:label="Reqs Id"
+        p:shortLabel="Reqs Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CustomerOrderDetailForReturns-orderDocumentLookable.orderStatusCd" parent="CustomerOrderDetailForReturns-orderDocumentLookable.orderStatusCd-parentBean" />
+  <bean id="CustomerOrderDetailForReturns-orderDocumentLookable.orderStatusCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="orderDocumentLookable.orderStatusCd"
+        p:forceUppercase="false"
+        p:label="Order Status Code"
+        p:shortLabel="Order Status Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+
+  <bean id="CustomerOrderDetailForReturns-orderDocumentLookable.arId" parent="CustomerOrderDetailForReturns-orderDocumentLookable.arId-parentBean" />
+  <bean id="CustomerOrderDetailForReturns-orderDocumentLookable.arId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="orderDocumentLookable.arId"
+        p:forceUppercase="false"
+        p:label="Ar Id"
+        p:shortLabel="Ar Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CustomerOrderDetailForReturns-orderDocumentLookable.vendorNm" parent="CustomerOrderDetailForReturns-orderDocumentLookable.vendorNm-parentBean" />
+  <bean id="CustomerOrderDetailForReturns-orderDocumentLookable.vendorNm-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="orderDocumentLookable.vendorNm"
+        p:forceUppercase="false"
+        p:label="Vendor Name"
+        p:shortLabel="Vendor Name"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CustomerOrderDetailForReturns-orderDocumentLookable.warehouseCd" parent="CustomerOrderDetailForReturns-orderDocumentLookable.warehouseCd-parentBean" />
+  <bean id="CustomerOrderDetailForReturns-orderDocumentLookable.warehouseCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="orderDocumentLookable.warehouseCd"
+        p:forceUppercase="false"
+        p:label="Warehouse Code"
+        p:shortLabel="Warehouse Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CustomerOrderDetailForReturns-orderDocumentLookable.orderTypeCode" parent="CustomerOrderDetailForReturns-orderDocumentLookable.orderTypeCode-parentBean" />
+  <bean id="CustomerOrderDetailForReturns-orderDocumentLookable.orderTypeCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="orderDocumentLookable.orderTypeCode"
+        p:forceUppercase="false"
+        p:label="Order Type Code"
+        p:shortLabel="Order Type Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CustomerOrderDetailForReturns-lastUpdateDate" parent="CustomerOrderDetailForReturns-lastUpdateDate-parentBean" />
+  <bean id="CustomerOrderDetailForReturns-lastUpdateDate-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="lastUpdateDate"
+        p:forceUppercase="false"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="HiddenControlDefinition" />
+    </property>
+  </bean>
+
+  <bean id="CustomerOrderDetailForReturns-distributorNbr" parent="CustomerOrderDetailForReturns-distributorNbr-parentBean" />
+  <bean id="CustomerOrderDetailForReturns-distributorNbr-parentBean" parent="Stock-stockDistributorNbr" abstract="true"
+        p:name="distributorNbr"        
+        p:label="Distributor Number"
+        p:shortLabel="Item #"
+        p:required="false" >    
+  </bean>
+
+  <bean id="CustomerOrderDetailForReturns-vendorShipmentNumber" parent="CustomerOrderDetailForReturns-vendorShipmentNumber-parentBean" />
+  <bean id="CustomerOrderDetailForReturns-vendorShipmentNumber-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorShipmentNumber"
+        p:forceUppercase="false"
+        p:label="Vendor Shipment Nbr"
+        p:shortLabel="Vendor Shipment Nbr"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CustomerOrderDetailForReturns-vendorRefNumber" parent="CustomerOrderDetailForReturns-vendorRefNumber-parentBean" />
+  <bean id="CustomerOrderDetailForReturns-vendorRefNumber-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorRefNumber"
+        p:forceUppercase="false"
+        p:label="Vendor Ref Nbr"
+        p:shortLabel="Vendor Ref Nbr"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CustomerOrderDetailForReturns-orderDetailId" parent="CustomerOrderDetailForReturns-orderDetailId-parentBean" />
+  <bean id="CustomerOrderDetailForReturns-orderDetailId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="orderDetailId"
+        p:forceUppercase="false"
+        p:label="Order Detail Id"
+        p:shortLabel="Order Detail Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CustomerOrderDetailForReturns-orderDocumentNbr" parent="CustomerOrderDetailForReturns-orderDocumentNbr-parentBean" />
+  <bean id="CustomerOrderDetailForReturns-orderDocumentNbr-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="orderDocumentNbr"
+        p:forceUppercase="false"
+        p:label="Order Document Number"
+        p:shortLabel="Order Document Nbr"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CustomerOrderDetailForReturns-salesInstanceId" parent="CustomerOrderDetailForReturns-salesInstanceId-parentBean" />
+  <bean id="CustomerOrderDetailForReturns-salesInstanceId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="salesInstanceId"
+        p:forceUppercase="false"
+        p:label="Order ID"
+        p:shortLabel="Order ID"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CustomerOrderDetailForReturns-orderItemCostAmt" parent="CustomerOrderDetailForReturns-orderItemCostAmt-parentBean" />
+  <bean id="CustomerOrderDetailForReturns-orderItemCostAmt-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="orderItemCostAmt"
+        p:forceUppercase="false"
+        p:label="Order Item Cost Amt"
+        p:shortLabel="Order Item Cost Amt"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CustomerOrderDetailForReturns-orderItemDetailDesc" parent="CustomerOrderDetailForReturns-orderItemDetailDesc-parentBean" />
+  <bean id="CustomerOrderDetailForReturns-orderItemDetailDesc-parentBean" parent="Stock-stockDesc" abstract="true"
+        p:name="orderItemDetailDesc"       
+        p:label="Order Item Detail Description"
+        p:shortLabel="Description">    
+  </bean>
+
+  <bean id="CustomerOrderDetailForReturns-orderItemMarkupAmt" parent="CustomerOrderDetailForReturns-orderItemMarkupAmt-parentBean" />
+  <bean id="CustomerOrderDetailForReturns-orderItemMarkupAmt-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="orderItemMarkupAmt"
+        p:forceUppercase="false"
+        p:label="Order Item Markup Amt"
+        p:shortLabel="Order Item Markup Amt"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CustomerOrderDetailForReturns-orderItemPriceAmt" parent="CustomerOrderDetailForReturns-orderItemPriceAmt-parentBean" />
+  <bean id="CustomerOrderDetailForReturns-orderItemPriceAmt-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="orderItemPriceAmt"
+        p:forceUppercase="false"
+        p:label="Order Item Price Amt"
+        p:shortLabel="Price"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="FloatingPointValidationPattern" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CustomerOrderDetailForReturns-orderItemQty" parent="CustomerOrderDetailForReturns-orderItemQty-parentBean" />
+  <bean id="CustomerOrderDetailForReturns-orderItemQty-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="orderItemQty"
+        p:forceUppercase="false"
+        p:label="Order Item Quantity"
+        p:shortLabel="Qty"
+        p:maxLength="8"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="NumericValidationPattern" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="3" />
+    </property>
+  </bean>
+
+  <bean id="CustomerOrderDetailForReturns-orderItemTaxAmt" parent="CustomerOrderDetailForReturns-orderItemTaxAmt-parentBean" />
+  <bean id="CustomerOrderDetailForReturns-orderItemTaxAmt-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="orderItemTaxAmt"
+        p:forceUppercase="false"
+        p:label="Order Item Tax Amt"
+        p:shortLabel="Order Item Tax Amt"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CustomerOrderDetailForReturns-orderStatusCd" parent="CustomerOrderDetailForReturns-orderStatusCd-parentBean" />
+  <bean id="CustomerOrderDetailForReturns-orderStatusCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="orderStatusCd"
+        p:forceUppercase="false"
+        p:label="Order Status Cd"
+        p:shortLabel="Order Status Cd"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CustomerOrderDetailForReturns-poId" parent="CustomerOrderDetailForReturns-poId-parentBean" />
+  <bean id="CustomerOrderDetailForReturns-poId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="poId"
+        p:forceUppercase="false"
+        p:label="PO"
+        p:shortLabel="PO"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CustomerOrderDetailForReturns-shippingHt" parent="CustomerOrderDetailForReturns-shippingHt-parentBean" />
+  <bean id="CustomerOrderDetailForReturns-shippingHt-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="shippingHt"
+        p:forceUppercase="false"
+        p:label="Shipping Ht"
+        p:shortLabel="Shipping Ht"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CustomerOrderDetailForReturns-shippingLh" parent="CustomerOrderDetailForReturns-shippingLh-parentBean" />
+  <bean id="CustomerOrderDetailForReturns-shippingLh-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="shippingLh"
+        p:forceUppercase="false"
+        p:label="Shipping Lh"
+        p:shortLabel="Shipping Lh"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CustomerOrderDetailForReturns-shippingWd" parent="CustomerOrderDetailForReturns-shippingWd-parentBean" />
+  <bean id="CustomerOrderDetailForReturns-shippingWd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="shippingWd"
+        p:forceUppercase="false"
+        p:label="Shipping Wd"
+        p:shortLabel="Shipping Wd"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CustomerOrderDetailForReturns-shippingWgt" parent="CustomerOrderDetailForReturns-shippingWgt-parentBean" />
+  <bean id="CustomerOrderDetailForReturns-shippingWgt-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="shippingWgt"
+        p:forceUppercase="false"
+        p:label="Shipping Wgt"
+        p:shortLabel="Shipping Wgt"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CustomerOrderDetailForReturns-stockUnitOfIssueCd" parent="CustomerOrderDetailForReturns-stockUnitOfIssueCd-parentBean" />
+  <bean id="CustomerOrderDetailForReturns-stockUnitOfIssueCd-parentBean" parent="Stock-salesUnitOfIssueCd" abstract="true"
+        p:name="stockUnitOfIssueCd" >
+  </bean>
+
+  <bean id="CustomerOrderDetailForReturns-vendorDetailAssignedId" parent="CustomerOrderDetailForReturns-vendorDetailAssignedId-parentBean" />
+  <bean id="CustomerOrderDetailForReturns-vendorDetailAssignedId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorDetailAssignedId"
+        p:forceUppercase="false"
+        p:label="Vendor Detail Assigned Id"
+        p:shortLabel="Vendor Detail Assigned Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CustomerOrderDetailForReturns-vendorHeaderGeneratedId" parent="CustomerOrderDetailForReturns-vendorHeaderGeneratedId-parentBean" />
+  <bean id="CustomerOrderDetailForReturns-vendorHeaderGeneratedId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorHeaderGeneratedId"
+        p:forceUppercase="false"
+        p:label="Vendor Header Generated Id"
+        p:shortLabel="Vendor Header Generated Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CustomerOrderDetailForReturns-vendorNm" parent="CustomerOrderDetailForReturns-vendorNm-parentBean" />
+  <bean id="CustomerOrderDetailForReturns-vendorNm-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorNm"
+        p:forceUppercase="false"
+        p:label="Vendor Nm"
+        p:shortLabel="Vendor Nm"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="CustomerOrderDetailForReturns-versionNumber" parent="CustomerOrderDetailForReturns-versionNumber-parentBean" />
+  <bean id="CustomerOrderDetailForReturns-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+  <bean id="CustomerOrderDetailForReturns-willCall" parent="CustomerOrderDetailForReturns-willCall-parentBean" />
+  <bean id="CustomerOrderDetailForReturns-willCall-parentBean" parent="GenericAttributes-genericBoolean" abstract="true"
+        p:name="willCall"
+        p:forceUppercase="false"
+        p:label="Will Call"
+        p:shortLabel="Will Call"
+        p:required="false" >
+  </bean>
+  
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="CustomerOrderDetailForReturns-inquiryDefinition" parent="CustomerOrderDetailForReturns-inquiryDefinition-parentBean" />
+
+  <bean id="CustomerOrderDetailForReturns-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Order Detail Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Order Detail Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+        <bean parent="FieldDefinition" p:attributeName="poId" />
+        <bean parent="FieldDefinition" p:attributeName="distributorNbr" />
+        <bean parent="FieldDefinition" p:attributeName="orderDocumentNbr" />
+        <bean parent="FieldDefinition" p:attributeName="orderDocumentLookable.reqsId" />              
+        <bean parent="FieldDefinition" p:attributeName="orderDocumentLookable.warehouseCd" />
+		<bean parent="FieldDefinition" p:attributeName="orderDocumentLookable.vendorNm" />
+            </list>
+          </property>
+        </bean>        
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="CustomerOrderDetailForReturns-lookupDefinition" parent="CustomerOrderDetailForReturns-lookupDefinition-parentBean" />
+
+  <bean id="CustomerOrderDetailForReturns-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Return From Customer" 
+ >
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>lastUpdateDate</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>        
+        <bean parent="FieldDefinition" p:attributeName="poId" />
+        <bean parent="FieldDefinition" p:attributeName="orderDocumentNbr" />
+        <bean parent="FieldDefinition" p:attributeName="orderDocumentLookable.reqsId" />              
+		<bean parent="FieldDefinition" p:attributeName="orderDocumentLookable.vendorNm" />
+		<bean parent="FieldDefinition" p:attributeName="catalogItem.stock.stockDistributorNbr" />
+		<bean parent="FieldDefinition" p:attributeName="orderDocumentLookable.orderStatusCd" />
+		<bean parent="FieldDefinition" p:attributeName="orderDocumentLookable.warehouseCd" />
+		<bean parent="FieldDefinition" p:attributeName="orderDocumentLookable.arId" />		
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="orderDocumentNbr" />
+        <bean parent="FieldDefinition" p:attributeName="orderDocumentLookable.orderType.orderTypeName" />        
+        <bean parent="FieldDefinition" p:attributeName="orderDocumentLookable.orderDetailsSize" />
+        <bean parent="FieldDefinition" p:attributeName="orderDocumentLookable.vendorNm" />        
+        <bean parent="FieldDefinition" p:attributeName="orderDocumentLookable.creationDate" />
+      </list>
+    </property>
+  </bean>
+
+</beans>

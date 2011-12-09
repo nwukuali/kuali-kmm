@@ -1,0 +1,22 @@
+@media print {
+	/* the above was needed so IE 5.5 and below will not read this stylesheet for the screen */
+	/* --- Note: modifications to this file are discouraged. Check the documentation before making any changes to this file. --- */
+	div#header {
+		display: none;
+	}
+	div#sidebar {
+		display: none;
+	}
+	div#main {
+		width: 600px;
+	}
+	p#utilityLinks {
+		display: none;
+	}
+	div#breadcrumbs {
+		display: none;
+	}
+	div#banner {
+		display: none;
+	}
+}

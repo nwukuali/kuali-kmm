@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="transactionManager" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="resourceRef" value="false" />
+		<property name="jndiTemplate" ref="jndiTemplate" />
+		<property name="expectedType" value="javax.transaction.TransactionManager" />
+		<property name="jndiName" value="${transactionManager.jndi.location}"></property>
+	</bean>
+
+	<bean id="userTransaction" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="resourceRef" value="false" />
+		<property name="jndiTemplate" ref="jndiTemplate" />
+		<property name="expectedType" value="javax.transaction.UserTransaction" />
+		<property name="jndiName" value="${userTransaction.jndi.location}"></property>
+	</bean>
+
+</beans>

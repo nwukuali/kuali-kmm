@@ -1,0 +1,437 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="ReorderItem" parent="ReorderItem-parentBean" />
+
+  <bean id="ReorderItem-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.ReorderItem"
+        p:titleAttribute="agreementNbr"
+        p:objectLabel="Agrrement Number"
+        p:inquiryDefinition-ref="ReorderItem-inquiryDefinition"
+        p:lookupDefinition-ref="ReorderItem-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="ReorderItem-warehouseCd" />
+        <ref bean="ReorderItem-rowval" />
+        <ref bean="ReorderItem-groupDesc" />
+        <ref bean="ReorderItem-catalogSubGroupId" />
+        <ref bean="ReorderItem-catalogGroup.catalogGroupCd" />
+        <ref bean="ReorderItem.catalogGroupCd"/>
+        <ref bean="ReorderItem-catalogSubGroup.catalogSubgroupCd" />
+        <ref bean="ReorderItem.catalogSubgroupCd" />
+        <ref bean="ReorderItem-subgroupDesc" />
+        <ref bean="ReorderItem-agreementNbr" />
+        <ref bean="ReorderItem-expInd" />
+        <ref bean="ReorderItem-descrepancyInd" />
+        <ref bean="ReorderItem-minimumOrderQtyInd" />
+        <ref bean="ReorderItem-noSalesOverYearInd" />
+        <ref bean="ReorderItem-noSalesLastMonthInd" />
+        <ref bean="ReorderItem-reorderQuantity" />
+        <ref bean="ReorderItem-backOrderQuantity" />
+        <ref bean="ReorderItem-warehouse.warehouseCd" />
+        <ref bean="ReorderItem-agreement.agreementNbr" />
+      </list>
+    </property>
+    
+    <property name="relationships" >
+      <list>
+        <bean parent="RelationshipDefinition">
+          <property name="objectAttributeName" value="catalogSubGroup" />
+          <property name="primitiveAttributes" >            
+              <bean parent="PrimitiveAttributeDefinition"
+                    p:sourceName="catalogSubGroupCode"
+                    p:targetName="catalogSubgroupCd" />
+          </property>
+          <property name="supportAttributes" >
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="catalogSubGroupCode"
+                    p:targetName="catalogSubgroupCd" />            
+          </property>
+        </bean>
+        <bean parent="RelationshipDefinition">
+          <property name="objectAttributeName" value="catalogGroup" />
+          <property name="primitiveAttributes" >            
+              <bean parent="PrimitiveAttributeDefinition"
+                    p:sourceName="catalogGroupCode"
+                    p:targetName="catalogGroupCd" />
+          </property>
+          <property name="supportAttributes" >
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="catalogGroupCode"
+                    p:targetName="catalogGroupCd" />
+          </property>
+        </bean>
+      </list>
+    </property>
+    
+  </bean>
+
+  <bean id="ReorderItem-rowval" parent="ReorderItem-rowval-parentBean" />
+  <bean id="ReorderItem-rowval-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="rowval"
+        p:forceUppercase="false"
+        p:label="rowval"
+        p:shortLabel="rowval"
+        p:maxLength="10" 
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ReorderItem-catalogSubGroupId" parent="ReorderItem-catalogSubGroupId-parentBean" />
+  <bean id="ReorderItem-catalogSubGroupId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="catalogSubgroupId"
+        p:forceUppercase="false"
+        p:label="catalogSubgroupId"
+        p:shortLabel="catalogSubGroupIds"
+        p:maxLength="10" 
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ReorderItem-reorderQuantity" parent="ReorderItem-reorderQuantity-parentBean" />
+  <bean id="ReorderItem-reorderQuantity-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="reorderQuantity"
+        p:forceUppercase="false"
+        p:label="Reorder Item Quantity"
+        p:shortLabel="Reorder Item Quantity"
+        p:maxLength="10" 
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ReorderItem-backOrderQuantity" parent="ReorderItem-backOrderQuantity-parentBean" />
+  <bean id="ReorderItem-backOrderQuantity-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="backOrderQuantity"
+        p:forceUppercase="false"
+        p:label="B/O Quantity"
+        p:shortLabel="B/O Quantity"
+        p:maxLength="10" 
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  
+  <bean id="ReorderItem.catalogSubgroupCd" parent="ReorderItem.catalogSubgroupCd-parentBean" />
+  <bean id="ReorderItem.catalogSubgroupCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="catalogSubGroupCode"
+        p:forceUppercase="false"
+        p:label="Subgroup Code"
+        p:shortLabel="SubGroup Code"
+        p:maxLength="10" 
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ReorderItem-catalogSubGroup.catalogSubgroupCd" parent="ReorderItem-catalogSubGroup.catalogSubgroupCd-parentBean" />
+  <bean id="ReorderItem-catalogSubGroup.catalogSubgroupCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="catalogSubGroup.catalogSubgroupCd"
+        p:forceUppercase="false"
+        p:label="Subgroup Code"
+        p:shortLabel="SubGroup Code"
+        p:maxLength="10" 
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  
+    <bean id="ReorderItem.catalogGroupCd" parent="ReorderItem.catalogGroupCd-parentBean" />
+  <bean id="ReorderItem.catalogGroupCd-parentBean" parent="catalogGroup-catalogGroupCd-parentBean" abstract="true"
+        p:name="catalogGroupCode"
+        p:forceUppercase="false"
+        p:label="Group Code"
+        p:shortLabel="Group Code"
+        p:maxLength="10" 
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>  
+
+    <bean id="ReorderItem-catalogGroup.catalogGroupCd" parent="ReorderItem-catalogGroup.catalogGroupCd-parentBean" />
+  <bean id="ReorderItem-catalogGroup.catalogGroupCd-parentBean" parent="catalogGroup-catalogGroupCd-parentBean" abstract="true"
+        p:name="catalogGroup.catalogGroupCd"
+        p:forceUppercase="false"
+        p:label="Group Code"
+        p:shortLabel="Group Code"
+        p:maxLength="10" 
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>  
+
+  <bean id="ReorderItem-reorderDate" parent="ReorderItem-reorderDate-parentBean" />
+  <bean id="ReorderItem-reorderDate-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="reorderDate"
+        p:forceUppercase="false"
+        p:label="Reorder Date"
+        p:shortLabel="Reorder Date"
+        p:maxLength="100"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition" />
+    </property>
+  </bean>
+
+  <bean id="ReorderItem-descrepancyInd" parent="ReorderItem-descrepancyInd-parentBean"/>
+  <bean id="ReorderItem-descrepancyInd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="descrepancyInd"
+        p:forceUppercase="false"
+        p:label="Inventory Descrepancies"
+        p:shortLabel="Inventory Descrepancies"
+        p:maxLength="10"
+        p:required="false" >
+	<property name="formatterClass" value="org.kuali.ext.mm.web.format.ReorderItemFormatter"/>        
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ReorderItem-noSalesLastMonthInd" parent="ReorderItem-noSalesLastMonthInd-parentBean"/>
+  <bean id="ReorderItem-noSalesLastMonthInd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="noSalesLastMonthInd"
+        p:forceUppercase="false"
+        p:label="No Sales >=1 month"
+        p:shortLabel="No Sales >=1 month"
+        p:maxLength="10"
+        p:required="false" >
+	<property name="formatterClass" value="org.kuali.ext.mm.web.format.ReorderItemFormatter"/>        
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ReorderItem-noSalesOverYearInd" parent="ReorderItem-noSalesOverYearInd-parentBean"/>
+  <bean id="ReorderItem-noSalesOverYearInd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="noSalesOverYearInd"
+        p:forceUppercase="false"
+        p:label="No Sales Last Year"
+        p:shortLabel="No Sales Last Year"
+        p:maxLength="10"
+        p:required="false" >
+	<property name="formatterClass" value="org.kuali.ext.mm.web.format.ReorderItemFormatter"/>        
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ReorderItem-minimumOrderQtyInd" parent="ReorderItem-minimumOrderQtyInd-parentBean"/>
+  <bean id="ReorderItem-minimumOrderQtyInd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="minimumOrderQtyInd"
+        p:forceUppercase="false"
+        p:label="Minimum PO Order Quantity"
+        p:shortLabel="Minimum PO Order Quantity"
+        p:maxLength="10"
+        p:required="false" >
+	<property name="formatterClass" value="org.kuali.ext.mm.web.format.ReorderItemFormatter"/>         
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ReorderItem-expInd" parent="ReorderItem-expInd-parentBean" />
+  <bean id="ReorderItem-expInd-parentBean" abstract="true" parent="AttributeDefinition" 
+        p:name="expInd"
+        p:label="Exp"
+        p:shortLabel="Exp"
+        p:required="false" >
+	<property name="formatterClass" value="org.kuali.ext.mm.web.format.ReorderItemFormatter"/>         
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+
+  <bean id="ReorderItem-warehouseCd" parent="ReorderItem-warehouseCd-parentBean" />
+  <bean id="ReorderItem-warehouseCd-parentBean" parent="Warehouse-warehouseCd" abstract="true"
+         p:name="warehouseCd"
+        p:required="false" >
+  </bean>
+
+  <bean id="ReorderItem-agreementNbr" parent="ReorderItem-agreementNbr-parentBean" />
+  <bean id="ReorderItem-agreementNbr-parentBean" parent="Agreement-agreementNbr" abstract="true"
+         p:name="agreementNbr"
+        p:required="false" >
+  </bean>
+
+  <bean id="ReorderItem-agreement.agreementNbr" parent="ReorderItem-agreement.agreementNbr-parentBean" />
+  <bean id="ReorderItem-agreement.agreementNbr-parentBean" parent="Agreement-agreementNbr" abstract="true"
+         p:name="agreement.agreementNbr"
+        p:required="false" >
+  </bean>
+
+  <bean id="ReorderItem-warehouse.warehouseCd" parent="ReorderItem-warehouse.warehouseCd-parentBean" />
+  <bean id="ReorderItem-warehouse.warehouseCd-parentBean" parent="Warehouse-warehouseCd" abstract="true"
+         p:name="warehouse.warehouseCd"
+        p:required="false" >
+  </bean>
+
+  <bean id="ReorderItem-groupDesc" parent="ReorderItem-groupDesc-parentBean" />
+  <bean id="ReorderItem-groupDesc-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="groupDesc"
+        p:forceUppercase="true"
+        p:label="Group"
+        p:shortLabel="Group"
+        p:maxLength="60">
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="70" />
+    </property>
+  </bean>
+
+  <bean id="ReorderItem-subgroupDesc" parent="ReorderItem-subgroupDesc-parentBean" />
+  <bean id="ReorderItem-subgroupDesc-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="subgroupDesc"
+        p:forceUppercase="true"
+        p:label="Subgroup"
+        p:shortLabel="Subgroup"
+        p:maxLength="60">
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="70" />
+    </property>
+  </bean>
+
+  <bean id="ReorderItem-inquiryDefinition" parent="ReorderItem-inquiryDefinition-parentBean" />
+
+  <bean id="ReorderItem-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Reorder Item Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Reorder Item Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="warehouseCd" />
+              <bean parent="FieldDefinition" p:attributeName="groupDesc" />
+              <bean parent="FieldDefinition" p:attributeName="subgroupDesc" />
+              <bean parent="FieldDefinition" p:attributeName="agreementNbr" />
+              <bean parent="FieldDefinition" p:attributeName="reorderQuantity" />
+              <bean parent="FieldDefinition" p:attributeName="backOrderQuantity" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="ReorderItem-lookupDefinition" parent="ReorderItem-lookupDefinition-parentBean" />
+
+  <bean id="ReorderItem-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Reorder Item Lookup"
+        p:lookupableID="reorderItemLookupable">
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>agreementNbr</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="false" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>
+        
+              <bean parent="FieldDefinition" p:attributeName="warehouseCd" />
+              <bean parent="FieldDefinition" p:attributeName="catalogGroupCode" />
+              <bean parent="FieldDefinition" p:attributeName="catalogSubGroupCode" />
+              <bean parent="FieldDefinition" p:attributeName="agreement.agreementNbr" />
+              <bean parent="FieldDefinition" p:attributeName="reorderQuantity" />
+              <bean parent="FieldDefinition" p:attributeName="backOrderQuantity" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+     
+              <bean parent="FieldDefinition" p:attributeName="warehouseCd" />
+              <bean parent="FieldDefinition" p:attributeName="agreement.agreementNbr" />
+              <bean parent="FieldDefinition" p:attributeName="groupDesc" />
+              <bean parent="FieldDefinition" p:attributeName="subgroupDesc" />
+              <bean parent="FieldDefinition" p:attributeName="reorderQuantity" />
+              <bean parent="FieldDefinition" p:attributeName="backOrderQuantity" />
+              <bean parent="FieldDefinition" p:attributeName="expInd" />
+              <bean parent="FieldDefinition" p:attributeName="descrepancyInd" />
+              <bean parent="FieldDefinition" p:attributeName="minimumOrderQtyInd" />
+              <bean parent="FieldDefinition" p:attributeName="noSalesOverYearInd" />
+              <bean parent="FieldDefinition" p:attributeName="noSalesLastMonthInd" />
+      </list>
+    </property>
+  </bean>
+
+</beans>

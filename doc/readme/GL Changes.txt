@@ -1,0 +1,2 @@
+* Reconfigure all object codes and offset object code for all account types.
+* Pick verify document, customer return document and cylinder demurrages will be switched to GLPE.

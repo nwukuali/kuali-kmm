@@ -1,0 +1,325 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="DeliveryLine" parent="DeliveryLine-parentBean" />
+
+  <bean id="DeliveryLine-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.DeliveryLine"
+        p:titleAttribute="deliveryLineId"
+        p:objectLabel="Delivery Line"
+        p:inquiryDefinition-ref="DeliveryLine-inquiryDefinition"
+        p:lookupDefinition-ref="DeliveryLine-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="DeliveryLine-active" />
+        <ref bean="DeliveryLine-deliveryDate" />      
+        <ref bean="DeliveryLine-deliveryLineId" />
+        <ref bean="DeliveryLine-deliveryInfoSummary"/>
+        <ref bean="DeliveryLine-deliveryReasonCode" />
+        <ref bean="DeliveryLine-deliveryLabelDocumentLines.nbrOfCartons"/>
+        <ref bean="DeliveryLine-deliveryLabelDocumentLines.deliveryCampusCd"/>
+        <ref bean="DeliveryLine-deliveryLabelDocumentLines.deliveryBuildingCd"/>
+        <ref bean="DeliveryLine-deliveryLabelDocumentLines.deliveryDepartmentNm"/>
+        <ref bean="DeliveryLine-deliveryLabelDocumentLines.deliveryInstructionTxt"/>
+        <ref bean="DeliveryLine-deliveryLabelDocumentLines.routeCd"/>
+        <ref bean="DeliveryLine-departmentReceivedByName" />
+        <ref bean="DeliveryLine-driverComment" />
+        <ref bean="DeliveryLine-lastUpdateDate" />
+        <ref bean="DeliveryLine-packListLineId" />
+        <ref bean="DeliveryLine-versionNumber" />
+      </list>
+    </property>
+    
+     <!--<property name="relationships" >
+      <list>
+        <bean parent="RelationshipDefinition">
+          <property name="objectAttributeName" value="deliveryLabelDocumentLines" />
+          <property name="primitiveAttributes" >
+            <list>
+              <bean parent="PrimitiveAttributeDefinition"
+                    p:sourceName="packListLineId"
+                    p:targetName="packListLineId" />
+            </list>
+          </property>
+          <property name="supportAttributes" >
+            <list>
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="true"
+                    p:sourceName="deliveryLabelDocumentLines.packListLineId"
+                    p:targetName="packListLineId" />      
+              <bean parent="SupportAttributeDefinition"
+                    p:identifier="false"
+                    p:sourceName="deliveryLabelDocumentLines.nbrOfCartons"
+                    p:targetName="deliveryLabelDocumentLines.nbrOfCartons" />            
+            </list>
+          </property>
+        </bean>                         
+                   
+      </list>
+    </property>        
+  --></bean>
+
+  <bean id="DeliveryLine-active" parent="DeliveryLine-active-parentBean" />
+  <bean id="DeliveryLine-active-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="active"
+        p:forceUppercase="false"
+        p:label="Active"
+        p:shortLabel="Active"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="DeliveryLine-deliveryDate" parent="DeliveryLine-deliveryDate-parentBean" />
+  <bean id="DeliveryLine-deliveryDate-parentBean" parent="GenericAttributes-genericDate" abstract="true"
+        p:name="deliveryDate"
+        p:label="Delivery Date"
+        p:shortLabel="Delivery Date"
+        p:required="false">    
+  </bean>
+  
+  <bean id="DeliveryLine-deliveryLabelDocumentLines.nbrOfCartons" parent="DeliveryLine-deliveryLabelDocumentLines.nbrOfCartons-parentBean" />
+  <bean id="DeliveryLine-deliveryLabelDocumentLines.nbrOfCartons-parentBean" parent="DeliveryLabelDocumentLines-nbrOfCartons" abstract="true"
+        p:name="deliveryLabelDocumentLines.nbrOfCartons"
+        p:label="Number Of Cartons"
+        p:shortLabel="Number Of Cartons"
+        p:required="false">    
+  </bean>
+  
+  
+  <bean id="DeliveryLine-deliveryLabelDocumentLines.deliveryInstructionTxt" parent="DeliveryLine-deliveryLabelDocumentLines.deliveryInstructionTxt-parentBean" />
+  <bean id="DeliveryLine-deliveryLabelDocumentLines.deliveryInstructionTxt-parentBean" parent="DeliveryLabelDocumentLines-deliveryInstructionTxt" abstract="true"
+        p:name="deliveryLabelDocumentLines.deliveryInstructionTxt"
+        p:label="Delivery Instruction Text"
+        p:shortLabel="Delivery Instruction Text"
+        p:required="false">    
+  </bean>
+  
+  <bean id="DeliveryLine-deliveryLabelDocumentLines.deliveryCampusCd" parent="DeliveryLine-deliveryLabelDocumentLines.deliveryCampusCd-parentBean" />
+  <bean id="DeliveryLine-deliveryLabelDocumentLines.deliveryCampusCd-parentBean" parent="DeliveryLabelDocumentLines-deliveryCampusCd" abstract="true"
+        p:name="deliveryLabelDocumentLines.deliveryCampusCd"
+        p:label="Delivery Campus Code"
+        p:shortLabel="Delivery Campus Code"
+        p:required="false">    
+  </bean>
+  
+  <bean id="DeliveryLine-deliveryLabelDocumentLines.deliveryBuildingCd" parent="DeliveryLine-deliveryLabelDocumentLines.deliveryBuildingCd-parentBean" />
+  <bean id="DeliveryLine-deliveryLabelDocumentLines.deliveryBuildingCd-parentBean" parent="DeliveryLabelDocumentLines-deliveryBuildingCd" abstract="true"
+        p:name="deliveryLabelDocumentLines.deliveryBuildingCd"
+        p:label="Delivery Building Code"
+        p:shortLabel="Delivery Building Code"
+        p:required="false">    
+  </bean>
+  
+  <bean id="DeliveryLine-deliveryLabelDocumentLines.deliveryDepartmentNm" parent="DeliveryLine-deliveryLabelDocumentLines.deliveryDepartmentNm-parentBean" />
+  <bean id="DeliveryLine-deliveryLabelDocumentLines.deliveryDepartmentNm-parentBean" parent="DeliveryLabelDocumentLines-deliveryDepartmentNm" abstract="true"
+        p:name="deliveryLabelDocumentLines.deliveryDepartmentNm"
+        p:label="Delivery Department Name"
+        p:shortLabel="Delivery Department Name"
+        p:required="false">    
+  </bean>
+  
+  <bean id="DeliveryLine-deliveryLabelDocumentLines.routeCd" parent="DeliveryLine-deliveryLabelDocumentLines.routeCd-parentBean" />
+  <bean id="DeliveryLine-deliveryLabelDocumentLines.routeCd-parentBean" parent="DeliveryLabelDocumentLines-routeCd" abstract="true"
+        p:name="deliveryLabelDocumentLines.routeCd"
+        p:label="Route Code"
+        p:shortLabel="Route Code"
+        p:required="false">    
+  </bean>  
+
+  <bean id="DeliveryLine-deliveryLineId" parent="DeliveryLine-deliveryLineId-parentBean" />
+  <bean id="DeliveryLine-deliveryLineId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="deliveryLineId"
+        p:forceUppercase="false"
+        p:label="Delivery Line Id"
+        p:shortLabel="Delivery Line Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  
+  <bean id="DeliveryLine-deliveryInfoSummary" parent="DeliveryLine-deliveryInfoSummary-parentBean" />
+  <bean id="DeliveryLine-deliveryInfoSummary-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="deliveryInfoSummary"
+        p:forceUppercase="false"
+        p:label="deliveryInfoSummary"
+        p:shortLabel="deliveryInfoSummary"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="DeliveryLine-deliveryReasonCode" parent="DeliveryLine-deliveryReasonCode-parentBean" />
+  <bean id="DeliveryLine-deliveryReasonCode-parentBean" parent="DeliveryReason-deliveryReasonCode" abstract="true"
+        p:name="deliveryReasonCode"
+        p:label="Delivery Reason Code"        
+        p:required="false" >
+  </bean>
+
+  <bean id="DeliveryLine-departmentReceivedByName" parent="DeliveryLine-departmentReceivedByName-parentBean" />
+  <bean id="DeliveryLine-departmentReceivedByName-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="departmentReceivedByName"
+        p:forceUppercase="false"
+        p:label="Department Received By Name"
+        p:shortLabel="Department Received By Name"
+        p:maxLength="40"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="40" />
+    </property>
+  </bean>
+
+  <bean id="DeliveryLine-driverComment" parent="DeliveryLine-driverComment-parentBean" />
+  <bean id="DeliveryLine-driverComment-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="driverComment"
+        p:forceUppercase="false"
+        p:label="Driver Comment"
+        p:shortLabel="Driver Comment"
+        p:maxLength="100"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control">
+         <bean parent="TextareaControlDefinition" p:rows="1" p:cols="40"/>
+    </property>     
+  </bean>
+
+  <bean id="DeliveryLine-lastUpdateDate" parent="DeliveryLine-lastUpdateDate-parentBean" />
+  <bean id="DeliveryLine-lastUpdateDate-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="lastUpdateDate"
+        p:forceUppercase="false"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="HiddenControlDefinition" />
+    </property>
+  </bean>
+
+  <bean id="DeliveryLine-packListLineId" parent="DeliveryLine-packListLineId-parentBean" />
+  <bean id="DeliveryLine-packListLineId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="packListLineId"
+        p:forceUppercase="false"
+        p:label="PickList Number"
+        p:shortLabel="PickList Number"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="DeliveryLine-versionNumber" parent="DeliveryLine-versionNumber-parentBean" />
+  <bean id="DeliveryLine-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="DeliveryLine-inquiryDefinition" parent="DeliveryLine-inquiryDefinition-parentBean" />
+
+  <bean id="DeliveryLine-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Delivery Line Inquiry" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Delivery Line Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="active" />
+              <bean parent="FieldDefinition" p:attributeName="deliveryDate" />
+              <bean parent="FieldDefinition" p:attributeName="deliveryReason.deliveryReasonCode" />
+              <bean parent="FieldDefinition" p:attributeName="departmentReceivedByName" />
+              <bean parent="FieldDefinition" p:attributeName="driverComment" />
+              <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+              <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="DeliveryLine-lookupDefinition" parent="DeliveryLine-lookupDefinition-parentBean" />
+
+  <bean id="DeliveryLine-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Delivery Line Lookup" 
+ >
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>deliveryLineId</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="active" />
+        <bean parent="FieldDefinition" p:attributeName="deliveryDate" />
+        <bean parent="FieldDefinition" p:attributeName="deliveryReason.deliveryReasonCode" />
+        <bean parent="FieldDefinition" p:attributeName="departmentReceivedByName" />
+        <bean parent="FieldDefinition" p:attributeName="driverComment" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+        <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="active" />
+        <bean parent="FieldDefinition" p:attributeName="deliveryDate" />
+        <bean parent="FieldDefinition" p:attributeName="deliveryReason.deliveryReasonCode" />
+        <bean parent="FieldDefinition" p:attributeName="departmentReceivedByName" />
+        <bean parent="FieldDefinition" p:attributeName="driverComment" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+        <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+      </list>
+    </property>
+  </bean>
+
+</beans>

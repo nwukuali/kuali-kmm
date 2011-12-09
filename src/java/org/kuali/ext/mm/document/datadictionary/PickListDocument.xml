@@ -1,0 +1,110 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="PickListDocument" parent="PickListDocument-parentBean" />
+
+  <bean id="PickListDocument-parentBean" abstract="true" parent="TransactionalDocumentEntry">
+    <property name="documentTypeName" value="SPKL"/>
+    <property name="sessionDocument" value="true"/>
+    <property name="documentClass" value="org.kuali.ext.mm.document.PickListDocument"/>
+    <property name="businessRulesClass" value="org.kuali.ext.mm.document.validation.impl.PickListDocumentRule"/>        
+    <property name="documentAuthorizerClass" value="org.kuali.rice.kns.document.authorization.TransactionalDocumentAuthorizerBase"/>
+    <property name="documentPresentationControllerClass" value="org.kuali.ext.mm.document.authorization.PickListDocumentPresentationController"/>
+<!--    <property name="promptBeforeValidationClass" value="org.kuali.ext.mm.document.validation.impl.PickListDocumentPreRules"/>-->
+<!--    <property name="attachmentTypesValuesFinderClass" value="org.kuali.kfs.module.purap.businessobject.options.PurchaseOrderAttachmentTypeValuesFinder"/>-->
+    <property name="allowsCopy" value="true"/>
+    
+
+    <property name="attributes" >
+      <list>
+        <ref bean="PickListDocument-versionNumber" />
+        <ref bean="PickListDocument-warehouseCd" />
+        <ref bean="PickListDocument-pickListLines" />
+        <ref bean="PickListDocument-maxOrders" />
+        <ref bean="PickListDocument-sortCode" />    
+      </list>
+    </property>
+    
+     <property name="defaultExistenceChecks" >
+      <list>
+        <bean parent="ReferenceDefinition"
+              p:attributeName="warehouse"
+              p:attributeToHighlightOnFail="warehouseCd" />
+      </list>
+    </property>
+    <property name="workflowAttributes">
+    	<ref bean="PickListDocument-workflowAttributes" />
+    </property>
+  </bean>
+
+  <bean id="PickListDocument-versionNumber" parent="PickListDocument-versionNumber-parentBean" />
+  <bean id="PickListDocument-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+  <bean id="PickListDocument-warehouseCd" parent="PickListDocument-warehouseCd-parentBean" />
+  <bean id="PickListDocument-warehouseCd-parentBean" parent="Warehouse-warehouseCd" abstract="true"
+        p:name="warehouseCd" />
+  
+  <bean id="PickListDocument-pickListLines" parent="PickListDocument-pickListLines-parentBean" />
+  <bean id="PickListDocument-pickListLines-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="pickListLines"
+        p:forceUppercase="false"
+        p:label="Pick List Lines"
+        p:shortLabel="Pick List Lines"
+        p:maxLength="10"
+        p:required="true" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  
+	<bean id="PickListDocument-maxOrders" parent="PickListDocument-maxOrders-parentBean" />
+	<bean id="PickListDocument-maxOrders-parentBean" parent="AttributeDefinition" abstract="true"
+	      p:name="maxOrders"
+	      p:forceUppercase="false"
+	      p:label="Maximum Orders"
+	      p:shortLabel="Max Orders"
+	      p:maxLength="5"
+	      p:required="false" >
+	  <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+	  <property name="control" >
+	    <bean parent="TextControlDefinition"
+	          p:size="6" />
+	  </property>
+	</bean>
+	
+	<bean id="PickListDocument-sortCode" parent="PickListDocument-sortCode-parentBean" />
+	<bean id="PickListDocument-sortCode-parentBean" parent="AttributeDefinition" abstract="true"
+	      p:name="sortCode"
+	      p:forceUppercase="false"
+	      p:label="Pick List Format"
+	      p:shortLabel="Pick List Format"
+	      p:maxLength="12"
+	      p:required="false" >
+	  <property name="validationPattern" >
+	    <bean parent="AnyCharacterValidationPattern"  p:allowWhitespace="true" />
+	  </property>
+	  <property name="control" >
+	    <bean parent="RadioControlDefinition"
+	          p:valuesFinderClass="org.kuali.ext.mm.businessobject.options.PickListOptionFinder"
+	          p:includeKeyInLabel="false"/>
+	  </property>
+	</bean>
+
+	<bean id="PickListDocument-workflowAttributes" parent="PickListDocument-workflowAttributes-parentBean"/>
+	
+	<bean id="PickListDocument-workflowAttributes-parentBean" abstract="true" parent="WorkflowAttributes" />
+
+</beans>

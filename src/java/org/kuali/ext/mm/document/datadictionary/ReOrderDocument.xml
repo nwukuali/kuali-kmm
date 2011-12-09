@@ -1,0 +1,511 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="ReOrderDocument" parent="ReOrderDocument-parentBean" />
+
+  <bean id="ReOrderDocument-parentBean" abstract="true" parent="TransactionalDocumentEntry">
+		<property name="documentTypeName" value="SROR" />
+		<property name="sessionDocument" value="true" />
+		<property name="documentClass" value="org.kuali.ext.mm.document.ReOrderDocument" />
+		<property name="businessRulesClass" value="org.kuali.ext.mm.document.validation.impl.ReOrderDocumentRule"/>
+		<property name="documentPresentationControllerClass" value="org.kuali.ext.mm.document.authorization.ReOrderDocumentPresentationController"/>
+		<property name="documentAuthorizerClass" value="org.kuali.rice.kns.document.authorization.TransactionalDocumentAuthorizerBase" />
+			
+    <property name="attributes" >
+      <list>
+        <ref bean="ReOrderDocument-arId" />
+        <ref bean="ReOrderDocument-billingAddressId" />
+        <ref bean="ReOrderDocument-campusCd" />
+        <ref bean="ReOrderDocument-deliveryBuildingCd" />
+        <ref bean="ReOrderDocument-checkinDocs.vendorRefNbr" />
+        <ref bean="ReOrderDocument-orderDetails.catalogItem.stock.stockDistributorNbr" />
+        <ref bean="ReOrderDocument-checkinDocs.vendorShipmentNbr" />
+        <ref bean="ReOrderDocument-deliveryBuildingRmNbr" />
+        <ref bean="ReOrderDocument-documentNumber" />
+        <ref bean="ReOrderDocument-deliveryDepartmentNm" />
+        <ref bean="ReOrderDocument-deliveryInstructionTxt" />
+        <ref bean="ReOrderDocument-customerProfileId" />
+        <ref bean="ReOrderDocument-customerProfile.principalName" />
+        <ref bean="ReOrderDocument-orderId" />
+        <ref bean="ReOrderDocument-orderStatusCd" />
+        <ref bean="ReOrderDocument-orderTypeCode" />
+        <ref bean="ReOrderDocument-recurringOrderId" />
+        <ref bean="ReOrderDocument-recurringOrderInd" />
+        <ref bean="ReOrderDocument-reqsId" />
+        <ref bean="ReOrderDocument-shippingAddressId" />
+        <ref bean="ReOrderDocument-shoppingCartId" />
+        <ref bean="ReOrderDocument-vendorDetailAssignedId" />
+        <ref bean="ReOrderDocument-vendorHeaderGeneratedId" />
+        <ref bean="ReOrderDocument-vendorNm" />
+        <ref bean="ReOrderDocument-versionNumber" />
+        <ref bean="ReOrderDocument-warehouseCd" />
+      </list>
+    </property>
+    <property name="collections" >
+      <list>
+		<bean parent="CollectionDefinition" 
+			  p:name="orderDetails"
+			  p:label="Order Details" 
+			  p:shortLabel="Order Details" />      
+        <bean parent="CollectionDefinition"
+              p:name="checkinDocs"
+              p:label="Checkin Docs"
+              p:shortLabel="Checkin Docs" />
+        <bean parent="CollectionDefinition"
+              p:name="accounts"
+              p:label="Accounts"
+              p:shortLabel="Accounts" />
+      </list>
+    </property>
+    <property name="workflowAttributes">
+    	<ref bean="ReorderDoc-workflowAttributes" />
+    </property>
+
+  </bean>
+
+	<bean id="ReOrderDocument-orderDetails.catalogItem.stock.stockDistributorNbr"
+		parent="ReOrderDocument-orderDetails.catalogItem.stock.stockDistributorNbr-parentBean" />
+	<bean id="ReOrderDocument-orderDetails.catalogItem.stock.stockDistributorNbr-parentBean"
+		parent="Stock-stockDistributorNbr" abstract="true" p:name="orderDetails.catalogItem.stock.stockDistributorNbr"
+		p:forceUppercase="false" p:label="Item Number"
+		p:shortLabel="Item Number" p:maxLength="10" p:required="false">
+		<property name="validationPattern">
+			<bean parent="AnyCharacterValidationPattern" p:allowWhitespace="true" />
+		</property>
+		<property name="control">
+			<bean parent="TextControlDefinition" p:size="10" />
+		</property>
+	</bean>
+
+  <bean id="ReOrderDocument-checkinDocs.vendorRefNbr" parent="ReOrderDocument-checkinDocs.vendorRefNbr-parentBean" />
+  <bean id="ReOrderDocument-checkinDocs.vendorRefNbr-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="checkinDocs.vendorRefNbr"
+        p:forceUppercase="false"
+        p:label="Vendor Reference Number"
+        p:shortLabel="Vendor Reference Number"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ReOrderDocument-checkinDocs.vendorShipmentNbr" parent="ReOrderDocument-checkinDocs.vendorShipmentNbr-parentBean" />
+  <bean id="ReOrderDocument-checkinDocs.vendorShipmentNbr-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="checkinDocs.vendorShipmentNbr"
+        p:forceUppercase="false"
+        p:label="Vendor Shipment Number"
+        p:shortLabel="Vendor Shipment Number"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  
+  <bean id="ReOrderDocument-arId" parent="ReOrderDocument-arId-parentBean" />
+  <bean id="ReOrderDocument-arId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="arId"
+        p:forceUppercase="false"
+        p:label="Ar Id"
+        p:shortLabel="Ar Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  
+  <bean id="ReOrderDocument-documentNumber" parent="ReOrderDocument-documentNumber-parentBean" />
+  <bean id="ReOrderDocument-documentNumber-parentBean" parent="DocumentHeader-documentNumber" abstract="true"
+        p:name="documentNumber" >
+  </bean>
+
+  <bean id="ReOrderDocument-billingAddressId" parent="ReOrderDocument-billingAddressId-parentBean" />
+  <bean id="ReOrderDocument-billingAddressId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="billingAddressId"
+        p:forceUppercase="false"
+        p:label="Billing Address Id"
+        p:shortLabel="Billing Address Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ReOrderDocument-campusCd" parent="ReOrderDocument-campusCd-parentBean" />
+  <bean id="ReOrderDocument-campusCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="campusCd"
+        p:forceUppercase="false"
+        p:label="Campus Code"
+        p:shortLabel="Campus Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ReOrderDocument-deliveryBuildingCd" parent="ReOrderDocument-deliveryBuildingCd-parentBean" />
+  <bean id="ReOrderDocument-deliveryBuildingCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="deliveryBuildingCd"
+        p:forceUppercase="false"
+        p:label="Delivery Building Code"
+        p:shortLabel="Delivery Building Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ReOrderDocument-deliveryBuildingRmNbr" parent="ReOrderDocument-deliveryBuildingRmNbr-parentBean" />
+  <bean id="ReOrderDocument-deliveryBuildingRmNbr-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="deliveryBuildingRmNbr"
+        p:forceUppercase="false"
+        p:label="Delivery Building Room Number"
+        p:shortLabel="Delivery Building Room Number"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ReOrderDocument-deliveryDepartmentNm" parent="ReOrderDocument-deliveryDepartmentNm-parentBean" />
+  <bean id="ReOrderDocument-deliveryDepartmentNm-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="deliveryDepartmentNm"
+        p:forceUppercase="false"
+        p:label="Delivery Department Name"
+        p:shortLabel="Delivery Department Name"
+        p:maxLength="45"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="12" />
+    </property>
+  </bean>
+
+  <bean id="ReOrderDocument-deliveryInstructionTxt" parent="ReOrderDocument-deliveryInstructionTxt-parentBean" />
+  <bean id="ReOrderDocument-deliveryInstructionTxt-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="deliveryInstructionTxt"
+        p:forceUppercase="false"
+        p:label="Delivery Instruction Txt"
+        p:shortLabel="Delivery Instruction Txt"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ReOrderDocument-documentPropertySerizabilityEvaluator" parent="ReOrderDocument-documentPropertySerizabilityEvaluator-parentBean" />
+  <bean id="ReOrderDocument-documentPropertySerizabilityEvaluator-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="documentPropertySerizabilityEvaluator"
+        p:forceUppercase="false"
+        p:label="Document Property Serizability Evaluator"
+        p:shortLabel="Document Property Serizability Evaluator"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ReOrderDocument-customerProfileId" parent="ReOrderDocument-customerProfileId-parentBean" />
+  <bean id="ReOrderDocument-customerProfileId-parentBean" parent="Profile-profileId" abstract="true"
+        p:name="customerProfileId" >        
+  </bean>
+  
+  <bean id="ReOrderDocument-customerProfile.principalName" parent="ReOrderDocument-customerProfile.principalName-parentBean" />
+  <bean id="ReOrderDocument-customerProfile.principalName-parentBean" parent="Profile-principalName" abstract="true"
+        p:name="customerProfile.principalName" >        
+  </bean>
+  
+
+  <bean id="ReOrderDocument-orderId" parent="ReOrderDocument-orderId-parentBean" />
+  <bean id="ReOrderDocument-orderId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="orderId"
+        p:forceUppercase="false"
+        p:label="Order ID"
+        p:shortLabel="Order ID"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ReOrderDocument-orderStatusCd" parent="ReOrderDocument-orderStatusCd-parentBean" />
+  <bean id="ReOrderDocument-orderStatusCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="orderStatusCd"
+        p:forceUppercase="false"
+        p:label="Order Status Code"
+        p:shortLabel="Order Status Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ReOrderDocument-orderTypeCode" parent="ReOrderDocument-orderTypeCode-parentBean" />
+  <bean id="ReOrderDocument-orderTypeCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="orderTypeCode"
+        p:forceUppercase="false"
+        p:label="Order Type Code"
+        p:shortLabel="Order Type Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ReOrderDocument-recurringOrderId" parent="ReOrderDocument-recurringOrderId-parentBean" />
+  <bean id="ReOrderDocument-recurringOrderId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="recurringOrderId"
+        p:forceUppercase="false"
+        p:label="Recurring Order ID"
+        p:shortLabel="Recurring Order ID"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ReOrderDocument-recurringOrderInd" parent="ReOrderDocument-recurringOrderInd-parentBean" />
+  <bean id="ReOrderDocument-recurringOrderInd-parentBean" abstract="true" parent="GenericAttributes-genericBoolean" 
+        p:name="recurringOrderInd"
+        p:required="false" />
+
+  <bean id="ReOrderDocument-reqsId" parent="ReOrderDocument-reqsId-parentBean" />
+  <bean id="ReOrderDocument-reqsId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="reqsId"
+        p:forceUppercase="false"
+        p:label="Requestor"
+        p:shortLabel="Requestor"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ReOrderDocument-shippingAddressId" parent="ReOrderDocument-shippingAddressId-parentBean" />
+  <bean id="ReOrderDocument-shippingAddressId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="shippingAddressId"
+        p:forceUppercase="false"
+        p:label="Shipping Address Id"
+        p:shortLabel="Shipping Address Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ReOrderDocument-shoppingCartId" parent="ReOrderDocument-shoppingCartId-parentBean" />
+  <bean id="ReOrderDocument-shoppingCartId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="shoppingCartId"
+        p:forceUppercase="false"
+        p:label="Shopping Cart Doc Nbr"
+        p:shortLabel="Shopping Cart Doc Nbr"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ReOrderDocument-vendorDetailAssignedId" parent="ReOrderDocument-vendorDetailAssignedId-parentBean" />
+  <bean id="ReOrderDocument-vendorDetailAssignedId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorDetailAssignedId"
+        p:forceUppercase="false"
+        p:label="Vendor Detail Assigned Id"
+        p:shortLabel="Vendor Detail Assigned Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ReOrderDocument-vendorHeaderGeneratedId" parent="ReOrderDocument-vendorHeaderGeneratedId-parentBean" />
+  <bean id="ReOrderDocument-vendorHeaderGeneratedId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorHeaderGeneratedId"
+        p:forceUppercase="false"
+        p:label="Vendor Header Generated Id"
+        p:shortLabel="Vendor Header Generated Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ReOrderDocument-vendorNm" parent="ReOrderDocument-vendorNm-parentBean" />
+  <bean id="ReOrderDocument-vendorNm-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorNm"
+        p:forceUppercase="false"
+        p:label="Vendor Name"
+        p:shortLabel="Vendor Name"
+        p:maxLength="200"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="200" />
+    </property>
+  </bean>
+
+  <bean id="ReOrderDocument-versionNumber" parent="ReOrderDocument-versionNumber-parentBean" />
+  <bean id="ReOrderDocument-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+  <bean id="ReOrderDocument-warehouseCd" parent="ReOrderDocument-warehouseCd-parentBean" />
+  <bean id="ReOrderDocument-warehouseCd-parentBean" parent="Warehouse-warehouseCd" abstract="true"
+        p:name="warehouseCd" >
+  </bean>
+
+  <bean id="RoutingType-RoutingAttribute-ReorderDocumentNumber" class="org.kuali.rice.kns.datadictionary.RoutingTypeDefinition">
+    	<property name="routingAttributes">
+    		<list>
+		        <ref bean="ReOrderDocument-RoutingAttribute-DocNumber"/>
+    		</list>
+    	</property>
+    	    	<property name="documentValuePathGroups">
+    		<list>
+    			<ref bean="RoutingType-RoutingAttribute-ReorderDocumentNumber-1111"/>
+    		</list>
+    	</property>
+    	
+    </bean>
+
+	<bean id="RoutingType-RoutingAttribute-ReorderDocumentNumber-1111" class="org.kuali.rice.kns.datadictionary.DocumentValuePathGroup">
+    	<property name="documentValues">
+	   		<list>
+	   			<value>documentNumber</value>
+	   		</list>
+   		</property>
+   	</bean>
+
+	<bean id="ReOrderDocument-RoutingAttribute-DocNumber" class="org.kuali.rice.kns.datadictionary.RoutingAttribute">
+    	<property name="qualificationAttributeName" value="documentNumber"/>
+	</bean>  
+	
+
+	<bean id="ReorderDoc-workflowAttributes" parent="ReorderDoc-workflowAttributes-parentBean"/>
+	
+	<bean id="ReorderDoc-workflowAttributes-parentBean" abstract="true" parent="WorkflowAttributes">
+	   	<property name="routingTypeDefinitions">
+   		<map>
+   			<entry key="ReorderDocumentReview" value-ref="RoutingType-RoutingAttribute-ReorderDocumentNumber"/>
+   		</map>
+   	</property>	
+	</bean>  
+
+  </beans>

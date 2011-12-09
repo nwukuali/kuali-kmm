@@ -1,0 +1,377 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="Agreement" parent="Agreement-parentBean" />
+
+  <bean id="Agreement-parentBean" abstract="true" parent="BusinessObjectEntry"
+        p:businessObjectClass="org.kuali.ext.mm.businessobject.Agreement"
+        p:titleAttribute="agreementNbr"
+        p:objectLabel="Agreement"
+        p:inquiryDefinition-ref="Agreement-inquiryDefinition"
+        p:lookupDefinition-ref="Agreement-lookupDefinition" >
+    <property name="attributes" >
+      <list>
+        <ref bean="Agreement-active" />
+        <ref bean="Agreement-agreementBeginDt" />
+        <ref bean="Agreement-agreementEndDt" />
+        <ref bean="Agreement-agreementLagDays" />
+        <ref bean="Agreement-agreementNbr" />
+        <ref bean="Agreement-agreementUsedAmt" />
+        <ref bean="Agreement-lastUpdateDate" />
+        <ref bean="Agreement-poId" />
+        <ref bean="Agreement-poTotalLimit" />
+        <ref bean="Agreement-vndrContrGnrtdId" />
+        <ref bean="Agreement-vndrHeaderGnrtdId" />
+        <ref bean="Agreement-vndrDetailAsgnId" />
+        <ref bean="Agreement-vendorNm" />
+        <ref bean="Agreement-vendorContractName" />        
+        <ref bean="Agreement-b2bInd" />
+        <ref bean="Agreement-ghostCardInd" />
+        <ref bean="Agreement-electronicInvoiceInd" />
+        <ref bean="Agreement-noPrintInd" />
+        <ref bean="Agreement-versionNumber" />
+      </list>
+    </property>
+	<property name="relationships">
+	    <list>
+	      <bean parent="RelationshipDefinition">
+	        <property name="objectAttributeName" value="financialVendorContract"/>
+	        <property name="primitiveAttributes">
+	          <list>
+	            <bean parent="PrimitiveAttributeDefinition" p:sourceName="vndrContrGnrtdId" p:targetName="vendorContractGeneratedIdentifier"/>
+	          </list>
+	        </property>          
+	      </bean>
+	      </list>
+	</property>
+  </bean>
+
+  <bean id="Agreement-active" parent="Agreement-active-parentBean" />
+  <bean id="Agreement-active-parentBean" abstract="true" parent="GenericAttributes-activeIndicator" 
+        p:name="active"
+        p:label="Active"
+        p:shortLabel="Active"
+        p:required="false" />
+
+  <bean id="Agreement-agreementBeginDt" parent="Agreement-agreementBeginDt-parentBean" />
+  <bean id="Agreement-agreementBeginDt-parentBean" abstract="true" parent="GenericAttributes-genericDate" 
+        p:name="agreementBeginDt"
+        p:label="Agreement Begin Date"
+        p:shortLabel="Agreement Begin Date"
+        p:required="false" />
+
+  <bean id="Agreement-agreementEndDt" parent="Agreement-agreementEndDt-parentBean" />
+  <bean id="Agreement-agreementEndDt-parentBean" abstract="true" parent="GenericAttributes-genericDate" 
+        p:name="agreementEndDt"
+        p:label="Agreement End Date"
+        p:shortLabel="Agreement End Date"
+        p:required="false" />
+
+  <bean id="Agreement-agreementLagDays" parent="Agreement-agreementLagDays-parentBean" />
+  <bean id="Agreement-agreementLagDays-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="agreementLagDays"
+        p:forceUppercase="false"
+        p:label="Agreement Lag Days"
+        p:shortLabel="Agreement Lag Days"
+        p:maxLength="8"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="Agreement-agreementNbr" parent="Agreement-agreementNbr-parentBean" />
+  <bean id="Agreement-agreementNbr-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="agreementNbr"
+        p:forceUppercase="false"
+        p:label="Agreement Number"
+        p:shortLabel="Agreement Number"
+        p:maxLength="15"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="15" />
+    </property>
+  </bean>
+
+  <bean id="Agreement-agreementUsedAmt" parent="Agreement-agreementUsedAmt-parentBean" />
+  <bean id="Agreement-agreementUsedAmt-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="agreementUsedAmt"
+        p:forceUppercase="false"
+        p:label="Agreement Used Amount"
+        p:shortLabel="Agreement Used Amount"
+        p:maxLength="20"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="20" />
+    </property>
+  </bean>
+
+  <bean id="Agreement-lastUpdateDate" parent="Agreement-lastUpdateDate-parentBean" />
+  <bean id="Agreement-lastUpdateDate-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="lastUpdateDate"
+        p:forceUppercase="false"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="HiddenControlDefinition" />
+    </property>
+  </bean>
+
+  <bean id="Agreement-poId" parent="Agreement-poId-parentBean" />
+  <bean id="Agreement-poId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="poId"
+        p:forceUppercase="false"
+        p:label="PO ID"
+        p:shortLabel="PO ID"
+        p:maxLength="9"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="Agreement-poTotalLimit" parent="Agreement-poTotalLimit-parentBean" />
+  <bean id="Agreement-poTotalLimit-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="poTotalLimit"
+        p:forceUppercase="false"
+        p:label="PO Total Limit"
+        p:shortLabel="PO Total Limit"
+        p:maxLength="20"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="20" />
+    </property>
+  </bean>
+
+  <bean id="Agreement-vndrContrGnrtdId" parent="Agreement-vndrContrGnrtdId-parentBean" />
+  <bean id="Agreement-vndrContrGnrtdId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vndrContrGnrtdId"
+        p:forceUppercase="false"
+        p:label="Vendor Contract Generated ID"
+        p:shortLabel="Vendor Contract Generated ID"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="NumericValidationPattern" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  
+  <bean id="Agreement-vndrHeaderGnrtdId" parent="Agreement-vndrHeaderGnrtdId-parentBean" />
+  <bean id="Agreement-vndrHeaderGnrtdId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vndrHeaderGnrtdId"
+        p:forceUppercase="false"
+        p:label="Vendor Header Generated ID"
+        p:shortLabel="Vendor Header Generated ID"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="NumericValidationPattern" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  <bean id="Agreement-vndrDetailAsgnId" parent="Agreement-vndrDetailAsgnId-parentBean" />
+  <bean id="Agreement-vndrDetailAsgnId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vndrDetailAsgnId"
+        p:forceUppercase="false"
+        p:label="Vendor Detail Assigned ID"
+        p:shortLabel="Vendor Detail ID"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="NumericValidationPattern" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+  <bean id="Agreement-vendorNm" parent="Agreement-vendorNm-parentBean" />
+  <bean id="Agreement-vendorNm-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorNm"
+        p:forceUppercase="false"
+        p:label="Vendor Name"
+        p:shortLabel="Vendor Name"
+        p:maxLength="45"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="45" />
+    </property>
+  </bean>
+  <bean id="Agreement-vendorContractName" parent="Agreement-vendorContractName-parentBean" />
+  <bean id="Agreement-vendorContractName-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorContractName"
+        p:forceUppercase="false"
+        p:label="Vendor Contract Name"
+        p:shortLabel="Vendor Contract Name"
+        p:maxLength="20"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="20" />
+    </property>
+  </bean>  
+
+  <bean id="Agreement-b2bInd" parent="Agreement-b2bInd-parentBean" />
+  <bean id="Agreement-b2bInd-parentBean" abstract="true" parent="GenericAttributes-genericBoolean" 
+        p:name="b2bInd"
+        p:label="B2B Indicator"
+        p:required="false" />
+
+  <bean id="Agreement-ghostCardInd" parent="Agreement-ghostCardInd-parentBean" />
+  <bean id="Agreement-ghostCardInd-parentBean" abstract="true" parent="GenericAttributes-genericBoolean"
+        p:name="ghostCardInd"
+        p:label="Ghost Card Indicator"
+        p:required="false" />
+
+  <bean id="Agreement-electronicInvoiceInd" parent="Agreement-electronicInvoiceInd-parentBean" />
+  <bean id="Agreement-electronicInvoiceInd-parentBean" abstract="true" parent="GenericAttributes-genericBoolean"
+        p:name="electronicInvoiceInd"
+        p:label="E-Invoice Indicator"
+        p:required="false" />
+        
+  <bean id="Agreement-noPrintInd" parent="Agreement-noPrintInd-parentBean" />
+  <bean id="Agreement-noPrintInd-parentBean" abstract="true" parent="GenericAttributes-genericBoolean"
+        p:name="noPrintInd"
+        p:label="No Print Indicator"
+        p:required="false" />
+        
+  <bean id="Agreement-versionNumber" parent="Agreement-versionNumber-parentBean" />
+  <bean id="Agreement-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+<!-- Business Object Inquiry Definition -->
+
+  <bean id="Agreement-inquiryDefinition" parent="Agreement-inquiryDefinition-parentBean" />
+
+  <bean id="Agreement-inquiryDefinition-parentBean" abstract="true" parent="InquiryDefinition"
+        p:title="Agreement Inquiry" p:inquirableClass="org.kuali.ext.mm.businessobject.inquiry.MmInquirableImpl" >
+    <property name="inquirySections" >
+      <list>
+        <bean parent="InquirySectionDefinition"
+              p:title="Agreement Attributes"
+              p:numberOfColumns="1" >
+          <property name="inquiryFields" >
+            <list>
+              <bean parent="FieldDefinition" p:attributeName="agreementNbr" />
+              <bean parent="FieldDefinition" p:attributeName="vndrContrGnrtdId" />
+              <bean parent="FieldDefinition" p:attributeName="vendorNm" />
+              <bean parent="FieldDefinition" p:attributeName="vendorContractName" />
+              <bean parent="FieldDefinition" p:attributeName="poTotalLimit" />
+              <bean parent="FieldDefinition" p:attributeName="agreementUsedAmt" />
+              <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+              <bean parent="FieldDefinition" p:attributeName="agreementBeginDt" />
+              <bean parent="FieldDefinition" p:attributeName="agreementEndDt" />
+              <bean parent="FieldDefinition" p:attributeName="agreementLagDays" />
+              <bean parent="FieldDefinition" p:attributeName="b2bInd" />
+              <bean parent="FieldDefinition" p:attributeName="ghostCardInd" />
+              <bean parent="FieldDefinition" p:attributeName="electronicInvoiceInd" />
+              <bean parent="FieldDefinition" p:attributeName="versionNumber" />
+              <bean parent="FieldDefinition" p:attributeName="active" />
+            </list>
+          </property>
+        </bean>
+      </list>
+    </property>
+  </bean>
+
+<!-- Business Object Lookup Definition -->
+  <bean id="Agreement-lookupDefinition" parent="Agreement-lookupDefinition-parentBean" />
+
+  <bean id="Agreement-lookupDefinition-parentBean" abstract="true" parent="LookupDefinition"
+        p:title="Agreement Lookup" 
+ >
+    <property name="defaultSort" >
+      <bean parent="SortDefinition">
+        <property name="attributeNames" >
+          <list>
+            <value>agreementNbr</value>
+          </list>
+        </property>
+        <property name="sortAscending" value="true" />
+      </bean>
+    </property>
+    <property name="lookupFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="agreementNbr" />
+        <bean parent="FieldDefinition" p:attributeName="vendorNm" />
+        <bean parent="FieldDefinition" p:attributeName="vendorContractName" />
+        <bean parent="FieldDefinition" p:attributeName="vndrContrGnrtdId" />
+        <bean parent="FieldDefinition" p:attributeName="agreementBeginDt" />
+        <bean parent="FieldDefinition" p:attributeName="agreementEndDt" />
+        <bean parent="FieldDefinition" p:attributeName="b2bInd" />
+        <bean parent="FieldDefinition" p:attributeName="ghostCardInd" />
+        <bean parent="FieldDefinition" p:attributeName="electronicInvoiceInd" />
+        <bean parent="FieldDefinition" p:attributeName="active" />
+      </list>
+    </property>
+    <property name="resultFields" >
+      <list>
+        <bean parent="FieldDefinition" p:attributeName="agreementNbr" />
+        <bean parent="FieldDefinition" p:attributeName="poTotalLimit" />
+        <bean parent="FieldDefinition" p:attributeName="agreementUsedAmt" />
+        <bean parent="FieldDefinition" p:attributeName="vndrContrGnrtdId" />
+        <bean parent="FieldDefinition" p:attributeName="vendorNm" />
+        <bean parent="FieldDefinition" p:attributeName="agreementBeginDt" />
+        <bean parent="FieldDefinition" p:attributeName="agreementEndDt" />
+        <bean parent="FieldDefinition" p:attributeName="agreementLagDays" />
+        <bean parent="FieldDefinition" p:attributeName="b2bInd" />
+        <bean parent="FieldDefinition" p:attributeName="ghostCardInd" />
+        <bean parent="FieldDefinition" p:attributeName="electronicInvoiceInd" />
+        <bean parent="FieldDefinition" p:attributeName="lastUpdateDate" />
+        <bean parent="FieldDefinition" p:attributeName="active" />
+      </list>
+    </property>
+  </bean>
+
+</beans>

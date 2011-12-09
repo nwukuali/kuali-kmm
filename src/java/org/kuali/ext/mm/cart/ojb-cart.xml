@@ -1,0 +1,37 @@
+<!--
+ Copyright 2006-2007 The Kuali Foundation.
+ 
+ Licensed under the Educational Community License, Version 1.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ 
+ http://www.opensource.org/licenses/ecl1.php
+ 
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License......
+-->
+<descriptor-repository version="1.0">	
+	
+	<class-descriptor class="org.kuali.ext.mm.cart.businessobject.CatalogItemSearch" table="MM_CATALOG_ITEM_SEARCH_T">
+		<field-descriptor name="catalogItemId" column="CATALOG_ITEM_ID" jdbc-type="VARCHAR" primarykey="true" autoincrement="true" sequence-name="MM_CATALOG_ITEM_S"/>
+		<field-descriptor name="distributorNbr" column="DISTRIBUTOR_NBR" jdbc-type="VARCHAR" />
+		<field-descriptor name="catalogPrc" column="CATALOG_PRC" jdbc-type="DECIMAL" conversion="org.kuali.rice.kns.util.OjbKualiDecimalFieldConversion" />
+		<field-descriptor name="catalogDesc" column="CATALOG_DESC" jdbc-type="VARCHAR" />
+		<field-descriptor name="recycledInd" column="RECYCLED_IND" jdbc-type="VARCHAR" conversion="org.kuali.rice.kns.util.OjbCharBooleanConversion" />
+		<field-descriptor name="catalogId" column="CATALOG_ID" jdbc-type="VARCHAR" />
+		<field-descriptor name="stockId" column="STOCK_ID" jdbc-type="VARCHAR" />
+		<field-descriptor name="displayableInd" column="DISPLAYABLE_IND" jdbc-type="VARCHAR" conversion="org.kuali.rice.kns.util.OjbCharBooleanConversion" />
+		<field-descriptor name="active" column="ACTV_IND" jdbc-type="VARCHAR" conversion="org.kuali.rice.kns.util.OjbCharBooleanConversion" />
+		<field-descriptor name="priorityNbr" column="PRIORITY_NBR" jdbc-type="INTEGER" />		
+		<field-descriptor name="priorCatalogSubgroupId" column="PRIOR_CATALOG_SUBGROUP_ID" jdbc-type="VARCHAR" />
+		<field-descriptor name="catalogSubgroupId" column="CATALOG_SUBGROUP_ID" jdbc-type="VARCHAR" />
+		<field-descriptor name="catalogGroupCd" column="CATALOG_GROUP_CD" jdbc-type="VARCHAR" />
+		<field-descriptor name="orderCount" column="ORDER_COUNT" jdbc-type="INTEGER" />
+		<reference-descriptor name="catalogItem" class-ref="org.kuali.ext.mm.businessobject.CatalogItem" auto-retrieve="true" auto-update="none" auto-delete="none" proxy="true">
+			<foreignkey field-ref="catalogItemId" />
+		</reference-descriptor>
+    </class-descriptor>
+</descriptor-repository>

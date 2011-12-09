@@ -1,0 +1,130 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+                           http://www.springframework.org/schema/tx
+                           http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+                           http://www.springframework.org/schema/aop
+                           http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+
+	<!-- Begin Shopping Portal beans  -->
+		
+	<bean id="shopCartBusinessObjectDao" parent="businessObjectDaoOjb"
+		class="org.kuali.ext.mm.cart.dataaccess.impl.ShopCartBusinessObjectDaoOjb"
+		lazy-init="true" scope="prototype">
+		<property name="mmBusinessObjectDao">
+			<ref bean="mmBusinessObjectDao" />
+		</property>
+	</bean>
+	
+	<bean id="shopCartSearchDao" parent="platformAwareDaoJdbc"
+		class="org.kuali.ext.mm.cart.dataaccess.impl.ShopCartSearchDaoJdbc"
+		lazy-init="true" scope="prototype">		
+	</bean>
+	
+	<bean id="shopCartSearchStringBuilderOracle" class="org.kuali.ext.mm.cart.service.impl.ShopCartSearchStringBuilderOracle"
+		lazy-init="true" >		
+	</bean>
+	
+	<bean id="shopCartSearchStringBuilderMySQL" class="org.kuali.ext.mm.cart.service.impl.ShopCartSearchStringBuilderMySQL"
+		lazy-init="true" >		
+	</bean>
+	
+	<bean id="shopCartSearchStringBuilder" class="org.kuali.ext.mm.cart.service.impl.ShopCartSearchStringBuilderImpl"
+		lazy-init="true" >
+		<property name="shopCartSearchStringBuilderOracle">
+			<ref bean="shopCartSearchStringBuilderOracle" />
+		</property>
+		<property name="shopCartSearchStringBuilderMySQL">
+			<ref bean="shopCartSearchStringBuilderMySQL" />
+		</property>
+		<property name="dbPlatform">
+			<ref bean="dbPlatform" />
+		</property>
+	</bean>
+
+	<bean id="shopCartService" class="org.kuali.ext.mm.cart.service.impl.ShopCartServiceImpl"
+		lazy-init="true">
+		<property name="businessObjectService">
+			<ref bean="businessObjectService" />
+		</property>
+		<property name="shopCartOrderService">
+			<ref bean="shopCartOrderService" />
+		</property>
+		<property name="shopCartCatalogService">
+			<ref bean="shopCartCatalogService" />
+		</property>
+	</bean>
+
+	<bean id="shopCartOrderService"
+		class="org.kuali.ext.mm.cart.service.impl.ShopCartOrderServiceImpl"
+		lazy-init="true">
+		<property name="businessObjectService">
+			<ref bean="businessObjectService" />
+		</property>
+		<property name="documentService">
+			<ref bean="documentService" />
+		</property>
+	</bean>
+
+	<bean id="shopCartCatalogService"
+		class="org.kuali.ext.mm.cart.service.impl.ShopCartCatalogServiceImpl"
+		parent="catalogService"
+		lazy-init="true">
+		<property name="shopCartBusinessObjectDao">
+			<ref bean="shopCartBusinessObjectDao" />
+		</property>
+	</bean>
+
+	<bean id="shopCartSearchService"
+		class="org.kuali.ext.mm.cart.service.impl.ShopCartSearchServiceImpl"
+		lazy-init="true">
+		<property name="shopCartBusinessObjectDao">
+			<ref bean="shopCartBusinessObjectDao" />
+		</property>
+		<property name="shopCartSearchDao">
+			<ref bean="shopCartSearchDao" />
+		</property>
+		<property name="shopCartCatalogService">
+			<ref bean="shopCartCatalogService" />
+		</property>
+	</bean>
+
+	<bean id="shopCartFavoriteService"
+		class="org.kuali.ext.mm.cart.service.impl.ShopCartFavoriteServiceImpl"
+		lazy-init="true">
+		<property name="businessObjectService">
+			<ref bean="businessObjectService" />
+		</property>
+		<property name="shopCartCatalogService">
+			<ref bean="shopCartCatalogService" />
+		</property>
+	</bean>
+
+	<bean id="shopCartProfileService"
+		class="org.kuali.ext.mm.cart.service.impl.ShopCartProfileServiceImpl"
+		lazy-init="true">
+		<property name="businessObjectService">
+			<ref bean="businessObjectService" />
+		</property>
+		<property name="addressService">
+			<ref bean="addressService" />
+		</property>
+	</bean>
+
+	<bean id="shopCartCustomerService"
+		class="org.kuali.ext.mm.cart.service.impl.ShopCartCustomerServiceImpl"
+		lazy-init="true">
+		<property name="businessObjectService">
+			<ref bean="businessObjectService" />
+		</property>
+	</bean>
+	
+	<bean id="shopCartSuggestionService"
+		class="org.kuali.ext.mm.cart.service.impl.ShopCartSuggestionServiceImpl"
+		lazy-init="true">
+	</bean>
+	
+	
+</beans>

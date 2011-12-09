@@ -1,0 +1,359 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean id="ReturnDoc" parent="ReturnDoc-parentBean" />
+
+  <bean id="ReturnDoc-parentBean" abstract="true" 
+  parent="TransactionalDocumentEntry">
+		<property name="documentTypeName" value="SRET" />
+		<property name="sessionDocument" value="true" />
+		<property name="documentClass" value="org.kuali.ext.mm.document.ReturnDocument" />
+		<property name="businessRulesClass" value="org.kuali.ext.mm.document.validation.impl.ReturnDocumentRule"/>
+		<property name="documentPresentationControllerClass" value="org.kuali.ext.mm.document.authorization.ReturnDocumentPresentationController"/>
+		<property name="documentAuthorizerClass" value="org.kuali.ext.mm.document.authorization.ReturnDocumentAuthorizer"/>				
+		<property name="allowsCopy" value="true" />
+    <property name="attributes" >
+      <list>
+        <ref bean="ReturnDoc-billingBuildingCd" />
+        <ref bean="ReturnDoc-customerProfileId" />
+        <ref bean="ReturnDoc-documentNumber" />
+        <ref bean="ReturnDoc-lastUpdateDate" />
+        <ref bean="ReturnDoc-orderId" />
+        <ref bean="ReturnDoc-retrievalBuildingCd" />
+        <ref bean="ReturnDoc-retrievalBuildingRmNbr" />
+        <ref bean="ReturnDoc-retrievalInstructionTxt" />
+        <ref bean="ReturnDoc-returnDetails" />
+        <ref bean="ReturnDoc-returnDocumentStatusCode" />
+        <ref bean="ReturnDoc-returnOrderId" />
+        <ref bean="ReturnDoc-returnTypeCode" />
+        <ref bean="ReturnDoc-vendorCreditInd" />
+        <ref bean="ReturnDoc-vendorDetailAssignedId" />
+        <ref bean="ReturnDoc-vendorDispositionInd" />
+        <ref bean="ReturnDoc-vendorHeaderGeneratedId" />
+        <ref bean="ReturnDoc-vendorNm" />
+        <ref bean="ReturnDoc-vendorReshipInd" />
+        <ref bean="ReturnDoc-versionNumber" />
+      </list>
+    </property>
+    <property name="workflowAttributes">
+    <ref bean="ReturnDoc-workflowAttributes" />
+    </property>    
+  </bean>
+
+  <bean id="ReturnDoc-billingBuildingCd" parent="ReturnDoc-billingBuildingCd-parentBean" />
+  <bean id="ReturnDoc-billingBuildingCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="billingBuildingCd"
+        p:forceUppercase="false"
+        p:label="Billing Building Cd"
+        p:shortLabel="Billing Building Cd"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ReturnDoc-customerProfileId" parent="ReturnDoc-customerProfileId-parentBean" />
+  <bean id="ReturnDoc-customerProfileId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="customerProfileId"
+        p:forceUppercase="false"
+        p:label="Customer Profile Id"
+        p:shortLabel="Customer Profile Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ReturnDoc-documentNumber" parent="ReturnDoc-documentNumber-parentBean" />
+  <bean id="ReturnDoc-documentNumber-parentBean" parent="DocumentHeader-documentNumber" abstract="true"
+        p:name="documentNumber"
+	>
+  </bean>
+
+  <bean id="ReturnDoc-lastUpdateDate" parent="ReturnDoc-lastUpdateDate-parentBean" />
+  <bean id="ReturnDoc-lastUpdateDate-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="lastUpdateDate"
+        p:forceUppercase="false"
+        p:label="Last Update Date"
+        p:shortLabel="Last Update Date"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="HiddenControlDefinition" />
+    </property>
+  </bean>
+
+  <bean id="ReturnDoc-orderId" parent="ReturnDoc-orderId-parentBean" />
+  <bean id="ReturnDoc-orderId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="orderId"
+        p:forceUppercase="false"
+        p:label="Order ID"
+        p:shortLabel="Order ID"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ReturnDoc-retrievalBuildingCd" parent="ReturnDoc-retrievalBuildingCd-parentBean" />
+  <bean id="ReturnDoc-retrievalBuildingCd-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="retrievalBuildingCd"
+        p:forceUppercase="false"
+        p:label="Retrieval Building Cd"
+        p:shortLabel="Retrieval Building Cd"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ReturnDoc-retrievalBuildingRmNbr" parent="ReturnDoc-retrievalBuildingRmNbr-parentBean" />
+  <bean id="ReturnDoc-retrievalBuildingRmNbr-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="retrievalBuildingRmNbr"
+        p:forceUppercase="false"
+        p:label="Retrieval Building Rm Nbr"
+        p:shortLabel="Retrieval Building Rm Nbr"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ReturnDoc-retrievalInstructionTxt" parent="ReturnDoc-retrievalInstructionTxt-parentBean" />
+  <bean id="ReturnDoc-retrievalInstructionTxt-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="retrievalInstructionTxt"
+        p:forceUppercase="false"
+        p:label="Retrieval Instruction Txt"
+        p:shortLabel="Retrieval Instruction Txt"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ReturnDoc-returnDetails" parent="ReturnDoc-returnDetails-parentBean" />
+  <bean id="ReturnDoc-returnDetails-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="returnDetails"
+        p:forceUppercase="false"
+        p:label="Return Details"
+        p:shortLabel="Return Details"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ReturnDoc-returnDocumentStatusCode" parent="ReturnDoc-returnDocumentStatusCode-parentBean" />
+  <bean id="ReturnDoc-returnDocumentStatusCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="returnDocumentStatusCode"
+        p:forceUppercase="false"
+        p:label="Return Document Status Code"
+        p:shortLabel="Return Document Status Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ReturnDoc-returnOrderId" parent="ReturnDoc-returnOrderId-parentBean" />
+  <bean id="ReturnDoc-returnOrderId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="returnOrderId"
+        p:forceUppercase="false"
+        p:label="Return Order ID"
+        p:shortLabel="Return Order ID"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ReturnDoc-returnTypeCode" parent="ReturnDoc-returnTypeCode-parentBean" />
+  <bean id="ReturnDoc-returnTypeCode-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="returnTypeCode"
+        p:forceUppercase="false"
+        p:label="Return Type Code"
+        p:shortLabel="Return Type Code"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ReturnDoc-vendorCreditInd" parent="ReturnDoc-vendorCreditInd-parentBean" />
+  <bean id="ReturnDoc-vendorCreditInd-parentBean" abstract="true" parent="GenericAttributes-genericBoolean" 
+        p:name="vendorCreditInd"
+        p:required="false" />
+
+  <bean id="ReturnDoc-vendorDetailAssignedId" parent="ReturnDoc-vendorDetailAssignedId-parentBean" />
+  <bean id="ReturnDoc-vendorDetailAssignedId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorDetailAssignedId"
+        p:forceUppercase="false"
+        p:label="Vendor Detail Assigned Id"
+        p:shortLabel="Vendor Detail Assigned Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="ReturnDoc-vendorDispositionInd" parent="ReturnDoc-vendorDispositionInd-parentBean" />
+  <bean id="ReturnDoc-vendorDispositionInd-parentBean" abstract="true" parent="GenericAttributes-genericBoolean" 
+        p:name="vendorDispositionInd"
+        p:required="false" />
+
+  <bean id="ReturnDoc-vendorHeaderGeneratedId" parent="ReturnDoc-vendorHeaderGeneratedId-parentBean" />
+  <bean id="ReturnDoc-vendorHeaderGeneratedId-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorHeaderGeneratedId"
+        p:forceUppercase="false"
+        p:label="Vendor Header Generated Id"
+        p:shortLabel="Vendor Header Generated Id"
+        p:maxLength="10"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="10" />
+    </property>
+  </bean>
+
+  <bean id="RoutingType-RoutingAttribute-ReturnDocStatusCode" class="org.kuali.rice.kns.datadictionary.RoutingTypeDefinition">
+    	<property name="routingAttributes">
+    		<list>
+		        <ref bean="ReturnDocument-RoutingAttribute-ReturnDocStatusCode"/>
+    		</list>
+    	</property>
+    	    	<property name="documentValuePathGroups">
+    		<list>
+    			<ref bean="RoutingType-RoutingAttribute-ReturnDocStatusCode-1111"/>
+    		</list>
+    	</property>
+    	
+    </bean>
+
+	<bean id="RoutingType-RoutingAttribute-ReturnDocStatusCode-1111" class="org.kuali.rice.kns.datadictionary.DocumentValuePathGroup">
+    	<property name="documentValues">
+	   		<list>
+	   			<value>documentNumber</value>
+	   		</list>
+   		</property>
+   	</bean>
+
+	<bean id="ReturnDocument-RoutingAttribute-ReturnDocStatusCode" class="org.kuali.rice.kns.datadictionary.RoutingAttribute">
+    	<property name="qualificationAttributeName" value="documentNumber"/>
+	</bean>
+
+  <bean id="ReturnDoc-vendorNm" parent="ReturnDoc-vendorNm-parentBean" />
+  <bean id="ReturnDoc-vendorNm-parentBean" parent="AttributeDefinition" abstract="true"
+        p:name="vendorNm"
+        p:forceUppercase="false"
+        p:label="Vendor Nm"
+        p:shortLabel="Vendor Nm"
+        p:maxLength="200"
+        p:required="false" >
+    <property name="validationPattern" >
+      <bean parent="AnyCharacterValidationPattern"
+            p:allowWhitespace="true" />
+    </property>
+    <property name="control" >
+      <bean parent="TextControlDefinition"
+            p:size="200" />
+    </property>
+  </bean>
+
+  <bean id="ReturnDoc-vendorReshipInd" parent="ReturnDoc-vendorReshipInd-parentBean" />
+  <bean id="ReturnDoc-vendorReshipInd-parentBean" abstract="true" parent="GenericAttributes-genericBoolean" 
+        p:name="vendorReshipInd"
+        p:required="false" />
+
+  <bean id="ReturnDoc-versionNumber" parent="ReturnDoc-versionNumber-parentBean" />
+  <bean id="ReturnDoc-versionNumber-parentBean" abstract="true" parent="AttributeReferenceDummy-versionNumber" 
+        p:name="versionNumber"
+        p:required="false" />
+
+	<bean id="ReturnDoc-workflowAttributes" parent="ReturnDoc-workflowAttributes-parentBean"/>
+	
+	<bean id="ReturnDoc-workflowAttributes-parentBean" abstract="true" parent="WorkflowAttributes">
+	   	<property name="routingTypeDefinitions">
+   		<map>
+   			<entry key="ReturnDocReview" value-ref="RoutingType-RoutingAttribute-ReturnDocStatusCode"/>
+   		</map>
+   	</property>	
+	</bean>
+
+</beans>

@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE cXML SYSTEM "http://xml.cXML.org/schemas/cXML/1.2.011/cXML.dtd" >
+<cXML version="1.2.011"
+	payloadID="2009-07-23T18:00:22.00CDT.cXML.0000015325-1INV02"
+	timestamp="2009-07-23T18:00:22.00CDT" xml:lang="en-US">
+	<Header>
+		<From>
+			<Credential domain="DUNS">
+				<Identity>Dell</Identity>
+			</Credential>
+		</From>
+		<To>
+			<Credential domain="DUNS">
+				<Identity>ucdt</Identity>
+			</Credential>
+		</To>
+		<Sender>
+			<Credential domain="DUNS">
+				<Identity>128293714</Identity>
+				<SharedSecret>nopassword</SharedSecret>
+			</Credential>
+			<UserAgent>Oracle Supplier Network</UserAgent>
+		</Sender>
+	</Header>
+	<Request deploymentMode="test">
+		<InvoiceDetailRequest>
+			<InvoiceDetailRequestHeader invoiceID="0000015325-1INV02"
+				purpose="standard" operation="new"
+				invoiceDate="2009-07-23T12:00:00.0CDT">
+				<InvoiceDetailHeaderIndicator></InvoiceDetailHeaderIndicator>
+				<InvoiceDetailLineIndicator></InvoiceDetailLineIndicator>
+				<InvoicePartner>
+					<Contact role="remitTo">
+						<Name xml:lang="en-US">
+							DELL MARKETING L.P.
+						</Name>
+						<PostalAddress name="default">
+							<DeliverTo>DELL MARKETING L.P.</DeliverTo>
+							<DeliverTo>C/O DELL USA L.P.</DeliverTo>
+							<Street>PO BOX 910916</Street>
+							<City>PASADENA</City>
+							<State>CA</State>
+							<PostalCode>91110-0916</PostalCode>
+							<Country isoCountryCode="US">US</Country>
+						</PostalAddress>
+					</Contact>
+				</InvoicePartner>
+				<InvoicePartner>
+					<Contact role="billTo">
+						<Name xml:lang="en-US">UCDavis</Name>
+						<PostalAddress name="default">
+							<DeliverTo>UCDavis</DeliverTo>
+							<DeliverTo>Materiel Management</DeliverTo>
+							<Street>Invoice Desk</Street>
+							<Street>202 Cousteau Place Ste 205</Street>
+							<City>Davis</City>
+							<State>CA</State>
+							<PostalCode>95618-7761</PostalCode>
+							<Country isoCountryCode="US">US</Country>
+						</PostalAddress>
+						<Email name="UCDavis">ucdep@ucdavis.edu</Email>
+					</Contact>
+				</InvoicePartner>
+				<InvoicePartner>
+					<Contact role="sales">
+						<Name xml:lang="en-US"></Name>
+						<PostalAddress name="default">
+							<Street>One Dell Way</Street>
+							<City>Round Rock</City>
+							<Country isoCountryCode="US">USA</Country>
+						</PostalAddress>
+						<Phone>
+							<TelephoneNumber></TelephoneNumber>
+						</Phone>
+						<Fax>
+							<TelephoneNumber>
+								<CountryCode></CountryCode>
+								<AreaOrCityCode></AreaOrCityCode>
+								<Number></Number>
+							</TelephoneNumber>
+						</Fax>
+					</Contact>
+				</InvoicePartner>
+				<InvoicePartner>
+					<Contact role="technicalSupport">
+						<Name xml:lang="en-US">default</Name>
+						<PostalAddress name="default">
+							<Street>One Dell Way</Street>
+							<City>Round Rock</City>
+							<Country isoCountryCode="US">USA</Country>
+						</PostalAddress>
+						<Phone name="default">
+							<TelephoneNumber>
+								<CountryCode isoCountryCode="US">
+									1
+								</CountryCode>
+							</TelephoneNumber>
+						</Phone>
+					</Contact>
+				</InvoicePartner>
+				<InvoicePartner>
+					<Contact role="customerService">
+						<Name xml:lang="en-US">default</Name>
+						<PostalAddress name="default">
+							<Street>One Dell Way</Street>
+							<City>Round Rock</City>
+							<Country isoCountryCode="US">USA</Country>
+						</PostalAddress>
+						<Phone name="default">
+							<TelephoneNumber>
+								<CountryCode isoCountryCode="US">
+									1
+								</CountryCode>
+							</TelephoneNumber>
+						</Phone>
+						<Fax name="default">
+							<TelephoneNumber>
+								<CountryCode isoCountryCode="US">
+									1
+								</CountryCode>
+								<AreaOrCityCode></AreaOrCityCode>
+								<Number></Number>
+							</TelephoneNumber>
+						</Fax>
+					</Contact>
+				</InvoicePartner>
+				<InvoiceDetailShipping
+					shippingDate="20090723T18:00:22.00CDT">
+					<Contact role="shipTo" addressID="UCD">
+						<Name xml:lang="en-US">UCDavis</Name>
+						<PostalAddress name="default">
+							<DeliverTo>UCDavis</DeliverTo>
+							<DeliverTo>ALEX MATSIS</DeliverTo>
+							<DeliverTo>1441 RESEARCH PARK</DeliverTo>
+							<Street>ROOM 254</Street>
+							<Street>
+								A&amp;FS: Accounting and Financial
+								Services VC
+							</Street>
+							<City>SACRAMENTO</City>
+							<State>CA</State>
+							<PostalCode>95829</PostalCode>
+							<Country isoCountryCode="US">US</Country>
+						</PostalAddress>
+						<Email name="UCDavis">
+							aamatsis@ucdavis.edu
+						</Email>
+					</Contact>
+				</InvoiceDetailShipping>
+			</InvoiceDetailRequestHeader>
+			<InvoiceDetailOrder>
+				<InvoiceDetailOrderInfo>
+					<OrderReference orderID="0000015325-1">
+						<DocumentReference
+							payloadID="2009-07-23T08:11:26-0700@0000015325-1"></DocumentReference>
+					</OrderReference>
+				</InvoiceDetailOrderInfo>
+				<InvoiceDetailItem invoiceLineNumber="1" quantity="1">
+					<UnitOfMeasure>EA</UnitOfMeasure>
+					<UnitPrice>
+						<Money currency="USD" alternateAmount="0.0"
+							alternateCurrency="USD">
+							1328.35
+						</Money>
+					</UnitPrice>
+					<InvoiceDetailItemReference lineNumber="1">
+						<ItemID>
+							<SupplierPartID>224-4706</SupplierPartID>
+						</ItemID>
+						<Description xml:lang="en-US">
+							01:00 Latitude E6500;IntelREG CoreTM 2 Duo
+							P8700 (2.53GHz, 3M L2 Cache, 1066MHz
+						</Description>
+					</InvoiceDetailItemReference>
+					<SubtotalAmount>
+						<Money>1328.35</Money>
+					</SubtotalAmount>
+					<Distribution>
+						<Accounting name="AccountID">
+							<AccountingSegment id="0000015325-1">
+								<Name xml:lang="en-US">OLI</Name>
+								<Description xml:lang="en-US">
+									3-PRAD150---
+								</Description>
+							</AccountingSegment>
+						</Accounting>
+						<Charge>
+							<Money currency="USD"></Money>
+						</Charge>
+					</Distribution>
+				</InvoiceDetailItem>
+				<InvoiceDetailItem invoiceLineNumber="2" quantity="1">
+					<UnitOfMeasure>EA</UnitOfMeasure>
+					<UnitPrice>
+						<Money currency="USD" alternateAmount="0.0"
+							alternateCurrency="USD">
+							530.00
+						</Money>
+					</UnitPrice>
+					<InvoiceDetailItemReference lineNumber="2">
+						<ItemID>
+							<SupplierPartID>224-2214</SupplierPartID>
+						</ItemID>
+						<Description xml:lang="en-US">
+							02:00 OptiPlex 760 Desktop;OptiPlex 760
+							Desktop Base Up to 88 Percent Efficient
+						</Description>
+					</InvoiceDetailItemReference>
+					<SubtotalAmount>
+						<Money>530.00</Money>
+					</SubtotalAmount>
+					<Distribution>
+						<Accounting name="AccountID">
+							<AccountingSegment id="0000015325-2">
+								<Name xml:lang="en-US">OLI</Name>
+								<Description xml:lang="en-US">
+									3-PRAD150---
+								</Description>
+							</AccountingSegment>
+						</Accounting>
+						<Charge>
+							<Money currency="USD"></Money>
+						</Charge>
+					</Distribution>
+				</InvoiceDetailItem>
+			</InvoiceDetailOrder>
+			<InvoiceDetailSummary>
+				<SubtotalAmount>
+					<Money currency="USD" alternateAmount="0.0"
+						alternateCurrency="USD">
+						1858.35
+					</Money>
+				</SubtotalAmount>
+				<Tax>
+					<Money currency="USD" alternateAmount="0.0"
+						alternateCurrency="USD">
+						75.45
+					</Money>
+					<Description xml:lang="en-US">
+						Total Taxes
+					</Description>
+					<TaxDetail category="Sales Tax">
+						<TaxableAmount>
+							<Money currency="USD" alternateAmount="0.0"
+								alternateCurrency="USD">
+								0.00
+							</Money>
+						</TaxableAmount>
+						<TaxAmount>
+							<Money currency="USD" alternateAmount="0.0"
+								alternateCurrency="USD">
+								75.45
+							</Money>
+						</TaxAmount>
+						<Description xml:lang="en-US">
+							state sales and use tax
+						</Description>
+					</TaxDetail>
+				</Tax>
+				<SpecialHandlingAmount>
+					<Money description="Environmental Fee"
+						currency="USD">
+						15.00
+					</Money>
+				</SpecialHandlingAmount>
+				<ShippingAmount>
+					<Money currency="USD" alternateAmount="0.0"
+						alternateCurrency="USD">
+						0.00
+					</Money>
+				</ShippingAmount>
+				<NetAmount>
+					<Money currency="USD" alternateAmount="0.0"
+						alternateCurrency="USD">
+						1948.80
+					</Money>
+				</NetAmount>
+				<DueAmount>
+					<Money currency="USD">1948.80</Money>
+				</DueAmount>
+			</InvoiceDetailSummary>
+		</InvoiceDetailRequest>
+	</Request>
+</cXML>
