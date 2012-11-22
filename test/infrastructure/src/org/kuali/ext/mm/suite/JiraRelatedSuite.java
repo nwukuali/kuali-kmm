@@ -31,8 +31,9 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.kuali.rice.kns.util.AssertionUtils;
 import org.w3c.dom.NodeList;
+
+import static junit.framework.Assert.assertTrue;
 
 /**
  * The abstract superclass of suites of all test classes or methods which {@link RelatesTo} a Kuali JIRA issue that is currently in
@@ -79,7 +80,7 @@ public abstract class JiraRelatedSuite {
                     for (int i = 0; i < keys.getLength(); i++) {
                         String jiraKey =""; 
                             //keys.item(i).getTextContent();
-                        AssertionUtils.assertThat(EXPECTED_JIRA_KEY.matcher(jiraKey).matches(), "badly formed key: " + jiraKey);
+                        assertTrue("badly formed key: " + jiraKey, EXPECTED_JIRA_KEY.matcher(jiraKey).matches());
                         jiraIssues.add(jiraKey);
                     }
                     jiraIssuesByState.put(state, jiraIssues);

@@ -29,7 +29,7 @@ import java.util.LinkedList;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.kuali.rice.kns.util.AssertionUtils;
+import static junit.framework.Assert.assertTrue;
 
 /**
  * Utility class that builds test suites dynamically.
@@ -112,7 +112,7 @@ public class TestSuiteBuilder {
      * @throws java.io.IOException if that directory cannot be scanned
      */
     private static ArrayList<String> scanTestClassNames(File testRootPackageDir) throws IOException {
-        AssertionUtils.assertThat(testRootPackageDir.getCanonicalPath().endsWith(ROOT_PACKAGE.replace('.', File.separatorChar)));
+        assertTrue(testRootPackageDir.getCanonicalPath().endsWith(ROOT_PACKAGE.replace('.', File.separatorChar)));
         ArrayList<String> testClassNames = new ArrayList<String>();
         LinkedList<File> dirs = new LinkedList<File>();
         dirs.add(testRootPackageDir);
