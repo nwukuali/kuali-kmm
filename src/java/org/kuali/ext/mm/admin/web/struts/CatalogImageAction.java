@@ -23,12 +23,13 @@ import org.kuali.ext.mm.businessobject.CatalogImage;
 import org.kuali.ext.mm.common.sys.MMKeyConstants;
 import org.kuali.ext.mm.service.MMServiceLocator;
 import org.kuali.ext.mm.util.MMFileUtil;
-import org.kuali.rice.core.util.RiceConstants;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.util.GlobalVariables;
-import org.kuali.rice.kns.util.KNSConstants;
+import org.kuali.rice.core.api.util.RiceConstants;
+import org.kuali.rice.kns.util.KNSGlobalVariables;
+import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.service.KRADServiceLocator;
+import org.kuali.rice.krad.util.GlobalVariables;
 import org.kuali.rice.kns.web.struts.action.KualiAction;
+import org.kuali.rice.krad.util.KRADConstants;
 
 
 /**
@@ -37,8 +38,8 @@ import org.kuali.rice.kns.web.struts.action.KualiAction;
 public class CatalogImageAction extends KualiAction {
     public ActionForward upload(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        String imageDir = KNSServiceLocator.getKualiConfigurationService().getPropertyString(
-                "catalog.images.dir");
+        String imageDir = KRADServiceLocator.getKualiConfigurationService().getPropertyValueAsString(
+					"catalog.images.dir");
         File imageDirFile = new File(imageDir);
         // create if directory doesn't exist
         if (!imageDirFile.exists()) {
@@ -93,8 +94,8 @@ public class CatalogImageAction extends KualiAction {
                     imageDir, imageFile.getFileName())));
                 catalogImageForm.getUploadedImages().add(imageFile.getFileName());
             }
-            GlobalVariables.getMessageList().add(MMKeyConstants.IMAGES_SAVED_SUCCESSFULLY,
-                    imageFile.getFileName());
+            KNSGlobalVariables.getMessageList().add(MMKeyConstants.IMAGES_SAVED_SUCCESSFULLY,
+							imageFile.getFileName());
             GlobalVariables.getUserSession().addObject("catalogUploadImages",
                     catalogImageForm.getUploadedImages());
         }
@@ -119,20 +120,20 @@ public class CatalogImageAction extends KualiAction {
 
     public ActionForward close(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        return mapping.findForward(KNSConstants.MAPPING_PORTAL);
+        return mapping.findForward(KRADConstants.MAPPING_PORTAL);
     }
 
     public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         String imageName = request.getParameter("imageName");
-        String imageDir = KNSServiceLocator.getKualiConfigurationService().getPropertyString(
+        String imageDir = KRADServiceLocator.getKualiConfigurationService().getPropertyValueAsString(
                 "catalog.images.dir");
         File file = new File(imageDir, imageName);
         List<String> uploadedImages = (List<String>) GlobalVariables.getUserSession()
                 .retrieveObject("catalogUploadImages");
         if (file.exists() && file.delete()) {
             deleteImageFromDb(imageDir, file);
-            GlobalVariables.getMessageList().add(MMKeyConstants.IMAGES_DELETED_SUCCESSFULLY,
+            KNSGlobalVariables.getMessageList().add(MMKeyConstants.IMAGES_DELETED_SUCCESSFULLY,
                     imageName);
             uploadedImages.remove(imageName);
         }

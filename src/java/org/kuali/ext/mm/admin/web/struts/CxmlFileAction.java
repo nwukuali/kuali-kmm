@@ -16,11 +16,12 @@ import org.kuali.ext.mm.b2b.cxml.types.CXML;
 import org.kuali.ext.mm.b2b.cxml.util.CxmlUtil;
 import org.kuali.ext.mm.cart.ShopCartConstants;
 import org.kuali.ext.mm.common.sys.MMKeyConstants;
-import org.kuali.rice.core.util.RiceConstants;
-import org.kuali.rice.kns.exception.AuthorizationException;
+import org.kuali.rice.core.api.util.RiceConstants;
 import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.util.GlobalVariables;
-import org.kuali.rice.kns.util.KNSConstants;
+import org.kuali.rice.krad.exception.AuthorizationException;
+import org.kuali.rice.krad.service.KRADServiceLocator;
+import org.kuali.rice.krad.util.GlobalVariables;
+import org.kuali.rice.krad.util.KRADConstants;
 import org.kuali.rice.kns.web.struts.action.KualiAction;
 
 
@@ -46,8 +47,8 @@ public class CxmlFileAction extends KualiAction {
         CxmlFileForm cxmlFileForm = (CxmlFileForm) form;
         FormFile cxmlFile = cxmlFileForm.getCxmlFile();
         if (cxmlFile != null && cxmlFile.getFileSize() > 0) {
-            String cxmlReceiveUrl = KNSServiceLocator.getKualiConfigurationService()
-                    .getPropertyString(MMKeyConstants.Shopping.SHOPPING_URL)
+            String cxmlReceiveUrl = KRADServiceLocator.getKualiConfigurationService()
+                    .getPropertyValueAsString(MMKeyConstants.Shopping.SHOPPING_URL)
                     + "/" + ShopCartConstants.PunchOut.VENDOR_REQUEST_ACTION;
             CXML cxml = CxmlUtil.unmarshal(cxmlFile.getInputStream());
             CXML resp = CxmlUtil.sendRequest(cxml, cxmlReceiveUrl);
@@ -60,7 +61,7 @@ public class CxmlFileAction extends KualiAction {
 
     public ActionForward close(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        return mapping.findForward(KNSConstants.MAPPING_PORTAL);
+        return mapping.findForward(KRADConstants.MAPPING_PORTAL);
     }
 
 
