@@ -31,7 +31,7 @@ import org.kuali.ext.mm.gl.service.GeneralLedgerProcessor;
 import org.kuali.ext.mm.integration.sys.businessobject.FinancialAccountingLine;
 import org.kuali.ext.mm.integration.sys.businessobject.FinancialGeneralLedgerPendingEntry;
 import org.kuali.ext.mm.service.MMServiceLocator;
-import org.kuali.rice.kns.util.ObjectUtils;
+import org.kuali.rice.krad.util.ObjectUtils;
 
 
 /**
