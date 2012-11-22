@@ -3,9 +3,6 @@
  */
 package org.kuali.ext.mm.b2b.cxml.transform;
 
-import java.io.Serializable;
-import java.util.List;
-
 import org.apache.commons.lang.StringUtils;
 import org.kuali.ext.mm.b2b.cxml.types.Description;
 import org.kuali.ext.mm.b2b.cxml.types.ItemDetail;
@@ -15,7 +12,10 @@ import org.kuali.ext.mm.b2b.cxml.util.CxmlUtil;
 import org.kuali.ext.mm.businessobject.ShopCartDetail;
 import org.kuali.ext.mm.businessobject.UnitOfIssue;
 import org.kuali.ext.mm.util.MMDecimal;
-import org.kuali.rice.kns.service.KNSServiceLocator;
+import org.kuali.rice.krad.service.KRADServiceLocator;
+
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author harsha07
@@ -54,7 +54,7 @@ public class CxmlToShoppingCartDetail implements CxmlTransformer<ShopCartDetail,
         cartDetail.setShopCartItemDetailDesc(StringUtils.left(CxmlUtil.cleanString(descString.toString()), 400));
         
         String unitOfMeasure = itemDetail.getUnitOfMeasure();
-        UnitOfIssue unitOfIssue = KNSServiceLocator.getBusinessObjectService().findBySinglePrimaryKey(UnitOfIssue.class, unitOfMeasure);
+        UnitOfIssue unitOfIssue = KRADServiceLocator.getBusinessObjectService().findBySinglePrimaryKey(UnitOfIssue.class, unitOfMeasure);
         if(unitOfIssue == null) {
             unitOfIssue = new UnitOfIssue();
             unitOfIssue.setUnitOfIssueCode(unitOfMeasure);

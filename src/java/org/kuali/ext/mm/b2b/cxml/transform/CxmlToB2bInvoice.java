@@ -3,47 +3,16 @@
  */
 package org.kuali.ext.mm.b2b.cxml.transform;
 
-import java.util.List;
-
-import org.kuali.ext.mm.b2b.cxml.invoice.B2bInvoice;
-import org.kuali.ext.mm.b2b.cxml.invoice.B2bInvoiceAccount;
-import org.kuali.ext.mm.b2b.cxml.invoice.B2bInvoiceDetail;
-import org.kuali.ext.mm.b2b.cxml.invoice.CancellationInvoice;
-import org.kuali.ext.mm.b2b.cxml.invoice.CreditMemo;
-import org.kuali.ext.mm.b2b.cxml.invoice.StandardInvoice;
-import org.kuali.ext.mm.b2b.cxml.types.Accounting;
-import org.kuali.ext.mm.b2b.cxml.types.AccountingSegment;
-import org.kuali.ext.mm.b2b.cxml.types.CXML;
-import org.kuali.ext.mm.b2b.cxml.types.DepositAmount;
-import org.kuali.ext.mm.b2b.cxml.types.Description;
-import org.kuali.ext.mm.b2b.cxml.types.Distribution;
-import org.kuali.ext.mm.b2b.cxml.types.DocumentReference;
-import org.kuali.ext.mm.b2b.cxml.types.DueAmount;
-import org.kuali.ext.mm.b2b.cxml.types.GrossAmount;
-import org.kuali.ext.mm.b2b.cxml.types.InvoiceDetailDiscount;
-import org.kuali.ext.mm.b2b.cxml.types.InvoiceDetailHeaderIndicator;
-import org.kuali.ext.mm.b2b.cxml.types.InvoiceDetailItem;
-import org.kuali.ext.mm.b2b.cxml.types.InvoiceDetailItemReference;
-import org.kuali.ext.mm.b2b.cxml.types.InvoiceDetailLineShipping;
-import org.kuali.ext.mm.b2b.cxml.types.InvoiceDetailLineSpecialHandling;
-import org.kuali.ext.mm.b2b.cxml.types.InvoiceDetailOrder;
-import org.kuali.ext.mm.b2b.cxml.types.InvoiceDetailOrderInfo;
-import org.kuali.ext.mm.b2b.cxml.types.InvoiceDetailRequest;
-import org.kuali.ext.mm.b2b.cxml.types.InvoiceDetailRequestHeader;
-import org.kuali.ext.mm.b2b.cxml.types.InvoiceDetailSummary;
-import org.kuali.ext.mm.b2b.cxml.types.NetAmount;
-import org.kuali.ext.mm.b2b.cxml.types.OrderReference;
-import org.kuali.ext.mm.b2b.cxml.types.Request;
-import org.kuali.ext.mm.b2b.cxml.types.ShippingAmount;
-import org.kuali.ext.mm.b2b.cxml.types.SpecialHandlingAmount;
-import org.kuali.ext.mm.b2b.cxml.types.SubtotalAmount;
-import org.kuali.ext.mm.b2b.cxml.types.Tax;
-import org.kuali.ext.mm.b2b.cxml.types.UnitPrice;
+import org.kuali.ext.mm.b2b.cxml.invoice.*;
+import org.kuali.ext.mm.b2b.cxml.types.*;
 import org.kuali.ext.mm.b2b.cxml.util.CxmlUtil;
 import org.kuali.ext.mm.businessobject.CxmlInvoice;
 import org.kuali.ext.mm.businessobject.OrderDetail;
 import org.kuali.ext.mm.document.OrderDocument;
-import org.kuali.rice.kns.util.ObjectUtils;
+import org.kuali.rice.krad.util.ObjectUtils;
+
+import java.util.List;
+import java.lang.Object;
 
 /**
  * @author harsha07
