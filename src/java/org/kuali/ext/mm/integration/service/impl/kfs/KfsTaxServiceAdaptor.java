@@ -16,17 +16,16 @@
 
 package org.kuali.ext.mm.integration.service.impl.kfs;
 
-import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.xml.namespace.QName;
-
 import org.kuali.ext.mm.integration.service.FinancialTaxService;
 import org.kuali.ext.mm.integration.sys.businessobject.FinancialTaxDetail;
 import org.kuali.kfs.sys.businessobject.TaxDetail;
 import org.kuali.kfs.sys.service.TaxService;
-import org.kuali.rice.kns.util.KualiDecimal;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+
+import javax.xml.namespace.QName;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author harsha07

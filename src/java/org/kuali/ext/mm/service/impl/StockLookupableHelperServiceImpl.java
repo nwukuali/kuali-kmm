@@ -1,21 +1,21 @@
 package org.kuali.ext.mm.service.impl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import org.kuali.ext.mm.businessobject.Stock;
 import org.kuali.ext.mm.businessobject.StockBalance;
 import org.kuali.ext.mm.businessobject.StockCost;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
-import org.kuali.rice.kim.service.KIMServiceLocator;
-import org.kuali.rice.kns.bo.BusinessObject;
+import org.kuali.rice.kim.api.services.KimApiServiceLocator;
 import org.kuali.rice.kns.lookup.HtmlData;
 import org.kuali.rice.kns.lookup.HtmlData.AnchorHtmlData;
 import org.kuali.rice.kns.lookup.KualiLookupableHelperServiceImpl;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.util.GlobalVariables;
+import org.kuali.rice.krad.bo.BusinessObject;
+import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.util.GlobalVariables;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 
 public class StockLookupableHelperServiceImpl extends KualiLookupableHelperServiceImpl {
@@ -67,9 +67,9 @@ public class StockLookupableHelperServiceImpl extends KualiLookupableHelperServi
             htmlDataList.add(getUrlData(businessObject, "edit", "Adjust Unit of Issue", pkNames));
             StockCost sC = stockCostList.get(0);
             htmlDataList.add(getUrlData(sC, "edit", "Adjust Cost", pkNames));
-            boolean canAdjustZeroBinBalance = KIMServiceLocator.getIdentityManagementService().isAuthorized(
+            boolean canAdjustZeroBinBalance = KimApiServiceLocator.getPermissionService().isAuthorized(
                     GlobalVariables.getUserSession().getPrincipalId(), MMConstants.MM_NAMESPACE,
-                    MMConstants.Stock.ADJUST_ZERO_BIN_BALANCE_PERMISSION, null, null);
+                    MMConstants.Stock.ADJUST_ZERO_BIN_BALANCE_PERMISSION, null);
             if (displayLink  || canAdjustZeroBinBalance) {
                 htmlDataList.add(getUrlData(businessObject, "edit", "Adjust Stock Balance", pkNames));
                 htmlDataList.add(getUrlData(businessObject, "edit", "Transfer Stock", pkNames));

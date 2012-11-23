@@ -1,25 +1,7 @@
 package org.kuali.ext.mm.service.impl;
 
-import java.sql.Date;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.commons.lang.StringUtils;
-import org.kuali.ext.mm.businessobject.Agreement;
-import org.kuali.ext.mm.businessobject.Bin;
-import org.kuali.ext.mm.businessobject.CatalogItem;
-import org.kuali.ext.mm.businessobject.CostCode;
-import org.kuali.ext.mm.businessobject.PickListLine;
-import org.kuali.ext.mm.businessobject.Stock;
-import org.kuali.ext.mm.businessobject.StockBalance;
-import org.kuali.ext.mm.businessobject.StockCost;
-import org.kuali.ext.mm.businessobject.StockCount;
-import org.kuali.ext.mm.businessobject.StockHistory;
-import org.kuali.ext.mm.businessobject.StoresPersistableBusinessObject;
+import org.kuali.ext.mm.businessobject.*;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.dataaccess.MMBusinessObjectDao;
@@ -30,12 +12,16 @@ import org.kuali.ext.mm.service.StockHistoryService;
 import org.kuali.ext.mm.service.StockService;
 import org.kuali.ext.mm.util.MMDecimal;
 import org.kuali.ext.mm.util.MMUtil;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.service.ParameterService;
-import org.kuali.rice.kns.util.ObjectUtils;
-import org.kuali.rice.kns.util.TransactionalServiceUtils;
+import org.kuali.rice.core.api.CoreApiServiceLocator;
+import org.kuali.rice.coreservice.framework.parameter.ParameterService;
+import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.service.KRADServiceLocator;
+import org.kuali.rice.krad.util.ObjectUtils;
+import org.kuali.rice.krad.util.TransactionalServiceUtils;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.sql.Date;
+import java.util.*;
 
 
 @Transactional
@@ -474,10 +460,10 @@ public class StockServiceImpl implements StockService {
      * @see org.kuali.ext.mm.service.StockService#isAgreementNumberValid(java.lang.String)
      */
     public boolean isAgreementNumberValid(String agreementNumber) {
-        Agreement agreement = KNSServiceLocator.getBusinessObjectService()
+        Agreement agreement = KRADServiceLocator.getBusinessObjectService()
             .findBySinglePrimaryKey(Agreement.class, agreementNumber);
         
-        Date today = KNSServiceLocator.getDateTimeService().getCurrentSqlDate();
+        Date today = CoreApiServiceLocator.getDateTimeService().getCurrentSqlDate();
         
         return agreement != null 
             && agreement.isActive() ;
@@ -491,9 +477,9 @@ public class StockServiceImpl implements StockService {
      */
     public String getCurrentStockPriceCode() {
         String currentStockPriceCode = null;
-        if (KNSServiceLocator.getParameterService().parameterExists(
+        if (SpringContext.getBean(ParameterService.class).parameterExists(
                 MMConstants.Parameters.Document.class, MMConstants.Parameters.STOCK_PRICE_CODE)) {
-            currentStockPriceCode = KNSServiceLocator.getParameterService().getParameterValue(
+            currentStockPriceCode = SpringContext.getBean(ParameterService.class).getParameterValueAsString(
                     MMConstants.Parameters.Document.class, MMConstants.Parameters.STOCK_PRICE_CODE);
         }
         currentStockPriceCode = StringUtils.isEmpty(currentStockPriceCode) ? MMConstants.CostCode.STANDARD_PRICE
@@ -514,7 +500,7 @@ public class StockServiceImpl implements StockService {
         fieldValues.put(MMConstants.StockCost.STOCK_ID, stockId);
         fieldValues.put(MMConstants.StockCost.COST_CODE, costCode);
         fieldValues.put(MMConstants.MMPersistableBusinessObject.ACTIVE, "Y");
-        Collection results = KNSServiceLocator.getBusinessObjectService().findMatching(StockCost.class, fieldValues);
+        Collection results = KRADServiceLocator.getBusinessObjectService().findMatching(StockCost.class, fieldValues);
         
         StockCost stockCost = null;
         Iterator<StockCost> it = results.iterator();
@@ -572,8 +558,8 @@ public class StockServiceImpl implements StockService {
      * @see org.kuali.ext.mm.service.StockService#isTrackableWithSerialNumber(org.kuali.ext.mm.businessobject.Stock)
      */
     public boolean isTrackableWithSerialNumber(Stock stock) {
-        ParameterService parameterService = KNSServiceLocator.getParameterService();
-        List<String> trackableStockTypeCodes = parameterService.getParameterValues(MMConstants.MM_NAMESPACE, MMConstants.Parameters.DOCUMENT,  MMConstants.Parameters.STOCK_TYPES_WITH_SERIAL_NUM);
+        ParameterService parameterService = SpringContext.getBean(ParameterService.class);
+        List<String> trackableStockTypeCodes = new ArrayList<String>(parameterService.getParameterValuesAsString(MMConstants.MM_NAMESPACE, MMConstants.Parameters.DOCUMENT,  MMConstants.Parameters.STOCK_TYPES_WITH_SERIAL_NUM));
 
         if(trackableStockTypeCodes.contains(stock.getStockTypeCode()))
             return true;

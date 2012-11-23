@@ -3,23 +3,8 @@
  */
 package org.kuali.ext.mm.service.impl;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.commons.lang.StringUtils;
-import org.kuali.ext.mm.businessobject.CatalogGroup;
-import org.kuali.ext.mm.businessobject.CatalogItem;
-import org.kuali.ext.mm.businessobject.CatalogSubgroup;
-import org.kuali.ext.mm.businessobject.CatalogSubgroupItem;
-import org.kuali.ext.mm.businessobject.OrderDetail;
-import org.kuali.ext.mm.businessobject.Profile;
-import org.kuali.ext.mm.businessobject.ShopCartDetail;
-import org.kuali.ext.mm.businessobject.ShoppingCart;
-import org.kuali.ext.mm.businessobject.Stock;
-import org.kuali.ext.mm.businessobject.TrueBuyoutDetail;
+import org.kuali.ext.mm.businessobject.*;
 import org.kuali.ext.mm.cart.ShopCartConstants;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
@@ -30,16 +15,20 @@ import org.kuali.ext.mm.integration.coa.businessobject.FinancialOrganization;
 import org.kuali.ext.mm.service.MMServiceLocator;
 import org.kuali.ext.mm.service.TrueBuyoutService;
 import org.kuali.ext.mm.util.MMDecimal;
-import org.kuali.rice.kew.exception.WorkflowException;
-import org.kuali.rice.kim.bo.Person;
-import org.kuali.rice.kim.service.PersonService;
-import org.kuali.rice.kns.UserSession;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.service.DocumentService;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.util.GlobalVariables;
-import org.kuali.rice.kns.util.KualiDecimal;
-import org.kuali.rice.kns.util.TransactionalServiceUtils;
+import org.kuali.rice.core.api.CoreApiServiceLocator;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+import org.kuali.rice.kew.api.exception.WorkflowException;
+import org.kuali.rice.kim.api.identity.Person;
+import org.kuali.rice.kim.api.identity.PersonService;
+import org.kuali.rice.krad.UserSession;
+import org.kuali.rice.krad.bo.AdHocRouteRecipient;
+import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.service.DocumentService;
+import org.kuali.rice.krad.service.KRADServiceLocator;
+import org.kuali.rice.krad.util.GlobalVariables;
+import org.kuali.rice.krad.util.TransactionalServiceUtils;
+
+import java.util.*;
 
 
 /**
@@ -299,7 +288,7 @@ public class TrueBuyoutServiceImpl implements TrueBuyoutService {
         stock.setBuyUnitOfIssueCd(detail.getOrderItemUnitOfIssueCode());
         stock.setBuyUnitOfIssueRt(new MMDecimal(1.0));
         stock.setAgreementNbr(detail.getAgreementNumber());
-        stock.setStockCreateDt(KNSServiceLocator.getDateTimeService().getCurrentSqlDate());
+        stock.setStockCreateDt(CoreApiServiceLocator.getDateTimeService().getCurrentSqlDate());
         return stock;
     }
     
@@ -346,7 +335,7 @@ public class TrueBuyoutServiceImpl implements TrueBuyoutService {
             doc = (OrderDocument)documentService.getNewDocument(OrderDocument.class);
 
             doc.setOrderTypeCode(MMConstants.OrderType.TRUE_BUYOUT);
-            doc.setOrderId(KNSServiceLocator.getSequenceAccessorService().getNextAvailableSequenceNumber(ShopCartConstants.Sequence.ORDER_ID_SEQ));
+            doc.setOrderId(KRADServiceLocator.getSequenceAccessorService().getNextAvailableSequenceNumber(ShopCartConstants.Sequence.ORDER_ID_SEQ));
             doc.getDocumentHeader().setDocumentDescription(String.valueOf(doc.getOrderId()));
 
             doc.setOrderStatusCd(MMConstants.OrderStatus.INITIATED);
@@ -362,7 +351,7 @@ public class TrueBuyoutServiceImpl implements TrueBuyoutService {
             doc.setDeliveryBuildingRmNbr(trueBuyout.getDeliveryBuildingRmNbr());
             doc.setDeliveryDepartmentNm(trueBuyout.getDeliveryDepartmentName());
 
-            doc.setCreationDate(KNSServiceLocator.getDateTimeService().getCurrentTimestamp());
+            doc.setCreationDate(CoreApiServiceLocator.getDateTimeService().getCurrentTimestamp());
             doc.setProfileTypeCode(MMConstants.OrderDocument.PROFILE_TYPE_INTERNAL);         
             
             List<OrderDetail> orderDetails = new ArrayList<OrderDetail>();
@@ -425,7 +414,7 @@ public class TrueBuyoutServiceImpl implements TrueBuyoutService {
 
     public void routeTrueBuyoutDocument(TrueBuyoutDocument document) {
         try {
-            documentService.routeDocument(document, "", new ArrayList<Object>());
+            documentService.routeDocument(document, "", new ArrayList<AdHocRouteRecipient>());
         }
         catch (WorkflowException e) {
             throw new RuntimeException("Error Routing OrderDocument", e);
@@ -434,7 +423,7 @@ public class TrueBuyoutServiceImpl implements TrueBuyoutService {
     
     private void routeOrderDocument(OrderDocument document) {
         try {
-            documentService.routeDocument(document, "", new ArrayList<Object>());
+            documentService.routeDocument(document, "", new ArrayList<AdHocRouteRecipient>());
         }
         catch (WorkflowException e) {
             throw new RuntimeException("Error Routing OrderDocument", e);

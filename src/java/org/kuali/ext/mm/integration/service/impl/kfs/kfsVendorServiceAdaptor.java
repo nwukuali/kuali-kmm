@@ -16,13 +16,6 @@
 
 package org.kuali.ext.mm.integration.service.impl.kfs;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-
-import javax.xml.namespace.QName;
-
 import org.apache.log4j.Logger;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.integration.FinancialSystemAdaptorFactory;
@@ -33,13 +26,15 @@ import org.kuali.ext.mm.integration.vnd.businessobject.FinancialPaymentTermType;
 import org.kuali.ext.mm.integration.vnd.businessobject.FinancialVendorAddress;
 import org.kuali.ext.mm.integration.vnd.businessobject.FinancialVendorContract;
 import org.kuali.ext.mm.integration.vnd.businessobject.FinancialVendorDetail;
-import org.kuali.kfs.vnd.businessobject.PaymentTermType;
-import org.kuali.kfs.vnd.businessobject.VendorAddress;
-import org.kuali.kfs.vnd.businessobject.VendorContract;
-import org.kuali.kfs.vnd.businessobject.VendorContractOrganization;
-import org.kuali.kfs.vnd.businessobject.VendorDetail;
+import org.kuali.kfs.vnd.businessobject.*;
 import org.kuali.kfs.vnd.document.service.VendorService;
-import org.kuali.rice.kns.util.KualiDecimal;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+
+import javax.xml.namespace.QName;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
 
 
 /**
