@@ -1,25 +1,25 @@
 package org.kuali.ext.mm.document.authorization;
 
-import java.util.Collection;
-import java.util.Set;
-
 import org.apache.commons.lang.StringUtils;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.document.WorksheetCountDocument;
 import org.kuali.ext.mm.util.MMUtil;
 import org.kuali.rice.kew.actionitem.ActionItem;
 import org.kuali.rice.kew.service.KEWServiceLocator;
-import org.kuali.rice.kim.bo.Person;
-import org.kuali.rice.kim.service.KIMServiceLocator;
-import org.kuali.rice.kns.document.Document;
+import org.kuali.rice.kim.api.identity.Person;
+import org.kuali.rice.kim.api.services.KimApiServiceLocator;
 import org.kuali.rice.kns.document.authorization.TransactionalDocumentPresentationControllerBase;
-import org.kuali.rice.kns.util.GlobalVariables;
+import org.kuali.rice.krad.document.Document;
+import org.kuali.rice.krad.util.GlobalVariables;
+
+import java.util.Collection;
+import java.util.Set;
 
 
 public class WorksheetCountDocumentController extends
         TransactionalDocumentPresentationControllerBase {
     @Override
-    protected boolean canSendAdhocRequests(Document document) {
+    public boolean canSendAdhocRequests(Document document) {
         return false;
     }
 
@@ -34,9 +34,9 @@ public class WorksheetCountDocumentController extends
                     || wdoc.getWorksheetStatusCode().equals(
                             MMConstants.WorksheetStatus.WORKSHEET_REPRINTED)) {
 
-                if (KIMServiceLocator.getIdentityManagementService().isAuthorized(
-                        GlobalVariables.getUserSession().getPrincipalId(),
-                        MMConstants.MM_NAMESPACE, "Edit Worksheet", null, null)) {
+                if (KimApiServiceLocator.getPermissionService().isAuthorized(
+									GlobalVariables.getUserSession().getPrincipalId(),
+									MMConstants.MM_NAMESPACE, "Edit Worksheet", null)) {
                     canDisplay = true;
                 }
                 else {
@@ -78,7 +78,7 @@ public class WorksheetCountDocumentController extends
         String principalId = luser.getPrincipalId().trim();
 
         Collection<ActionItem> actionsItems = KEWServiceLocator.getActionListService()
-                .findByWorkflowUserRouteHeaderId(principalId, new Long(docNumber));
+                .findByWorkflowUserDocumentId(principalId,docNumber);
 
         return !MMUtil.isCollectionEmpty(actionsItems);
     }

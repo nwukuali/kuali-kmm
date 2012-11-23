@@ -1,37 +1,38 @@
 package org.kuali.ext.mm.document.authorization;
 
-import java.util.Set;
-
 import org.apache.commons.lang.StringUtils;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.service.MMServiceLocator;
-import org.kuali.rice.kim.bo.types.dto.AttributeSet;
-import org.kuali.rice.kim.service.KIMServiceLocator;
-import org.kuali.rice.kim.util.KimConstants;
-import org.kuali.rice.kns.document.Document;
+import org.kuali.rice.kew.api.WorkflowDocument;
+import org.kuali.rice.kim.api.KimConstants;
+import org.kuali.rice.kim.api.services.KimApiServiceLocator;
 import org.kuali.rice.kns.document.authorization.TransactionalDocumentPresentationControllerBase;
-import org.kuali.rice.kns.util.GlobalVariables;
-import org.kuali.rice.kns.workflow.service.KualiWorkflowDocument;
+import org.kuali.rice.krad.document.Document;
+import org.kuali.rice.krad.util.GlobalVariables;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 
 public class OrderDocumentPresentationController extends
         TransactionalDocumentPresentationControllerBase {
 
     @Override
-    protected boolean canSendAdhocRequests(Document document) {
+    public boolean canSendAdhocRequests(Document document) {
         return false;
     }
 
     @Override
-    protected boolean canBlanketApprove(Document document) {
-        AttributeSet permissionDetails = new AttributeSet();
+    public boolean canBlanketApprove(Document document) {
+        Map<String,String> permissionDetails = new HashMap<String, String>();
         permissionDetails.put("documentTypeName", "SORD");
         // check permission
-        KualiWorkflowDocument workflowDocument = document.getDocumentHeader().getWorkflowDocument();
-        if ((workflowDocument.stateIsInitiated() || workflowDocument.stateIsSaved())
+        WorkflowDocument workflowDocument = document.getDocumentHeader().getWorkflowDocument();
+        if ((workflowDocument.isInitiated() || workflowDocument.isSaved())
                 && StringUtils.equals(workflowDocument.getInitiatorPrincipalId(), GlobalVariables
                         .getUserSession().getPrincipalId())
-                && KIMServiceLocator.getIdentityManagementService().isAuthorizedByTemplateName(
+                && KimApiServiceLocator.getPermissionService().isAuthorizedByTemplate(
                         GlobalVariables.getUserSession().getPrincipalId(),
                         KimConstants.KIM_GROUP_WORKFLOW_NAMESPACE_CODE,
                         KimConstants.PermissionTemplateNames.BLANKET_APPROVE_DOCUMENT,

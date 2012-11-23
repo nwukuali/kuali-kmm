@@ -3,8 +3,8 @@
  */
 package org.kuali.ext.mm.document.authorization;
 
-import org.kuali.rice.kns.document.Document;
 import org.kuali.rice.kns.document.authorization.TransactionalDocumentPresentationControllerBase;
+import org.kuali.rice.krad.document.Document;
 
 /**
  * @author rshrivas
@@ -18,22 +18,22 @@ public class CatalogPendingPresentationController extends TransactionalDocumentP
     }
 
     @Override
-    protected boolean canSendAdhocRequests(Document document) {
+    public boolean canSendAdhocRequests(Document document) {
         return false;
     }
 
     @Override
-    protected boolean canSave(Document document){
+    public boolean canSave(Document document){
         return false;
     }
 
     @Override
-    protected boolean canClose(Document document){
+    public boolean canClose(Document document){
         return true;
     }
 
     @Override
-    protected boolean canApprove(Document document) {
+    public boolean canApprove(Document document) {
         return true;
     }
 

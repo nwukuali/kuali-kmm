@@ -1,13 +1,13 @@
 package org.kuali.ext.mm.document.authorization;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.kuali.ext.mm.businessobject.Markup;
 import org.kuali.ext.mm.common.sys.MMConstants;
-import org.kuali.rice.kns.bo.BusinessObject;
 import org.kuali.rice.kns.document.MaintenanceDocumentBase;
 import org.kuali.rice.kns.document.authorization.MaintenanceDocumentPresentationControllerBase;
+import org.kuali.rice.krad.bo.BusinessObject;
+
+import java.util.HashSet;
+import java.util.Set;
 
 
 public class MarkupPresentationController extends MaintenanceDocumentPresentationControllerBase {

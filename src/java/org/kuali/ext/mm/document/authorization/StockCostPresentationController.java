@@ -1,11 +1,11 @@
 package org.kuali.ext.mm.document.authorization;
 
-import java.util.Set;
-
 import org.kuali.ext.mm.common.sys.MMConstants;
-import org.kuali.rice.kns.document.Document;
 import org.kuali.rice.kns.document.MaintenanceDocument;
 import org.kuali.rice.kns.document.authorization.MaintenanceDocumentPresentationControllerBase;
+import org.kuali.rice.krad.document.Document;
+
+import java.util.Set;
 
 
 	public class StockCostPresentationController extends MaintenanceDocumentPresentationControllerBase {
@@ -23,7 +23,7 @@ import org.kuali.rice.kns.document.authorization.MaintenanceDocumentPresentation
 
 
     @Override
-    protected boolean canSave(Document document){
+    public boolean canSave(Document document){
          return false;
     }
 }
