@@ -15,12 +15,13 @@
  */
 package org.kuali.ext.mm.businessobject.options;
 
+import org.kuali.ext.mm.common.sys.MMConstants;
+import org.kuali.rice.core.api.util.ConcreteKeyValue;
+import org.kuali.rice.core.api.util.KeyValue;
+import org.kuali.rice.krad.keyvalues.KeyValuesBase;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import org.kuali.ext.mm.common.sys.MMConstants;
-import org.kuali.rice.core.util.KeyLabelPair;
-import org.kuali.rice.kns.lookup.keyvalues.KeyValuesBase;
 
 /**
  *
@@ -33,11 +34,11 @@ public class RestrictionCodeValuesFinder extends KeyValuesBase {
      * @return a List of key/value pairs to populate a control
      * @see org.kuali.rice.kns.lookup.keyvalues.KeyValuesFinder#getKeyValues()
      */
-    public List<KeyLabelPair> getKeyValues() {
+    public List<KeyValue> getKeyValues() {
 
-        List<KeyLabelPair> labels = new ArrayList<KeyLabelPair>();
-        labels.add(new KeyLabelPair(MMConstants.CatalogRestriction.OPTION_ALLOW, MMConstants.CatalogRestriction.OPTION_ALLOW_LABEL));
-        labels.add(new KeyLabelPair(MMConstants.CatalogRestriction.OPTION_DISALLOW, MMConstants.CatalogRestriction.OPTION_DISALLOW_LABEL));
+        List<KeyValue> labels = new ArrayList<KeyValue>();
+        labels.add(new ConcreteKeyValue(MMConstants.CatalogRestriction.OPTION_ALLOW, MMConstants.CatalogRestriction.OPTION_ALLOW_LABEL));
+        labels.add(new ConcreteKeyValue(MMConstants.CatalogRestriction.OPTION_DISALLOW, MMConstants.CatalogRestriction.OPTION_DISALLOW_LABEL));
         return labels;
     }
 

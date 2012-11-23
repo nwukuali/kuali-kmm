@@ -1,14 +1,16 @@
 package org.kuali.ext.mm.businessobject.options;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.util.MMUtil;
-import org.kuali.rice.core.util.KeyLabelPair;
-import org.kuali.rice.kns.service.KeyValuesService;
+import org.kuali.rice.core.api.util.ConcreteKeyValue;
+import org.kuali.rice.core.api.util.KeyValue;
+import org.kuali.rice.krad.service.KeyValuesService;
+import org.kuali.rice.krad.util.ObjectUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 
 public class OptionsValueFinder {
@@ -21,19 +23,19 @@ public class OptionsValueFinder {
         return instance;
     }
 
-    public List<KeyLabelPair> getKeyLabelPair(Class classVal, String codeProperty,
+    public List<KeyValue> getKeyValue(Class classVal, String codeProperty,
             String valProperty) {
-        return this.getKeyLabelPair(classVal, codeProperty, valProperty, null);
+        return this.getKeyValue(classVal, codeProperty, valProperty, null);
     }
 
-    public List<KeyLabelPair> getKeyLabelPair(Class classVal, String codeProperty,
+    public List<KeyValue> getKeyValue(Class classVal, String codeProperty,
             String valProperty, Map<String, Object> param) {
         return getKeyValMap(classVal, codeProperty, valProperty, param);
     }
 
-    private List<KeyLabelPair> getKeyValMap(Class className, String codeProperty,
+    private List<KeyValue> getKeyValMap(Class className, String codeProperty,
             String valProperty, Map<String, Object> param) {
-        List<KeyLabelPair> labels = null;
+        List<KeyValue> labels = null;
         List objects = new ArrayList();
         KeyValuesService keyValuesService = SpringContext.getBean(KeyValuesService.class);
 
@@ -48,23 +50,23 @@ public class OptionsValueFinder {
 
     }
 
-    private List<KeyLabelPair> constructKayLabels(List objects, String codeProperty,
+    private List<KeyValue> constructKayLabels(List objects, String codeProperty,
             String valProperty) {
-        List<KeyLabelPair> labels = null;
+        List<KeyValue> labels = null;
         if (!MMUtil.isCollectionEmpty(objects))
-            labels = new ArrayList<KeyLabelPair>();
+            labels = new ArrayList<KeyValue>();
         else
-            return new ArrayList<KeyLabelPair>();
+            return new ArrayList<KeyValue>();
         labels
-                .add(new KeyLabelPair(null,
+                .add(new ConcreteKeyValue(null,
                     MMConstants.OptionFinderParms.OPTION_FINDER_DEFAULT_LABEL));
 
         for (Object object : objects) {
-            String code = (String) org.kuali.rice.kns.util.ObjectUtils.getPropertyValue(object,
-                    codeProperty);
-            String codeDesc = (String) org.kuali.rice.kns.util.ObjectUtils.getPropertyValue(object,
+            String code = (String) ObjectUtils.getPropertyValue(object,
+							codeProperty);
+            String codeDesc = (String) ObjectUtils.getPropertyValue(object,
                     valProperty);
-            labels.add(new KeyLabelPair(code, codeDesc));
+            labels.add(new ConcreteKeyValue(code, codeDesc));
         }
         return labels;
     }

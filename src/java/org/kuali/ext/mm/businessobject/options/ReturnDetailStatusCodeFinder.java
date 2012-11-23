@@ -15,12 +15,12 @@
  */
 package org.kuali.ext.mm.businessobject.options;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.kuali.ext.mm.businessobject.ReturnStatusCode;
 import org.kuali.ext.mm.common.sys.MMConstants;
-import org.kuali.rice.kns.lookup.valueFinder.ValueFinder;
+import org.kuali.rice.krad.valuefinder.ValueFinder;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 @SuppressWarnings("unchecked")

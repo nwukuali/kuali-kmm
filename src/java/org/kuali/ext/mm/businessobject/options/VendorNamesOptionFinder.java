@@ -3,16 +3,17 @@
  */
 package org.kuali.ext.mm.businessobject.options;
 
+import org.kuali.ext.mm.businessobject.Catalog;
+import org.kuali.ext.mm.common.sys.context.SpringContext;
+import org.kuali.rice.core.api.util.ConcreteKeyValue;
+import org.kuali.rice.core.api.util.KeyValue;
+import org.kuali.rice.krad.keyvalues.KeyValuesBase;
+import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.valuefinder.ValueFinder;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import org.kuali.ext.mm.businessobject.Catalog;
-import org.kuali.ext.mm.common.sys.context.SpringContext;
-import org.kuali.rice.core.util.KeyLabelPair;
-import org.kuali.rice.kns.lookup.keyvalues.KeyValuesBase;
-import org.kuali.rice.kns.lookup.valueFinder.ValueFinder;
-import org.kuali.rice.kns.service.BusinessObjectService;
 
 
 /**
@@ -26,17 +27,17 @@ public class VendorNamesOptionFinder extends KeyValuesBase implements ValueFinde
      * @return a List of key/value pairs to populate a control
      * @see org.kuali.rice.kns.lookup.keyvalues.KeyValuesFinder#getKeyValues()
      */
-    public List<KeyLabelPair> getKeyValues() {
+    public List<KeyValue> getKeyValues() {
         BusinessObjectService bOService = SpringContext.getBean(BusinessObjectService.class);
 
         List<Catalog> catalogList = (List<Catalog>) bOService.findAll(Catalog.class);
-        List<KeyLabelPair> labels = new ArrayList<KeyLabelPair>();
-        labels.add(new KeyLabelPair("", ""));
-        labels.add(new KeyLabelPair("Select All", "Select All"));
+        List<KeyValue> labels = new ArrayList<KeyValue>();
+        labels.add(new ConcreteKeyValue("", ""));
+        labels.add(new ConcreteKeyValue("Select All", "Select All"));
         for (Iterator iterator = catalogList.iterator(); iterator.hasNext();) {
             Catalog catalog = (Catalog) iterator.next();
             if(!catalog.getCatalogTypeCd().equalsIgnoreCase("1")){
-                labels.add(new KeyLabelPair(catalog.getCatalogDesc(), catalog.getCatalogDesc()));
+                labels.add(new ConcreteKeyValue(catalog.getCatalogDesc(), catalog.getCatalogDesc()));
             }
         }              
        return labels;

@@ -15,12 +15,13 @@
  */
 package org.kuali.ext.mm.businessobject.options;
 
+import org.kuali.ext.mm.common.sys.MMConstants;
+import org.kuali.rice.core.api.util.ConcreteKeyValue;
+import org.kuali.rice.core.api.util.KeyValue;
+import org.kuali.rice.krad.keyvalues.KeyValuesBase;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import org.kuali.ext.mm.common.sys.MMConstants;
-import org.kuali.rice.core.util.KeyLabelPair;
-import org.kuali.rice.kns.lookup.keyvalues.KeyValuesBase;
 
 /**
  *
@@ -33,17 +34,17 @@ public class OrderFrequencyValuesFinder extends KeyValuesBase {
      * @return a List of key/value pairs to populate a control
      * @see org.kuali.rice.kns.lookup.keyvalues.KeyValuesFinder#getKeyValues()
      */
-    public List<KeyLabelPair> getKeyValues() {
+    public List<KeyValue> getKeyValues() {
 
-        List<KeyLabelPair> labels = new ArrayList<KeyLabelPair>();
-        labels.add(new KeyLabelPair(MMConstants.RecurringOrder.OPTION_NONE, MMConstants.RecurringOrder.OPTION_LABEL_NONE));
-        labels.add(new KeyLabelPair(MMConstants.RecurringOrder.OPTION_DAILY, MMConstants.RecurringOrder.OPTION_LABEL_DAILY));
-        labels.add(new KeyLabelPair(MMConstants.RecurringOrder.OPTION_WEEKLY, MMConstants.RecurringOrder.OPTION_LABEL_WEEKLY));
-        labels.add(new KeyLabelPair(MMConstants.RecurringOrder.OPTION_BI_WEEKLY, MMConstants.RecurringOrder.OPTION_LABEL_BI_WEEKLY));
-        labels.add(new KeyLabelPair(MMConstants.RecurringOrder.OPTION_MONTHLY, MMConstants.RecurringOrder.OPTION_LABEL_MONTHLY));
-        labels.add(new KeyLabelPair(MMConstants.RecurringOrder.OPTION_QUARTERLY, MMConstants.RecurringOrder.OPTION_LABEL_QUARTERLY));
-        labels.add(new KeyLabelPair(MMConstants.RecurringOrder.OPTION_SEMI_ANNUALLY, MMConstants.RecurringOrder.OPTION_LABEL_SEMI_ANNUALLY));
-        labels.add(new KeyLabelPair(MMConstants.RecurringOrder.OPTION_YEARLY, MMConstants.RecurringOrder.OPTION_LABEL_YEARLY));
+        List<KeyValue> labels = new ArrayList<KeyValue>();
+        labels.add(new ConcreteKeyValue(MMConstants.RecurringOrder.OPTION_NONE.toString(), MMConstants.RecurringOrder.OPTION_LABEL_NONE));
+        labels.add(new ConcreteKeyValue(MMConstants.RecurringOrder.OPTION_DAILY.toString(), MMConstants.RecurringOrder.OPTION_LABEL_DAILY));
+        labels.add(new ConcreteKeyValue(MMConstants.RecurringOrder.OPTION_WEEKLY.toString(), MMConstants.RecurringOrder.OPTION_LABEL_WEEKLY));
+        labels.add(new ConcreteKeyValue(MMConstants.RecurringOrder.OPTION_BI_WEEKLY.toString(), MMConstants.RecurringOrder.OPTION_LABEL_BI_WEEKLY));
+        labels.add(new ConcreteKeyValue(MMConstants.RecurringOrder.OPTION_MONTHLY.toString(), MMConstants.RecurringOrder.OPTION_LABEL_MONTHLY));
+        labels.add(new ConcreteKeyValue(MMConstants.RecurringOrder.OPTION_QUARTERLY.toString(), MMConstants.RecurringOrder.OPTION_LABEL_QUARTERLY));
+        labels.add(new ConcreteKeyValue(MMConstants.RecurringOrder.OPTION_SEMI_ANNUALLY.toString(), MMConstants.RecurringOrder.OPTION_LABEL_SEMI_ANNUALLY));
+        labels.add(new ConcreteKeyValue(MMConstants.RecurringOrder.OPTION_YEARLY.toString(), MMConstants.RecurringOrder.OPTION_LABEL_YEARLY));
         
         return labels;
     }

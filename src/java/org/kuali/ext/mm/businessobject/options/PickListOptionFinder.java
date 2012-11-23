@@ -15,13 +15,14 @@
  */
 package org.kuali.ext.mm.businessobject.options;
 
+import org.kuali.ext.mm.common.sys.MMConstants;
+import org.kuali.rice.core.api.util.ConcreteKeyValue;
+import org.kuali.rice.core.api.util.KeyValue;
+import org.kuali.rice.krad.keyvalues.KeyValuesBase;
+import org.kuali.rice.krad.valuefinder.ValueFinder;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import org.kuali.ext.mm.common.sys.MMConstants;
-import org.kuali.rice.core.util.KeyLabelPair;
-import org.kuali.rice.kns.lookup.keyvalues.KeyValuesBase;
-import org.kuali.rice.kns.lookup.valueFinder.ValueFinder;
 
 
 /**
@@ -35,12 +36,12 @@ public class PickListOptionFinder extends KeyValuesBase implements ValueFinder {
      * @return a List of key/value pairs to populate a control
      * @see org.kuali.rice.kns.lookup.keyvalues.KeyValuesFinder#getKeyValues()
      */
-    public List<KeyLabelPair> getKeyValues() {
+    public List<KeyValue> getKeyValues() {
 
-        List<KeyLabelPair> labels = new ArrayList<KeyLabelPair>();
-        labels.add(new KeyLabelPair(MMConstants.PickListDocument.OPTION_ORDERS, MMConstants.PickListDocument.OPTION_ORDERS));
-        labels.add(new KeyLabelPair(MMConstants.PickListDocument.OPTION_ZONES, MMConstants.PickListDocument.OPTION_ZONES));
-        labels.add(new KeyLabelPair(MMConstants.PickListDocument.OPTION_SINGLE_LIST, MMConstants.PickListDocument.OPTION_SINGLE_LIST));
+        List<KeyValue> labels = new ArrayList<KeyValue>();
+        labels.add(new ConcreteKeyValue(MMConstants.PickListDocument.OPTION_ORDERS, MMConstants.PickListDocument.OPTION_ORDERS));
+        labels.add(new ConcreteKeyValue(MMConstants.PickListDocument.OPTION_ZONES, MMConstants.PickListDocument.OPTION_ZONES));
+        labels.add(new ConcreteKeyValue(MMConstants.PickListDocument.OPTION_SINGLE_LIST, MMConstants.PickListDocument.OPTION_SINGLE_LIST));
         return labels;
     }
 

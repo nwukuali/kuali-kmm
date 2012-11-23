@@ -15,18 +15,15 @@
  */
 package org.kuali.ext.mm.businessobject.options;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
 import org.kuali.ext.mm.businessobject.CycleCount;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
-import org.kuali.rice.core.util.KeyLabelPair;
-import org.kuali.rice.kns.lookup.keyvalues.KeyValuesBase;
-import org.kuali.rice.kns.service.KeyValuesService;
+import org.kuali.rice.core.api.util.ConcreteKeyValue;
+import org.kuali.rice.core.api.util.KeyValue;
+import org.kuali.rice.krad.keyvalues.KeyValuesBase;
+import org.kuali.rice.krad.service.KeyValuesService;
+
+import java.util.*;
 
 
 public class CountFrequencyFinder extends KeyValuesBase {
@@ -36,14 +33,14 @@ public class CountFrequencyFinder extends KeyValuesBase {
         List labels = new ArrayList();
         for (Object code : codes) {
             CycleCount cycleCount = (CycleCount) code;
-            labels.add(new KeyLabelPair(cycleCount.getCycleCntCd(), cycleCount.getCycleCntDesc()));
+            labels.add(new ConcreteKeyValue(cycleCount.getCycleCntCd(), cycleCount.getCycleCntDesc()));
         }
-        Collections.sort(labels, new Comparator<KeyLabelPair>() {
-            public int compare(KeyLabelPair o1, KeyLabelPair o2) {
-                return o1.getLabel().compareTo(o2.getLabel());
+        Collections.sort(labels, new Comparator<KeyValue>() {
+            public int compare(KeyValue o1, KeyValue o2) {
+                return o1.getValue().compareTo(o2.getValue());
             }
         });
-        labels.add(0, new KeyLabelPair("",
+        labels.add(0, new ConcreteKeyValue("",
             MMConstants.OptionFinderParms.OPTION_FINDER_DEFAULT_LABEL));
         return labels;
     }
