@@ -1,7 +1,5 @@
 package org.kuali.ext.mm.businessobject;
 
-import java.util.LinkedHashMap;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -65,15 +63,5 @@ public class OrderType extends MMPersistableBusinessObjectBase implements
 		this.orderTypeName = name;
 	}
 
-	/**
-	 * toStringMapper
-	 *
-	 * @return LinkedHashMap
-	 */
-	@Override
-    public LinkedHashMap toStringMapper() {
-		LinkedHashMap propMap = new LinkedHashMap();
 
-		return propMap;
-	}
 }

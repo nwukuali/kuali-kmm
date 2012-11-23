@@ -2,22 +2,6 @@ package org.kuali.ext.mm.businessobject;
 
 // Generated May 19, 2009 9:29:05 AM by Hibernate Tools 3.2.4.GA
 
-import java.sql.Date;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
 import org.apache.cxf.common.util.StringUtils;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
@@ -27,13 +11,27 @@ import org.kuali.ext.mm.document.ReturnDocument;
 import org.kuali.ext.mm.service.OrderService;
 import org.kuali.ext.mm.util.MMDecimal;
 import org.kuali.ext.mm.util.MMUtil;
-import org.kuali.rice.kew.exception.WorkflowException;
-import org.kuali.rice.kns.document.Document;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.util.KualiDecimal;
-import org.kuali.rice.kns.util.ObjectUtils;
-import org.kuali.rice.kns.util.TransactionalServiceUtils;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+import org.kuali.rice.kew.api.exception.WorkflowException;
+import org.kuali.rice.krad.document.Document;
+import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.service.KRADServiceLocatorWeb;
+import org.kuali.rice.krad.util.ObjectUtils;
+import org.kuali.rice.krad.util.TransactionalServiceUtils;
+
+import javax.persistence.*;
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+
+//import org.kuali.rice.kew.exception.WorkflowException;
+//import org.kuali.rice.krad.document.Document;
+//import org.kuali.rice.krad.service.BusinessObjectService;
+//import org.kuali.rice.core.api.util.type.KualiDecimal;
+//import org.kuali.rice.krad.util.ObjectUtils;
+//import org.kuali.rice.krad.util.TransactionalServiceUtils;
 
 
 /**
@@ -544,7 +542,7 @@ public class OrderDetail extends StoresPersistableBusinessObject implements Clon
             return 0;
         }
         CheckInReceivable first = TransactionalServiceUtils.retrieveFirstAndExhaustIterator(matches
-                .iterator());
+					.iterator());
 
         return first.getOrderItemQty() - (first.getAcceptedItemQty() + first.getRejectedItemQty());
     }
@@ -622,11 +620,11 @@ public class OrderDetail extends StoresPersistableBusinessObject implements Clon
             }
 
             for (CheckinDocument cdoc : docs) {
-                if (KNSServiceLocator.getDocumentService().documentExists(cdoc.getDocumentNumber())) {
-                    Document doc = KNSServiceLocator.getDocumentService().getByDocumentHeaderId(
+                if (KRADServiceLocatorWeb.getDocumentService().documentExists(cdoc.getDocumentNumber())) {
+                    Document doc = KRADServiceLocatorWeb.getDocumentService().getByDocumentHeaderId(
                             cdoc.getDocumentNumber());
                     if (doc.getDocumentHeader().hasWorkflowDocument()) {
-                        if (!doc.getDocumentHeader().getWorkflowDocument().stateIsFinal())
+                        if (!doc.getDocumentHeader().getWorkflowDocument().isFinal())
                             return false;
                     }
                 }
@@ -648,14 +646,14 @@ public class OrderDetail extends StoresPersistableBusinessObject implements Clon
         }
         try {
             for (CheckinDocument cdoc : docs) {
-                if (KNSServiceLocator.getDocumentService().documentExists(cdoc.getDocumentNumber())) {
+                if (KRADServiceLocatorWeb.getDocumentService().documentExists(cdoc.getDocumentNumber())) {
                     if (!cdoc.getDocumentHeader().hasWorkflowDocument()) {
-                        cdoc = (CheckinDocument) KNSServiceLocator.getDocumentService()
+                        cdoc = (CheckinDocument) KRADServiceLocatorWeb.getDocumentService()
                                 .getByDocumentHeaderId(cdoc.getDocumentNumber());
                     }
                     if (cdoc.getDocumentHeader().hasWorkflowDocument()
-                            && cdoc.getDocumentHeader().getWorkflowDocument().stateIsSaved()
-                            || cdoc.getDocumentHeader().getWorkflowDocument().stateIsInitiated())
+                            && cdoc.getDocumentHeader().getWorkflowDocument().isSaved()
+                            || cdoc.getDocumentHeader().getWorkflowDocument().isInitiated())
                         return cdoc;
                     continue;
                 }
@@ -676,15 +674,15 @@ public class OrderDetail extends StoresPersistableBusinessObject implements Clon
         }
         try {
             for (ReturnDocument cdoc : docs) {
-                if (KNSServiceLocator.getDocumentService().documentExists(cdoc.getDocumentNumber())) {
+                if (KRADServiceLocatorWeb.getDocumentService().documentExists(cdoc.getDocumentNumber())) {
                     if (!cdoc.getDocumentHeader().hasWorkflowDocument()) {
-                        cdoc = (ReturnDocument) KNSServiceLocator.getDocumentService()
+                        cdoc = (ReturnDocument) KRADServiceLocatorWeb.getDocumentService()
                                 .getByDocumentHeaderId(cdoc.getDocumentNumber());
                     }
 
                     if (cdoc.getDocumentHeader().hasWorkflowDocument()
-                            && cdoc.getDocumentHeader().getWorkflowDocument().stateIsSaved()
-                            || cdoc.getDocumentHeader().getWorkflowDocument().stateIsInitiated())
+                            && cdoc.getDocumentHeader().getWorkflowDocument().isSaved()
+                            || cdoc.getDocumentHeader().getWorkflowDocument().isInitiated())
                         return cdoc;
                     continue;
                 }
@@ -705,12 +703,12 @@ public class OrderDetail extends StoresPersistableBusinessObject implements Clon
         }
         try {
             for (ReturnDocument cdoc : docs) {
-                if (KNSServiceLocator.getDocumentService().documentExists(cdoc.getDocumentNumber())) {
+                if (KRADServiceLocatorWeb.getDocumentService().documentExists(cdoc.getDocumentNumber())) {
                     Document doc = null;
-                    doc = KNSServiceLocator.getDocumentService().getByDocumentHeaderId(
+                    doc = KRADServiceLocatorWeb.getDocumentService().getByDocumentHeaderId(
                             cdoc.getDocumentNumber());
                     if (doc.getDocumentHeader().hasWorkflowDocument()) {
-                        if (!doc.getDocumentHeader().getWorkflowDocument().stateIsFinal())
+                        if (!doc.getDocumentHeader().getWorkflowDocument().isFinal())
                             return false;
                     }
                 }
@@ -838,16 +836,6 @@ public class OrderDetail extends StoresPersistableBusinessObject implements Clon
         return itemCostAmt;
     }
 
-    /**
-     * toStringMapper
-     * 
-     * @return LinkedHashMap
-     */
-    @Override
-    public LinkedHashMap toStringMapper() {
-        LinkedHashMap propMap = new LinkedHashMap();
-        return propMap;
-    }
 
     public Integer getItemLineNumber() {
         return this.itemLineNumber;
