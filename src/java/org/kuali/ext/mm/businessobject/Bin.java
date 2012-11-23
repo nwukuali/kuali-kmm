@@ -2,21 +2,12 @@ package org.kuali.ext.mm.businessobject;
 
 // Generated Apr 8, 2009 10:12:44 AM by Hibernate Tools 3.2.4.GA
 
-import java.util.LinkedHashMap;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
 import org.apache.commons.lang.StringUtils;
 import org.kuali.ext.mm.common.sys.MMConstants;
-import org.kuali.rice.kns.util.KualiDecimal;
-import org.kuali.rice.kns.util.ObjectUtils;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+import org.kuali.rice.krad.util.ObjectUtils;
+
+import javax.persistence.*;
 
 
 /**
@@ -244,15 +235,4 @@ public class Bin extends MMPersistableBusinessObjectBase implements java.io.Seri
                 + ", zone=" + zone + ", zoneId=" + zoneId + "]";
     }
 
-    /**
-     * toStringMapper
-     *
-     * @return LinkedHashMap
-     */
-    @Override
-    public LinkedHashMap<String, String> toStringMapper() {
-        LinkedHashMap<String, String> propMap = new LinkedHashMap<String, String>();
-        propMap.put("binId", "binId");
-        return propMap;
-    }
 }

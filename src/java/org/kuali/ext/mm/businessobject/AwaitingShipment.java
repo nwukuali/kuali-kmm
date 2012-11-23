@@ -1,10 +1,10 @@
 package org.kuali.ext.mm.businessobject;
-	
-import java.sql.Timestamp;
-import java.util.LinkedHashMap;
 
-import org.kuali.rice.kns.bo.BusinessObjectBase;
-	
+import org.kuali.rice.krad.bo.BusinessObjectBase;
+
+import java.sql.Timestamp;
+
+
 public class AwaitingShipment extends BusinessObjectBase {
 
     private Integer orderNumber;
@@ -97,15 +97,6 @@ public class AwaitingShipment extends BusinessObjectBase {
 	public void setBinLocation(String binLocation) {
 		this.binLocation = binLocation;
 	}
-
-    /**
-     * @see org.kuali.rice.kns.bo.BusinessObjectBase#toStringMapper()
-     */
-    @Override
-    protected LinkedHashMap toStringMapper() {
-        // TODO Auto-generated method stub
-        return null;
-    }
 
     /**
      * @see org.kuali.rice.kns.bo.BusinessObject#refresh()

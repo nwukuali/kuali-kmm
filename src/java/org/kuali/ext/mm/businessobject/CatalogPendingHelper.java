@@ -4,7 +4,7 @@
 package org.kuali.ext.mm.businessobject;
 
 import org.kuali.ext.mm.document.CatalogPending;
-import org.kuali.rice.kew.dto.DocumentRouteStatusChangeDTO;
+import org.kuali.rice.kew.framework.postprocessor.DocumentRouteStatusChange;
 
 /**
  * @author rshrivas
@@ -21,7 +21,7 @@ public class CatalogPendingHelper extends CatalogPending {
     }
 
     @Override
-    public void doRouteStatusChange(DocumentRouteStatusChangeDTO statusChangeEvent) {
+    public void doRouteStatusChange(DocumentRouteStatusChange statusChangeEvent) {
         super.doRouteStatusChange(statusChangeEvent);
     }
 }

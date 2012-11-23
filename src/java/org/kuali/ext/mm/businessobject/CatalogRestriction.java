@@ -1,18 +1,14 @@
 package org.kuali.ext.mm.businessobject;
 
-import java.util.LinkedHashMap;
+import org.apache.commons.lang.StringUtils;
+import org.kuali.ext.mm.integration.coa.businessobject.FinancialAccount;
+import org.kuali.ext.mm.integration.coa.businessobject.FinancialChart;
+import org.kuali.ext.mm.integration.coa.businessobject.FinancialOrganization;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import org.apache.commons.lang.StringUtils;
-import org.apache.ojb.broker.PersistenceBroker;
-import org.apache.ojb.broker.PersistenceBrokerException;
-import org.kuali.ext.mm.integration.coa.businessobject.FinancialAccount;
-import org.kuali.ext.mm.integration.coa.businessobject.FinancialChart;
-import org.kuali.ext.mm.integration.coa.businessobject.FinancialOrganization;
 
 @Entity
 @Table(name = "MM_CATALOG_RESTRICT_T")
@@ -125,36 +121,21 @@ public class CatalogRestriction extends MMPersistableBusinessObjectBase implemen
     public FinancialAccount getAccount() {
         return account;
     }
-    
-    @Override
-    public void beforeInsert(PersistenceBroker persistenceBroker) throws PersistenceBrokerException {
-        super.beforeInsert(persistenceBroker);
 
-        if(StringUtils.isNotBlank(this.getAccountNumber())) {
-            this.setOrganization(null);
-            this.setOrganizationCode("");
-        }
-    }
+	protected void prePersist() {
+		super.prePersist();
+		if(StringUtils.isNotBlank(this.getAccountNumber())) {
+				this.setOrganization(null);
+				this.setOrganizationCode("");
+		}
+	}
 
-    @Override
-    public void beforeUpdate(PersistenceBroker persistenceBroker) throws PersistenceBrokerException {
-        super.beforeUpdate(persistenceBroker);
-        
-        if(StringUtils.isNotBlank(this.getAccountNumber())) {
-            this.setOrganization(null);
-            this.setOrganizationCode("");
-        }
-    }
-
-    /**
-     * toStringMapper
-     * @return LinkedHashMap
-     */
-    @Override
-    public LinkedHashMap toStringMapper() {
-        LinkedHashMap propMap = new LinkedHashMap();
-        return propMap;
-    }
-
+	protected void preUpdate() {
+		super.preUpdate();
+		if(StringUtils.isNotBlank(this.getAccountNumber())) {
+				this.setOrganization(null);
+				this.setOrganizationCode("");
+		}
+	}
 
 }
