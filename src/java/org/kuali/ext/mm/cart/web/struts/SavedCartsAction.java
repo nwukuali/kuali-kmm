@@ -1,12 +1,5 @@
 package org.kuali.ext.mm.cart.web.struts;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -19,11 +12,17 @@ import org.kuali.ext.mm.cart.service.ShopCartService;
 import org.kuali.ext.mm.cart.service.ShopCartServiceLocator;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.MMKeyConstants;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.util.KNSConstants;
-import org.kuali.rice.kns.util.KualiDecimal;
-import org.kuali.rice.kns.util.ObjectUtils;
-import org.kuali.rice.kns.util.UrlFactory;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+import org.kuali.rice.krad.service.KRADServiceLocator;
+import org.kuali.rice.krad.util.KRADConstants;
+import org.kuali.rice.krad.util.ObjectUtils;
+import org.kuali.rice.krad.util.UrlFactory;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
 
 
 public class SavedCartsAction extends StoresShoppingActionBase {
@@ -75,8 +74,8 @@ public class SavedCartsAction extends StoresShoppingActionBase {
         request.getSession().setAttribute(ShopCartConstants.Session.SESSION_SHOP_CART, scForm.getCartToLoad());
 
         Properties parameters = new Properties();
-        parameters.put(KNSConstants.DISPATCH_REQUEST_PARAMETER, ShopCartConstants.START_METHOD);
-		String viewCartUrl = KNSServiceLocator.getKualiConfigurationService().getPropertyString(MMKeyConstants.MM_MODULE_URL) + "/" + "viewCart.do";;
+        parameters.put(KRADConstants.DISPATCH_REQUEST_PARAMETER, ShopCartConstants.START_METHOD);
+		String viewCartUrl = KRADServiceLocator.getKualiConfigurationService().getPropertyValueAsString(MMKeyConstants.MM_MODULE_URL) + "/" + "viewCart.do";;
 
 
 		return new ActionForward(UrlFactory.parameterizeUrl(viewCartUrl, parameters), true);
@@ -156,7 +155,7 @@ public class SavedCartsAction extends StoresShoppingActionBase {
 		scForm.createNewConfirmAction(request);
 		scForm.getConfirmAction().setConfirmAction(ShopCartConstants.SAVED_CARTS_ACTION);
 		scForm.getConfirmAction().setDeclineAction(ShopCartConstants.SAVED_CARTS_ACTION);
-		scForm.getConfirmAction().setMessage(KNSServiceLocator.getKualiConfigurationService().getPropertyString(ShopCartKeyConstants.QUESTION_CONFIRM_DELETE_SAVED_CART));
+		scForm.getConfirmAction().setMessage(KRADServiceLocator.getKualiConfigurationService().getPropertyValueAsString(ShopCartKeyConstants.QUESTION_CONFIRM_DELETE_SAVED_CART));
 		confirmParameters.put(MMConstants.DISPATCH_REQUEST_PARAMETER, ShopCartConstants.DELETE_SAVED_CART_METHOD);
 		confirmParameters.put(ShopCartConstants.CART_ID, cartToDelete.getShoppingCartId());
 		declineParameters.put(MMConstants.DISPATCH_REQUEST_PARAMETER, ShopCartConstants.START_METHOD);
@@ -176,7 +175,7 @@ public class SavedCartsAction extends StoresShoppingActionBase {
 		scForm.createNewConfirmAction(request);
 		scForm.getConfirmAction().setConfirmAction(ShopCartConstants.SAVED_CARTS_ACTION);
 		scForm.getConfirmAction().setDeclineAction(ShopCartConstants.SAVED_CARTS_ACTION);
-		scForm.getConfirmAction().setMessage(KNSServiceLocator.getKualiConfigurationService().getPropertyString(ShopCartKeyConstants.QUESTION_CONFIRM_CART_SAVE));
+		scForm.getConfirmAction().setMessage(KRADServiceLocator.getKualiConfigurationService().getPropertyValueAsString(ShopCartKeyConstants.QUESTION_CONFIRM_CART_SAVE));
 		confirmParameters.put(MMConstants.DISPATCH_REQUEST_PARAMETER, ShopCartConstants.SAVE_CONFRIM_METHOD);
 		confirmParameters.put(ShopCartConstants.SAVED_CART_NAME, scForm.getSaveShopCartName());
 		declineParameters.put(MMConstants.DISPATCH_REQUEST_PARAMETER, ShopCartConstants.PREPARE_TO_SAVE_METHOD);
@@ -209,7 +208,7 @@ public class SavedCartsAction extends StoresShoppingActionBase {
         scForm.getSessionCart().setSessionCartSaved(true);
 
         Properties parameters = new Properties();
-        parameters.put(KNSConstants.DISPATCH_REQUEST_PARAMETER, ShopCartConstants.START_METHOD);
+        parameters.put(KRADConstants.DISPATCH_REQUEST_PARAMETER, ShopCartConstants.START_METHOD);
         return new ActionForward(UrlFactory.parameterizeUrl(ShopCartConstants.VIEW_CART_ACTION, parameters), true);
 	}
 

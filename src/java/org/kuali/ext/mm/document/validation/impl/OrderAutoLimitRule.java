@@ -3,9 +3,6 @@
  */
 package org.kuali.ext.mm.document.validation.impl;
 
-import java.util.Collection;
-import java.util.HashMap;
-
 import org.apache.commons.lang.StringUtils;
 import org.kuali.ext.mm.businessobject.OrderAutoLimit;
 import org.kuali.ext.mm.common.sys.MMKeyConstants;
@@ -13,7 +10,10 @@ import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.dataaccess.MMBusinessObjectDao;
 import org.kuali.ext.mm.integration.FinancialSystemAdaptorFactory;
 import org.kuali.rice.kns.document.MaintenanceDocument;
-import org.kuali.rice.kns.util.KNSConstants;
+import org.kuali.rice.krad.util.KRADConstants;
+
+import java.util.Collection;
+import java.util.HashMap;
 
 
 /**
@@ -28,15 +28,15 @@ public class OrderAutoLimitRule extends FinancialMaintenanceDocumentRuleBase {
         OrderAutoLimit autoLimit = (OrderAutoLimit) document.getNewMaintainableObject()
                 .getBusinessObject();
         // validate chart code
-        valid &= validateChart(autoLimit.getChartCode(), KNSConstants.MAINTENANCE_NEW_MAINTAINABLE
+        valid &= validateChart(autoLimit.getChartCode(), KRADConstants.MAINTENANCE_NEW_MAINTAINABLE
                 + "chartCode", MMKeyConstants.OrderAutoLimit.CHART_NOT_VALID);
         // validate org code
 //        valid &= validateOrg(autoLimit.getChartCode(), autoLimit.getOrgCode(),
-//                KNSConstants.MAINTENANCE_NEW_MAINTAINABLE + "orgCode",
+//                KRADConstants.MAINTENANCE_NEW_MAINTAINABLE + "orgCode",
 //                MMKeyConstants.OrderAutoLimit.ORG_NOT_VALID);
         // validate account number
         valid &= validateAccount(autoLimit.getChartCode(), autoLimit.getAccountNumber(),
-                KNSConstants.MAINTENANCE_NEW_MAINTAINABLE + "accountNumber",
+                KRADConstants.MAINTENANCE_NEW_MAINTAINABLE + "accountNumber",
                 MMKeyConstants.OrderAutoLimit.ACCT_NOT_VALID);
 
         if (document.isNew()) {

@@ -1,16 +1,15 @@
 package org.kuali.ext.mm.document.web.struts;
 
-import java.sql.Timestamp;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.document.PickListDocument;
-import org.kuali.rice.kns.util.KNSConstants;
+import org.kuali.rice.kew.api.WorkflowDocument;
 import org.kuali.rice.kns.web.struts.form.KualiTransactionalDocumentFormBase;
 import org.kuali.rice.kns.web.ui.ExtraButton;
-import org.kuali.rice.kns.workflow.service.KualiWorkflowDocument;
+import org.kuali.rice.krad.util.KRADConstants;
+
+import javax.servlet.http.HttpServletRequest;
+import java.sql.Timestamp;
+import java.util.List;
 
 
 public class PickListForm extends KualiTransactionalDocumentFormBase {
@@ -136,9 +135,9 @@ public class PickListForm extends KualiTransactionalDocumentFormBase {
     public List<ExtraButton> getExtraButtons() {
         extraButtons.clear();
 
-        KualiWorkflowDocument workflowDoc = this.getPickListDocument().getDocumentHeader().getWorkflowDocument();
+        WorkflowDocument workflowDoc = this.getPickListDocument().getDocumentHeader().getWorkflowDocument();
 
-        if(workflowDoc.stateIsApproved() || workflowDoc.stateIsEnroute() || workflowDoc.stateIsProcessed() || workflowDoc.stateIsFinal()) {
+        if(workflowDoc.isApproved() || workflowDoc.isEnroute() || workflowDoc.isProcessed() || workflowDoc.isFinal()) {
         	 extraButtons.add(createPrintButton());
         }
 
@@ -170,7 +169,7 @@ public class PickListForm extends KualiTransactionalDocumentFormBase {
 	@Override
 	public void addRequiredNonEditableProperties() {
 	    super.addRequiredNonEditableProperties();
-	    registerRequiredNonEditableProperty(KNSConstants.LOOKUP_RESULTS_SEQUENCE_NUMBER);
+	    registerRequiredNonEditableProperty(KRADConstants.LOOKUP_RESULTS_SEQUENCE_NUMBER);
 	}
 
 }

@@ -1,21 +1,15 @@
 package org.kuali.ext.mm.document.service.impl;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.document.service.BusinessObjectLockingService;
-import org.kuali.rice.kns.bo.PersistableBusinessObject;
-import org.kuali.rice.kns.document.MaintenanceLock;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.service.MaintenanceDocumentService;
-import org.kuali.rice.kns.util.KNSConstants;
-import org.kuali.rice.kns.util.ObjectUtils;
+import org.kuali.rice.krad.bo.PersistableBusinessObject;
+import org.kuali.rice.krad.maintenance.MaintenanceLock;
+import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.service.MaintenanceDocumentService;
+import org.kuali.rice.krad.util.KRADConstants;
+import org.kuali.rice.krad.util.ObjectUtils;
+
+import java.util.*;
 
 
 /**
@@ -87,7 +81,7 @@ public class BusinessObjectLockingServiceImpl implements BusinessObjectLockingSe
     protected StringBuffer createLockRepresentation(PersistableBusinessObject bo,
             List<String> keyFields) {
         StringBuffer lockRepresentation = new StringBuffer(bo.getClass().getName());
-        lockRepresentation.append(KNSConstants.Maintenance.AFTER_CLASS_DELIM);
+        lockRepresentation.append(KRADConstants.Maintenance.LOCK_AFTER_CLASS_DELIM);
         int pos = 0;
         for (String fieldName : keyFields) {
             pos++;
@@ -96,10 +90,10 @@ public class BusinessObjectLockingServiceImpl implements BusinessObjectLockingSe
                 fieldValue = "";
             }
             lockRepresentation.append(fieldName);
-            lockRepresentation.append(KNSConstants.Maintenance.AFTER_FIELDNAME_DELIM);
+            lockRepresentation.append(KRADConstants.Maintenance.LOCK_AFTER_FIELDNAME_DELIM);
             lockRepresentation.append(String.valueOf(fieldValue));
             if (pos < keyFields.size()) {
-                lockRepresentation.append(KNSConstants.Maintenance.AFTER_VALUE_DELIM);
+                lockRepresentation.append(KRADConstants.Maintenance.LOCK_AFTER_VALUE_DELIM);
             }
         }
         return lockRepresentation;

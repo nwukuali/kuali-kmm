@@ -1,12 +1,12 @@
 package org.kuali.ext.mm.service;
 
-import java.util.List;
-
 import org.kuali.ext.mm.businessobject.Accounts;
 import org.kuali.ext.mm.businessobject.OrderDetail;
 import org.kuali.ext.mm.businessobject.Profile;
 import org.kuali.ext.mm.document.OrderDocument;
-import org.kuali.rice.kns.util.KualiDecimal;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+
+import java.util.List;
 
 public interface OrderService {
     /**

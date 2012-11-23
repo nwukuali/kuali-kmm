@@ -1,9 +1,9 @@
 package org.kuali.ext.mm.common.service.impl;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.kuali.ext.mm.common.filter.AuthenticationFilter;
-import org.kuali.rice.kim.service.AuthenticationService;
+import org.kuali.rice.kim.api.identity.AuthenticationService;
+
+import javax.servlet.http.HttpServletRequest;
 
 
 public class AuthenticationServiceSimpleImpl implements AuthenticationService {

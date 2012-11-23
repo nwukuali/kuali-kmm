@@ -18,8 +18,8 @@ package org.kuali.ext.mm.integration.service;
 
 import org.kuali.ext.mm.document.OrderDocument;
 import org.kuali.ext.mm.integration.purap.document.FinancialPurchaseOrderDocument;
-import org.kuali.rice.kns.document.Document;
-import org.kuali.rice.kns.util.KualiDecimal;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+import org.kuali.rice.krad.document.Document;
 
 /**
  * @author harsha07

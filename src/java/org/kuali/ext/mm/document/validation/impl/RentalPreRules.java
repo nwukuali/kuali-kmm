@@ -1,15 +1,15 @@
  package org.kuali.ext.mm.document.validation.impl;
 
-import org.kuali.ext.mm.businessobject.Rental;
-import org.kuali.ext.mm.common.sys.MMKeyConstants;
-import org.kuali.ext.mm.common.sys.context.SpringContext;
-import org.kuali.ext.mm.service.MMServiceLocator;
-import org.kuali.ext.mm.service.RentalService;
-import org.kuali.rice.core.util.RiceConstants;
-import org.kuali.rice.kns.document.Document;
-import org.kuali.rice.kns.document.MaintenanceDocument;
-import org.kuali.rice.kns.rules.PromptBeforeValidationBase;
-import org.kuali.rice.kns.service.KualiConfigurationService;
+ import org.kuali.ext.mm.businessobject.Rental;
+ import org.kuali.ext.mm.common.sys.MMKeyConstants;
+ import org.kuali.ext.mm.common.sys.context.SpringContext;
+ import org.kuali.ext.mm.service.MMServiceLocator;
+ import org.kuali.ext.mm.service.RentalService;
+ import org.kuali.rice.core.api.config.property.ConfigurationService;
+ import org.kuali.rice.core.api.util.RiceConstants;
+ import org.kuali.rice.kns.document.MaintenanceDocument;
+ import org.kuali.rice.kns.rules.PromptBeforeValidationBase;
+ import org.kuali.rice.krad.document.Document;
 
 
 public class RentalPreRules extends PromptBeforeValidationBase {
@@ -54,8 +54,8 @@ public class RentalPreRules extends PromptBeforeValidationBase {
 	 * @return True if the user wants to proceed with modifying a historical record
 	 */
 	private boolean isOkModifyingHistoricalRecord() {
-        KualiConfigurationService kualiConfiguration = SpringContext.getBean(KualiConfigurationService.class);
-        String warningMessage = kualiConfiguration.getPropertyString(MMKeyConstants.Rental.HISTORICAL_MODIFICATION_QUESTION);
+        ConfigurationService kualiConfiguration = SpringContext.getBean(ConfigurationService.class);
+        String warningMessage = kualiConfiguration.getPropertyValueAsString(MMKeyConstants.Rental.HISTORICAL_MODIFICATION_QUESTION);
         return super.askOrAnalyzeYesNoQuestion(MMKeyConstants.Rental.HISTORICAL_MODIFICATION_QUESTION, warningMessage);
 	}
 

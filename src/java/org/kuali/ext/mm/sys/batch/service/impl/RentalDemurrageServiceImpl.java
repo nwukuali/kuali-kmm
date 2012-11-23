@@ -3,10 +3,6 @@
  */
 package org.kuali.ext.mm.sys.batch.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.log4j.Logger;
 import org.kuali.ext.mm.businessobject.MMCapitalAssetInformation;
 import org.kuali.ext.mm.businessobject.MMCapitalAssetInformationDetail;
@@ -22,9 +18,13 @@ import org.kuali.ext.mm.integration.fp.businessobject.FinancialInternalBillingIt
 import org.kuali.ext.mm.integration.sys.businessobject.FinancialAccountingLine;
 import org.kuali.ext.mm.sys.batch.dataaccess.RentalDemurrageDao;
 import org.kuali.ext.mm.sys.batch.service.RentalDemurrageService;
-import org.kuali.rice.kns.bo.DocumentHeader;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.util.KualiDecimal;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+import org.kuali.rice.krad.bo.DocumentHeader;
+import org.kuali.rice.krad.service.BusinessObjectService;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 
 /**

@@ -1,12 +1,12 @@
 package org.kuali.ext.mm.cart.web.struts;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.kuali.ext.mm.businessobject.ShoppingCart;
 import org.kuali.ext.mm.cart.ShopCartConstants;
 import org.kuali.ext.mm.cart.service.ShopCartService;
 import org.kuali.ext.mm.cart.service.ShopCartServiceLocator;
-import org.kuali.rice.kns.util.KualiDecimal;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+
+import javax.servlet.http.HttpServletRequest;
 
 
 public class PunchOutReturnForm extends ShopCartFormBase {

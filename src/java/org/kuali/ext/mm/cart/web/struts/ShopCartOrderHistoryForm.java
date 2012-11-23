@@ -1,11 +1,10 @@
 package org.kuali.ext.mm.cart.web.struts;
 
-import java.util.Calendar;
+import org.kuali.ext.mm.cart.ShopCartConstants;
+import org.kuali.rice.core.api.CoreApiServiceLocator;
 
 import javax.servlet.http.HttpServletRequest;
-
-import org.kuali.ext.mm.cart.ShopCartConstants;
-import org.kuali.rice.kns.service.KNSServiceLocator;
+import java.util.Calendar;
 
 
 public class ShopCartOrderHistoryForm extends ShopCartOrdersForm {
@@ -28,7 +27,7 @@ public class ShopCartOrderHistoryForm extends ShopCartOrdersForm {
 	 */
 	public ShopCartOrderHistoryForm() {
 		super();
-		setCurrentCalendar(KNSServiceLocator.getDateTimeService().getCurrentCalendar());
+		setCurrentCalendar(CoreApiServiceLocator.getDateTimeService().getCurrentCalendar());
 	}
 
 	@Override

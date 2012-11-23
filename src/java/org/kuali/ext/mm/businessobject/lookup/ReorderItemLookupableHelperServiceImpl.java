@@ -15,26 +15,21 @@
  */
 package org.kuali.ext.mm.businessobject.lookup;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-
 import org.apache.cxf.common.util.StringUtils;
 import org.kuali.ext.mm.businessobject.ReorderItem;
 import org.kuali.ext.mm.common.sys.MMConstants;
-import org.kuali.rice.kns.bo.BusinessObject;
 import org.kuali.rice.kns.lookup.HtmlData;
 import org.kuali.rice.kns.lookup.HtmlData.AnchorHtmlData;
 import org.kuali.rice.kns.lookup.KualiLookupableHelperServiceImpl;
-import org.kuali.rice.kns.util.KNSConstants;
-import org.kuali.rice.kns.util.ObjectUtils;
-import org.kuali.rice.kns.util.UrlFactory;
 import org.kuali.rice.kns.web.struts.form.LookupForm;
 import org.kuali.rice.kns.web.ui.Column;
 import org.kuali.rice.kns.web.ui.ResultRow;
+import org.kuali.rice.krad.bo.BusinessObject;
+import org.kuali.rice.krad.util.KRADConstants;
+import org.kuali.rice.krad.util.ObjectUtils;
+import org.kuali.rice.krad.util.UrlFactory;
+
+import java.util.*;
 
 
 /**
@@ -61,7 +56,7 @@ public class ReorderItemLookupableHelperServiceImpl extends KualiLookupableHelpe
             fieldValues.remove(MMConstants.ReorderItem.CATALOG_GROUP_CATALOG_CODE);
             getParameters().remove(MMConstants.ReorderItem.CATALOG_GROUP_CATALOG_CODE);
             fieldValues.put(MMConstants.ReorderItem.CATALOG_GROUPCODE, catalogGroupCode);
-            getParameters().put(MMConstants.ReorderItem.CATALOG_GROUPCODE, catalogGroupCode);
+            getParameters().put(MMConstants.ReorderItem.CATALOG_GROUPCODE, new String[]{catalogGroupCode});
         }
 
         if (!StringUtils.isEmpty(catalogSubGroupCode)) {
@@ -69,8 +64,7 @@ public class ReorderItemLookupableHelperServiceImpl extends KualiLookupableHelpe
             getParameters().remove(MMConstants.ReorderItem.CATALOG_SUBGROUP_CATALOG_SUBGROUPCODE);
             fieldValues.put(MMConstants.ReorderItem.CATALOG_SUBGROUP_CATALOG_CODE,
                     catalogSubGroupCode);
-            getParameters().put(MMConstants.ReorderItem.CATALOG_SUBGROUP_CATALOG_CODE,
-                    catalogSubGroupCode);
+            getParameters().put(MMConstants.ReorderItem.CATALOG_SUBGROUP_CATALOG_CODE, new String[]{catalogSubGroupCode});
         }
 
         List<? extends BusinessObject> results = super.getSearchResults(fieldValues);
@@ -130,8 +124,8 @@ public class ReorderItemLookupableHelperServiceImpl extends KualiLookupableHelpe
         AnchorHtmlData anchorHtmlData = null;
 
         params
-                .setProperty(KNSConstants.DISPATCH_REQUEST_PARAMETER,
-                        KNSConstants.DOC_HANDLER_METHOD);
+                .setProperty(KRADConstants.DISPATCH_REQUEST_PARAMETER,
+                        KRADConstants.DOC_HANDLER_METHOD);
         params.setProperty(MMConstants.COMMAND, MMConstants.COMMAND_INITIATE);
         params.setProperty(MMConstants.ReorderItem.EDIT_ITEMS_ACTION,
                 MMConstants.ReorderItem.EDIT_REORDERED_ITEMS_LABEL);
@@ -155,10 +149,10 @@ public class ReorderItemLookupableHelperServiceImpl extends KualiLookupableHelpe
             params.setProperty(MMConstants.ReorderItem.CATALOG_SUBGROUP_CATALOG_SUBGROUPCODE,
                     reorderItem.getCatalogSubGroupCode());
 
-        params.setProperty(KNSConstants.DOCUMENT_TYPE_NAME,
+        params.setProperty(KRADConstants.DOCUMENT_TYPE_NAME,
                 MMConstants.ReOrderDocument.STORES_REORDER_DOCUMENT);
-        String href = getKualiConfigurationService().getPropertyString(
-                KNSConstants.APPLICATION_URL_KEY)
+        String href = getKualiConfigurationService().getPropertyValueAsString(
+                KRADConstants.APPLICATION_URL_KEY)
                 + "/"
                 + UrlFactory.parameterizeUrl(MMConstants.ReorderItem.REORDER_DOCUMENT_ACTION,
                         params);
@@ -178,17 +172,17 @@ public class ReorderItemLookupableHelperServiceImpl extends KualiLookupableHelpe
         params.setProperty(MMConstants.Warehouse.WAREHOUSE_CD, reorderItem.getWarehouseCd());
 
         params
-                .setProperty(KNSConstants.DISPATCH_REQUEST_PARAMETER,
-                        KNSConstants.DOC_HANDLER_METHOD);
+                .setProperty(KRADConstants.DISPATCH_REQUEST_PARAMETER,
+                        KRADConstants.DOC_HANDLER_METHOD);
         params.setProperty(MMConstants.COMMAND, MMConstants.COMMAND_INITIATE);
         params.setProperty(MMConstants.ReorderItem.EDIT_ITEMS_ACTION,
                 MMConstants.ReorderItem.EDIT_ALL_ITEMS_IN_AGREEMENT_LABEL);
         params.setProperty(MMConstants.ReorderItem.REORDER_AGREEMENT_NUMBER, reorderItem
                 .getAgreementNbr());
-        params.setProperty(KNSConstants.DOCUMENT_TYPE_NAME,
+        params.setProperty(KRADConstants.DOCUMENT_TYPE_NAME,
                 MMConstants.ReOrderDocument.STORES_REORDER_DOCUMENT);
-        String href = getKualiConfigurationService().getPropertyString(
-                KNSConstants.APPLICATION_URL_KEY)
+        String href = getKualiConfigurationService().getPropertyValueAsString(
+                KRADConstants.APPLICATION_URL_KEY)
                 + "/"
                 + UrlFactory.parameterizeUrl(MMConstants.ReorderItem.REORDER_DOCUMENT_ACTION,
                         params);

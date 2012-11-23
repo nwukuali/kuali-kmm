@@ -3,21 +3,20 @@
  */
 package org.kuali.ext.mm.integration.purap.document;
 
+import org.kuali.ext.mm.integration.FinancialSystemComponent;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+import org.kuali.rice.krad.bo.ExternalizableBusinessObject;
+import org.kuali.rice.krad.bo.TransientBusinessObjectBase;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-
-import org.kuali.ext.mm.integration.FinancialSystemComponent;
-import org.kuali.rice.kns.bo.ExternalizableBusinessObject;
-import org.kuali.rice.kns.bo.TransientBusinessObjectBase;
-import org.kuali.rice.kns.util.KualiDecimal;
 
 /**
  * @author harsha07
  */
 public class FinancialPurchaseOrderDetail extends TransientBusinessObjectBase implements
-        ExternalizableBusinessObject, FinancialSystemComponent {
+	ExternalizableBusinessObject, FinancialSystemComponent {
 
     /**
      *
@@ -127,14 +126,6 @@ public class FinancialPurchaseOrderDetail extends TransientBusinessObjectBase im
      */
     public void setItemLineNumber(Integer itemLineNumber) {
         this.itemLineNumber = itemLineNumber;
-    }
-
-    /**
-     * @see org.kuali.rice.kns.bo.BusinessObjectBase#toStringMapper()
-     */
-    @Override
-    protected LinkedHashMap<String, String> toStringMapper() {
-        return null;
     }
 
 

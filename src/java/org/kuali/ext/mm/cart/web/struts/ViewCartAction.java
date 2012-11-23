@@ -1,34 +1,29 @@
 package org.kuali.ext.mm.cart.web.struts;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Properties;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.kuali.ext.mm.businessobject.Catalog;
-import org.kuali.ext.mm.businessobject.CatalogItem;
-import org.kuali.ext.mm.businessobject.ShopCartDetail;
-import org.kuali.ext.mm.businessobject.ShoppingCart;
-import org.kuali.ext.mm.businessobject.TrueBuyoutDetail;
-import org.kuali.ext.mm.businessobject.UnitOfIssue;
+import org.kuali.ext.mm.businessobject.*;
 import org.kuali.ext.mm.cart.ShopCartConstants;
 import org.kuali.ext.mm.cart.ShopCartKeyConstants;
 import org.kuali.ext.mm.cart.service.ShopCartServiceLocator;
 import org.kuali.ext.mm.cart.valueobject.DirectEntry;
 import org.kuali.ext.mm.common.sys.MMConstants;
+import org.kuali.rice.core.api.config.property.ConfigurationService;
 import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.service.KualiConfigurationService;
-import org.kuali.rice.kns.util.GlobalVariables;
-import org.kuali.rice.kns.util.KNSConstants;
-import org.kuali.rice.kns.util.ObjectUtils;
-import org.kuali.rice.kns.util.UrlFactory;
+import org.kuali.rice.krad.service.KRADServiceLocator;
+import org.kuali.rice.krad.util.GlobalVariables;
+import org.kuali.rice.krad.util.KRADConstants;
+import org.kuali.rice.krad.util.ObjectUtils;
+import org.kuali.rice.krad.util.UrlFactory;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Properties;
 
 
 public class ViewCartAction extends StoresShoppingActionBase {
@@ -51,10 +46,10 @@ public class ViewCartAction extends StoresShoppingActionBase {
 
 	public ActionForward deleteItem(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
         ViewCartForm vcForm = (ViewCartForm)form;
-        KualiConfigurationService configService = KNSServiceLocator.getKualiConfigurationService();
+        ConfigurationService configService = KRADServiceLocator.getKualiConfigurationService();
 
         if(vcForm.getSelectedItems() == null) {
-            vcForm.setFormMessage(configService.getPropertyString(ShopCartKeyConstants.ERROR_NO_ITEMS_SELECTED));
+            vcForm.setFormMessage(configService.getPropertyValueAsString(ShopCartKeyConstants.ERROR_NO_ITEMS_SELECTED));
         }
         else {
 	        for(String itemId : vcForm.getSelectedItems()) {
@@ -105,11 +100,11 @@ public class ViewCartAction extends StoresShoppingActionBase {
 
 	public ActionForward addToFavorites(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
         ViewCartForm vcForm = (ViewCartForm)form;
-        KualiConfigurationService configService = KNSServiceLocator.getKualiConfigurationService();
+        ConfigurationService configService = KRADServiceLocator.getKualiConfigurationService();
 
         List<String> catalogItemIds = new ArrayList<String>();
         if(vcForm.getSelectedItems() == null) {
-        	vcForm.setFormMessage(configService.getPropertyString(ShopCartKeyConstants.ERROR_NO_ITEMS_SELECTED));
+        	vcForm.setFormMessage(configService.getPropertyValueAsString(ShopCartKeyConstants.ERROR_NO_ITEMS_SELECTED));
         	return mapping.findForward(MMConstants.MAPPING_BASIC);
         }
 
@@ -122,14 +117,14 @@ public class ViewCartAction extends StoresShoppingActionBase {
         	    catalogItemIds.add(item.getCatalogItem().getCatalogItemId());
         }
         if(containsPunchOutItems) {
-            vcForm.setFormMessage(configService.getPropertyString(ShopCartKeyConstants.ERROR_ADDING_PUNCHOUT_ITEMS_TO_FAVORITES));
+            vcForm.setFormMessage(configService.getPropertyValueAsString(ShopCartKeyConstants.ERROR_ADDING_PUNCHOUT_ITEMS_TO_FAVORITES));
             return mapping.findForward(MMConstants.MAPPING_BASIC);
         }
 
        	request.getSession().setAttribute(ShopCartConstants.Session.ADD_TO_FAVORITES_ITEMS, catalogItemIds);
 
 		Properties parameters = new Properties();
-        parameters.put(KNSConstants.DISPATCH_REQUEST_PARAMETER, ShopCartConstants.ADD_TO_FAVORITES_METHOD);
+        parameters.put(KRADConstants.DISPATCH_REQUEST_PARAMETER, ShopCartConstants.ADD_TO_FAVORITES_METHOD);
 
         return new ActionForward(UrlFactory.parameterizeUrl(ShopCartConstants.FAVORITES_ACTION, parameters), true);
     }
@@ -207,7 +202,7 @@ public class ViewCartAction extends StoresShoppingActionBase {
      */
     protected String getMethodCaller(HttpServletRequest request) {
         String caller = "";
-        String parameterName = (String) request.getAttribute(KNSConstants.METHOD_TO_CALL_ATTRIBUTE);
+        String parameterName = (String) request.getAttribute(KRADConstants.METHOD_TO_CALL_ATTRIBUTE);
         if (StringUtils.isNotBlank(parameterName)) {
             caller = StringUtils.substringBetween(parameterName, ".caller", ".");
         }
@@ -256,14 +251,14 @@ public class ViewCartAction extends StoresShoppingActionBase {
             GlobalVariables.getMessageMap().putError(prefix + ShopCartConstants.DirectEntry.UNIT_OF_ISSUE, ShopCartKeyConstants.ERROR_TRUE_BUYOUT_UI_BLANK);
         }
         else {
-            UnitOfIssue unitOfIssue = KNSServiceLocator.getBusinessObjectService()
+            UnitOfIssue unitOfIssue = KRADServiceLocator.getBusinessObjectService()
                     .findBySinglePrimaryKey(UnitOfIssue.class, entry.getUnitOfIssue());
             if(unitOfIssue == null) {
                 GlobalVariables.getMessageMap().putError(prefix + ShopCartConstants.DirectEntry.UNIT_OF_ISSUE, ShopCartKeyConstants.ERROR_TRUE_BUYOUT_UI_INVALID);
             }
         }
-        KNSServiceLocator.getDictionaryValidationService().validateAttributeFormat(TrueBuyoutDetail.class.getName(), MMConstants.TrueBuyoutDetail.ORDER_ITEM_QTY, entry.getQuantity(), prefix + ShopCartConstants.DirectEntry.QUANTITY);
-        KNSServiceLocator.getDictionaryValidationService().validateAttributeFormat(TrueBuyoutDetail.class.getName(), MMConstants.TrueBuyoutDetail.ORDER_ITEM_UI, entry.getUnitOfIssue(), prefix + ShopCartConstants.DirectEntry.UNIT_OF_ISSUE);
+        KNSServiceLocator.getKNSDictionaryValidationService().validateAttributeFormat(TrueBuyoutDetail.class.getName(), MMConstants.TrueBuyoutDetail.ORDER_ITEM_QTY, entry.getQuantity(), prefix + ShopCartConstants.DirectEntry.QUANTITY);
+        KNSServiceLocator.getKNSDictionaryValidationService().validateAttributeFormat(TrueBuyoutDetail.class.getName(), MMConstants.TrueBuyoutDetail.ORDER_ITEM_UI, entry.getUnitOfIssue(), prefix + ShopCartConstants.DirectEntry.UNIT_OF_ISSUE);
         return !GlobalVariables.getMessageMap().hasErrors();
     }
 

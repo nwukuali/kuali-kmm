@@ -3,18 +3,17 @@
  */
 package org.kuali.ext.mm.integration.purap.document;
 
-import java.math.BigDecimal;
-import java.util.LinkedHashMap;
-
 import org.kuali.ext.mm.integration.FinancialSystemComponent;
-import org.kuali.rice.kns.bo.ExternalizableBusinessObject;
-import org.kuali.rice.kns.bo.TransientBusinessObjectBase;
+import org.kuali.rice.krad.bo.ExternalizableBusinessObject;
+import org.kuali.rice.krad.bo.TransientBusinessObjectBase;
+
+import java.math.BigDecimal;
 
 /**
  * @author harsha07
  */
 public class FinancialPurchaseOrderAccount extends TransientBusinessObjectBase implements
-        ExternalizableBusinessObject, FinancialSystemComponent {
+	ExternalizableBusinessObject, FinancialSystemComponent {
     /**
      *
      */
@@ -267,12 +266,5 @@ public class FinancialPurchaseOrderAccount extends TransientBusinessObjectBase i
         this.accountFixedAmt = accountFixedAmt;
     }
 
-    /**
-     * @see org.kuali.rice.kns.bo.BusinessObjectBase#toStringMapper()
-     */
-    @Override
-    protected LinkedHashMap<String, String> toStringMapper() {
-        return null;
-    }
 
 }

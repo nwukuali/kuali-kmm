@@ -1,11 +1,11 @@
 package org.kuali.ext.mm.document.web.struts;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.struts.upload.FormFile;
 import org.kuali.ext.mm.document.MassUpdateDocument;
 import org.kuali.ext.mm.sys.valueobject.MassUpdateUploadSummary;
 import org.kuali.rice.kns.web.struts.form.KualiTransactionalDocumentFormBase;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author schneppd

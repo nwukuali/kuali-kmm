@@ -1,15 +1,15 @@
 package org.kuali.ext.mm.sys.batch.dataaccess.ojb;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
 import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.Query;
 import org.apache.ojb.broker.query.QueryFactory;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.document.OrderDocument;
 import org.kuali.ext.mm.sys.batch.dataaccess.OrderDocumentDao;
-import org.kuali.rice.kns.dao.impl.PlatformAwareDaoBaseOjb;
+import org.kuali.rice.core.framework.persistence.ojb.dao.PlatformAwareDaoBaseOjb;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 
 /**

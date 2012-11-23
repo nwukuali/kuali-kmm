@@ -3,18 +3,18 @@
  */
 package org.kuali.ext.mm.gl.service.impl;
 
-import static org.kuali.ext.mm.integration.sys.businessobject.FinancialGeneralLedgerPendingEntryHelper.combineGlpe;
-import static org.kuali.ext.mm.integration.sys.businessobject.FinancialGeneralLedgerPendingEntryHelper.createGlpe;
-
-import java.util.HashMap;
-
 import org.kuali.ext.mm.businessobject.Warehouse;
 import org.kuali.ext.mm.businessobject.WarehouseAccounts;
 import org.kuali.ext.mm.gl.GlConstants;
 import org.kuali.ext.mm.gl.WarehouseGlGroup;
 import org.kuali.ext.mm.gl.service.TaxLiabilityGeneralLedgerService;
-import org.kuali.rice.kns.util.KualiDecimal;
-import org.kuali.rice.kns.util.ObjectUtils;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+import org.kuali.rice.krad.util.ObjectUtils;
+
+import java.util.HashMap;
+
+import static org.kuali.ext.mm.integration.sys.businessobject.FinancialGeneralLedgerPendingEntryHelper.combineGlpe;
+import static org.kuali.ext.mm.integration.sys.businessobject.FinancialGeneralLedgerPendingEntryHelper.createGlpe;
 
 /**
  * @author harsha07

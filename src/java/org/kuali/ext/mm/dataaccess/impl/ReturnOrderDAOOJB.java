@@ -1,28 +1,19 @@
 package org.kuali.ext.mm.dataaccess.impl;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.QueryByCriteria;
 import org.apache.ojb.broker.query.QueryFactory;
-import org.kuali.ext.mm.businessobject.CatalogItem;
-import org.kuali.ext.mm.businessobject.OrderDetail;
-import org.kuali.ext.mm.businessobject.OrderReturnDetail;
-import org.kuali.ext.mm.businessobject.OrderReturnDetailForVendor;
-import org.kuali.ext.mm.businessobject.ReorderCatalogItemDetail;
-import org.kuali.ext.mm.businessobject.ReturnDetail;
+import org.kuali.ext.mm.businessobject.*;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.dataaccess.ReturnOrderDAO;
 import org.kuali.ext.mm.document.ReturnDocument;
 import org.kuali.ext.mm.service.MMServiceLocator;
 import org.kuali.ext.mm.util.MMUtil;
-import org.kuali.rice.kns.dao.impl.PlatformAwareDaoBaseOjb;
-import org.kuali.rice.kns.util.ObjectUtils;
+import org.kuali.rice.core.framework.persistence.ojb.dao.PlatformAwareDaoBaseOjb;
+import org.kuali.rice.krad.util.ObjectUtils;
+
+import java.util.*;
 
 
 

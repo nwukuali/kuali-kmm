@@ -1,20 +1,20 @@
 package org.kuali.ext.mm.document.web.struts;
 
-import java.io.ByteArrayOutputStream;
-import java.util.Collection;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.kuali.ext.mm.businessobject.PickTicket;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.service.PickListService;
-import org.kuali.rice.kns.service.DateTimeService;
+import org.kuali.rice.core.api.CoreApiServiceLocator;
+import org.kuali.rice.core.api.datetime.DateTimeService;
 import org.kuali.rice.kns.util.WebUtils;
 import org.kuali.rice.kns.web.struts.action.KualiAction;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayOutputStream;
+import java.util.Collection;
 
 
 
@@ -59,7 +59,7 @@ public class PickTicketAction extends KualiAction {
 		Collection<PickTicket> pickTicketList = pickListService.getAllUnprintedTickets();
 		ByteArrayOutputStream baos = SpringContext.getBean(PickListService.class).generatePdfTicket(pickTicketList);
 
-		DateTimeService dtService = SpringContext.getBean(DateTimeService.class);
+		DateTimeService dtService = CoreApiServiceLocator.getDateTimeService();
 		String date = dtService.toDateTimeStringForFilename(dtService.getCurrentDate());
 
 		WebUtils.saveMimeOutputStreamAsFile(response, "application/pdf", baos, date + ".pdf");

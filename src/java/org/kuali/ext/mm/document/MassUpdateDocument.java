@@ -1,12 +1,4 @@
 package org.kuali.ext.mm.document;
-	
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.persistence.Transient;
 
 import org.kuali.ext.mm.businessobject.Agreement;
 import org.kuali.ext.mm.businessobject.MassUpdateDetail;
@@ -20,13 +12,19 @@ import org.kuali.ext.mm.gl.service.GeneralLedgerProcessor;
 import org.kuali.ext.mm.integration.sys.businessobject.FinancialGeneralLedgerPendingEntry;
 import org.kuali.ext.mm.service.MassUpdateService;
 import org.kuali.ext.mm.util.MMDecimal;
-import org.kuali.rice.kew.dto.DocumentRouteStatusChangeDTO;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.service.DataDictionaryService;
-import org.kuali.rice.kns.util.KualiDecimal;
-import org.kuali.rice.kns.workflow.service.KualiWorkflowDocument;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+import org.kuali.rice.kew.api.WorkflowDocument;
+import org.kuali.rice.kew.framework.postprocessor.DocumentRouteStatusChange;
+import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.service.DataDictionaryService;
 
-	
+import javax.persistence.Transient;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+
 public class MassUpdateDocument extends StoresTransactionalDocumentBase  implements
     GeneralLedgerPostable {
 
@@ -113,11 +111,11 @@ public class MassUpdateDocument extends StoresTransactionalDocumentBase  impleme
         return warehouseCostChangeMap;
     }
     
-    public void doRouteStatusChange(DocumentRouteStatusChangeDTO statusChangeEvent) {
+    public void doRouteStatusChange(DocumentRouteStatusChange statusChangeEvent) {
         super.doRouteStatusChange(statusChangeEvent);
-        KualiWorkflowDocument workflowDocument = getDocumentHeader().getWorkflowDocument();
+        WorkflowDocument workflowDocument = getDocumentHeader().getWorkflowDocument();
 
-        if (workflowDocument.stateIsProcessed()) {            
+        if (workflowDocument.isProcessed()) {
             setWarehouseCostChangeMap(
                     SpringContext.getBean(MassUpdateService.class).processMassUpdateDocument(this));
             this.setFinalIndicator(true);
@@ -125,18 +123,6 @@ public class MassUpdateDocument extends StoresTransactionalDocumentBase  impleme
      // generate GL entries
         SpringContext.getBean(GeneralLedgerProcessor.class).doRouteStatusChange(this,
                 getDocumentHeader());
-    }
-    
-    /**
-     * toStringMapper
-     * 
-     * @return LinkedHashMap
-     */
-    @Override
-    public LinkedHashMap<String, String> toStringMapper() {
-        LinkedHashMap<String, String> propMap = new LinkedHashMap<String, String>();
-        propMap.put("documentNumber", documentNumber);
-        return propMap;
     }
 
     /**

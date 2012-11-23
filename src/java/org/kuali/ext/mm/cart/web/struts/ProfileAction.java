@@ -1,11 +1,5 @@
 package org.kuali.ext.mm.cart.web.struts;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -17,13 +11,19 @@ import org.kuali.ext.mm.cart.ShopCartKeyConstants;
 import org.kuali.ext.mm.cart.service.ShopCartProfileService;
 import org.kuali.ext.mm.cart.service.ShopCartServiceLocator;
 import org.kuali.ext.mm.common.sys.MMConstants;
-import org.kuali.rice.kim.bo.Person;
-import org.kuali.rice.kim.service.KIMServiceLocator;
-import org.kuali.rice.kns.service.DictionaryValidationService;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.service.KualiConfigurationService;
-import org.kuali.rice.kns.util.GlobalVariables;
-import org.kuali.rice.kns.util.ObjectUtils;
+import org.kuali.rice.core.api.config.property.ConfigurationService;
+import org.kuali.rice.kim.api.identity.Person;
+import org.kuali.rice.kim.api.services.KimApiServiceLocator;
+import org.kuali.rice.krad.service.DictionaryValidationService;
+import org.kuali.rice.krad.service.KRADServiceLocator;
+import org.kuali.rice.krad.service.KRADServiceLocatorWeb;
+import org.kuali.rice.krad.util.GlobalVariables;
+import org.kuali.rice.krad.util.ObjectUtils;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class ProfileAction extends StoresShoppingActionBase {
@@ -163,7 +163,7 @@ public class ProfileAction extends StoresShoppingActionBase {
 		pForm.createNewConfirmAction(request);
 		pForm.getConfirmAction().setConfirmAction(ShopCartConstants.PROFILE_ACTION);
 		pForm.getConfirmAction().setDeclineAction(ShopCartConstants.PROFILE_ACTION);
-		pForm.getConfirmAction().setMessage(KNSServiceLocator.getKualiConfigurationService().getPropertyString(ShopCartKeyConstants.QUESTION_CONFIRM_PROFILE_SAVE));
+		pForm.getConfirmAction().setMessage(KRADServiceLocator.getKualiConfigurationService().getPropertyValueAsString(ShopCartKeyConstants.QUESTION_CONFIRM_PROFILE_SAVE));
 		confirmParameters.put(MMConstants.DISPATCH_REQUEST_PARAMETER, ShopCartConstants.SAVE_CONFRIM_METHOD);
 		declineParameters.put(MMConstants.DISPATCH_REQUEST_PARAMETER, ShopCartConstants.CONFIRM_ACTION_DECLINE_METHOD);
 		pForm.getConfirmAction().setConfirmParameters(confirmParameters);
@@ -175,7 +175,7 @@ public class ProfileAction extends StoresShoppingActionBase {
     	pForm.setShipToAddress(new Address());
     	pForm.setBillingAddress(new Address());
 
-    	Person user = KIMServiceLocator.getPersonService().getPersonByPrincipalName(pForm.getCustomer().getPrincipalName());
+    	Person user = KimApiServiceLocator.getPersonService().getPersonByPrincipalName(pForm.getCustomer().getPrincipalName());
     	boolean isPersonalUse = true;
     	if(user != null)
     		isPersonalUse = pForm.getProfileToEdit().isPersonalUseIndicator();
@@ -221,8 +221,8 @@ public class ProfileAction extends StoresShoppingActionBase {
 		profileService.setBillingAddress(pForm.getProfileToEdit(), pForm.getBillingAddress());
 		profileService.saveCustomerProfile(pForm.getProfileToEdit());
 		
-		KualiConfigurationService configService = KNSServiceLocator.getKualiConfigurationService();
-		pForm.setProfileMessage(configService.getPropertyString(ShopCartKeyConstants.MESSAGE_PROFILE_SAVED));
+		ConfigurationService configService = KRADServiceLocator.getKualiConfigurationService();
+		pForm.setProfileMessage(configService.getPropertyValueAsString(ShopCartKeyConstants.MESSAGE_PROFILE_SAVED));
 		if(pForm.getCustomerProfile() == null || StringUtils.equals(pForm.getProfileToEdit().getProfileId(), pForm.getCustomerProfile().getProfileId())) {
 		    pForm.setCustomerProfile(pForm.getProfileToEdit());
 		    request.getSession().setAttribute(ShopCartConstants.Session.CUSTOMER_PROFILE, pForm.getCustomerProfile());
@@ -235,7 +235,7 @@ public class ProfileAction extends StoresShoppingActionBase {
 	 * @return
 	 */
 	private boolean isProfileFormValid(ProfileForm pForm) {
-		DictionaryValidationService validationService = KNSServiceLocator.getDictionaryValidationService();
+		DictionaryValidationService validationService = KRADServiceLocatorWeb.getDictionaryValidationService();
 
 		boolean isValid = validationService.isBusinessObjectValid(pForm.getProfileToEdit(), "profileToEdit");
 		isValid &=  validationService.isBusinessObjectValid(pForm.getShipToAddress(), "shipToAddress");

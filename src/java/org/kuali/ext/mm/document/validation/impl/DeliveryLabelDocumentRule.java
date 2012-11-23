@@ -3,10 +3,6 @@
  */
 package org.kuali.ext.mm.document.validation.impl;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-
 import org.apache.commons.lang.StringUtils;
 import org.kuali.ext.mm.businessobject.OrderDetail;
 import org.kuali.ext.mm.businessobject.PickListLine;
@@ -17,12 +13,16 @@ import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.document.DeliveryLabelDocument;
 import org.kuali.ext.mm.document.DeliveryLabelDocumentLines;
 import org.kuali.ext.mm.document.OrderDocument;
-import org.kuali.rice.kew.exception.WorkflowException;
-import org.kuali.rice.kns.document.Document;
+import org.kuali.rice.kew.api.exception.WorkflowException;
 import org.kuali.rice.kns.rules.DocumentRuleBase;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.service.DocumentService;
-import org.kuali.rice.kns.util.GlobalVariables;
+import org.kuali.rice.krad.document.Document;
+import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.service.DocumentService;
+import org.kuali.rice.krad.util.GlobalVariables;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
 
 /**

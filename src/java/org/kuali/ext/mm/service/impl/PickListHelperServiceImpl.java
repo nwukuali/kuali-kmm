@@ -3,15 +3,15 @@
  */
 package org.kuali.ext.mm.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.kuali.ext.mm.businessobject.Bin;
 import org.kuali.ext.mm.businessobject.CatalogItem;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.service.PickListHelperService;
 import org.kuali.ext.mm.service.StockService;
-import org.kuali.rice.kns.service.BusinessObjectService;
+import org.kuali.rice.krad.service.BusinessObjectService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**

@@ -16,12 +16,12 @@
 
 package org.kuali.ext.mm.integration.sys.businessobject;
 
-import java.util.HashMap;
-
 import org.kuali.ext.mm.businessobject.Accounts;
 import org.kuali.ext.mm.businessobject.WarehouseAccounts;
 import org.kuali.ext.mm.gl.WarehouseGlGroup;
-import org.kuali.rice.kns.util.KualiDecimal;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+
+import java.util.HashMap;
 
 /**
  * Helper class to build a FinancialGeneralLedgerPendingEntry entry using Accounts and Warehouse Accounts

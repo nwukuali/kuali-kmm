@@ -1,19 +1,14 @@
 package org.kuali.ext.mm.document;
 
-import java.sql.Date;
-
-import javax.persistence.Column;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-
 import org.kuali.ext.mm.businessobject.MMPersistableBusinessObjectBase;
 import org.kuali.ext.mm.businessobject.Route;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.integration.FinancialSystemAdaptorFactory;
 import org.kuali.ext.mm.integration.sys.businessobject.FinancialBuilding;
-import org.kuali.rice.kns.util.ObjectUtils;
+import org.kuali.rice.krad.util.ObjectUtils;
+
+import javax.persistence.*;
+import java.sql.Date;
 
 public class DeliveryLabelDocumentLines extends MMPersistableBusinessObjectBase {
 

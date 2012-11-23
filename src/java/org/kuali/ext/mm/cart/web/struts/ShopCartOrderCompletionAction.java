@@ -1,11 +1,5 @@
 package org.kuali.ext.mm.cart.web.struts;
 
-import java.util.List;
-import java.util.Properties;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -15,10 +9,17 @@ import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.MMKeyConstants;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.document.OrderDocument;
-import org.kuali.rice.kew.util.KEWConstants;
-import org.kuali.rice.kns.service.KualiConfigurationService;
-import org.kuali.rice.kns.util.KNSConstants;
-import org.kuali.rice.kns.util.UrlFactory;
+import org.kuali.rice.core.api.config.property.ConfigurationService;
+import org.kuali.rice.kew.api.KewApiConstants;
+import org.kuali.rice.krad.util.KRADConstants;
+import org.kuali.rice.krad.util.UrlFactory;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+import java.util.Properties;
+
+//import org.kuali.rice.core.api.config.property.ConfigurationService;;
 
 
 public class ShopCartOrderCompletionAction extends ShopCartOrdersAction {
@@ -66,11 +67,11 @@ public class ShopCartOrderCompletionAction extends ShopCartOrdersAction {
 	    boolean isShowAll = Boolean.valueOf(showAllParam);
 	    
 		if(!isShowAll && oForm.getOrderDocumentList() != null && oForm.getOrderDocumentList().size() == 1) {
-			String moduleUrl = SpringContext.getBean(KualiConfigurationService.class).getPropertyString(MMKeyConstants.MM_MODULE_URL);
+			String moduleUrl = SpringContext.getBean(ConfigurationService.class).getPropertyValueAsString(MMKeyConstants.MM_MODULE_URL);
 			Properties parameters = new Properties();
-			parameters.put(KNSConstants.PARAMETER_DOC_ID, oForm.getOrderDocumentList().get(0).getDocumentNumber());
-			parameters.put(KEWConstants.COMMAND_PARAMETER, KEWConstants.DOCSEARCH_COMMAND);
-			parameters.put(KNSConstants.DISPATCH_REQUEST_PARAMETER, KNSConstants.DOC_HANDLER_METHOD);
+			parameters.put(KRADConstants.PARAMETER_DOC_ID, oForm.getOrderDocumentList().get(0).getDocumentNumber());
+			parameters.put(KewApiConstants.COMMAND_PARAMETER, KewApiConstants.DOCSEARCH_COMMAND);
+			parameters.put(KRADConstants.DISPATCH_REQUEST_PARAMETER, KRADConstants.DOC_HANDLER_METHOD);
 			parameters.put(MMConstants.OrderDocument.RETURN_TO_SENDER_PARAM, moduleUrl + "/" + ShopCartConstants.ORDER_COMPLETION_ACTION);
 			ActionForward actionForward = new ActionForward("/" + UrlFactory.parameterizeUrl(MMConstants.ORDER_ACTION, parameters), true);
 			actionForward.setModule("");

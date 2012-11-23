@@ -3,9 +3,6 @@
  */
 package org.kuali.ext.mm.sys;
 
-import java.io.File;
-import java.io.IOException;
-
 import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.index.IndexReader;
@@ -13,7 +10,10 @@ import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Searcher;
 import org.apache.lucene.store.SimpleFSDirectory;
 import org.apache.lucene.util.Version;
-import org.kuali.rice.kns.service.KNSServiceLocator;
+import org.kuali.rice.krad.service.KRADServiceLocator;
+
+import java.io.File;
+import java.io.IOException;
 
 public class LuceneIndexingManager {
     private static final Logger LOG = Logger.getLogger(LuceneIndexingManager.class);
@@ -23,8 +23,8 @@ public class LuceneIndexingManager {
     private static IndexReader indexReader;
     
     public static final File getLucenceIndexDir() {
-        File indexDir = new File(KNSServiceLocator.getKualiConfigurationService()
-                .getPropertyString("lucene.index.storage.dir"));
+        File indexDir = new File(KRADServiceLocator.getKualiConfigurationService()
+                .getPropertyValueAsString("lucene.index.storage.dir"));
         if (!indexDir.exists()) {
             LOG.info("Created dir path " + indexDir);
             indexDir.mkdirs();
@@ -33,8 +33,8 @@ public class LuceneIndexingManager {
     }
 
     public static final File getLucenceIndexBackupDir() {
-        File indexDir = new File(KNSServiceLocator.getKualiConfigurationService()
-                .getPropertyString("lucene.index.storage.dir"), "backup");
+        File indexDir = new File(KRADServiceLocator.getKualiConfigurationService()
+                .getPropertyValueAsString("lucene.index.storage.dir"), "backup");
         if (!indexDir.exists()) {
             LOG.info("Created dir path " + indexDir);
             indexDir.mkdirs();

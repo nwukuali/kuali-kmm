@@ -3,11 +3,6 @@
  */
 package org.kuali.ext.mm.sys.batch.web.struts;
 
-import java.util.Date;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -16,9 +11,13 @@ import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.sys.batch.BatchRuntimeException;
 import org.kuali.ext.mm.sys.batch.service.BatchControlService;
 import org.kuali.ext.mm.sys.batch.service.impl.BatchStatusVO;
-import org.kuali.rice.core.util.RiceConstants;
-import org.kuali.rice.kns.util.KNSConstants;
+import org.kuali.rice.core.api.util.RiceConstants;
 import org.kuali.rice.kns.web.struts.action.KualiAction;
+import org.kuali.rice.krad.util.KRADConstants;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 
 
 /**
@@ -27,7 +26,7 @@ import org.kuali.rice.kns.web.struts.action.KualiAction;
 public class BatchControlAction extends KualiAction {
     public ActionForward cancel(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        return mapping.findForward(KNSConstants.MAPPING_PORTAL);
+        return mapping.findForward(KRADConstants.MAPPING_PORTAL);
     }
 
     public ActionForward start(ActionMapping mapping, ActionForm form, HttpServletRequest request,

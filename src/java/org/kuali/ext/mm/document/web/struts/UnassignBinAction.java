@@ -3,13 +3,6 @@
  */
 package org.kuali.ext.mm.document.web.struts;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -18,13 +11,19 @@ import org.kuali.ext.mm.businessobject.CatalogItem;
 import org.kuali.ext.mm.businessobject.StockBalance;
 import org.kuali.ext.mm.common.sys.MMKeyConstants;
 import org.kuali.ext.mm.service.MMServiceLocator;
-import org.kuali.rice.core.util.RiceConstants;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.util.GlobalVariables;
-import org.kuali.rice.kns.util.KNSConstants;
-import org.kuali.rice.kns.util.ObjectUtils;
-import org.kuali.rice.kns.util.TransactionalServiceUtils;
+import org.kuali.rice.core.api.util.RiceConstants;
+import org.kuali.rice.kns.util.KNSGlobalVariables;
 import org.kuali.rice.kns.web.struts.action.KualiAction;
+import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.util.KRADConstants;
+import org.kuali.rice.krad.util.ObjectUtils;
+import org.kuali.rice.krad.util.TransactionalServiceUtils;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author harsha07
@@ -75,7 +74,7 @@ public class UnassignBinAction extends KualiAction {
             }
         }
         if (deleted) {
-            GlobalVariables.getMessageList().add(MMKeyConstants.INFO_EMPTY_BINS_UNASSIGNED);
+            KNSGlobalVariables.getMessageList().add(MMKeyConstants.INFO_EMPTY_BINS_UNASSIGNED);
             binForm.setReadOnly(true);
         }
         return mapping.findForward(RiceConstants.MAPPING_BASIC);
@@ -83,6 +82,6 @@ public class UnassignBinAction extends KualiAction {
 
     public ActionForward cancel(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        return mapping.findForward(KNSConstants.MAPPING_PORTAL);
+        return mapping.findForward(KRADConstants.MAPPING_PORTAL);
     }
 }

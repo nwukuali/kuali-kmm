@@ -1,33 +1,25 @@
 package org.kuali.ext.mm.service.impl;
 
+import org.apache.commons.lang.StringUtils;
+import org.kuali.ext.mm.businessobject.*;
+import org.kuali.ext.mm.common.sys.MMConstants;
+import org.kuali.ext.mm.common.sys.context.SpringContext;
+import org.kuali.ext.mm.document.service.BusinessObjectLockingService;
+import org.kuali.ext.mm.document.service.CatalogItemMaintenanceService;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+import org.kuali.rice.kns.document.MaintenanceDocument;
+import org.kuali.rice.kns.maintenance.Maintainable;
+import org.kuali.rice.krad.bo.DocumentHeader;
+import org.kuali.rice.krad.bo.PersistableBusinessObject;
+import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.util.KRADConstants;
+import org.kuali.rice.krad.util.ObjectUtils;
+
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.commons.lang.StringUtils;
-import org.kuali.ext.mm.businessobject.Catalog;
-import org.kuali.ext.mm.businessobject.CatalogItem;
-import org.kuali.ext.mm.businessobject.CatalogItemImage;
-import org.kuali.ext.mm.businessobject.CatalogItemMarkup;
-import org.kuali.ext.mm.businessobject.CatalogSubgroupItem;
-import org.kuali.ext.mm.businessobject.HazardousMateriel;
-import org.kuali.ext.mm.businessobject.StockAttribute;
-import org.kuali.ext.mm.businessobject.StockBalance;
-import org.kuali.ext.mm.businessobject.StockPackNote;
-import org.kuali.ext.mm.common.sys.MMConstants;
-import org.kuali.ext.mm.common.sys.context.SpringContext;
-import org.kuali.ext.mm.document.service.BusinessObjectLockingService;
-import org.kuali.ext.mm.document.service.CatalogItemMaintenanceService;
-import org.kuali.rice.kns.bo.DocumentHeader;
-import org.kuali.rice.kns.bo.PersistableBusinessObject;
-import org.kuali.rice.kns.document.MaintenanceDocument;
-import org.kuali.rice.kns.maintenance.Maintainable;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.util.KNSConstants;
-import org.kuali.rice.kns.util.KualiDecimal;
-import org.kuali.rice.kns.util.ObjectUtils;
 
 
 public class CatalogItemMaintainableImpl extends StoresMaintainableImpl {
@@ -46,7 +38,7 @@ public class CatalogItemMaintainableImpl extends StoresMaintainableImpl {
             List<String> lockingKeys = new ArrayList<String>();
             lockingKeys.add(MMConstants.Stock.STOCK_ID);
             if(ObjectUtils.isNotNull(catalogItem.getStock())){
-            List<String> lockingIds = lockingService.getLockingDocumentIds(catalogItem.getStock(), lockingKeys, this.documentNumber);            
+            List<String> lockingIds = lockingService.getLockingDocumentIds(catalogItem.getStock(), lockingKeys, getDocumentNumber());
             if (lockingIds!=null  &&  !lockingIds.isEmpty())
                 lockingDocId = lockingIds.get(0);
             }
@@ -57,12 +49,12 @@ public class CatalogItemMaintainableImpl extends StoresMaintainableImpl {
     @Override
     @SuppressWarnings("unchecked")
     public void doRouteStatusChange(DocumentHeader documentHeader) {
-        if(documentHeader.getWorkflowDocument().stateIsEnroute()) {
+        if(documentHeader.getWorkflowDocument().isEnroute()) {
             BusinessObjectLockingService lockingService = SpringContext.getBean(BusinessObjectLockingService.class);
             CatalogItem catalogItem = (CatalogItem) getBusinessObject();
-            lockingService.createAndSaveLock(documentNumber, catalogItem.getStock(), MMConstants.Stock.STOCK_ID);
+            lockingService.createAndSaveLock(getDocumentNumber(), catalogItem.getStock(), MMConstants.Stock.STOCK_ID);
         }
-        else if (documentHeader.getWorkflowDocument().stateIsProcessed()) {
+        else if (documentHeader.getWorkflowDocument().isProcessed()) {
             applyValidationRules(this.getBusinessObject());
             CatalogItem catalogItem = (CatalogItem) getBusinessObject();
 
@@ -76,7 +68,7 @@ public class CatalogItemMaintainableImpl extends StoresMaintainableImpl {
                         populateStockObject(catalogItem);
                         // If action is copy null out unique ids and version number
                         // to create a new stock object as well                        
-                        if(KNSConstants.MAINTENANCE_COPY_ACTION.equals(getMaintenanceAction())){
+                        if(KRADConstants.MAINTENANCE_COPY_ACTION.equals(getMaintenanceAction())){
                             catalogItem.setStockId(null);
                             catalogItem.getStock().setVersionNumber(null);
                             catalogItem.getStock().setObjectId(null);
@@ -224,8 +216,8 @@ public class CatalogItemMaintainableImpl extends StoresMaintainableImpl {
     @Override
     public boolean answerSplitNodeQuestion(String nodeName) {
         if ("NewCatalogItem".equals(nodeName)) {            
-            return KNSConstants.MAINTENANCE_NEWWITHEXISTING_ACTION.equals(getMaintenanceAction())
-                || KNSConstants.MAINTENANCE_COPY_ACTION.equals(getMaintenanceAction());
+            return KRADConstants.MAINTENANCE_NEWWITHEXISTING_ACTION.equals(getMaintenanceAction())
+                || KRADConstants.MAINTENANCE_COPY_ACTION.equals(getMaintenanceAction());
         }
         return false;
     }

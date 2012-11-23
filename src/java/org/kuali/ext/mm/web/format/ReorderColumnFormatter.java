@@ -20,14 +20,14 @@ package org.kuali.ext.mm.web.format;
  */
 
 
-import javax.servlet.jsp.PageContext;
-
 import org.apache.commons.lang.StringUtils;
 import org.displaytag.decorator.DisplaytagColumnDecorator;
 import org.displaytag.exception.DecoratorException;
 import org.displaytag.properties.MediaTypeEnum;
-import org.kuali.rice.kns.util.KNSConstants;
 import org.kuali.rice.kns.web.comparator.CellComparatorHelper;
+import org.kuali.rice.krad.util.KRADConstants;
+
+import javax.servlet.jsp.PageContext;
 
 public class ReorderColumnFormatter implements DisplaytagColumnDecorator {
 
@@ -54,7 +54,7 @@ public class ReorderColumnFormatter implements DisplaytagColumnDecorator {
     public Object decorate(Object cellValue, PageContext pageContext, MediaTypeEnum mediaType) throws DecoratorException {
         Object decoratedOutput = null;
         if (null == cellValue) {
-            decoratedOutput = MediaTypeEnum.HTML.equals(mediaType) ? "&nbsp" : KNSConstants.EMPTY_STRING;
+            decoratedOutput = MediaTypeEnum.HTML.equals(mediaType) ? "&nbsp" : KRADConstants.EMPTY_STRING;
         }
 
         //If a column resulting from lookup contains collection values, each of the collection entry

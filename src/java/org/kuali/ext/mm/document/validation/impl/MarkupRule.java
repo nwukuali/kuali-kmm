@@ -1,7 +1,5 @@
 package org.kuali.ext.mm.document.validation.impl;
 
-import java.util.Arrays;
-
 import org.apache.commons.lang.StringUtils;
 import org.kuali.ext.mm.businessobject.Markup;
 import org.kuali.ext.mm.common.sys.MMConstants;
@@ -10,8 +8,10 @@ import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.integration.FinancialSystemAdaptorFactory;
 import org.kuali.rice.kns.document.MaintenanceDocument;
 import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.util.GlobalVariables;
-import org.kuali.rice.kns.util.KNSConstants;
+import org.kuali.rice.krad.util.GlobalVariables;
+import org.kuali.rice.krad.util.KRADConstants;
+
+import java.util.Arrays;
 
 
 public class MarkupRule extends FinancialMaintenanceDocumentRuleBase {
@@ -23,15 +23,15 @@ public class MarkupRule extends FinancialMaintenanceDocumentRuleBase {
                 .checkAndErrorSystemAvailability();
         Markup markup = (Markup) document.getNewMaintainableObject().getBusinessObject();
         // validate chart code
-        valid &= validateChart(markup.getMarkupCoaCd(), KNSConstants.MAINTENANCE_NEW_MAINTAINABLE
+        valid &= validateChart(markup.getMarkupCoaCd(), KRADConstants.MAINTENANCE_NEW_MAINTAINABLE
                 + "markupCoaCd", MMKeyConstants.Markup.CHART_NOT_VALID);
         // validate org code
         valid &= validateOrg(markup.getMarkupCoaCd(), markup.getMarkupOrg(),
-                KNSConstants.MAINTENANCE_NEW_MAINTAINABLE + "markupOrg",
+                KRADConstants.MAINTENANCE_NEW_MAINTAINABLE + "markupOrg",
                 MMKeyConstants.Markup.ORG_NOT_VALID);
         // validate account number
         valid &= validateAccount(markup.getMarkupCoaCd(), markup.getMarkupAccountNbr(),
-                KNSConstants.MAINTENANCE_NEW_MAINTAINABLE + "markupAccountNbr",
+                KRADConstants.MAINTENANCE_NEW_MAINTAINABLE + "markupAccountNbr",
                 MMKeyConstants.Markup.ACCT_NOT_VALID);
 
 
@@ -39,7 +39,7 @@ public class MarkupRule extends FinancialMaintenanceDocumentRuleBase {
                 && StringUtils.isNotBlank(markup.getCatalogSubgroup().getCatalogSubgroupCd())) {
         	if(!StringUtils.equals(markup.getCatalogSubgroup().getCatalogGroupCd(), markup.getCatalogGroupCode())) {
         		GlobalVariables.getMessageMap().putError(
-        				KNSConstants.MAINTENANCE_NEW_MAINTAINABLE + MMConstants.Markup.CATALOG_SUBGROUP_CD,
+        				KRADConstants.MAINTENANCE_NEW_MAINTAINABLE + MMConstants.Markup.CATALOG_SUBGROUP_CD,
                         MMKeyConstants.Markup.ERROR_MARKUP_SUBGROUP_NOT_VALID,
                         markup.getCatalogSubgroup().getCatalogSubgroupCd(), markup.getCatalogGroupCode());
         		valid = false;
@@ -47,20 +47,20 @@ public class MarkupRule extends FinancialMaintenanceDocumentRuleBase {
         }
         if(markup.getMarkupFixed() == null && markup.getMarkupRt() == null) {
         	GlobalVariables.getMessageMap().putError(
-        			KNSConstants.MAINTENANCE_NEW_MAINTAINABLE + MMConstants.Markup.MARKUP_FIXED,
+        			KRADConstants.MAINTENANCE_NEW_MAINTAINABLE + MMConstants.Markup.MARKUP_FIXED,
                        MMKeyConstants.Markup.ERROR_MARKUP_AMOUNT_BLANK);
        		valid = false;
         }
         else if(markup.getMarkupFixed() != null && markup.getMarkupRt() != null) {
         	GlobalVariables.getMessageMap().putError(
-        			KNSConstants.MAINTENANCE_NEW_MAINTAINABLE + MMConstants.Markup.MARKUP_FIXED,
+        			KRADConstants.MAINTENANCE_NEW_MAINTAINABLE + MMConstants.Markup.MARKUP_FIXED,
                       MMKeyConstants.Markup.ERROR_MARKUP_AMOUNT_CONFLICT);
       		valid = false;
         }
         if(markup.getMarkupFromQty() != null && markup.getMarkupToQty() != null) {
 	        if(markup.getMarkupFromQty() > markup.getMarkupToQty()) {
 	        	GlobalVariables.getMessageMap().putError(
-	        			KNSConstants.MAINTENANCE_NEW_MAINTAINABLE + MMConstants.Markup.MARKUP_FROM_QTY,
+	        			KRADConstants.MAINTENANCE_NEW_MAINTAINABLE + MMConstants.Markup.MARKUP_FROM_QTY,
 	                     MMKeyConstants.Markup.ERROR_MARKUP_FROM_QTY_INVALID);
 	     		valid = false;
 	        }
@@ -68,7 +68,7 @@ public class MarkupRule extends FinancialMaintenanceDocumentRuleBase {
         if(markup.getMarkupBeginDt() != null && markup.getMarkupEndDt() != null) {
 	        if(markup.getMarkupBeginDt().compareTo(markup.getMarkupEndDt()) > 0) {
 	        	GlobalVariables.getMessageMap().putError(
-	        			KNSConstants.MAINTENANCE_NEW_MAINTAINABLE + MMConstants.Markup.MARKUP_BEGIN_DT,
+	        			KRADConstants.MAINTENANCE_NEW_MAINTAINABLE + MMConstants.Markup.MARKUP_BEGIN_DT,
 	                    MMKeyConstants.Markup.ERROR_MARKUP_BEGIN_DATE_INVALID);
 	    		valid = false;
 	        }
@@ -115,7 +115,7 @@ public class MarkupRule extends FinancialMaintenanceDocumentRuleBase {
 		if(fieldValue == null || StringUtils.isBlank(fieldValue.toString())) {
 			String errorLabel = KNSServiceLocator.getDataDictionaryService().getAttributeErrorLabel(Markup.class, fieldName);
 			GlobalVariables.getMessageMap().putError(
-        			KNSConstants.MAINTENANCE_NEW_MAINTAINABLE + fieldName,
+        			KRADConstants.MAINTENANCE_NEW_MAINTAINABLE + fieldName,
                     MMKeyConstants.Markup.ERROR_MARKUP_FIELD_REQUIRED,
                     errorLabel, Arrays.toString(markupTypeCode));
     		return false;

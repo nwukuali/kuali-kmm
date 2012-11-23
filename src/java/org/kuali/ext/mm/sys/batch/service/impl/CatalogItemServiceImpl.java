@@ -3,15 +3,15 @@
  */
 package org.kuali.ext.mm.sys.batch.service.impl;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.kuali.ext.mm.businessobject.CatalogItem;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.sys.batch.dataaccess.CatalogItemDao;
 import org.kuali.ext.mm.sys.batch.service.CatalogItemService;
-import org.kuali.rice.kns.service.KNSServiceLocator;
+import org.kuali.rice.krad.service.KRADServiceLocator;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -49,7 +49,7 @@ public class CatalogItemServiceImpl implements CatalogItemService{
     public Collection<CatalogItem> getCatalogItemsForStock(String stockId) {
         Map<String, Object> fieldValues = new HashMap<String, Object>();
         fieldValues.put(MMConstants.CatalogItem.STOCK_ID, stockId);
-        return KNSServiceLocator.getBusinessObjectService().findMatching(CatalogItem.class, fieldValues);        
+        return KRADServiceLocator.getBusinessObjectService().findMatching(CatalogItem.class, fieldValues);
     }
 
 }

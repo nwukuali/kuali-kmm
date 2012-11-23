@@ -1,12 +1,5 @@
 package org.kuali.ext.mm.cart.web.struts;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -17,11 +10,17 @@ import org.kuali.ext.mm.cart.valueobject.Breadcrumb;
 import org.kuali.ext.mm.cart.valueobject.BrowseManager;
 import org.kuali.ext.mm.cart.valueobject.ConfirmAction;
 import org.kuali.ext.mm.common.sys.MMConstants;
-import org.kuali.rice.kns.exception.AuthorizationException;
-import org.kuali.rice.kns.util.KNSConstants;
-import org.kuali.rice.kns.util.ObjectUtils;
-import org.kuali.rice.kns.util.UrlFactory;
 import org.kuali.rice.kns.web.struts.action.KualiAction;
+import org.kuali.rice.krad.exception.AuthorizationException;
+import org.kuali.rice.krad.util.KRADConstants;
+import org.kuali.rice.krad.util.ObjectUtils;
+import org.kuali.rice.krad.util.UrlFactory;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
 
 
 public class StoresShoppingActionBase extends KualiAction {
@@ -41,7 +40,7 @@ public class StoresShoppingActionBase extends KualiAction {
 //		permissionDetails.put(KimAttributes.NAMESPACE_CODE, KimCommonUtils.getNamespaceCode(StoresShoppingActionBase.class));
 //		permissionDetails.put(KimAttributes.ACTION_CLASS, StoresShoppingActionBase.class.getName());
 //
-//        if (!KIMServiceLocator.getIdentityManagementService().isAuthorizedByTemplateName(principalId, KNSConstants.KNS_NAMESPACE,
+//        if (!KIMServiceLocator.getIdentityManagementService().isAuthorizedByTemplateName(principalId, KRADConstants.KNS_NAMESPACE,
 //        		KimConstants.PermissionTemplateNames.USE_SCREEN, permissionDetails, roleQualifier ))
 //        {
 //            throw new AuthorizationException(GlobalVariables.getUserSession().getPerson().getPrincipalName(),
@@ -81,7 +80,7 @@ public class StoresShoppingActionBase extends KualiAction {
 		Properties parameters = new Properties();
 		parameters.put(ShopCartConstants.ACTION_PARM_QUERY, searchString);
 		parameters.put(ShopCartConstants.ACTION_PARM_CATALOG, catalog);
-        parameters.put(KNSConstants.DISPATCH_REQUEST_PARAMETER, ShopCartConstants.QUICK_SEARCH_METHOD);
+        parameters.put(KRADConstants.DISPATCH_REQUEST_PARAMETER, ShopCartConstants.QUICK_SEARCH_METHOD);
 
 		return new ActionForward(UrlFactory.parameterizeUrl(ShopCartConstants.BROWSE_ACTION, parameters), true);
 	}
@@ -130,7 +129,7 @@ public class StoresShoppingActionBase extends KualiAction {
 	    request.getSession().invalidate();
 
 		Properties parameters = new Properties();
-	    parameters.put(KNSConstants.DISPATCH_REQUEST_PARAMETER, ShopCartConstants.START_METHOD);
+	    parameters.put(KRADConstants.DISPATCH_REQUEST_PARAMETER, ShopCartConstants.START_METHOD);
 
 		return new ActionForward(UrlFactory.parameterizeUrl(ShopCartConstants.HOME_ACTION, parameters), true);
 
@@ -138,7 +137,7 @@ public class StoresShoppingActionBase extends KualiAction {
 
     protected ActionForward redirectHome() {
         Properties parameters = new Properties();
-        parameters.put(KNSConstants.DISPATCH_REQUEST_PARAMETER, ShopCartConstants.START_METHOD);
+        parameters.put(KRADConstants.DISPATCH_REQUEST_PARAMETER, ShopCartConstants.START_METHOD);
 
         return new ActionForward(UrlFactory.parameterizeUrl(ShopCartConstants.HOME_ACTION, parameters), true);
     }

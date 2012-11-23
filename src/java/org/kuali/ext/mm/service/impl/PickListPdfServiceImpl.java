@@ -1,29 +1,20 @@
 package org.kuali.ext.mm.service.impl;
 
-import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import org.kuali.ext.mm.common.sys.MMKeyConstants;
-import org.kuali.ext.mm.common.sys.context.SpringContext;
-import org.kuali.ext.mm.service.PickListPdfService;
-import org.kuali.rice.kns.service.KualiConfigurationService;
-
-import com.lowagie.text.Chunk;
-import com.lowagie.text.Document;
-import com.lowagie.text.Element;
-import com.lowagie.text.ExceptionConverter;
-import com.lowagie.text.Font;
-import com.lowagie.text.PageSize;
-import com.lowagie.text.Paragraph;
-import com.lowagie.text.Phrase;
-import com.lowagie.text.Rectangle;
+import com.lowagie.text.*;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfPageEventHelper;
 import com.lowagie.text.pdf.PdfWriter;
 import com.lowagie.text.pdf.draw.LineSeparator;
 import com.lowagie.text.pdf.draw.VerticalPositionMark;
+import org.kuali.ext.mm.common.sys.MMKeyConstants;
+import org.kuali.ext.mm.common.sys.context.SpringContext;
+import org.kuali.ext.mm.service.PickListPdfService;
+import org.kuali.rice.core.api.config.property.ConfigurationService;
+
+import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 
 public class PickListPdfServiceImpl implements PickListPdfService {
@@ -52,7 +43,7 @@ public class PickListPdfServiceImpl implements PickListPdfService {
 			Rectangle page = document.getPageSize();
 
 			PdfPTable header = new PdfPTable(3);
-			Chunk title = new Chunk(SpringContext.getBean(KualiConfigurationService.class).getPropertyString(MMKeyConstants.PickTicket.HEADER_TITLE), new Font(Font.BOLD, 14));
+			Chunk title = new Chunk(SpringContext.getBean(ConfigurationService.class).getPropertyValueAsString(MMKeyConstants.PickTicket.HEADER_TITLE), new Font(Font.BOLD, 14));
 
 			try {
 				float[] widths = {45, 25, 30};

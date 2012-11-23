@@ -1,7 +1,5 @@
 package org.kuali.ext.mm.document.validation.impl;
 
-import java.util.List;
-
 import org.apache.commons.lang.StringUtils;
 import org.kuali.ext.mm.businessobject.Warehouse;
 import org.kuali.ext.mm.businessobject.WarehouseAccounts;
@@ -9,9 +7,11 @@ import org.kuali.ext.mm.businessobject.WarehouseObject;
 import org.kuali.ext.mm.common.sys.MMKeyConstants;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.integration.FinancialSystemAdaptorFactory;
-import org.kuali.rice.kns.bo.PersistableBusinessObject;
 import org.kuali.rice.kns.document.MaintenanceDocument;
-import org.kuali.rice.kns.util.GlobalVariables;
+import org.kuali.rice.krad.bo.PersistableBusinessObject;
+import org.kuali.rice.krad.util.GlobalVariables;
+
+import java.util.List;
 
 
 public class WarehouseRule extends FinancialMaintenanceDocumentRuleBase {

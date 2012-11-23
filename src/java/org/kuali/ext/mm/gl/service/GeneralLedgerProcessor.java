@@ -17,11 +17,11 @@
 
 package org.kuali.ext.mm.gl.service;
 
-import java.util.List;
-
 import org.kuali.ext.mm.gl.GeneralLedgerPostable;
 import org.kuali.ext.mm.integration.sys.businessobject.FinancialGeneralLedgerPendingEntry;
-import org.kuali.rice.kns.bo.DocumentHeader;
+import org.kuali.rice.krad.bo.DocumentHeader;
+
+import java.util.List;
 
 /**
  * @author harsha07

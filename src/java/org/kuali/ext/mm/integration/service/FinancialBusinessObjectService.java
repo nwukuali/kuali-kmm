@@ -16,12 +16,12 @@
 
 package org.kuali.ext.mm.integration.service;
 
+import org.kuali.rice.krad.bo.BusinessObject;
+import org.kuali.rice.krad.bo.PersistableBusinessObject;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-
-import org.kuali.rice.kns.bo.BusinessObject;
-import org.kuali.rice.kns.bo.PersistableBusinessObject;
 
 /**
  */
@@ -31,7 +31,7 @@ public interface FinancialBusinessObjectService {
 
     public void save(List<? extends PersistableBusinessObject> businessObjects);
 
-    public PersistableBusinessObject findByPrimaryKey(Class clazz, Map primaryKeys);
+    public BusinessObject findByPrimaryKey(Class clazz, Map primaryKeys);
 
     public Collection findAll(Class clazz);
 
@@ -52,5 +52,5 @@ public interface FinancialBusinessObjectService {
 
     public BusinessObject getReferenceIfExists(BusinessObject bo, String referenceName);
 
-    public <T> T findBySinglePrimaryKey(Class<T> clazz, Object primaryKey);
+    public <T extends BusinessObject> T findBySinglePrimaryKey(Class<T> clazz, Object primaryKey);
 }

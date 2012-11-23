@@ -1,32 +1,26 @@
 package org.kuali.ext.mm.dataaccess.impl;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.QueryByCriteria;
 import org.apache.ojb.broker.query.QueryFactory;
 import org.apache.ojb.broker.query.ReportQueryByCriteria;
-import org.kuali.ext.mm.businessobject.Bin;
-import org.kuali.ext.mm.businessobject.BinLookable;
-import org.kuali.ext.mm.businessobject.CatalogItem;
-import org.kuali.ext.mm.businessobject.CheckinDetail;
-import org.kuali.ext.mm.businessobject.OrderDetail;
-import org.kuali.ext.mm.businessobject.OrderReturnDetail;
-import org.kuali.ext.mm.businessobject.StockBalance;
+import org.kuali.ext.mm.businessobject.*;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.MMKeyConstants;
 import org.kuali.ext.mm.dataaccess.CheckinOrderDAO;
 import org.kuali.ext.mm.document.CheckinDocument;
 import org.kuali.ext.mm.document.OrderDocument;
 import org.kuali.ext.mm.util.MMUtil;
-import org.kuali.rice.kns.dao.impl.PlatformAwareDaoBaseOjb;
+import org.kuali.rice.core.framework.persistence.ojb.dao.PlatformAwareDaoBaseOjb;
 import org.kuali.rice.kns.lookup.LookupUtils;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.util.GlobalVariables;
+import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.util.GlobalVariables;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 
 public class CheckinOrderDAOOJB extends PlatformAwareDaoBaseOjb implements CheckinOrderDAO {

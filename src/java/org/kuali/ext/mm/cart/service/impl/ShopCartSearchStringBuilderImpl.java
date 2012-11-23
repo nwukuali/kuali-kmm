@@ -4,9 +4,9 @@
 package org.kuali.ext.mm.cart.service.impl;
 
 import org.kuali.ext.mm.cart.service.ShopCartSearchStringBuilder;
-import org.kuali.rice.core.database.platform.DatabasePlatform;
-import org.kuali.rice.core.database.platform.MySQLDatabasePlatform;
-import org.kuali.rice.core.database.platform.OracleDatabasePlatform;
+import org.kuali.rice.core.framework.persistence.platform.DatabasePlatform;
+import org.kuali.rice.core.framework.persistence.platform.MySQLDatabasePlatform;
+import org.kuali.rice.core.framework.persistence.platform.OracleDatabasePlatform;
 
 /**
  * @author schneppd

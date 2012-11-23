@@ -1,21 +1,11 @@
 package org.kuali.ext.mm.document.web.struts;
 
 
-import java.math.BigDecimal;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.kuali.ext.mm.businessobject.Accounts;
-import org.kuali.ext.mm.businessobject.MMCapitalAssetInformation;
-import org.kuali.ext.mm.businessobject.MMCapitalAssetInformationDetail;
-import org.kuali.ext.mm.businessobject.OrderDetail;
-import org.kuali.ext.mm.businessobject.RecurringOrder;
+import org.kuali.ext.mm.businessobject.*;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.MMKeyConstants;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
@@ -23,15 +13,20 @@ import org.kuali.ext.mm.document.OrderDocument;
 import org.kuali.ext.mm.integration.FinancialSystemAdaptorFactory;
 import org.kuali.ext.mm.service.OrderService;
 import org.kuali.ext.mm.service.PunchOutVendorService;
-import org.kuali.rice.kim.service.KIMServiceLocator;
-import org.kuali.rice.kns.exception.AuthorizationException;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.util.GlobalVariables;
-import org.kuali.rice.kns.util.KNSConstants;
-import org.kuali.rice.kns.util.KualiDecimal;
-import org.kuali.rice.kns.util.ObjectUtils;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+import org.kuali.rice.kim.api.services.KimApiServiceLocator;
+import org.kuali.rice.kns.service.BusinessObjectDictionaryService;
 import org.kuali.rice.kns.web.struts.action.KualiTransactionalDocumentActionBase;
 import org.kuali.rice.kns.web.struts.form.KualiDocumentFormBase;
+import org.kuali.rice.krad.exception.AuthorizationException;
+import org.kuali.rice.krad.util.GlobalVariables;
+import org.kuali.rice.krad.util.KRADConstants;
+import org.kuali.rice.krad.util.ObjectUtils;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
+import java.util.List;
 
 
 public class OrderAction extends KualiTransactionalDocumentActionBase {
@@ -51,8 +46,8 @@ public class OrderAction extends KualiTransactionalDocumentActionBase {
                 .getParameter(MMConstants.OrderDocument.RETURN_TO_SENDER_PARAM));
         // List<String> approvedItems = new ArrayList<String>();
         checkAuthorization(oForm.getOrderDocument());
-        if (oForm.getOrderDocument().getDocumentHeader().getWorkflowDocument().stateIsSaved()
-        		|| oForm.getOrderDocument().getDocumentHeader().getWorkflowDocument().stateIsInitiated()
+        if (oForm.getOrderDocument().getDocumentHeader().getWorkflowDocument().isSaved()
+        		|| oForm.getOrderDocument().getDocumentHeader().getWorkflowDocument().isInitiated()
                 && oForm.getOrderDocument().getAccounts().isEmpty()) {
             OrderService orderService = SpringContext.getBean(OrderService.class);
             if(orderService.computeTotal(oForm.getOrderDocument().getOrderDetails()).isGreaterThan(KualiDecimal.ZERO)) {
@@ -94,9 +89,9 @@ public class OrderAction extends KualiTransactionalDocumentActionBase {
     private void checkAuthorization(OrderDocument orderDocument) {
         if (MMConstants.OrderDocument.PROFILE_TYPE_PERSONAL.equals(orderDocument
                 .getProfileTypeCode())) {
-            if (!KIMServiceLocator.getIdentityManagementService().isAuthorized(
+            if (!KimApiServiceLocator.getPermissionService().isAuthorized(
                     GlobalVariables.getUserSession().getPrincipalId(), MMConstants.MM_NAMESPACE,
-                    MMConstants.OrderDocument.OPEN_PERSONAL_ORDER_PERMISSION, null, null)) {
+                    MMConstants.OrderDocument.OPEN_PERSONAL_ORDER_PERMISSION, null)) {
                 String currentPrincipalName = GlobalVariables.getUserSession().getPrincipalName();
                 String principalName = orderDocument.getCustomerProfile().getPrincipalName();
                 if (!currentPrincipalName.equalsIgnoreCase(principalName)) {
@@ -191,7 +186,7 @@ public class OrderAction extends KualiTransactionalDocumentActionBase {
 
         Accounts newAccountingLine = oForm.getNewAccountingLine();
         String errorKey = MMConstants.OrderDocument.NEW_ACCOUNTING_LINE + ".";
-        KNSServiceLocator.getBusinessObjectDictionaryService().performForceUppercase(newAccountingLine);
+				SpringContext.getBean(BusinessObjectDictionaryService.class).performForceUppercase(newAccountingLine);
         Double orderTotal = SpringContext.getBean(OrderService.class).computeTotal(
                 oForm.getOrderDocument().getOrderDetails()).doubleValue();
         updateAccountingLineAmountValues(newAccountingLine, orderTotal, true);
@@ -217,7 +212,7 @@ public class OrderAction extends KualiTransactionalDocumentActionBase {
 
         String errorKey = MMConstants.OrderDocument.NEW_ORDER_DETAIL_ACCOUNTING_LINES + "[" + line
                 + "].";
-        KNSServiceLocator.getBusinessObjectDictionaryService().performForceUppercase(newAccountingLine);
+        SpringContext.getBean(BusinessObjectDictionaryService.class).performForceUppercase(newAccountingLine);
         Double lineTotal = orderService.computeLineTotalWithTax(oForm.getOrderDocument()
                 .getOrderDetails().get(line)).doubleValue();
         updateAccountingLineAmountValues(newAccountingLine, lineTotal, true);
@@ -431,7 +426,8 @@ public class OrderAction extends KualiTransactionalDocumentActionBase {
                 updateAccountingLineAmountValues(detailAccount, detail.getDetailTotal().doubleValue(), false);
             }
         }
-        KNSServiceLocator.getBusinessObjectDictionaryService().performForceUppercase(document);
+
+				SpringContext.getBean(BusinessObjectDictionaryService.class).performForceUppercase(document);
 
     }
 
@@ -463,7 +459,7 @@ public class OrderAction extends KualiTransactionalDocumentActionBase {
 
     protected int getSelectedLineItem(HttpServletRequest request) {
         int selectedLine = -1;
-        String parameterName = (String) request.getAttribute(KNSConstants.METHOD_TO_CALL_ATTRIBUTE);
+        String parameterName = (String) request.getAttribute(KRADConstants.METHOD_TO_CALL_ATTRIBUTE);
         if (StringUtils.isNotBlank(parameterName)) {
             String lineNumber = StringUtils.substringBetween(parameterName, ".item", ".");
             selectedLine = Integer.parseInt(lineNumber);

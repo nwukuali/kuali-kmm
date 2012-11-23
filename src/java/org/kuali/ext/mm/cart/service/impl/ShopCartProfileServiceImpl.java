@@ -3,10 +3,6 @@
  */
 package org.kuali.ext.mm.cart.service.impl;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.kuali.ext.mm.businessobject.Customer;
 import org.kuali.ext.mm.businessobject.Profile;
 import org.kuali.ext.mm.businessobject.ShoppingCart;
@@ -14,10 +10,14 @@ import org.kuali.ext.mm.cart.ShopCartConstants;
 import org.kuali.ext.mm.cart.service.ShopCartProfileService;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.service.impl.ProfileServiceImpl;
-import org.kuali.rice.kim.service.KIMServiceLocator;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.util.GlobalVariables;
+import org.kuali.rice.coreservice.framework.CoreFrameworkServiceLocator;
+import org.kuali.rice.kim.api.services.KimApiServiceLocator;
+import org.kuali.rice.krad.util.GlobalVariables;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -41,11 +41,11 @@ public class ShopCartProfileServiceImpl extends ProfileServiceImpl implements Sh
      * @see org.kuali.ext.mm.cart.service.ShopCartProfileService#isPersonalUseProfileEnabled(org.kuali.ext.mm.businessobject.Customer)
      */
     public boolean isPersonalUseProfileEnabled(Customer customer) {
-        boolean isAllowed = KNSServiceLocator.getParameterService().getIndicatorParameter(ShoppingCart.class, ShopCartConstants.Parameters.ALLOW_PERSONAL_USE);
+        boolean isAllowed = CoreFrameworkServiceLocator.getParameterService().getParameterValueAsBoolean(ShoppingCart.class, ShopCartConstants.Parameters.ALLOW_PERSONAL_USE);
         if(!isAllowed) {
-            isAllowed = KIMServiceLocator.getIdentityManagementService().isAuthorized(
+            isAllowed = KimApiServiceLocator.getPermissionService().isAuthorized(
                     GlobalVariables.getUserSession().getPrincipalId(), MMConstants.MM_NAMESPACE,
-                    ShopCartConstants.Permission.PERSONAL_USE_SHOPPING, null, null);
+                    ShopCartConstants.Permission.PERSONAL_USE_SHOPPING, null);
         }
         return isAllowed;
     }

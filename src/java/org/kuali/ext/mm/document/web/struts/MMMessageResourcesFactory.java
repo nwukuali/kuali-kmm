@@ -18,7 +18,7 @@ package org.kuali.ext.mm.document.web.struts;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.util.MessageResources;
 import org.kuali.ext.mm.common.sys.context.ContextConstants;
-import org.kuali.rice.core.config.ConfigContext;
+import org.kuali.rice.core.api.config.property.ConfigContext;
 import org.kuali.rice.kns.web.struts.action.KualiPropertyMessageResourcesFactory;
 
 

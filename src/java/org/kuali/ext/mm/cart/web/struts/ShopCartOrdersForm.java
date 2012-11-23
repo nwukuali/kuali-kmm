@@ -1,12 +1,5 @@
 package org.kuali.ext.mm.cart.web.struts;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.lang.StringUtils;
 import org.kuali.ext.mm.businessobject.OrderDetail;
 import org.kuali.ext.mm.cart.ShopCartConstants;
@@ -14,10 +7,16 @@ import org.kuali.ext.mm.cart.ShopCartKeyConstants;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.document.OrderDocument;
 import org.kuali.ext.mm.service.RecurringOrderService;
-import org.kuali.rice.kew.exception.WorkflowException;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.service.KualiConfigurationService;
+import org.kuali.rice.core.api.config.property.ConfigurationService;
+import org.kuali.rice.kew.api.exception.WorkflowException;
+import org.kuali.rice.krad.service.KRADServiceLocator;
+import org.kuali.rice.krad.service.KRADServiceLocatorWeb;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public class ShopCartOrdersForm extends StoresShoppingFormBase {
@@ -60,7 +59,7 @@ public class ShopCartOrdersForm extends StoresShoppingFormBase {
         if(StringUtils.isNotBlank(docId)) {
         	documentList.clear();
         	try {
-				documentList.add((OrderDocument)KNSServiceLocator.getDocumentService().getByDocumentHeaderId(docId));
+				documentList.add((OrderDocument) KRADServiceLocatorWeb.getDocumentService().getByDocumentHeaderId(docId));
 			} catch (WorkflowException e) {
 				e.printStackTrace();
 				throw new RuntimeException("Error retrieving document for Order Summary list.", e);
@@ -80,11 +79,11 @@ public class ShopCartOrdersForm extends StoresShoppingFormBase {
 		}        	
         
         if(documentList != null && !documentList.isEmpty()) {			
-			KualiConfigurationService configService = SpringContext.getBean(KualiConfigurationService.class);
-			String willCallMessage = configService.getPropertyString(ShopCartKeyConstants.MESSAGE_ORDER_CONTAINS_ITEMS_FOR_WILLCALL);
+			ConfigurationService configService = SpringContext.getBean(ConfigurationService.class);
+			String willCallMessage = configService.getPropertyValueAsString(ShopCartKeyConstants.MESSAGE_ORDER_CONTAINS_ITEMS_FOR_WILLCALL);
 
         	for(OrderDocument document : documentList) {
-        		document = (OrderDocument)KNSServiceLocator.getBusinessObjectService().retrieve(document);
+        		document = (OrderDocument) KRADServiceLocator.getBusinessObjectService().retrieve(document);
         		if(!getShowOrderDetails().containsKey(document.getDocumentNumber()))
         			getShowOrderDetails().put(document.getDocumentNumber(), false);
         		request.getSession().setAttribute(ShopCartConstants.Session.SHOW_ORDER_DETAILS_MAP, getShowOrderDetails());

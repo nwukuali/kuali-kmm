@@ -7,8 +7,8 @@ import org.kuali.ext.mm.common.sys.MMKeyConstants;
 import org.kuali.ext.mm.service.MMServiceLocator;
 import org.kuali.rice.kns.document.MaintenanceDocument;
 import org.kuali.rice.kns.maintenance.rules.MaintenanceDocumentRuleBase;
-import org.kuali.rice.kns.util.GlobalVariables;
-import org.kuali.rice.kns.util.KNSConstants;
+import org.kuali.rice.krad.util.GlobalVariables;
+import org.kuali.rice.krad.util.KRADConstants;
 
 
 public class PunchOutVendorRule extends MaintenanceDocumentRuleBase {
@@ -22,10 +22,10 @@ public class PunchOutVendorRule extends MaintenanceDocumentRuleBase {
 
         PunchOutVendor existing = MMServiceLocator.getPunchOutVendorService()
             .getPunchOutVendorByVendorCredentials(newVal.getVendorCredentialDomain(), newVal.getVendorIdentity());
-        
+
         if (document.isNew() && existing != null) {
             GlobalVariables.getMessageMap().putError(
-                    KNSConstants.MAINTENANCE_NEW_MAINTAINABLE + MMConstants.PunchOutVendor.VENDOR_IDENTITY,
+                    KRADConstants.MAINTENANCE_NEW_MAINTAINABLE + MMConstants.PunchOutVendor.VENDOR_IDENTITY,
                     MMKeyConstants.PunchOutVendor.ERROR_VENDOR_EXISTS, 
                     newVal.getVendorCredentialDomain(),
                     newVal.getVendorIdentity());
@@ -38,7 +38,7 @@ public class PunchOutVendorRule extends MaintenanceDocumentRuleBase {
                                 oldVal.getVendorCredentialDomain()))
                 && existing != null) {
             GlobalVariables.getMessageMap().putError(
-                    KNSConstants.MAINTENANCE_NEW_MAINTAINABLE + MMConstants.PunchOutVendor.VENDOR_IDENTITY,
+                    KRADConstants.MAINTENANCE_NEW_MAINTAINABLE + MMConstants.PunchOutVendor.VENDOR_IDENTITY,
                     MMKeyConstants.PunchOutVendor.ERROR_VENDOR_EXISTS, 
                     newVal.getVendorCredentialDomain(),
                     newVal.getVendorIdentity());
@@ -48,7 +48,7 @@ public class PunchOutVendorRule extends MaintenanceDocumentRuleBase {
         if(MMConstants.CatalogType.PUNCHOUT.equals(newVal.getCatalog().getCatalogTypeCd())
                 && StringUtils.isBlank(newVal.getPunchOutUrl())) {
             String errorLabel = getDataDictionaryService().getAttributeErrorLabel(PunchOutVendor.class, MMConstants.PunchOutVendor.PUNCH_OUT_URL);
-            GlobalVariables.getMessageMap().putError(KNSConstants.MAINTENANCE_NEW_MAINTAINABLE + MMConstants.PunchOutVendor.PUNCH_OUT_URL, MMKeyConstants.PunchOutVendor.ERROR_PUNCHOUT_URL_BLANK, errorLabel);
+            GlobalVariables.getMessageMap().putError(KRADConstants.MAINTENANCE_NEW_MAINTAINABLE + MMConstants.PunchOutVendor.PUNCH_OUT_URL, MMKeyConstants.PunchOutVendor.ERROR_PUNCHOUT_URL_BLANK, errorLabel);
             valid = false;
         }
 

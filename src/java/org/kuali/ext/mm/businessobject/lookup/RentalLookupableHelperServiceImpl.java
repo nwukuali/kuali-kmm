@@ -1,18 +1,18 @@
 package org.kuali.ext.mm.businessobject.lookup;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
-
 import org.kuali.ext.mm.businessobject.Rental;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.MMKeyConstants;
-import org.kuali.rice.kns.bo.BusinessObject;
 import org.kuali.rice.kns.lookup.HtmlData;
 import org.kuali.rice.kns.lookup.HtmlData.AnchorHtmlData;
 import org.kuali.rice.kns.lookup.KualiLookupableHelperServiceImpl;
-import org.kuali.rice.kns.util.KNSConstants;
-import org.kuali.rice.kns.util.UrlFactory;
+import org.kuali.rice.krad.bo.BusinessObject;
+import org.kuali.rice.krad.util.KRADConstants;
+import org.kuali.rice.krad.util.UrlFactory;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
 
 
 public class RentalLookupableHelperServiceImpl extends KualiLookupableHelperServiceImpl {
@@ -37,15 +37,15 @@ public class RentalLookupableHelperServiceImpl extends KualiLookupableHelperServ
 
     protected HtmlData getUpdateUrl(Rental rental) {
         Properties parameters = new Properties();
-        parameters.put(KNSConstants.DISPATCH_REQUEST_PARAMETER, KNSConstants.MAINTENANCE_EDIT_METHOD_TO_CALL);
+        parameters.put(KRADConstants.DISPATCH_REQUEST_PARAMETER, KRADConstants.MAINTENANCE_EDIT_METHOD_TO_CALL);
         parameters.put(MMConstants.Rental.RENTAL_ID, rental.getRentalId());
-        parameters.put(KNSConstants.BUSINESS_OBJECT_CLASS_ATTRIBUTE, rental.getClass().getName());
-        parameters.put(KNSConstants.RETURN_LOCATION_PARAMETER, this.getBackLocation());
+        parameters.put(KRADConstants.BUSINESS_OBJECT_CLASS_ATTRIBUTE, rental.getClass().getName());
+        parameters.put(KRADConstants.RETURN_LOCATION_PARAMETER, this.getBackLocation());
 
-        String href = getKualiConfigurationService().getPropertyString(
+        String href = getKualiConfigurationService().getPropertyValueAsString(
                 MMKeyConstants.KR_URL)
-                + "/" + UrlFactory.parameterizeUrl(KNSConstants.MAINTENANCE_ACTION, parameters);
-        return new AnchorHtmlData(href, KNSConstants.DOC_HANDLER_METHOD,
+                + "/" + UrlFactory.parameterizeUrl(KRADConstants.MAINTENANCE_ACTION, parameters);
+        return new AnchorHtmlData(href, KRADConstants.DOC_HANDLER_METHOD,
             MMConstants.RENTAL_ACTION_UPDATE);
     }
     

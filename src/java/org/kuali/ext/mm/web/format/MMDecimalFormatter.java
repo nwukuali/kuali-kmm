@@ -18,18 +18,19 @@ package org.kuali.ext.mm.web.format;
 // end Kuali Foundation modification
 
 // begin Kuali Foundation modification
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.text.ParseException;
-import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.kuali.ext.mm.util.MMDecimal;
-import org.kuali.rice.kns.util.KualiInteger;
-import org.kuali.rice.kns.util.RiceKeyConstants;
-import org.kuali.rice.kns.web.format.FormatException;
-import org.kuali.rice.kns.web.format.Formatter;
+import org.kuali.rice.core.api.util.RiceKeyConstants;
+import org.kuali.rice.core.api.util.type.KualiInteger;
+import org.kuali.rice.core.web.format.FormatException;
+import org.kuali.rice.core.web.format.Formatter;
+
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.util.regex.Pattern;
 
 /**
  * begin Kuali Foundation modification This class is used to format objects as a percent. end Kuali Foundation modification

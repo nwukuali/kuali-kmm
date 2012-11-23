@@ -3,23 +3,22 @@
  */
 package org.kuali.ext.mm.integration.service.impl.mm;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-
+import edu.msu.ebsp.mm.service.OrderQueryService;
+import edu.msu.ebsp.mm.service.dto.OrderInfoDto;
 import org.kuali.ext.mm.businessobject.Accounts;
 import org.kuali.ext.mm.businessobject.Address;
 import org.kuali.ext.mm.businessobject.OrderDetail;
 import org.kuali.ext.mm.businessobject.Profile;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.document.OrderDocument;
-import org.kuali.rice.kim.bo.Person;
-import org.kuali.rice.kim.service.PersonService;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.util.ObjectUtils;
+import org.kuali.rice.kim.api.identity.Person;
+import org.kuali.rice.kim.api.identity.PersonService;
+import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.util.ObjectUtils;
 
-import edu.msu.ebsp.mm.service.OrderQueryService;
-import edu.msu.ebsp.mm.service.dto.OrderInfoDto;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author harsha07

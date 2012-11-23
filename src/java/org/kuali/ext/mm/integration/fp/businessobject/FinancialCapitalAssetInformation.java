@@ -16,10 +16,10 @@
 
 package org.kuali.ext.mm.integration.fp.businessobject;
 
+import org.springframework.util.AutoPopulatingList;
+
 import java.io.Serializable;
 import java.util.List;
-
-import org.kuali.rice.kns.util.TypedArrayList;
 
 /**
  * @author harsha07
@@ -44,7 +44,7 @@ public class FinancialCapitalAssetInformation implements Serializable{
      */
     @SuppressWarnings("unchecked")
     public FinancialCapitalAssetInformation() {
-        this.capitalAssetInformationDetails = new TypedArrayList(
+        this.capitalAssetInformationDetails = new AutoPopulatingList(
             FinancialCapitalAssetInformationDetail.class);
     }
 

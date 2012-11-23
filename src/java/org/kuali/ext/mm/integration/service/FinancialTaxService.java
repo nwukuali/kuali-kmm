@@ -16,11 +16,11 @@
 
 package org.kuali.ext.mm.integration.service;
 
+import org.kuali.ext.mm.integration.sys.businessobject.FinancialTaxDetail;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+
 import java.sql.Date;
 import java.util.List;
-
-import org.kuali.ext.mm.integration.sys.businessobject.FinancialTaxDetail;
-import org.kuali.rice.kns.util.KualiDecimal;
 
 public interface FinancialTaxService {
 

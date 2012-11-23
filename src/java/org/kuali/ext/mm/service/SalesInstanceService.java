@@ -2,7 +2,7 @@ package org.kuali.ext.mm.service;
 
 import org.kuali.ext.mm.businessobject.SalesInstance;
 import org.kuali.ext.mm.document.OrderDocument;
-import org.kuali.rice.kns.util.KualiDecimal;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
 
 /**
  * @author schneppd

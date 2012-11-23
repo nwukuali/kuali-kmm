@@ -1,13 +1,13 @@
 package org.kuali.ext.mm.cart.web.struts;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.kuali.ext.mm.businessobject.Address;
 import org.kuali.ext.mm.businessobject.Profile;
 import org.kuali.ext.mm.cart.service.ShopCartServiceLocator;
-import org.kuali.rice.kim.bo.Person;
-import org.kuali.rice.kim.service.KIMServiceLocator;
-import org.kuali.rice.kns.util.ObjectUtils;
+import org.kuali.rice.kim.api.identity.Person;
+import org.kuali.rice.kim.api.services.KimApiServiceLocator;
+import org.kuali.rice.krad.util.ObjectUtils;
+
+import javax.servlet.http.HttpServletRequest;
 
 
 
@@ -38,7 +38,7 @@ public class ProfileForm extends StoresShoppingFormBase {
 		if(!ObjectUtils.isNull(getCustomer()))
 			getCustomer().refreshReferenceObject("profiles");
 
-		Person user = KIMServiceLocator.getPersonService().getPersonByPrincipalName(getCustomer().getPrincipalName());
+		Person user = KimApiServiceLocator.getPersonService().getPersonByPrincipalName(getCustomer().getPrincipalName());
 		setHideInternalInfo(user == null);
 
 	}

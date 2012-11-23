@@ -1,20 +1,5 @@
 package org.kuali.ext.mm.cart.web.struts;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Properties;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -24,10 +9,20 @@ import org.kuali.ext.mm.cart.service.ShopCartServiceLocator;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.util.MMFileUtil;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.util.KNSConstants;
-import org.kuali.rice.kns.util.UrlFactory;
+import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.service.KRADServiceLocator;
+import org.kuali.rice.krad.util.KRADConstants;
+import org.kuali.rice.krad.util.UrlFactory;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.*;
 
 
 public class ItemAction extends StoresShoppingActionBase {
@@ -61,7 +56,7 @@ public class ItemAction extends StoresShoppingActionBase {
 		request.getSession().setAttribute(ShopCartConstants.Session.ADD_TO_FAVORITES_ITEMS, item);
 
 		Properties parameters = new Properties();
-        parameters.put(KNSConstants.DISPATCH_REQUEST_PARAMETER, ShopCartConstants.ADD_TO_FAVORITES_METHOD);
+        parameters.put(KRADConstants.DISPATCH_REQUEST_PARAMETER, ShopCartConstants.ADD_TO_FAVORITES_METHOD);
 
 		return new ActionForward(UrlFactory.parameterizeUrl(ShopCartConstants.FAVORITES_ACTION, parameters), true);
     }
@@ -100,8 +95,8 @@ public class ItemAction extends StoresShoppingActionBase {
     public ActionForward streamImage(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         response.setContentType("image/jpg");
-        String imageDir = KNSServiceLocator.getKualiConfigurationService().getPropertyString(
-                "catalog.images.dir");
+        String imageDir = KRADServiceLocator.getKualiConfigurationService().getPropertyValueAsString(
+					"catalog.images.dir");
         File imageFile = new File(imageDir, request.getParameter("imagePath"));
         if (!imageFile.exists()) {
             return null;
@@ -114,8 +109,8 @@ public class ItemAction extends StoresShoppingActionBase {
     public ActionForward downloadWebreqImages(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response) throws Exception {
         response.setContentType("text/html");
-        String imageDir = KNSServiceLocator.getKualiConfigurationService().getPropertyString(
-                "catalog.images.dir");
+        String imageDir = KRADServiceLocator.getKualiConfigurationService().getPropertyValueAsString(
+					"catalog.images.dir");
         File imageDirFile = new File(imageDir);
         // create if director doesn't exist
         if (!imageDirFile.exists()) {

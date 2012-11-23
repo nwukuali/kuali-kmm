@@ -1,13 +1,5 @@
 package org.kuali.ext.mm.cart.service.impl;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.apache.commons.lang.StringUtils;
 import org.kuali.ext.mm.businessobject.CatalogGroup;
 import org.kuali.ext.mm.businessobject.CatalogItem;
@@ -20,17 +12,13 @@ import org.kuali.ext.mm.cart.service.ShopCartCatalogService;
 import org.kuali.ext.mm.cart.service.ShopCartSearchService;
 import org.kuali.ext.mm.cart.service.ShopCartSearchStringBuilder;
 import org.kuali.ext.mm.cart.service.ShopCartServiceLocator;
-import org.kuali.ext.mm.cart.valueobject.AdvancedSearch;
-import org.kuali.ext.mm.cart.valueobject.Breadcrumb;
-import org.kuali.ext.mm.cart.valueobject.BrowseManager;
-import org.kuali.ext.mm.cart.valueobject.PagingElement;
-import org.kuali.ext.mm.cart.valueobject.SortElement;
+import org.kuali.ext.mm.cart.valueobject.*;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.dataaccess.QueryElement;
 import org.kuali.ext.mm.util.MMUtil;
-import org.kuali.rice.kns.util.ObjectUtils;
+import org.kuali.rice.krad.util.ObjectUtils;
 
-import edu.emory.mathcs.backport.java.util.Arrays;
+import java.util.*;
 
 public class ShopCartSearchServiceImpl implements ShopCartSearchService {
 
@@ -492,7 +480,7 @@ public class ShopCartSearchServiceImpl implements ShopCartSearchService {
             childKey = subgroup.getCatalogSubgroupId();
             subgroup.setResultSetCount(subgroupMap.get(childKey).count);
         }
-        return Arrays.asList(subgroupResults.toArray());
+        return new ArrayList<CatalogSubgroup>(subgroupResults);
 	}
 	
 	/**

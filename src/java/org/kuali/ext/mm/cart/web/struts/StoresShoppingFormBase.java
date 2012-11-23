@@ -1,9 +1,5 @@
 package org.kuali.ext.mm.cart.web.struts;
 
-import java.util.Calendar;
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.lang.StringUtils;
 import org.kuali.ext.mm.businessobject.Customer;
 import org.kuali.ext.mm.businessobject.Profile;
@@ -15,10 +11,13 @@ import org.kuali.ext.mm.cart.valueobject.ConfirmAction;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.MMKeyConstants;
 import org.kuali.ext.mm.util.MMUtil;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.util.GlobalVariables;
-import org.kuali.rice.kns.util.ObjectUtils;
 import org.kuali.rice.kns.web.struts.form.KualiForm;
+import org.kuali.rice.krad.service.KRADServiceLocator;
+import org.kuali.rice.krad.util.GlobalVariables;
+import org.kuali.rice.krad.util.ObjectUtils;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Calendar;
 
 
 public class StoresShoppingFormBase extends KualiForm {
@@ -189,7 +188,7 @@ public class StoresShoppingFormBase extends KualiForm {
     }
     
     public String getShoppingBaseUrl() {
-        return KNSServiceLocator.getKualiConfigurationService().getPropertyString(MMKeyConstants.Shopping.SHOPPING_URL);
+        return KRADServiceLocator.getKualiConfigurationService().getPropertyValueAsString(MMKeyConstants.Shopping.SHOPPING_URL);
     }
 
     public boolean isOrderCompletionWaiting() {

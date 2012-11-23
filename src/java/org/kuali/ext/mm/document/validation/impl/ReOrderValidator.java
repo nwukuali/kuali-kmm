@@ -10,9 +10,9 @@ import org.kuali.ext.mm.common.sys.MMKeyConstants;
 import org.kuali.ext.mm.document.ReOrderDocument;
 import org.kuali.ext.mm.service.MMServiceLocator;
 import org.kuali.ext.mm.util.MMDecimal;
-import org.kuali.rice.kns.util.GlobalVariables;
-import org.kuali.rice.kns.util.KualiDecimal;
-import org.kuali.rice.kns.util.ObjectUtils;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+import org.kuali.rice.krad.util.GlobalVariables;
+import org.kuali.rice.krad.util.ObjectUtils;
 
 
 public class ReOrderValidator {

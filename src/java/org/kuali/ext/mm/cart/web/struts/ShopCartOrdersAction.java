@@ -1,11 +1,5 @@
 package org.kuali.ext.mm.cart.web.struts;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -14,7 +8,13 @@ import org.kuali.ext.mm.cart.ShopCartConstants;
 import org.kuali.ext.mm.cart.ShopCartKeyConstants;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.document.OrderDocument;
-import org.kuali.rice.kns.service.KNSServiceLocator;
+import org.kuali.rice.krad.service.KRADServiceLocator;
+import org.kuali.rice.krad.service.KRADServiceLocatorWeb;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class ShopCartOrdersAction extends StoresShoppingActionBase {
@@ -100,9 +100,9 @@ public class ShopCartOrdersAction extends StoresShoppingActionBase {
         ShopCartOrdersForm oForm = (ShopCartOrdersForm)form;
 
         String documentId = (String)request.getSession().getAttribute(ShopCartConstants.Session.RECURRING_DOC_ID);
-        OrderDocument orderDocument = (OrderDocument)KNSServiceLocator.getDocumentService().getByDocumentHeaderId(documentId);
+        OrderDocument orderDocument = (OrderDocument) KRADServiceLocatorWeb.getDocumentService().getByDocumentHeaderId(documentId);
         orderDocument.getRecurringOrder().setActive(false);
-        KNSServiceLocator.getBusinessObjectService().save(orderDocument.getRecurringOrder());
+        KRADServiceLocator.getBusinessObjectService().save(orderDocument.getRecurringOrder());
         
         request.getSession().removeAttribute(ShopCartConstants.Session.RECURRING_DOC_ID);
         
@@ -164,7 +164,7 @@ public class ShopCartOrdersAction extends StoresShoppingActionBase {
         oForm.createNewConfirmAction(request);
         oForm.getConfirmAction().setConfirmAction(ShopCartConstants.ORDER_HISTORY_ACTION);
         oForm.getConfirmAction().setDeclineAction(ShopCartConstants.ORDER_HISTORY_ACTION);
-        oForm.getConfirmAction().setMessage(KNSServiceLocator.getKualiConfigurationService().getPropertyString(ShopCartKeyConstants.QUESTION_CONFIRM_END_RECURRENCE));
+        oForm.getConfirmAction().setMessage(KRADServiceLocator.getKualiConfigurationService().getPropertyValueAsString(ShopCartKeyConstants.QUESTION_CONFIRM_END_RECURRENCE));
         confirmParameters.put(MMConstants.DISPATCH_REQUEST_PARAMETER, ShopCartConstants.END_RECURRENCE_CONFRIM_METHOD);
         declineParameters.put(MMConstants.DISPATCH_REQUEST_PARAMETER, ShopCartConstants.CONFIRM_ACTION_DECLINE_METHOD);
         oForm.getConfirmAction().setConfirmParameters(confirmParameters);

@@ -32,16 +32,15 @@ package org.kuali.ext.mm.integration.sys.businessobject;
  * limitations under the License.
  */
 
-import java.math.BigDecimal;
-import java.util.LinkedHashMap;
-
 import org.kuali.ext.mm.integration.FinancialSystemComponent;
-import org.kuali.rice.kns.bo.ExternalizableBusinessObject;
-import org.kuali.rice.kns.bo.TransientBusinessObjectBase;
-import org.kuali.rice.kns.util.KualiDecimal;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+import org.kuali.rice.krad.bo.ExternalizableBusinessObject;
+import org.kuali.rice.krad.bo.TransientBusinessObjectBase;
+
+import java.math.BigDecimal;
 
 public class FinancialTaxDetail extends TransientBusinessObjectBase implements
-        ExternalizableBusinessObject, FinancialSystemComponent {
+	ExternalizableBusinessObject, FinancialSystemComponent {
     private static final long serialVersionUID = 1929841907918272286L;
     private String rateCode; // (e.g., state code or district code)
     private String rateName; // (e.g., state name or tax district name)
@@ -119,11 +118,6 @@ public class FinancialTaxDetail extends TransientBusinessObjectBase implements
 
     public void setTypeCode(String typeCode) {
         this.typeCode = typeCode;
-    }
-
-    @Override
-    protected LinkedHashMap<String, Object> toStringMapper() {
-        return null;
     }
 
     @Override

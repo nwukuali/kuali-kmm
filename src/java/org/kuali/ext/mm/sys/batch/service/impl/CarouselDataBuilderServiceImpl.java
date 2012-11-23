@@ -3,23 +3,20 @@
  */
 package org.kuali.ext.mm.sys.batch.service.impl;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.MMKeyConstants;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.sys.batch.dataaccess.CarouselDataBuilderDao;
 import org.kuali.ext.mm.sys.batch.service.CarouselDataBuilderService;
-import org.kuali.rice.kns.service.DateTimeService;
-import org.kuali.rice.kns.service.KNSServiceLocator;
+import org.kuali.rice.core.api.datetime.DateTimeService;
+import org.kuali.rice.coreservice.framework.CoreFrameworkServiceLocator;
+import org.kuali.rice.krad.service.KRADServiceLocator;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.util.*;
 
 
 /**
@@ -97,7 +94,7 @@ public class CarouselDataBuilderServiceImpl implements CarouselDataBuilderServic
 	 * @see org.kuali.ext.mm.sys.batch.service.CarouselDataBuilderService#process()
 	 */
 	public void process() {
-		List<String> zonesByWarehouse = KNSServiceLocator.getParameterService().getParameterValues(MMConstants.MM_NAMESPACE, MMConstants.Parameters.BATCH, MMConstants.Parameters.CAROUSEL_WAREHOUSE_ZONES);
+		List<String> zonesByWarehouse = new ArrayList<String>(CoreFrameworkServiceLocator.getParameterService().getParameterValuesAsString(MMConstants.MM_NAMESPACE, MMConstants.Parameters.BATCH, MMConstants.Parameters.CAROUSEL_WAREHOUSE_ZONES));
 		Map<String, List<String>> warehouseZoneMap = getWarehouseZoneMap(zonesByWarehouse);
 		for(String warehouseCode : warehouseZoneMap.keySet()) {
 			List<String> carouselLines = new ArrayList<String>();
@@ -121,7 +118,7 @@ public class CarouselDataBuilderServiceImpl implements CarouselDataBuilderServic
 				continue;
 
 			DateTimeService dateTimeService = SpringContext.getBean(DateTimeService.class);
-			String filePath = KNSServiceLocator.getKualiConfigurationService().getPropertyString(MMKeyConstants.EXTERNAL_CAROUSEL_DIRECTORY_KEY) + File.separator;
+			String filePath = KRADServiceLocator.getKualiConfigurationService().getPropertyValueAsString(MMKeyConstants.EXTERNAL_CAROUSEL_DIRECTORY_KEY) + File.separator;
 			String fileName = dateTimeService.toDateTimeStringForFilename(dateTimeService.getCurrentDate());
 			File directory = new File(filePath + "WH-" + warehouseCode);
 			directory.mkdirs();

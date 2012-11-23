@@ -3,9 +3,6 @@
  */
 package org.kuali.ext.mm.document.validation.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.commons.lang.StringUtils;
 import org.kuali.ext.mm.businessobject.Delivery;
 import org.kuali.ext.mm.businessobject.DeliveryLine;
@@ -15,8 +12,11 @@ import org.kuali.ext.mm.common.sys.MMKeyConstants;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.rice.kns.document.MaintenanceDocument;
 import org.kuali.rice.kns.maintenance.rules.MaintenanceDocumentRuleBase;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.util.GlobalVariables;
+import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.util.GlobalVariables;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -26,7 +26,7 @@ import org.kuali.rice.kns.util.GlobalVariables;
 public class DeliveryBusinessRule extends MaintenanceDocumentRuleBase{
     
     protected boolean processCustomRouteDocumentBusinessRules(MaintenanceDocument document) {
-        
+
         BusinessObjectService bOS = SpringContext.getBean(BusinessObjectService.class);
         Delivery delivery = (Delivery) document.getNewMaintainableObject().getBusinessObject();
         String routeCd = delivery.getRouteCd();       

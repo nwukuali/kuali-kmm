@@ -5,8 +5,8 @@ import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.document.OrderDocument;
 import org.kuali.ext.mm.service.OrderService;
 import org.kuali.ext.mm.service.SalesInstanceService;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.util.KualiDecimal;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+import org.kuali.rice.krad.service.BusinessObjectService;
 
 
 /**

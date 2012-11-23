@@ -1,18 +1,6 @@
 package org.kuali.ext.mm.service.impl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.kuali.ext.mm.businessobject.Bin;
-import org.kuali.ext.mm.businessobject.OrderDetail;
-import org.kuali.ext.mm.businessobject.PickListLine;
-import org.kuali.ext.mm.businessobject.ReturnDetail;
-import org.kuali.ext.mm.businessobject.Stock;
-import org.kuali.ext.mm.businessobject.StockBalance;
-import org.kuali.ext.mm.businessobject.StockCost;
-import org.kuali.ext.mm.businessobject.StockHistory;
+import org.kuali.ext.mm.businessobject.*;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.document.ReturnDocument;
@@ -20,8 +8,13 @@ import org.kuali.ext.mm.service.IReturnCommand;
 import org.kuali.ext.mm.service.MMServiceLocator;
 import org.kuali.ext.mm.service.StockService;
 import org.kuali.ext.mm.util.MMDecimal;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.util.ObjectUtils;
+import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.util.ObjectUtils;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public class InventoryAdjustmentReturnActionService implements IReturnCommand {

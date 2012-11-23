@@ -1,19 +1,15 @@
 package org.kuali.ext.mm.businessobject.lookup;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-
 import org.kuali.ext.mm.businessobject.PickTicket;
 import org.kuali.ext.mm.common.sys.MMConstants;
-import org.kuali.rice.kns.bo.BusinessObject;
 import org.kuali.rice.kns.lookup.HtmlData;
 import org.kuali.rice.kns.lookup.HtmlData.AnchorHtmlData;
 import org.kuali.rice.kns.lookup.KualiLookupableHelperServiceImpl;
-import org.kuali.rice.kns.util.KNSConstants;
-import org.kuali.rice.kns.util.UrlFactory;
+import org.kuali.rice.krad.bo.BusinessObject;
+import org.kuali.rice.krad.util.KRADConstants;
+import org.kuali.rice.krad.util.UrlFactory;
+
+import java.util.*;
 
 
 @SuppressWarnings("unchecked")
@@ -73,47 +69,47 @@ public class PickTicketLookupableHelperServiceImpl extends KualiLookupableHelper
 
     protected HtmlData getPrintUrl(PickTicket pickTicket) {
         Properties parameters = new Properties();
-        parameters.put(KNSConstants.DISPATCH_REQUEST_PARAMETER, MMConstants.PRINT_TICKET_METHOD);
+        parameters.put(KRADConstants.DISPATCH_REQUEST_PARAMETER, MMConstants.PRINT_TICKET_METHOD);
         parameters
                 .put(MMConstants.ACTION_PARM_PICK_TICKET_NUMBER, pickTicket.getPickTicketNumber());
-        parameters.put(KNSConstants.DOC_FORM_KEY, this.getDocFormKey());
-        parameters.put(KNSConstants.RETURN_LOCATION_PARAMETER, this.getBackLocation());
+        parameters.put(KRADConstants.DOC_FORM_KEY, this.getDocFormKey());
+        parameters.put(KRADConstants.RETURN_LOCATION_PARAMETER, this.getBackLocation());
 
-        String href = getKualiConfigurationService().getPropertyString(
-                KNSConstants.APPLICATION_URL_KEY)
+        String href = getKualiConfigurationService().getPropertyValueAsString(
+                KRADConstants.APPLICATION_URL_KEY)
                 + "/" + UrlFactory.parameterizeUrl(MMConstants.PICK_TICKET_ACTION, parameters);
-        return new AnchorHtmlData(href, KNSConstants.DOC_HANDLER_METHOD,
+        return new AnchorHtmlData(href, KRADConstants.DOC_HANDLER_METHOD,
             MMConstants.PICK_TICKET_ACTION_PRINT);
     }
 
     protected HtmlData getVerifyUrl(PickTicket pickTicket) {
         Properties parameters = new Properties();
-        parameters.put(KNSConstants.DISPATCH_REQUEST_PARAMETER, KNSConstants.DOC_HANDLER_METHOD);
+        parameters.put(KRADConstants.DISPATCH_REQUEST_PARAMETER, KRADConstants.DOC_HANDLER_METHOD);
         parameters
                 .put(MMConstants.ACTION_PARM_PICK_TICKET_NUMBER, pickTicket.getPickTicketNumber());
-        parameters.put(KNSConstants.DOCUMENT_TYPE_NAME,
+        parameters.put(KRADConstants.DOCUMENT_TYPE_NAME,
                 MMConstants.PickVerifyDocument.PICK_VERIFY_DOC_TYPE);
         parameters.put(MMConstants.COMMAND, MMConstants.COMMAND_INITIATE);
 
-        String href = getKualiConfigurationService().getPropertyString(
-                KNSConstants.APPLICATION_URL_KEY)
+        String href = getKualiConfigurationService().getPropertyValueAsString(
+                KRADConstants.APPLICATION_URL_KEY)
                 + "/"
                 + UrlFactory.parameterizeUrl(MMConstants.PickVerifyDocument.PICK_VERIFY_ACTION,
                         parameters);
-        return new AnchorHtmlData(href, KNSConstants.DOC_HANDLER_METHOD,
+        return new AnchorHtmlData(href, KRADConstants.DOC_HANDLER_METHOD,
             MMConstants.PickVerifyDocument.PICK_VERIFY_ACTION_VERIFY);
     }
 
     protected HtmlData getPrintAllUrl() {
         Properties parameters = new Properties();
-        parameters.put(KNSConstants.DISPATCH_REQUEST_PARAMETER, MMConstants.PRINT_ALL_METHOD);
-        parameters.put(KNSConstants.DOC_FORM_KEY, this.getDocFormKey());
-        parameters.put(KNSConstants.RETURN_LOCATION_PARAMETER, this.getBackLocation());
+        parameters.put(KRADConstants.DISPATCH_REQUEST_PARAMETER, MMConstants.PRINT_ALL_METHOD);
+        parameters.put(KRADConstants.DOC_FORM_KEY, this.getDocFormKey());
+        parameters.put(KRADConstants.RETURN_LOCATION_PARAMETER, this.getBackLocation());
 
-        String href = getKualiConfigurationService().getPropertyString(
-                KNSConstants.APPLICATION_URL_KEY)
+        String href = getKualiConfigurationService().getPropertyValueAsString(
+                KRADConstants.APPLICATION_URL_KEY)
                 + "/" + UrlFactory.parameterizeUrl(MMConstants.PICK_TICKET_ACTION, parameters);
-        return new AnchorHtmlData(href, KNSConstants.DOC_HANDLER_METHOD,
+        return new AnchorHtmlData(href, KRADConstants.DOC_HANDLER_METHOD,
             MMConstants.PICK_TICKET_ACTION_PRINT_ALL);
     }
 

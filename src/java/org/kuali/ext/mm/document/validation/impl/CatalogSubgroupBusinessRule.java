@@ -3,9 +3,6 @@
  */
 package org.kuali.ext.mm.document.validation.impl;
 
-import java.util.HashMap;
-import java.util.List;
-
 import org.apache.commons.lang.StringUtils;
 import org.kuali.ext.mm.businessobject.CatalogSubgroup;
 import org.kuali.ext.mm.common.sys.MMConstants;
@@ -14,8 +11,11 @@ import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.rice.kns.document.MaintenanceDocument;
 import org.kuali.rice.kns.maintenance.Maintainable;
 import org.kuali.rice.kns.maintenance.rules.MaintenanceDocumentRuleBase;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.util.GlobalVariables;
+import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.util.GlobalVariables;
+
+import java.util.HashMap;
+import java.util.List;
 
 
 /**

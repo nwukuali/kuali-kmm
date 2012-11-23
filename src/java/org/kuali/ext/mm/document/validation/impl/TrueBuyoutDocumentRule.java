@@ -1,23 +1,19 @@
 package org.kuali.ext.mm.document.validation.impl;
 
 import org.apache.commons.lang.StringUtils;
-import org.kuali.ext.mm.businessobject.MMPersistableBusinessObjectBase;
-import org.kuali.ext.mm.businessobject.Markup;
-import org.kuali.ext.mm.businessobject.RentalObjectCode;
-import org.kuali.ext.mm.businessobject.StockType;
-import org.kuali.ext.mm.businessobject.TrueBuyoutDetail;
+import org.kuali.ext.mm.businessobject.*;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.MMKeyConstants;
 import org.kuali.ext.mm.document.TrueBuyoutDocument;
 import org.kuali.ext.mm.service.MMServiceLocator;
 import org.kuali.ext.mm.service.StockService;
-import org.kuali.rice.kns.document.Document;
-import org.kuali.rice.kns.rule.event.ApproveDocumentEvent;
-import org.kuali.rice.kns.rules.DocumentRuleBase;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.util.GlobalVariables;
-import org.kuali.rice.kns.util.ObjectUtils;
-import org.kuali.rice.kns.util.RiceKeyConstants;
+import org.kuali.rice.core.api.util.RiceKeyConstants;
+import org.kuali.rice.krad.document.Document;
+import org.kuali.rice.krad.rules.DocumentRuleBase;
+import org.kuali.rice.krad.rules.rule.event.ApproveDocumentEvent;
+import org.kuali.rice.krad.service.KRADServiceLocator;
+import org.kuali.rice.krad.util.GlobalVariables;
+import org.kuali.rice.krad.util.ObjectUtils;
 
 
 public class TrueBuyoutDocumentRule extends DocumentRuleBase {
@@ -43,7 +39,7 @@ public class TrueBuyoutDocumentRule extends DocumentRuleBase {
     /**
      * (non-Javadoc)
      *
-     * @see org.kuali.rice.kns.rules.DocumentRuleBase#processCustomApproveDocumentBusinessRules(org.kuali.rice.kns.rule.event.ApproveDocumentEvent)
+     * @see org.kuali.rice.kns.rules.DocumentRuleBase#processCustomApproveDocumentBusinessRules(org.kuali.rice.krad.rules.rule.event.ApproveDocumentEvent)
      */
     @Override
     protected boolean processCustomApproveDocumentBusinessRules(ApproveDocumentEvent approveEvent) {
@@ -116,7 +112,7 @@ public class TrueBuyoutDocumentRule extends DocumentRuleBase {
                         MMKeyConstants.TrueBuyoutDocument.ERROR_MARKUP_CODE_INVALID);
             }
             detail.refreshReferenceObject(MMConstants.TrueBuyoutDetail.CATALOG);
-            if(ObjectUtils.isNotNull(detail.getCatalog()) 
+            if(ObjectUtils.isNotNull(detail.getCatalog())
                     && !MMConstants.CatalogType.TRUE_BUYOUT.equals(detail.getCatalog().getCatalogTypeCd())) {
                 GlobalVariables.getMessageMap().putError(
                         detailErrorKey + "." + MMConstants.TrueBuyoutDetail.CATALOG + "." + MMConstants.Catalog.CATALOG_CD,
@@ -141,7 +137,7 @@ public class TrueBuyoutDocumentRule extends DocumentRuleBase {
 
     
     private boolean validateReferenceObject(Class clazz, String primaryKeyValue, String errorPath, String errorKey) {
-        MMPersistableBusinessObjectBase mmOject = (MMPersistableBusinessObjectBase)KNSServiceLocator.getBusinessObjectService().findBySinglePrimaryKey(clazz, primaryKeyValue);
+        MMPersistableBusinessObjectBase mmOject = (MMPersistableBusinessObjectBase) KRADServiceLocator.getBusinessObjectService().findBySinglePrimaryKey(clazz, primaryKeyValue);
         if(mmOject == null || !mmOject.isActive()) {
             GlobalVariables.getMessageMap().putError(
                     errorPath,

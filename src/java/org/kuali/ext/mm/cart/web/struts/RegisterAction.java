@@ -1,10 +1,5 @@
 package org.kuali.ext.mm.cart.web.struts;
 
-import java.util.Properties;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -13,8 +8,12 @@ import org.kuali.ext.mm.cart.ShopCartConstants;
 import org.kuali.ext.mm.cart.service.ShopCartCustomerService;
 import org.kuali.ext.mm.cart.service.ShopCartServiceLocator;
 import org.kuali.ext.mm.common.sys.MMConstants;
-import org.kuali.rice.kns.util.KNSConstants;
-import org.kuali.rice.kns.util.UrlFactory;
+import org.kuali.rice.krad.util.KRADConstants;
+import org.kuali.rice.krad.util.UrlFactory;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Properties;
 
 
 public class RegisterAction extends StoresShoppingActionBase {
@@ -54,7 +53,7 @@ public class RegisterAction extends StoresShoppingActionBase {
         	newCustomer = customerService.createAndSaveNewCustomer(newCustomer.getPrincipalName(), newCustomer.getFirstName(), newCustomer.getLastName(), newCustomer.getCustomerPassword());
         	request.getSession().setAttribute(ShopCartConstants.Session.CUSTOMER, newCustomer);
         	Properties parameters = new Properties();
-            parameters.put(KNSConstants.DISPATCH_REQUEST_PARAMETER, ShopCartConstants.START_METHOD);
+            parameters.put(KRADConstants.DISPATCH_REQUEST_PARAMETER, ShopCartConstants.START_METHOD);
             action = new ActionForward(UrlFactory.parameterizeUrl(ShopCartConstants.PROFILE_ACTION, parameters), true);
         }
 

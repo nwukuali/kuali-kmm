@@ -3,23 +3,11 @@
  */
 package org.kuali.ext.mm.document;
 
+import org.kuali.ext.mm.businessobject.*;
+import org.springframework.util.AutoPopulatingList;
+
+import javax.persistence.*;
 import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
-import org.kuali.ext.mm.businessobject.DeliveryLine;
-import org.kuali.ext.mm.businessobject.PackStatusCode;
-import org.kuali.ext.mm.businessobject.PickListLine;
-import org.kuali.ext.mm.businessobject.PickStatusCode;
-import org.kuali.ext.mm.businessobject.StoresTransactionalDocumentBase;
-import org.kuali.rice.kns.util.TypedArrayList;
 
 /**
  * @author rshrivas
@@ -83,8 +71,8 @@ public class DeliveryLabelDocument extends StoresTransactionalDocumentBase {
     
     public DeliveryLabelDocument() {
         super();
-        this.setPickListLines(new TypedArrayList(PickListLine.class));
-        this.setDeliveryLabelDocumentLines(new TypedArrayList(DeliveryLabelDocumentLines.class));
+        this.setPickListLines(new AutoPopulatingList(PickListLine.class));
+        this.setDeliveryLabelDocumentLines(new AutoPopulatingList(DeliveryLabelDocumentLines.class));
     }         
     
     /**

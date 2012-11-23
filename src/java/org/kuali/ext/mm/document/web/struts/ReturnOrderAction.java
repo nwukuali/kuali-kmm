@@ -15,15 +15,6 @@
  */
 package org.kuali.ext.mm.document.web.struts;
 
-import java.io.ByteArrayOutputStream;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -35,9 +26,17 @@ import org.kuali.ext.mm.document.validation.impl.ReturnOrderValidator;
 import org.kuali.ext.mm.service.MMServiceLocator;
 import org.kuali.ext.mm.service.ReturnOrderService;
 import org.kuali.ext.mm.util.MMUtil;
-import org.kuali.rice.kim.bo.Person;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.util.GlobalVariables;
+import org.kuali.rice.kim.api.identity.Person;
+import org.kuali.rice.krad.service.KRADServiceLocatorWeb;
+import org.kuali.rice.krad.util.GlobalVariables;
+
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayOutputStream;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 
 /**
@@ -224,7 +223,7 @@ public class ReturnOrderAction extends RentalTrackingActionBase {
         String contentDisposition = sbContentDispValue.toString();
 //        if(ObjectUtils.isNull(document)){
             String documentId = request.getParameter("documentId");
-            document = (ReturnDocument) KNSServiceLocator.getDocumentService().getByDocumentHeaderId(documentId);
+            document = (ReturnDocument) KRADServiceLocatorWeb.getDocumentService().getByDocumentHeaderId(documentId);
 //        }
         baos = MMServiceLocator.getReturnOrderService().generatePDFAfterApproval(document);
 

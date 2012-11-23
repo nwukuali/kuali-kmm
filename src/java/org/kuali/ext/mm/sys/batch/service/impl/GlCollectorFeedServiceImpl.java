@@ -3,8 +3,29 @@
  */
 package org.kuali.ext.mm.sys.batch.service.impl;
 
-import static org.kuali.ext.mm.common.sys.MMConstants.LF;
+import org.apache.log4j.Logger;
+import org.kuali.ext.mm.businessobject.Warehouse;
+import org.kuali.ext.mm.common.sys.MMPropertyConstants;
+import org.kuali.ext.mm.common.sys.context.SpringContext;
+import org.kuali.ext.mm.integration.FinancialSystemAdaptorFactory;
+import org.kuali.ext.mm.integration.sys.businessobject.FinancialGeneralLedgerPendingEntry;
+import org.kuali.ext.mm.sys.batch.dataaccess.GlCollectorFeedDao;
+import org.kuali.ext.mm.sys.batch.service.GlCollectorFeedService;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.service.KRADServiceLocator;
+import org.kuali.rice.krad.util.ObjectUtils;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
+import org.xml.sax.SAXException;
 
+import javax.xml.XMLConstants;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Validator;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -17,29 +38,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.xml.XMLConstants;
-import javax.xml.transform.stream.StreamSource;
-import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
-import javax.xml.validation.Validator;
-
-import org.apache.log4j.Logger;
-import org.kuali.ext.mm.businessobject.Warehouse;
-import org.kuali.ext.mm.common.sys.MMPropertyConstants;
-import org.kuali.ext.mm.common.sys.context.SpringContext;
-import org.kuali.ext.mm.integration.FinancialSystemAdaptorFactory;
-import org.kuali.ext.mm.integration.sys.businessobject.FinancialGeneralLedgerPendingEntry;
-import org.kuali.ext.mm.sys.batch.dataaccess.GlCollectorFeedDao;
-import org.kuali.ext.mm.sys.batch.service.GlCollectorFeedService;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.util.KualiDecimal;
-import org.kuali.rice.kns.util.ObjectUtils;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.TransactionDefinition;
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.support.DefaultTransactionDefinition;
-import org.xml.sax.SAXException;
+import static org.kuali.ext.mm.common.sys.MMConstants.LF;
 
 
 /**
@@ -62,7 +61,7 @@ public class GlCollectorFeedServiceImpl implements GlCollectorFeedService {
         Collection<Warehouse> warehouses = bos.findMatching(Warehouse.class, fieldValues);
         LOG.info("Total number of active warehouses found - " + warehouses.size());
 
-        String glCollectorDir = KNSServiceLocator.getKualiConfigurationService().getPropertyString(
+        String glCollectorDir = KRADServiceLocator.getKualiConfigurationService().getPropertyValueAsString(
                 MMPropertyConstants.KMM_GL_COLLECTOR_DIR);
         LOG.info("GL Collector directory location is " + glCollectorDir);
         if (!new File(glCollectorDir).exists()) {
@@ -172,7 +171,7 @@ public class GlCollectorFeedServiceImpl implements GlCollectorFeedService {
      * @return
      */
     private String glCollectorSchemaLocation() {
-        return KNSServiceLocator.getKualiConfigurationService().getPropertyString(
+        return KRADServiceLocator.getKualiConfigurationService().getPropertyValueAsString(
                 MMPropertyConstants.FINANCE_SYSTEM_URL)
                 + "/static/xsd/gl/collector.xsd";
     }

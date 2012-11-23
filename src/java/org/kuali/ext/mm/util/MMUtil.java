@@ -1,23 +1,17 @@
 package org.kuali.ext.mm.util;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.MMKeyConstants;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
 import org.kuali.rice.kns.datadictionary.BusinessObjectEntry;
 import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.util.GlobalVariables;
-import org.kuali.rice.kns.util.Guid;
-import org.kuali.rice.kns.util.KNSConstants;
-import org.kuali.rice.kns.util.KualiDecimal;
-import org.kuali.rice.kns.util.UrlFactory;
+import org.kuali.rice.krad.service.KRADServiceLocator;
+import org.kuali.rice.krad.util.GlobalVariables;
+import org.kuali.rice.krad.util.KRADConstants;
+import org.kuali.rice.krad.util.UrlFactory;
+
+import java.sql.Timestamp;
+import java.util.*;
 
 
 public class MMUtil {
@@ -106,13 +100,13 @@ public class MMUtil {
     }
 
     public static String getFileName() {
-        String tag = new Guid().toString();
+        String tag = UUID.randomUUID().toString();
         String fileName = MMConstants.WorksheetCountDocument.REPORT_ZIP_FILE_NAME + tag + ".pdf";
         return fileName;
     }
 
     public static String getFileNameForPackingList() {
-        String tag = new Guid().toString();
+        String tag = UUID.randomUUID().toString();
         String fileName = MMConstants.WorksheetCountDocument.REPORT_ZIP_FILE_NAME + tag + ".pdf";
         return fileName;
     }
@@ -154,11 +148,11 @@ public class MMUtil {
         String objectLabel = ((BusinessObjectEntry)KNSServiceLocator.getDataDictionaryService()
                 .getDataDictionary().getDictionaryObjectEntry(objectClass.getName())).getObjectLabel();
         Properties parameters = new Properties();
-        parameters.put(KNSConstants.PARAMETER_DOC_ID, lockingDocId);
-        parameters.put(KNSConstants.PARAMETER_COMMAND, KNSConstants.METHOD_DISPLAY_DOC_SEARCH_VIEW);
+        parameters.put(KRADConstants.PARAMETER_DOC_ID, lockingDocId);
+        parameters.put(KRADConstants.PARAMETER_COMMAND, KRADConstants.METHOD_DISPLAY_DOC_SEARCH_VIEW);
         String blockingUrl = UrlFactory.parameterizeUrl(
-                KNSServiceLocator.getKualiConfigurationService()
-                    .getPropertyString(KNSConstants.WORKFLOW_URL_KEY) + "/" + KNSConstants.DOC_HANDLER_ACTION, parameters);
+					KRADServiceLocator.getKualiConfigurationService()
+                    .getPropertyValueAsString(KRADConstants.WORKFLOW_URL_KEY) + "/" + KRADConstants.DOC_HANDLER_ACTION, parameters);
         GlobalVariables.getMessageMap().putError(
                 errorPath,
                 MMKeyConstants.ERROR_MM_OBJECT_LOCKED, 

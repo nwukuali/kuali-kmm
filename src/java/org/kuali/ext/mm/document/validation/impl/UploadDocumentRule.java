@@ -1,19 +1,19 @@
 package org.kuali.ext.mm.document.validation.impl;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Date;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.upload.FormFile;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.MMKeyConstants;
 import org.kuali.ext.mm.document.CatalogPending;
 import org.kuali.ext.mm.util.ParseUtil;
-import org.kuali.rice.kns.document.Document;
 import org.kuali.rice.kns.rules.DocumentRuleBase;
-import org.kuali.rice.kns.util.GlobalVariables;
+import org.kuali.rice.krad.document.Document;
+import org.kuali.rice.krad.util.GlobalVariables;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Date;
 
 
 /**

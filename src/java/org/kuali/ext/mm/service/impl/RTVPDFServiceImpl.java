@@ -3,11 +3,10 @@
  */
 package org.kuali.ext.mm.service.impl;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
-import java.util.List;
-
+import com.lowagie.text.Document;
+import com.lowagie.text.ExceptionConverter;
+import com.lowagie.text.PageSize;
+import com.lowagie.text.pdf.*;
 import org.apache.cxf.common.util.StringUtils;
 import org.kuali.ext.mm.businessobject.Profile;
 import org.kuali.ext.mm.businessobject.ReturnDetail;
@@ -22,21 +21,20 @@ import org.kuali.ext.mm.integration.sys.businessobject.FinancialBuilding;
 import org.kuali.ext.mm.service.RTVPDFService;
 import org.kuali.ext.mm.util.MMDecimal;
 import org.kuali.ext.mm.util.MMUtil;
-import org.kuali.rice.kns.service.DateTimeService;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.service.KualiConfigurationService;
-import org.kuali.rice.kns.service.ParameterService;
-import org.kuali.rice.kns.util.KualiDecimal;
-import org.kuali.rice.kns.util.ObjectUtils;
+import org.kuali.rice.core.api.CoreApiServiceLocator;
+import org.kuali.rice.core.api.config.property.ConfigurationService;
+import org.kuali.rice.core.api.datetime.DateTimeService;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+import org.kuali.rice.coreservice.framework.parameter.ParameterService;
+import org.kuali.rice.krad.util.ObjectUtils;
 
-import com.lowagie.text.Document;
-import com.lowagie.text.ExceptionConverter;
-import com.lowagie.text.PageSize;
-import com.lowagie.text.pdf.AcroFields;
-import com.lowagie.text.pdf.PdfCopy;
-import com.lowagie.text.pdf.PdfImportedPage;
-import com.lowagie.text.pdf.PdfReader;
-import com.lowagie.text.pdf.PdfStamper;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+//import org.kuali.rice.core.api.datetime.DateTimeService;
+//import org.kuali.rice.kns.service.ParameterService;
 
 
 /**
@@ -48,7 +46,7 @@ public class RTVPDFServiceImpl implements RTVPDFService {
             .getLogger(RTVPDFServiceImpl.class);
 
     private ParameterService parameterService;
-    private KualiConfigurationService KualiConfigurationService;
+    private ConfigurationService kualiConfigurationService;
     private ByteArrayOutputStream pdfContent;
     private PdfCopy copy;
 
@@ -85,17 +83,17 @@ public class RTVPDFServiceImpl implements RTVPDFService {
         returnListLinesLimitCheck.addAll(returnOrderLines);
         int pageNum = 0;
         PdfStamper stamper = null;
-        Integer maxLinesPerPage = Integer.parseInt(getParameterService().getParameterValue(
-                MMConstants.MM_NAMESPACE, MMConstants.Parameters.DOCUMENT,
-                MMConstants.Parameters.PACKING_LIST_PDF_MAX_LINES));
-        String pdfTemplate = getParameterService().getParameterValue(MMConstants.MM_NAMESPACE,
-                MMConstants.Parameters.DOCUMENT, MMConstants.Parameters.PACKING_LIST_PDF);
+        Integer maxLinesPerPage = Integer.parseInt(getParameterService().getParameterValueAsString(
+					MMConstants.MM_NAMESPACE, MMConstants.Parameters.DOCUMENT,
+					MMConstants.Parameters.PACKING_LIST_PDF_MAX_LINES));
+        String pdfTemplate = getParameterService().getParameterValueAsString(MMConstants.MM_NAMESPACE,
+					MMConstants.Parameters.DOCUMENT, MMConstants.Parameters.PACKING_LIST_PDF);
         try {
             // split up data that requires more than one page and repeat stamping for each necessary page
             while (!returnListLinesLimitCheck.isEmpty()) {
 
                 ByteArrayOutputStream packingListContent = new ByteArrayOutputStream();
-                PdfReader reader = new PdfReader(getKualiConfigurationService().getPropertyString(
+                PdfReader reader = new PdfReader(getKualiConfigurationService().getPropertyValueAsString(
                         MMKeyConstants.EXTERNAL_REPORTS_DIRECTORY_KEY)
                         + "/" + pdfTemplate);
                 stamper = new PdfStamper(reader, packingListContent);
@@ -149,15 +147,15 @@ public class RTVPDFServiceImpl implements RTVPDFService {
         if (returnLines.size() <= 0)
             return;
 
-        KualiConfigurationService configService = SpringContext
-                .getBean(KualiConfigurationService.class);
+        ConfigurationService configService = SpringContext
+                .getBean(ConfigurationService.class);
         try {
-            DateTimeService dateTimeService = KNSServiceLocator.getDateTimeService();
+            DateTimeService dateTimeService = CoreApiServiceLocator.getDateTimeService();
             AcroFields formFields = stamper.getAcroFields();
 
             OrderDocument odoc = getOrderDocNumber(returnLines);
             formFields.setField(configService
-                    .getPropertyString(MMKeyConstants.PackingList.HEADER_FIELD_TIMESTAMP),
+                    .getPropertyValueAsString(MMKeyConstants.PackingList.HEADER_FIELD_TIMESTAMP),
                     dateTimeService.toDateTimeString(dateTimeService.getCurrentDate()));
             Warehouse warehouse = null;
 
@@ -167,7 +165,7 @@ public class RTVPDFServiceImpl implements RTVPDFService {
                 FinancialBuilding deliveryBuilding = adaptorFactory.getFinancialLocationService()
                         .getBuilding(odoc.getCampusCd(), odoc.getDeliveryBuildingCd());
                 formFields.setField(configService
-                        .getPropertyString(MMKeyConstants.PackingList.HEADER_FIELD_ORDER_NUMBER),
+                        .getPropertyValueAsString(MMKeyConstants.PackingList.HEADER_FIELD_ORDER_NUMBER),
                         String.valueOf(odoc.getOrderId()));
                 warehouse = odoc.getWarehouse();
                 // TODO: need to find the necessity
@@ -176,14 +174,14 @@ public class RTVPDFServiceImpl implements RTVPDFService {
                             Warehouse.class, odoc.getWarehouseCd());
 
                 formFields.setField(configService
-                        .getPropertyString(MMKeyConstants.PackingList.HEADER_FIELD_DEPARTMENT),
+                        .getPropertyValueAsString(MMKeyConstants.PackingList.HEADER_FIELD_DEPARTMENT),
                         odoc.getDeliveryDepartmentNm());
 
                 if (!odoc.getAccounts().isEmpty())
                     formFields
                             .setField(
                                     configService
-                                            .getPropertyString(MMKeyConstants.PackingList.HEADER_FIELD_REFERENCE_NUMBER),
+                                            .getPropertyValueAsString(MMKeyConstants.PackingList.HEADER_FIELD_REFERENCE_NUMBER),
                                     odoc.getAccounts().get(0).getDepartmentReferenceText());
 
                 Profile profile = odoc.getCustomerProfile();
@@ -192,24 +190,24 @@ public class RTVPDFServiceImpl implements RTVPDFService {
                     formFields
                             .setField(
                                     configService
-                                            .getPropertyString(MMKeyConstants.PackingList.HEADER_FIELD_REQUESTED_BY),
+                                            .getPropertyValueAsString(MMKeyConstants.PackingList.HEADER_FIELD_REQUESTED_BY),
                                     profile.getPrincipalName());
 
                     formFields.setField(configService
-                            .getPropertyString(MMKeyConstants.PackingList.HEADER_FIELD_PHONE),
+                            .getPropertyValueAsString(MMKeyConstants.PackingList.HEADER_FIELD_PHONE),
                             profile.getProfilePhoneNumber());
                     formFields
                             .setField(
                                     configService
-                                            .getPropertyString(MMKeyConstants.PackingList.HEADER_FIELD_REQUEST_BUILDING),
+                                            .getPropertyValueAsString(MMKeyConstants.PackingList.HEADER_FIELD_REQUEST_BUILDING),
                                     profile.getDeliveryBuildingCode());
                     formFields
                             .setField(
                                     configService
-                                            .getPropertyString(MMKeyConstants.PackingList.HEADER_FIELD_REQUEST_ROOM),
+                                            .getPropertyValueAsString(MMKeyConstants.PackingList.HEADER_FIELD_REQUEST_ROOM),
                                     profile.getDeliveryBuildingRoomNumber());
                     formFields.setField(configService
-                            .getPropertyString(MMKeyConstants.PackingList.HEADER_FIELD_PHONE),
+                            .getPropertyValueAsString(MMKeyConstants.PackingList.HEADER_FIELD_PHONE),
                             profile.getProfilePhoneNumber());
 
                 }
@@ -217,17 +215,17 @@ public class RTVPDFServiceImpl implements RTVPDFService {
                 formFields
                         .setField(
                                 configService
-                                        .getPropertyString(MMKeyConstants.PackingList.HEADER_FIELD_DEPARTMENT_NAME),
+                                        .getPropertyValueAsString(MMKeyConstants.PackingList.HEADER_FIELD_DEPARTMENT_NAME),
                                 odoc.getDeliveryDepartmentNm());
                 formFields
                         .setField(
                                 configService
-                                        .getPropertyString(MMKeyConstants.PackingList.HEADER_FIELD_DELIVER_BUILDING),
+                                        .getPropertyValueAsString(MMKeyConstants.PackingList.HEADER_FIELD_DELIVER_BUILDING),
                                 odoc.getDeliveryBuildingCd());
                 formFields
                         .setField(
                                 configService
-                                        .getPropertyString(MMKeyConstants.PackingList.HEADER_FIELD_DELIVER_BUILDING),
+                                        .getPropertyValueAsString(MMKeyConstants.PackingList.HEADER_FIELD_DELIVER_BUILDING),
                                 (deliveryBuilding != null
                                         && deliveryBuilding.getBuildingName() != null ? deliveryBuilding
                                         .getBuildingName()
@@ -235,7 +233,7 @@ public class RTVPDFServiceImpl implements RTVPDFService {
 
                 if (odoc.getShippingAddress() != null) {
                     formFields.setField(configService
-                            .getPropertyString(MMKeyConstants.PackingList.HEADER_FIELD_DELIVER_TO),
+                            .getPropertyValueAsString(MMKeyConstants.PackingList.HEADER_FIELD_DELIVER_TO),
                             odoc.getShippingAddress().getAddressName());
                     String cityStateZip = (odoc.getShippingAddress().getAddressCityName() != null ? odoc
                             .getShippingAddress().getAddressCityName()
@@ -250,7 +248,7 @@ public class RTVPDFServiceImpl implements RTVPDFService {
                     formFields
                             .setField(
                                     configService
-                                            .getPropertyString(MMKeyConstants.PackingList.HEADER_FIELD_CITY_STATE_ZIP),
+                                            .getPropertyValueAsString(MMKeyConstants.PackingList.HEADER_FIELD_CITY_STATE_ZIP),
                                     cityStateZip);
                 }
             }
@@ -258,14 +256,14 @@ public class RTVPDFServiceImpl implements RTVPDFService {
             formFields
                     .setField(
                             configService
-                                    .getPropertyString(MMKeyConstants.PackingList.HEADER_FIELD_DATE_ORDERED),
+                                    .getPropertyValueAsString(MMKeyConstants.PackingList.HEADER_FIELD_DATE_ORDERED),
                             dateTimeService.toDateTimeString((odoc == null || odoc
                                     .getCreationDate() == null) ? MMUtil.getCurrentTimestamp()
                                     : odoc.getCreationDate()));
 
             if (warehouse != null) {
                 formFields.setField(configService
-                        .getPropertyString(MMKeyConstants.PackingList.HEADER_FIELD_REQUESTED_BY),
+                        .getPropertyValueAsString(MMKeyConstants.PackingList.HEADER_FIELD_REQUESTED_BY),
                         warehouse.getWarehouseNme());
             }
 
@@ -278,45 +276,45 @@ public class RTVPDFServiceImpl implements RTVPDFService {
 
                 String index = "[" + String.valueOf(i++) + "]";
                 formFields.setField(configService
-                        .getPropertyString(MMKeyConstants.PackingList.LINE_FIELD_LINE)
+                        .getPropertyValueAsString(MMKeyConstants.PackingList.LINE_FIELD_LINE)
                         + index, String.valueOf(++lineNum));
 
                 // TODO: need to find the correct values
 
                 formFields.setField(configService
-                        .getPropertyString(MMKeyConstants.PackingList.LINE_FIELD_ORDER_QUANTITY)
+                        .getPropertyValueAsString(MMKeyConstants.PackingList.LINE_FIELD_ORDER_QUANTITY)
                         + index, String.valueOf(line.getReturnQuantity()));
                 formFields.setField(configService
-                        .getPropertyString(MMKeyConstants.PackingList.LINE_FIELD_SHIP_QUANTITY)
+                        .getPropertyValueAsString(MMKeyConstants.PackingList.LINE_FIELD_SHIP_QUANTITY)
                         + index, String.valueOf(line.getReturnQuantity()));
                 formFields
                         .setField(
                                 configService
-                                        .getPropertyString(MMKeyConstants.PackingList.LINE_FIELD_BACKORDER_QUANTITY)
+                                        .getPropertyValueAsString(MMKeyConstants.PackingList.LINE_FIELD_BACKORDER_QUANTITY)
                                         + index, String.valueOf(""));
                 // TODO need to find the necessity of this field
                 formFields.setField(configService
-                        .getPropertyString(MMKeyConstants.PackingList.LINE_FIELD_BACKORDER_DATE)
+                        .getPropertyValueAsString(MMKeyConstants.PackingList.LINE_FIELD_BACKORDER_DATE)
                         + index, null);
 
                 if (ObjectUtils.isNotNull(line.getOrderDetail())
                         && ObjectUtils.isNotNull(line.getOrderDetail().getStockUnitOfIssue()))
                     formFields.setField(configService
-                            .getPropertyString(MMKeyConstants.PackingList.LINE_FIELD_UI)
+                            .getPropertyValueAsString(MMKeyConstants.PackingList.LINE_FIELD_UI)
                             + index, line.getOrderDetail().getStockUnitOfIssue()
                             .getUnitOfIssueCode());
                 else if (ObjectUtils.isNotNull(line.getReturnUnitOfIssue()))
                     formFields.setField(configService
-                            .getPropertyString(MMKeyConstants.PackingList.LINE_FIELD_UI)
+                            .getPropertyValueAsString(MMKeyConstants.PackingList.LINE_FIELD_UI)
                             + index, line.getReturnUnitOfIssue().getUnitOfIssueCode());
 
                 if (ObjectUtils.isNotNull(line.getCatalogItem())
                         && ObjectUtils.isNotNull(line.getCatalogItem().getStock())) {
                     formFields.setField(configService
-                            .getPropertyString(MMKeyConstants.PackingList.LINE_FIELD_ITEM_NUMBER)
+                            .getPropertyValueAsString(MMKeyConstants.PackingList.LINE_FIELD_ITEM_NUMBER)
                             + index, line.getCatalogItem().getStock().getStockDistributorNbr());
                     formFields.setField(configService
-                            .getPropertyString(MMKeyConstants.PackingList.LINE_FIELD_DESCRIPTION)
+                            .getPropertyValueAsString(MMKeyConstants.PackingList.LINE_FIELD_DESCRIPTION)
                             + index, line.getCatalogItem().getStock().getStockDesc());
                 }
 
@@ -326,18 +324,18 @@ public class RTVPDFServiceImpl implements RTVPDFService {
                 MMDecimal totLinePrice = (price != null) ? price.multiply(qty) : MMDecimal.ZERO;
                 totalOrder = totalOrder.add(new KualiDecimal(totLinePrice.doubleValue()));
                 formFields.setField(configService
-                        .getPropertyString(MMKeyConstants.PackingList.LINE_FIELD_TOTAL_PRICE)
+                        .getPropertyValueAsString(MMKeyConstants.PackingList.LINE_FIELD_TOTAL_PRICE)
                         + index, totLinePrice.toString());
             }
 
             formFields.setField(configService
-                    .getPropertyString(MMKeyConstants.PackingList.LINE_FIELD_TOTAL_ORDER),
+                    .getPropertyValueAsString(MMKeyConstants.PackingList.LINE_FIELD_TOTAL_ORDER),
                     totalOrder.toString());
             formFields.setField(configService
-                    .getPropertyString(MMKeyConstants.PackingList.LINE_FIELD_TOTAL_SAVED),
+                    .getPropertyValueAsString(MMKeyConstants.PackingList.LINE_FIELD_TOTAL_SAVED),
                     totalAmountSaved.toString());
             formFields.setField(configService
-                    .getPropertyString(MMKeyConstants.PackingList.FOOTER_FIELD_MESSAGES), messages);
+                    .getPropertyValueAsString(MMKeyConstants.PackingList.FOOTER_FIELD_MESSAGES), messages);
         }
         catch (Exception e) {
             LOG.error(e);
@@ -353,12 +351,12 @@ public class RTVPDFServiceImpl implements RTVPDFService {
         return parameterService;
     }
 
-    public void setKualiConfigurationService(KualiConfigurationService kualiConfigurationService) {
-        KualiConfigurationService = kualiConfigurationService;
+    public void setKualiConfigurationService(ConfigurationService kualiConfigurationService) {
+        this.kualiConfigurationService = kualiConfigurationService;
     }
 
-    public KualiConfigurationService getKualiConfigurationService() {
-        return KualiConfigurationService;
+    public ConfigurationService getKualiConfigurationService() {
+        return kualiConfigurationService;
     }
 
 

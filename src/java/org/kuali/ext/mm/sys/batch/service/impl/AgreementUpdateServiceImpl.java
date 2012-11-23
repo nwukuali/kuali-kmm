@@ -1,10 +1,5 @@
 package org.kuali.ext.mm.sys.batch.service.impl;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-
 import org.kuali.ext.mm.businessobject.Agreement;
 import org.kuali.ext.mm.businessobject.Warehouse;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
@@ -13,9 +8,14 @@ import org.kuali.ext.mm.integration.service.FinancialVendorService;
 import org.kuali.ext.mm.integration.vnd.businessobject.FinancialVendorContract;
 import org.kuali.ext.mm.integration.vnd.businessobject.FinancialVendorDetail;
 import org.kuali.ext.mm.sys.batch.service.AgreementUpdateService;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.util.KualiDecimal;
+import org.kuali.rice.core.api.CoreApiServiceLocator;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+import org.kuali.rice.krad.service.BusinessObjectService;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 
 
 /**
@@ -110,7 +110,7 @@ public class AgreementUpdateServiceImpl implements AgreementUpdateService {
         agreement.setPoTotalLimit(apoLimit == null ? KualiDecimal.ZERO : apoLimit);
         KualiDecimal usedAmount = contract.getTotalUsedAmt();
         agreement.setAgreementUsedAmt(usedAmount == null ? KualiDecimal.ZERO : usedAmount);
-        agreement.setLastUpdateDate(KNSServiceLocator.getDateTimeService().getCurrentTimestamp());
+        agreement.setLastUpdateDate(CoreApiServiceLocator.getDateTimeService().getCurrentTimestamp());
         agreement.save();
     }
 
@@ -140,7 +140,7 @@ public class AgreementUpdateServiceImpl implements AgreementUpdateService {
         agreement.setGhostCardInd(false);
         agreement.setElectronicInvoiceInd(false);
         agreement.setActive(true);
-        agreement.setLastUpdateDate(KNSServiceLocator.getDateTimeService().getCurrentTimestamp());
+        agreement.setLastUpdateDate(CoreApiServiceLocator.getDateTimeService().getCurrentTimestamp());
         agreement.save();
     }
 }

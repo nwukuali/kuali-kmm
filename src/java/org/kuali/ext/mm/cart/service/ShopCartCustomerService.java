@@ -1,7 +1,7 @@
 package org.kuali.ext.mm.cart.service;
 
 import org.kuali.ext.mm.businessobject.Customer;
-import org.kuali.rice.kim.bo.Person;
+import org.kuali.rice.kim.api.identity.Person;
 
 
 public interface ShopCartCustomerService {

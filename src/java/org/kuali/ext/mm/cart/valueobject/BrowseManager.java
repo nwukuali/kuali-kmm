@@ -1,20 +1,11 @@
 package org.kuali.ext.mm.cart.valueobject;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
 import org.apache.commons.lang.StringUtils;
-import org.kuali.ext.mm.businessobject.Catalog;
-import org.kuali.ext.mm.businessobject.CatalogGroup;
-import org.kuali.ext.mm.businessobject.CatalogItem;
-import org.kuali.ext.mm.businessobject.CatalogSubgroup;
-import org.kuali.ext.mm.businessobject.Profile;
+import org.kuali.ext.mm.businessobject.*;
 import org.kuali.ext.mm.cart.service.ShopCartServiceLocator;
-import org.kuali.rice.kns.util.ObjectUtils;
+import org.kuali.rice.krad.util.ObjectUtils;
+
+import java.util.*;
 
 
 public class BrowseManager {

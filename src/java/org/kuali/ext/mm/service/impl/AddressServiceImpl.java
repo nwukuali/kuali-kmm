@@ -3,12 +3,6 @@
  */
 package org.kuali.ext.mm.service.impl;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import org.apache.commons.lang.StringUtils;
 import org.kuali.ext.mm.businessobject.Address;
 import org.kuali.ext.mm.businessobject.Profile;
@@ -20,12 +14,19 @@ import org.kuali.ext.mm.integration.FinancialSystemAdaptorFactory;
 import org.kuali.ext.mm.integration.service.FinancialLocationService;
 import org.kuali.ext.mm.integration.sys.businessobject.FinancialBuilding;
 import org.kuali.ext.mm.service.AddressService;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.service.DictionaryValidationService;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.util.GlobalVariables;
-import org.kuali.rice.kns.util.ObjectUtils;
+import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.service.DictionaryValidationService;
+import org.kuali.rice.krad.service.KRADServiceLocator;
+import org.kuali.rice.krad.service.KRADServiceLocatorWeb;
+import org.kuali.rice.krad.util.GlobalVariables;
+import org.kuali.rice.krad.util.ObjectUtils;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 /**
@@ -114,7 +115,7 @@ public class AddressServiceImpl implements AddressService {
 		address.setAddressProfileId(profile.getProfileId());
 		String addressId = findExistingAddress(address);
 		if(addressId == null) {
-			addressId = String.valueOf(KNSServiceLocator.getSequenceAccessorService().getNextAvailableSequenceNumber(ShopCartConstants.Sequence.ADDERSS_ID_SEQ));
+			addressId = String.valueOf(KRADServiceLocator.getSequenceAccessorService().getNextAvailableSequenceNumber(ShopCartConstants.Sequence.ADDERSS_ID_SEQ));
 			address.setAddressId(String.valueOf(addressId));
 			getBusinessObjectService().save(address);
 		}
@@ -219,7 +220,7 @@ public class AddressServiceImpl implements AddressService {
      * @see org.kuali.ext.mm.service.AddressService#validateAddress(org.kuali.ext.mm.businessobject.Address, java.lang.String)
      */
     public boolean validateAddress(Address address, String errorPath) {
-        DictionaryValidationService validationService = KNSServiceLocator.getDictionaryValidationService();
+        DictionaryValidationService validationService = KRADServiceLocatorWeb.getDictionaryValidationService();
         boolean isValid = validationService.isBusinessObjectValid(address, errorPath);
         
         if(!isPhoneNumberFormatValid(address.getAddressPhoneNumber())) {

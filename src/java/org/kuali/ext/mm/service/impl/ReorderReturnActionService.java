@@ -9,11 +9,23 @@ import org.kuali.ext.mm.document.OrderDocument;
 import org.kuali.ext.mm.document.ReturnDocument;
 import org.kuali.ext.mm.service.IReturnCommand;
 import org.kuali.ext.mm.util.MMUtil;
-import org.kuali.rice.kim.service.KIMServiceLocator;
-import org.kuali.rice.kns.UserSession;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.util.GlobalVariables;
-import org.kuali.rice.kns.util.ObjectUtils;
+import org.kuali.kfs.sys.context.SpringContext;
+import org.kuali.rice.kew.api.KewApiConstants;
+import org.kuali.rice.kew.api.WorkflowDocument;
+import org.kuali.rice.kew.api.action.ActionTaken;
+import org.kuali.rice.kim.api.identity.Person;
+import org.kuali.rice.kim.api.identity.PersonService;
+import org.kuali.rice.kim.api.services.KimApiServiceLocator;
+import org.kuali.rice.krad.UserSession;
+import org.kuali.rice.krad.service.DocumentService;
+import org.kuali.rice.krad.service.KRADServiceLocator;
+import org.kuali.rice.krad.service.KRADServiceLocatorWeb;
+import org.kuali.rice.krad.util.GlobalVariables;
+import org.kuali.rice.krad.util.ObjectUtils;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 
 public class ReorderReturnActionService implements IReturnCommand {
@@ -29,23 +41,22 @@ public class ReorderReturnActionService implements IReturnCommand {
         if (ObjectUtils.isNull(rdoc.getReorderDocument()) || rdetail.requiresDummyOrder()) {
 
             UserSession curSession = GlobalVariables.getUserSession();
-            String name = ObjectUtils.isNull(rdoc.getDocumentHeader().getWorkflowDocument()
-                    .getAllPriorApprovers()) ? KIMServiceLocator.getIdentityManagementService()
+            String name = ObjectUtils.isNull(getPriorApprovers(rdoc.getDocumentHeader().getWorkflowDocument())
+                    ) ? KimApiServiceLocator.getIdentityService()
                     .getPrincipal(
                             rdoc.getDocumentHeader().getWorkflowDocument()
-                                    .getInitiatorPrincipalId()).getPrincipalName() : rdoc
-                    .getDocumentHeader().getWorkflowDocument().getAllPriorApprovers().iterator()
+                                    .getInitiatorPrincipalId()).getPrincipalName() :
+							getPriorApprovers(rdoc.getDocumentHeader().getWorkflowDocument()).iterator()
                     .next().getPrincipalName();
             GlobalVariables.setUserSession(new UserSession(name));
 
-            odoc = (OrderDocument) KNSServiceLocator.getDocumentService().getNewDocument(
+            odoc = (OrderDocument) KRADServiceLocatorWeb.getDocumentService().getNewDocument(
                     MMConstants.OrderDocument.STORES_ORDER_DOCUMENT);
             OrderDocument ddd = rdoc.getOrderDocument();
             if (ddd == null) {
 
-                ddd = (OrderDocument) KNSServiceLocator.getDocumentDao().findByDocumentHeaderId(
-                        org.kuali.ext.mm.document.OrderDocument.class,
-                        rdoc.getOrderDocumentNumber());
+                ddd = (OrderDocument) SpringContext.getBean(DocumentService.class).getByDocumentHeaderId(
+									rdoc.getOrderDocumentNumber());
             }
             odoc = this.getPopulatedOrderDocument(ddd, odoc);
 
@@ -70,7 +81,7 @@ public class ReorderReturnActionService implements IReturnCommand {
     }
 
     private OrderDocument getPopulatedOrderDocument(OrderDocument oldObj, OrderDocument newObj) {
-        newObj.setOrderId(KNSServiceLocator.getSequenceAccessorService()
+        newObj.setOrderId(KRADServiceLocator.getSequenceAccessorService()
                 .getNextAvailableSequenceNumber(ShopCartConstants.Sequence.ORDER_ID_SEQ));
         newObj.setOrderTypeCode(MMConstants.OrderDocument.ORDER_TYPE_STOCK);
         newObj.setRecurringOrderInd(true);
@@ -115,5 +126,23 @@ public class ReorderReturnActionService implements IReturnCommand {
 
     public boolean preValidate(ReturnDocument rdoc, ReturnDetail rdetail) throws Exception {
         return true;
+    }
+
+			private Set<Person> getPriorApprovers(WorkflowDocument workflowDocument) {
+        PersonService personService = KimApiServiceLocator.getPersonService();
+        List<ActionTaken> actionsTaken = workflowDocument.getActionsTaken();
+        Set<String> principalIds = new HashSet<String>();
+        Set<Person> persons = new HashSet<Person>();
+
+        for (ActionTaken actionTaken : actionsTaken) {
+            if (KewApiConstants.ACTION_TAKEN_APPROVED_CD.equals(actionTaken.getActionTaken())) {
+                String principalId = actionTaken.getPrincipalId();
+                if (!principalIds.contains(principalId)) {
+                    principalIds.add(principalId);
+                    persons.add(personService.getPerson(principalId));
+                }
+            }
+        }
+        return persons;
     }
 }

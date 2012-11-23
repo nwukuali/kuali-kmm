@@ -1,13 +1,5 @@
 package org.kuali.ext.mm.dataaccess.impl;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.QueryFactory;
@@ -21,9 +13,13 @@ import org.kuali.ext.mm.dataaccess.StockItemLookupServiceDAO;
 import org.kuali.ext.mm.document.WorksheetCountDocument;
 import org.kuali.ext.mm.service.MMServiceLocator;
 import org.kuali.ext.mm.util.MMUtil;
-import org.kuali.rice.kns.dao.impl.PlatformAwareDaoBaseOjb;
-import org.kuali.rice.kns.util.ObjectUtils;
-import org.kuali.rice.kns.util.TransactionalServiceUtils;
+import org.kuali.rice.core.framework.persistence.ojb.dao.PlatformAwareDaoBaseOjb;
+import org.kuali.rice.krad.util.ObjectUtils;
+import org.kuali.rice.krad.util.TransactionalServiceUtils;
+
+import java.sql.Timestamp;
+import java.util.*;
+//import org.kuali.rice.krad.util.TransactionalServiceUtils;
 
 
 public class StockItemLookupDAOOjb extends PlatformAwareDaoBaseOjb implements

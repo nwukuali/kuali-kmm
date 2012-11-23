@@ -3,11 +3,6 @@
  */
 package org.kuali.ext.mm.service.impl;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-
 import org.apache.commons.lang.StringUtils;
 import org.kuali.ext.mm.businessobject.CatalogGroup;
 import org.kuali.ext.mm.businessobject.CatalogSubgroup;
@@ -16,8 +11,13 @@ import org.kuali.ext.mm.businessobject.MarkupType;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.rice.kns.maintenance.KualiMaintainableImpl;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.service.KNSServiceLocator;
+import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.service.KRADServiceLocator;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 
 /**
@@ -80,7 +80,7 @@ public class MarkupMaintainableImpl extends KualiMaintainableImpl {
 		fieldValues.put(MMConstants.CatalogSubgroup.CATALOG_SUBGROUP_CD, catalogSubgroupCd);
 		fieldValues.put(MMConstants.MMPersistableBusinessObject.ACTIVE, "Y");
 
-		Collection results = KNSServiceLocator.getBusinessObjectService().findMatching(CatalogSubgroup.class, fieldValues);
+		Collection results = KRADServiceLocator.getBusinessObjectService().findMatching(CatalogSubgroup.class, fieldValues);
 
 		Iterator<CatalogSubgroup> subgroups = results.iterator();
 		return (subgroups.hasNext() ? subgroups.next() : null);

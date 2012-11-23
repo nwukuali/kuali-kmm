@@ -3,10 +3,6 @@
  */
 package org.kuali.ext.mm.document;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import org.kuali.ext.mm.businessobject.CheckinDetail;
 import org.kuali.ext.mm.businessobject.OrderDetail;
 import org.kuali.ext.mm.businessobject.Warehouse;
@@ -21,12 +17,17 @@ import org.kuali.ext.mm.service.MMServiceLocator;
 import org.kuali.ext.mm.service.WarehouseAccountingService;
 import org.kuali.ext.mm.util.MMDecimal;
 import org.kuali.ext.mm.util.MMUtil;
-import org.kuali.rice.kew.dto.DocumentRouteStatusChangeDTO;
-import org.kuali.rice.kns.rule.event.KualiDocumentEvent;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.util.KualiDecimal;
-import org.kuali.rice.kns.util.ObjectUtils;
-import org.kuali.rice.kns.workflow.service.KualiWorkflowDocument;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+import org.kuali.rice.kew.api.WorkflowDocument;
+import org.kuali.rice.kew.framework.postprocessor.DocumentRouteStatusChange;
+import org.kuali.rice.krad.rules.rule.event.KualiDocumentEvent;
+import org.kuali.rice.krad.rules.rule.event.RouteDocumentEvent;
+import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.util.ObjectUtils;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 
 /**
@@ -40,11 +41,11 @@ public class ReceiptCorrectionDocument extends CheckinDocument {
     private static final long serialVersionUID = -8610393750707784117L;
 
     @Override
-    public void doRouteStatusChange(DocumentRouteStatusChangeDTO statusChangeEvent) {
+    public void doRouteStatusChange(DocumentRouteStatusChange statusChangeEvent) {
         super.doRouteStatusChange(statusChangeEvent);
-        KualiWorkflowDocument workflowDocument = getDocumentHeader().getWorkflowDocument();
+        WorkflowDocument workflowDocument = getDocumentHeader().getWorkflowDocument();
 
-        if (workflowDocument.stateIsProcessed()) {
+        if (workflowDocument.isProcessed()) {
             try {
                 MMServiceLocator.getReceiptCorrectionService().processReceiptCorrectionDocument(this);
             }
@@ -53,7 +54,7 @@ public class ReceiptCorrectionDocument extends CheckinDocument {
             }
 
         }
-        else if (workflowDocument.stateIsFinal()) {
+        else if (workflowDocument.isFinal()) {
             this.setFinalInd(true);
         }
 
@@ -115,7 +116,7 @@ public class ReceiptCorrectionDocument extends CheckinDocument {
 
     @Override
     public void prepareForSave(KualiDocumentEvent event) {
-        if (event instanceof org.kuali.rice.kns.rule.event.RouteDocumentEvent) {
+        if (event instanceof RouteDocumentEvent) {
             List<CheckinDetail> listData = new ArrayList<CheckinDetail>(0);
             for (CheckinDetail rd : this.getCheckinDetails()) {
                 if (!rd.isLineCorrected())

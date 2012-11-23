@@ -3,34 +3,23 @@
  */
 package org.kuali.ext.mm.sys.batch.dataaccess.jdbc.mysql;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.sql.Clob;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Iterator;
-
 import org.apache.commons.collections.map.ListOrderedMap;
 import org.apache.struts.upload.FormFile;
 import org.kuali.ext.mm.businessobject.CatalogItemPending;
 import org.kuali.ext.mm.businessobject.CatalogPendingDoc;
 import org.kuali.ext.mm.sys.batch.dataaccess.CatalogPendingDocDao;
-import org.kuali.rice.kns.dao.jdbc.PlatformAwareDaoBaseJdbc;
-import org.kuali.rice.kns.service.KNSServiceLocator;
+import org.kuali.rice.core.framework.persistence.jdbc.dao.PlatformAwareDaoBaseJdbc;
+import org.kuali.rice.krad.service.KRADServiceLocator;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.ResultSetExtractor;
+
+import java.io.*;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Iterator;
 
 /**
  * @author sravani
@@ -66,7 +55,7 @@ public class CatalogPendingDocDaoJdbc extends PlatformAwareDaoBaseJdbc implement
 
     public File createTempCatalogFile(String fdocNbr) {
         final File tempFile;
-        tempFile = new File(KNSServiceLocator.getKualiConfigurationService().getPropertyString(
+        tempFile = new File(KRADServiceLocator.getKualiConfigurationService().getPropertyValueAsString(
                 "external.temp.directory")
                 + File.separator + fdocNbr + ".csv");
         String query = "SELECT CATALOG_FILE FROM MM_CATALOG_PENDING_DOC_T WHERE FDOC_NBR = '"

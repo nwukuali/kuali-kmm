@@ -3,6 +3,14 @@
  */
 package org.kuali.ext.mm.sys.batch.service.impl;
 
+import org.apache.log4j.Logger;
+import org.kuali.ext.mm.common.sys.MMConstants;
+import org.kuali.ext.mm.common.sys.context.SpringContext;
+import org.kuali.ext.mm.sys.batch.dataaccess.FamisDataBuilderDao;
+import org.kuali.ext.mm.sys.batch.service.FamisDataBuilderService;
+import org.kuali.rice.coreservice.framework.parameter.ParameterService;
+import org.kuali.rice.krad.service.KRADServiceLocator;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -10,14 +18,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import org.apache.log4j.Logger;
-import org.kuali.ext.mm.common.sys.MMConstants;
-import org.kuali.ext.mm.common.sys.context.SpringContext;
-import org.kuali.ext.mm.sys.batch.dataaccess.FamisDataBuilderDao;
-import org.kuali.ext.mm.sys.batch.service.FamisDataBuilderService;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.service.ParameterService;
 
 
 /**
@@ -32,16 +32,15 @@ public class FamisDataBuilderServiceImpl implements FamisDataBuilderService {
      */
     public void buildFamisDataFeedFile() {
         try {
-            String famisDirPath = KNSServiceLocator.getKualiConfigurationService()
-                    .getPropertyString("external.famis.directory");
+            String famisDirPath = KRADServiceLocator.getKualiConfigurationService()
+                    .getPropertyValueAsString("external.famis.directory");
             File dir = new File(famisDirPath);
             dir.mkdirs();
             String fileName = "kmm-orders-"
                     + new SimpleDateFormat("MM-dd-yyyy-HH-mm-ss").format(new Date()) + ".txt";
             File famisFile = new File(dir, fileName);
-            List<String> famisAccounts = SpringContext.getBean(ParameterService.class)
-                    .getParameterValues(MMConstants.MM_NAMESPACE, MMConstants.Parameters.BATCH,
-                            MMConstants.Parameters.FAMIS_FEED_ACCOUNTS);
+            List<String> famisAccounts = new ArrayList<String>(SpringContext.getBean(ParameterService.class)
+                    .getParameterValuesAsString(MMConstants.MM_NAMESPACE, MMConstants.Parameters.BATCH,MMConstants.Parameters.FAMIS_FEED_ACCOUNTS));
             List<String> lines = new ArrayList<String>();
             for (String string : famisAccounts) {
                 String[] split = string.split("-");

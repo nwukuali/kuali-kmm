@@ -1,8 +1,6 @@
 package org.kuali.ext.mm.common.sys.context;
 
-import org.kuali.rice.core.util.JSTLConstants;
-
-public class ContextConstants extends JSTLConstants {
+public class ContextConstants {
     private static final long serialVersionUID = -5718958812751024076L;
     public static final String DEFAULT_SPRING_FILE = "default.spring.file";
     public static final String DEFAULT_TEST_SPRING_FILE = "default.test.spring.file";

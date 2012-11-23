@@ -16,11 +16,6 @@
 
 package org.kuali.ext.mm.integration.service.impl.kfs;
 
-import java.util.HashMap;
-import java.util.List;
-
-import javax.xml.namespace.QName;
-
 import org.apache.log4j.Logger;
 import org.kuali.ext.mm.integration.coa.businessobject.FinancialObjectCode;
 import org.kuali.ext.mm.integration.service.FinancialBusinessObjectService;
@@ -32,6 +27,11 @@ import org.kuali.kfs.module.cam.businessobject.Asset;
 import org.kuali.kfs.module.cam.businessobject.AssetGlobal;
 import org.kuali.kfs.module.cam.businessobject.AssetType;
 import org.kuali.kfs.module.cam.document.service.AssetService;
+
+import javax.xml.namespace.QName;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author harsha07
@@ -112,8 +112,8 @@ public class KfsCapitalAssetServiceAdaptor extends KfsServiceAdaptor<AssetServic
      */
     public boolean isCapitalAssetObjectSubType(Integer fiscalYear, String chartOfAccountsCode,
             String objectCode) {
-        List<String> validCapitalObjSubTypes = getParameterService().getParameterValues(
-                AssetGlobal.class, CamsConstants.Parameters.CAPITAL_OBJECT_SUB_TYPES);
+        List<String> validCapitalObjSubTypes = new ArrayList<String>(getParameterService().getParameterValuesAsString(
+                AssetGlobal.class, CamsConstants.Parameters.CAPITAL_OBJECT_SUB_TYPES));
         FinancialObjectCode objCode = getObjectCodeService().getByPrimaryId(fiscalYear,
                 chartOfAccountsCode, objectCode);
         return validCapitalObjSubTypes != null && objCode != null

@@ -1,17 +1,7 @@
 package org.kuali.ext.mm.document.validation.impl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Properties;
-import java.util.Set;
-
 import org.apache.commons.lang.StringUtils;
-import org.kuali.ext.mm.businessobject.Bin;
-import org.kuali.ext.mm.businessobject.CheckinDetail;
-import org.kuali.ext.mm.businessobject.OrderDetail;
-import org.kuali.ext.mm.businessobject.StagingRental;
-import org.kuali.ext.mm.businessobject.StockBalance;
+import org.kuali.ext.mm.businessobject.*;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.MMKeyConstants;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
@@ -22,14 +12,16 @@ import org.kuali.ext.mm.service.MMServiceLocator;
 import org.kuali.ext.mm.service.RentalService;
 import org.kuali.ext.mm.util.MMDecimal;
 import org.kuali.ext.mm.util.MMUtil;
-import org.kuali.rice.kns.document.Document;
-import org.kuali.rice.kns.rules.DocumentRuleBase;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.util.GlobalVariables;
-import org.kuali.rice.kns.util.KNSConstants;
-import org.kuali.rice.kns.util.ObjectUtils;
-import org.kuali.rice.kns.util.RiceKeyConstants;
-import org.kuali.rice.kns.util.UrlFactory;
+import org.kuali.rice.core.api.util.RiceKeyConstants;
+import org.kuali.rice.krad.document.Document;
+import org.kuali.rice.krad.rules.DocumentRuleBase;
+import org.kuali.rice.krad.service.KRADServiceLocator;
+import org.kuali.rice.krad.util.GlobalVariables;
+import org.kuali.rice.krad.util.KRADConstants;
+import org.kuali.rice.krad.util.ObjectUtils;
+import org.kuali.rice.krad.util.UrlFactory;
+
+import java.util.*;
 
 
 public class CheckinDocumentRule extends DocumentRuleBase {
@@ -220,7 +212,7 @@ public class CheckinDocumentRule extends DocumentRuleBase {
 
 
         Integer binId = cdetail.getBinId();
-        Bin bin = KNSServiceLocator.getBusinessObjectService().findBySinglePrimaryKey(Bin.class, binId);
+        Bin bin = KRADServiceLocator.getBusinessObjectService().findBySinglePrimaryKey(Bin.class, binId);
 
         if (ObjectUtils.isNull(bin)) {
             GlobalVariables.getMessageMap().putError(
@@ -357,14 +349,14 @@ public class CheckinDocumentRule extends DocumentRuleBase {
         }
         if (!lockingDocIds.isEmpty()) {
             Properties parameters = new Properties();
-            parameters.put(KNSConstants.PARAMETER_DOC_ID, lockingDocIds.get(0));
-            parameters.put(KNSConstants.PARAMETER_COMMAND,
-                    KNSConstants.METHOD_DISPLAY_DOC_SEARCH_VIEW);
+            parameters.put(KRADConstants.PARAMETER_DOC_ID, lockingDocIds.get(0));
+            parameters.put(KRADConstants.PARAMETER_COMMAND,
+                    KRADConstants.METHOD_DISPLAY_DOC_SEARCH_VIEW);
             String blockingUrl = UrlFactory.parameterizeUrl(getKualiConfigurationService()
-                    .getPropertyString(KNSConstants.WORKFLOW_URL_KEY)
-                    + "/" + KNSConstants.DOC_HANDLER_ACTION, parameters);
-            GlobalVariables.getMessageMap().putError(KNSConstants.GLOBAL_ERRORS,
-                    RiceKeyConstants.ERROR_MAINTENANCE_LOCKED, blockingUrl, lockingDocIds.get(0));
+							.getPropertyValueAsString(KRADConstants.WORKFLOW_URL_KEY)
+							+ "/" + KRADConstants.DOC_HANDLER_ACTION, parameters);
+            GlobalVariables.getMessageMap().putError(KRADConstants.GLOBAL_ERRORS,
+							RiceKeyConstants.ERROR_MAINTENANCE_LOCKED, blockingUrl, lockingDocIds.get(0));
             isValid = false;
         }
 

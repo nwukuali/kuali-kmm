@@ -1,21 +1,7 @@
 package org.kuali.ext.mm.service.impl;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
 import org.apache.commons.lang.StringUtils;
-import org.kuali.ext.mm.businessobject.MassUpdateDetail;
-import org.kuali.ext.mm.businessobject.Stock;
-import org.kuali.ext.mm.businessobject.StockBalance;
-import org.kuali.ext.mm.businessobject.StockCost;
-import org.kuali.ext.mm.businessobject.StockHistory;
+import org.kuali.ext.mm.businessobject.*;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.MMKeyConstants;
 import org.kuali.ext.mm.document.MassUpdateDocument;
@@ -26,11 +12,17 @@ import org.kuali.ext.mm.service.StockService;
 import org.kuali.ext.mm.sys.valueobject.MassUpdateUploadSummary;
 import org.kuali.ext.mm.util.MMDecimal;
 import org.kuali.ext.mm.util.ParseUtil;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.util.GlobalVariables;
-import org.kuali.rice.kns.util.ObjectUtils;
+import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.service.KRADServiceLocator;
+import org.kuali.rice.krad.util.GlobalVariables;
+import org.kuali.rice.krad.util.ObjectUtils;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.io.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 
 /**
@@ -199,7 +191,7 @@ public class MassUpdateServiceImpl implements MassUpdateService {
     public Map<String, MMDecimal> processMassUpdateDocument(MassUpdateDocument massUpdateDocument) {
         Map<String, MMDecimal> costChangeMap = new HashMap<String, MMDecimal>();
         
-        BusinessObjectService businessObjectService = KNSServiceLocator.getBusinessObjectService();
+        BusinessObjectService businessObjectService = KRADServiceLocator.getBusinessObjectService();
         StockService stockService = MMServiceLocator.getStockService();
         StockHistoryService historyService = MMServiceLocator.getStockHistoryService();        
         

@@ -1,9 +1,5 @@
 package org.kuali.ext.mm.sys.batch.dataaccess.jdbc;
 
-import java.io.File;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.StopAnalyzer;
 import org.apache.lucene.document.Document;
@@ -14,9 +10,13 @@ import org.apache.lucene.store.SimpleFSDirectory;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.sys.LuceneIndexingManager;
 import org.kuali.ext.mm.sys.batch.dataaccess.LuceneIndexerDao;
-import org.kuali.rice.kns.dao.jdbc.PlatformAwareDaoBaseJdbc;
+import org.kuali.rice.core.framework.persistence.jdbc.dao.PlatformAwareDaoBaseJdbc;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
+
+import java.io.File;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 
 public class LuceneIndexerDaoJdbc extends PlatformAwareDaoBaseJdbc implements LuceneIndexerDao {

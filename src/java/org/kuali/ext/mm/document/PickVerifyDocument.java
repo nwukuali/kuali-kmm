@@ -2,27 +2,8 @@ package org.kuali.ext.mm.document;
 
 // Generated May 11, 2009 11:03:40 AM by Hibernate Tools 3.2.4.GA
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-
 import org.apache.commons.lang.StringUtils;
-import org.apache.ojb.broker.PersistenceBroker;
-import org.apache.ojb.broker.PersistenceBrokerException;
-import org.kuali.ext.mm.businessobject.OrderDetail;
-import org.kuali.ext.mm.businessobject.PickListLine;
-import org.kuali.ext.mm.businessobject.PickTicket;
-import org.kuali.ext.mm.businessobject.StoresTransactionalDocumentBase;
-import org.kuali.ext.mm.businessobject.Warehouse;
-import org.kuali.ext.mm.businessobject.WarehouseObject;
+import org.kuali.ext.mm.businessobject.*;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.gl.GeneralLedgerPostable;
@@ -34,14 +15,27 @@ import org.kuali.ext.mm.integration.sys.businessobject.FinancialGeneralLedgerPen
 import org.kuali.ext.mm.service.PickVerifyService;
 import org.kuali.ext.mm.service.WarehouseAccountingService;
 import org.kuali.ext.mm.util.MMDecimal;
-import org.kuali.rice.kew.dto.DocumentRouteStatusChangeDTO;
-import org.kuali.rice.kns.rule.event.KualiDocumentEvent;
-import org.kuali.rice.kns.service.BusinessObjectService;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+import org.kuali.rice.kew.api.WorkflowDocument;
+import org.kuali.rice.kew.framework.postprocessor.DocumentRouteStatusChange;
 import org.kuali.rice.kns.service.DataDictionaryService;
-import org.kuali.rice.kns.util.KualiDecimal;
-import org.kuali.rice.kns.util.ObjectUtils;
-import org.kuali.rice.kns.workflow.service.KualiWorkflowDocument;
+import org.kuali.rice.krad.rules.rule.event.KualiDocumentEvent;
+import org.kuali.rice.krad.rules.rule.event.SaveDocumentEvent;
+import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.util.ObjectUtils;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+//import org.kuali.rice.kew.dto.DocumentRouteStatusChangeDTO;
+//import org.kuali.rice.kns.rule.event.KualiDocumentEvent;
+//import org.kuali.rice.krad.service.BusinessObjectService;
+//import org.kuali.rice.core.api.util.type.KualiDecimal;
+//import org.kuali.rice.krad.util.ObjectUtils;
+//import org.kuali.rice.kew.api.WorkflowDocument;
 
 
 /**
@@ -96,11 +90,11 @@ public class PickVerifyDocument extends StoresTransactionalDocumentBase implemen
      * @see org.kuali.rice.kns.document.Document#doRouteStatusChange(org.kuali.rice.kew.dto.DocumentRouteStatusChangeDTO)
      */
     @Override
-    public void doRouteStatusChange(DocumentRouteStatusChangeDTO statusChangeEvent) {
+    public void doRouteStatusChange(DocumentRouteStatusChange statusChangeEvent) {
         super.doRouteStatusChange(statusChangeEvent);
-        KualiWorkflowDocument workflowDocument = getDocumentHeader().getWorkflowDocument();
+        WorkflowDocument workflowDocument = getDocumentHeader().getWorkflowDocument();
 
-        if (workflowDocument.stateIsProcessed()
+        if (workflowDocument.isProcessed()
                 && MMConstants.PickStatusCode.PICK_STATUS_PRTD.equals(pickTicket
                         .getPickStatusCodeCd())) {
             PickVerifyService pickVerifyService = SpringContext.getBean(PickVerifyService.class);
@@ -112,8 +106,8 @@ public class PickVerifyDocument extends StoresTransactionalDocumentBase implemen
 
         // Remove lock when doc status change. We don't include
         // stateIsFinal since document always go to 'processed' first.
-        if (workflowDocument.stateIsCanceled() || workflowDocument.stateIsDisapproved()
-                || workflowDocument.stateIsException() || workflowDocument.stateIsProcessed()) {
+        if (workflowDocument.isCanceled() || workflowDocument.isDisapproved()
+                || workflowDocument.isException() || workflowDocument.isProcessed()) {
             // remove the lock
             // MMServiceLocator.getBusinessObjectLockingService().deleteLocks(getDocumentNumber());
         }
@@ -145,7 +139,7 @@ public class PickVerifyDocument extends StoresTransactionalDocumentBase implemen
     public void postProcessSave(KualiDocumentEvent event) {
         super.postProcessSave(event);
         // if(event.getName())
-        if (!(event instanceof org.kuali.rice.kns.rule.event.SaveDocumentEvent)) {
+        if (!(event instanceof SaveDocumentEvent)) {
             // BusinessObjectLockingService lockService = MMServiceLocator
             // .getBusinessObjectLockingService();
 
@@ -179,39 +173,20 @@ public class PickVerifyDocument extends StoresTransactionalDocumentBase implemen
         getPickTicket().setPickListLines(newLineList);
     }
 
-    /**
-     * @see org.kuali.rice.kns.bo.PersistableBusinessObjectBase#afterUpdate(org.apache.ojb.broker.PersistenceBroker)
-     */
-    @Override
-    public void afterUpdate(PersistenceBroker persistenceBroker) throws PersistenceBrokerException {
-        super.afterUpdate(persistenceBroker);
-        if (ObjectUtils.isNotNull(this.getPickTicket()))
-            SpringContext.getBean(BusinessObjectService.class).save(this.getPickTicket());
-    }
 
-    /**
-     * @see org.kuali.rice.kns.bo.PersistableBusinessObjectBase#afterInsert(org.apache.ojb.broker.PersistenceBroker)
-     */
-    @Override
-    public void afterInsert(PersistenceBroker persistenceBroker) throws PersistenceBrokerException {
-        super.afterInsert(persistenceBroker);
-        if (ObjectUtils.isNotNull(this.getPickTicket()))
-            SpringContext.getBean(BusinessObjectService.class).save(this.getPickTicket());
-    }
+		protected void postUpdate() {
+			super.postUpdate();
+			if (ObjectUtils.isNotNull(this.getPickTicket()))
+				SpringContext.getBean(BusinessObjectService.class).save(this.getPickTicket());
+		}
 
-    /**
-     * toStringMapper
-     * 
-     * @return LinkedHashMap
-     */
-    @Override
-    public LinkedHashMap<String, String> toStringMapper() {
-        LinkedHashMap<String, String> propMap = new LinkedHashMap<String, String>();
-        propMap.put("documentNumber", documentNumber);
-        return propMap;
-    }
+		protected void postPersist() {
+			super.postPersist();
+			if (ObjectUtils.isNotNull(this.getPickTicket()))
+				SpringContext.getBean(BusinessObjectService.class).save(this.getPickTicket());
+		}
 
-    /**
+	/**
      * @see org.kuali.ext.mm.gl.GeneralLedgerPostable#generateGlpeEntries()
      */
     public List<FinancialGeneralLedgerPendingEntry> generateGlpeEntries() {

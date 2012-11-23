@@ -1,7 +1,5 @@
 package org.kuali.ext.mm.cart.service;
 
-import java.util.List;
-
 import org.kuali.ext.mm.b2b.cxml.types.CXML;
 import org.kuali.ext.mm.businessobject.CatalogItem;
 import org.kuali.ext.mm.businessobject.Profile;
@@ -9,7 +7,9 @@ import org.kuali.ext.mm.businessobject.ShopCartDetail;
 import org.kuali.ext.mm.businessobject.ShoppingCart;
 import org.kuali.ext.mm.cart.valueobject.DirectEntry;
 import org.kuali.ext.mm.document.OrderDocument;
-import org.kuali.rice.kns.util.KualiDecimal;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+
+import java.util.List;
 
 public interface ShopCartService {
 

@@ -3,17 +3,17 @@
  */
 package org.kuali.ext.mm.sys.batch.dataaccess.jdbc;
 
+import org.apache.commons.collections.map.ListOrderedMap;
+import org.kuali.ext.mm.document.DiscrepancyLine;
+import org.kuali.ext.mm.sys.batch.dataaccess.DiscrepancyLineDao;
+import org.kuali.rice.core.framework.persistence.jdbc.dao.PlatformAwareDaoBaseJdbc;
+
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-
-import org.apache.commons.collections.map.ListOrderedMap;
-import org.kuali.ext.mm.document.DiscrepancyLine;
-import org.kuali.ext.mm.sys.batch.dataaccess.DiscrepancyLineDao;
-import org.kuali.rice.kns.dao.jdbc.PlatformAwareDaoBaseJdbc;
 
 /**
  * @author rshrivas

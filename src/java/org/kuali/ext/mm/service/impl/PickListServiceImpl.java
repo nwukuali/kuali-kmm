@@ -1,24 +1,7 @@
 package org.kuali.ext.mm.service.impl;
 
-import java.io.ByteArrayOutputStream;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.commons.lang.StringUtils;
-import org.kuali.ext.mm.businessobject.BackOrder;
-import org.kuali.ext.mm.businessobject.Bin;
-import org.kuali.ext.mm.businessobject.CatalogItem;
-import org.kuali.ext.mm.businessobject.OrderDetail;
-import org.kuali.ext.mm.businessobject.PickListLine;
-import org.kuali.ext.mm.businessobject.PickTicket;
+import org.kuali.ext.mm.businessobject.*;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.MMKeyConstants;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
@@ -31,15 +14,20 @@ import org.kuali.ext.mm.service.PickListHelperService;
 import org.kuali.ext.mm.service.PickListPdfService;
 import org.kuali.ext.mm.service.PickListService;
 import org.kuali.ext.mm.service.StockService;
-import org.kuali.rice.kns.bo.AdHocRouteRecipient;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.service.DateTimeService;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.service.KualiConfigurationService;
-import org.kuali.rice.kns.service.ParameterService;
-import org.kuali.rice.kns.util.ObjectUtils;
-import org.kuali.rice.kns.util.TypedArrayList;
+import org.kuali.rice.core.api.CoreApiServiceLocator;
+import org.kuali.rice.core.api.config.property.ConfigurationService;
+import org.kuali.rice.core.api.datetime.DateTimeService;
+import org.kuali.rice.coreservice.framework.parameter.ParameterService;
+import org.kuali.rice.krad.bo.AdHocRouteRecipient;
+import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.service.KRADServiceLocator;
+import org.kuali.rice.krad.util.ObjectUtils;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.AutoPopulatingList;
+
+import java.io.ByteArrayOutputStream;
+import java.sql.Timestamp;
+import java.util.*;
 
 
 /**
@@ -118,7 +106,7 @@ public class PickListServiceImpl implements PickListService {
 
 		// Rebuild pick list lines from tickets to allow release of any dropped
 		// lines during ticket creation
-		List<PickListLine> newLineList = new TypedArrayList(PickListLine.class);
+		List<PickListLine> newLineList = new AutoPopulatingList(PickListLine.class);
 
 		for (PickTicket ticket : pickTickets) {
 			newLineList.addAll(ticket.getPickListLines());
@@ -217,7 +205,7 @@ public class PickListServiceImpl implements PickListService {
 		line.setPickTicket(null);
 		line.setPickTicketNumber(null);
 		line.setPickStatusCodeCd(MMConstants.PickStatusCode.PICK_STATUS_INIT);
-		KNSServiceLocator.getBusinessObjectService().save(line);
+		KRADServiceLocator.getBusinessObjectService().save(line);
 	}
 
 	/**
@@ -467,16 +455,16 @@ public class PickListServiceImpl implements PickListService {
 		Timestamp oldestDate = getOldestDate(ticket);
 
 		
-		KualiConfigurationService configService = SpringContext.getBean(KualiConfigurationService.class);
+		ConfigurationService configService = SpringContext.getBean(ConfigurationService.class);
         
-		String orderLabel = configService.getPropertyString(MMKeyConstants.PickTicket.HEADER_LABEL_ORDER);
-		String departmentLabel = configService.getPropertyString(MMKeyConstants.PickTicket.HEADER_LABEL_DEPARTMENT);
-		String buildingLabel = configService.getPropertyString(MMKeyConstants.PickTicket.HEADER_LABEL_BUILDING);
-		String routeLabel = configService.getPropertyString(MMKeyConstants.PickTicket.HEADER_LABEL_ROUTE);
-		String catalogNumberLabel = configService.getPropertyString(MMKeyConstants.PickTicket.HEADER_LABEL_CATALOG_NUMBER);
-		String descriptionLabel = configService.getPropertyString(MMKeyConstants.PickTicket.HEADER_LABEL_DESCRIPTION);
-		String willCallNote = configService.getPropertyString(MMKeyConstants.PickTicket.HEADER_WILLCALL);
-		String personalUseNote = configService.getPropertyString(MMKeyConstants.PickTicket.HEADER_PERSONAL_USE);
+		String orderLabel = configService.getPropertyValueAsString(MMKeyConstants.PickTicket.HEADER_LABEL_ORDER);
+		String departmentLabel = configService.getPropertyValueAsString(MMKeyConstants.PickTicket.HEADER_LABEL_DEPARTMENT);
+		String buildingLabel = configService.getPropertyValueAsString(MMKeyConstants.PickTicket.HEADER_LABEL_BUILDING);
+		String routeLabel = configService.getPropertyValueAsString(MMKeyConstants.PickTicket.HEADER_LABEL_ROUTE);
+		String catalogNumberLabel = configService.getPropertyValueAsString(MMKeyConstants.PickTicket.HEADER_LABEL_CATALOG_NUMBER);
+		String descriptionLabel = configService.getPropertyValueAsString(MMKeyConstants.PickTicket.HEADER_LABEL_DESCRIPTION);
+		String willCallNote = configService.getPropertyValueAsString(MMKeyConstants.PickTicket.HEADER_WILLCALL);
+		String personalUseNote = configService.getPropertyValueAsString(MMKeyConstants.PickTicket.HEADER_PERSONAL_USE);
 
 		 FinancialSystemAdaptorFactory adaptorFactory = SpringContext.getBean(FinancialSystemAdaptorFactory.class);
 		for (PickListLine line : ticket.getPickListLines()) {
@@ -503,8 +491,8 @@ public class PickListServiceImpl implements PickListService {
 				leftColumn.add(departmentLabel + potentialHeaderCells.get(departmentLabel));
 		}
 		if (willCall) {
-			leftColumn.add(configService.getPropertyString(MMKeyConstants.PickTicket.HEADER_LABEL_ORDERED_BY) + ticket.getPickListLines().get(0).getSalesInstance().getCustomerProfile().getCustomer().getCustomerName());
-			leftColumn.add(configService.getPropertyString(MMKeyConstants.PickTicket.HEADER_LABEL_SHIP_TO_ATTN));
+			leftColumn.add(configService.getPropertyValueAsString(MMKeyConstants.PickTicket.HEADER_LABEL_ORDERED_BY) + ticket.getPickListLines().get(0).getSalesInstance().getCustomerProfile().getCustomer().getCustomerName());
+			leftColumn.add(configService.getPropertyValueAsString(MMKeyConstants.PickTicket.HEADER_LABEL_SHIP_TO_ATTN));
 		} else {
 			if (potentialHeaderCells.containsKey(buildingLabel) && potentialHeaderCells.get(buildingLabel) != null) {
 				leftColumn.add(buildingLabel + potentialHeaderCells.get(buildingLabel));
@@ -522,11 +510,11 @@ public class PickListServiceImpl implements PickListService {
 
 		DateTimeService dtService = SpringContext.getBean(DateTimeService.class);
 
-		rightColumn.add(configService.getPropertyString(MMKeyConstants.PickTicket.HEADER_LABEL_PICKING_NUMBER) + ticket.getPickTicketNumber());
-		rightColumn.add(configService.getPropertyString(MMKeyConstants.PickTicket.HEADER_LABEL_PRINT_DATE) + dtService.toDateString(dtService.getCurrentDate()));
-		rightColumn.add(configService.getPropertyString(MMKeyConstants.PickTicket.HEADER_LABEL_OLDEST_DATE) + dtService.toDateString(oldestDate));
+		rightColumn.add(configService.getPropertyValueAsString(MMKeyConstants.PickTicket.HEADER_LABEL_PICKING_NUMBER) + ticket.getPickTicketNumber());
+		rightColumn.add(configService.getPropertyValueAsString(MMKeyConstants.PickTicket.HEADER_LABEL_PRINT_DATE) + dtService.toDateString(dtService.getCurrentDate()));
+		rightColumn.add(configService.getPropertyValueAsString(MMKeyConstants.PickTicket.HEADER_LABEL_OLDEST_DATE) + dtService.toDateString(oldestDate));
 		ticket.refreshReferenceObject(MMConstants.PickListDocument.PICK_LIST_DOCUMENT);
-		rightColumn.add(configService.getPropertyString(MMKeyConstants.PickTicket.HEADER_LABEL_WAREHOUSE) + ticket.getPickListDocument().getWarehouse().getWarehouseCd());
+		rightColumn.add(configService.getPropertyValueAsString(MMKeyConstants.PickTicket.HEADER_LABEL_WAREHOUSE) + ticket.getPickListDocument().getWarehouse().getWarehouseCd());
 	}
 
 	/**
@@ -537,15 +525,15 @@ public class PickListServiceImpl implements PickListService {
 	 * @param pdfService
 	 */
 	protected void buildPdfContent(Object document, PickTicket pickTicket, PickListPdfService pdfService) {
-		KualiConfigurationService configService = SpringContext.getBean(KualiConfigurationService.class);
-		String locationColumn = configService.getPropertyString(MMKeyConstants.PickTicket.COLUMN_LOCATION);
-		String quantityColumn = configService.getPropertyString(MMKeyConstants.PickTicket.COLUMN_QTY);
-		String unitOfIssueColumn = configService.getPropertyString(MMKeyConstants.PickTicket.COLUMN_UI);
-		String descriptionColumn = configService.getPropertyString(MMKeyConstants.PickTicket.COLUMN_DESCRIPTION);
-		String tubColumn = configService.getPropertyString(MMKeyConstants.PickTicket.COLUMN_TUB);
-		String orderColumn = configService.getPropertyString(MMKeyConstants.PickTicket.COLUMN_ORDER);
-		String itemColumn = configService.getPropertyString(MMKeyConstants.PickTicket.COLUMN_ITEM);
-		String pickedColumn = configService.getPropertyString(MMKeyConstants.PickTicket.COLUMN_PICKED);
+		ConfigurationService configService = SpringContext.getBean(ConfigurationService.class);
+		String locationColumn = configService.getPropertyValueAsString(MMKeyConstants.PickTicket.COLUMN_LOCATION);
+		String quantityColumn = configService.getPropertyValueAsString(MMKeyConstants.PickTicket.COLUMN_QTY);
+		String unitOfIssueColumn = configService.getPropertyValueAsString(MMKeyConstants.PickTicket.COLUMN_UI);
+		String descriptionColumn = configService.getPropertyValueAsString(MMKeyConstants.PickTicket.COLUMN_DESCRIPTION);
+		String tubColumn = configService.getPropertyValueAsString(MMKeyConstants.PickTicket.COLUMN_TUB);
+		String orderColumn = configService.getPropertyValueAsString(MMKeyConstants.PickTicket.COLUMN_ORDER);
+		String itemColumn = configService.getPropertyValueAsString(MMKeyConstants.PickTicket.COLUMN_ITEM);
+		String pickedColumn = configService.getPropertyValueAsString(MMKeyConstants.PickTicket.COLUMN_PICKED);
 
 		// build zone header
 		List<String> zoneHeaderColumns = new ArrayList<String>();
@@ -654,7 +642,7 @@ public class PickListServiceImpl implements PickListService {
 	public Collection<PickTicket> getAllUnprintedTickets() {
 		Map<String, String> fieldValues = new HashMap<String, String>();
 		PickTicketDao pickTicketDao = SpringContext.getBean(PickTicketDao.class);
-		Integer resultsLimit = Integer.parseInt(getParameterService().getParameterValue(MMConstants.MM_NAMESPACE, MMConstants.Parameters.LOOKUP, MMConstants.Parameters.MAX_PRINT_ALL_RESULTS));
+		Integer resultsLimit = Integer.parseInt(getParameterService().getParameterValueAsString(MMConstants.MM_NAMESPACE, MMConstants.Parameters.LOOKUP, MMConstants.Parameters.MAX_PRINT_ALL_RESULTS));
 		fieldValues.put(MMConstants.PickStatusCode.PICK_STATUS_CODE, MMConstants.PickStatusCode.PICK_STATUS_INIT);
 		Collection<PickTicket> results = pickTicketDao.findMatchingBoundedAndOrderBy(PickTicket.class, fieldValues, MMConstants.PickTicket.PICK_TICKET_NUMBER, true, resultsLimit);
 		return results;
@@ -722,7 +710,7 @@ public class PickListServiceImpl implements PickListService {
         newLine.setStockQty(orderDetail.getOrderItemQty());
         newLine.setPickStockQty(0);
         newLine.setBackOrderQty(orderDetail.getOrderItemQty());
-        newLine.setCreatedDate(KNSServiceLocator.getDateTimeService().getCurrentTimestamp());                
+        newLine.setCreatedDate(CoreApiServiceLocator.getDateTimeService().getCurrentTimestamp());
         
         
         return newLine;
@@ -808,7 +796,7 @@ public class PickListServiceImpl implements PickListService {
                 newLine.setBackOrderId(lineTemplate.getBackOrderId());
                 newLine.setStockId(item.getStockId());
                 newLine.setPickStatusCodeCd(MMConstants.PickStatusCode.PICK_STATUS_INIT);                
-                newLine.setCreatedDate(KNSServiceLocator.getDateTimeService().getCurrentTimestamp());                
+                newLine.setCreatedDate(CoreApiServiceLocator.getDateTimeService().getCurrentTimestamp());
                 newLine.setBinId(bin.getBinId());
                 newLine.setStockQty(qtyToPick);
 
@@ -837,7 +825,7 @@ public class PickListServiceImpl implements PickListService {
 //	    pickedStatusCodes.add(MMConstants.PickStatusCode.PICK_STATUS_PCKD);
 //        fieldValues.put(MMConstants.PickListLine.ORDER_DETAIL_ID, detail.getOrderDetailId());
 //        fieldValues.put(MMConstants.PickListLine.PICK_STATUS_CODE_CD, pickedStatusCodes);
-//        Collection<PickListLine> results = KNSServiceLocator.getBusinessObjectService().findMatching(PickListLine.class, fieldValues);
+//        Collection<PickListLine> results = KRADServiceLocator.getBusinessObjectService().findMatching(PickListLine.class, fieldValues);
 //	    
 //        Iterator<PickListLine> itPickLine = results.iterator();
 //        
@@ -854,7 +842,7 @@ public class PickListServiceImpl implements PickListService {
 //	public Integer getTotalQuantityToPick(OrderDetail detail) {        
 //        Map<String, Object> fieldValues = new HashMap<String, Object>();
 //        fieldValues.put(MMConstants.PickListLine.ORDER_DETAIL_ID, detail.getOrderDetailId());
-//        Collection<PickListLine> pickLines = KNSServiceLocator.getBusinessObjectService().findMatching(PickListLine.class, fieldValues);
+//        Collection<PickListLine> pickLines = KRADServiceLocator.getBusinessObjectService().findMatching(PickListLine.class, fieldValues);
 //        Collection<BackOrder> backOrders = SpringContext.getBean(BackOrderService.class)
 //                .getBackOrdersForOrderDetail(detail.getOrderDetailId());        
 //        
@@ -887,7 +875,7 @@ public class PickListServiceImpl implements PickListService {
 	    }
 	    Map<String, Object> fieldValues = new HashMap<String, Object>();
         fieldValues.put(MMConstants.OrderDetail.ORDER_DETAIL_ID, orderDetailIds);
-        Collection<OrderDetail> results = KNSServiceLocator.getBusinessObjectService().findMatching(OrderDetail.class, fieldValues);
+        Collection<OrderDetail> results = KRADServiceLocator.getBusinessObjectService().findMatching(OrderDetail.class, fieldValues);
 	    
 	    return results;
 	}
@@ -896,7 +884,7 @@ public class PickListServiceImpl implements PickListService {
 	 * @see org.kuali.ext.mm.service.PickListService#savePickListLine(org.kuali.ext.mm.businessobject.PickListLine)
 	 */
 	public void savePickListLine(PickListLine line) {
-		KNSServiceLocator.getBusinessObjectService().save(line);
+		KRADServiceLocator.getBusinessObjectService().save(line);
 	}
 
 	/**

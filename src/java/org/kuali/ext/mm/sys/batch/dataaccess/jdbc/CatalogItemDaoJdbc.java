@@ -4,7 +4,7 @@
 package org.kuali.ext.mm.sys.batch.dataaccess.jdbc;
 
 import org.kuali.ext.mm.sys.batch.dataaccess.CatalogItemDao;
-import org.kuali.rice.kns.dao.jdbc.PlatformAwareDaoBaseJdbc;
+import org.kuali.rice.core.framework.persistence.jdbc.dao.PlatformAwareDaoBaseJdbc;
 
 /**
  * @author rshrivas

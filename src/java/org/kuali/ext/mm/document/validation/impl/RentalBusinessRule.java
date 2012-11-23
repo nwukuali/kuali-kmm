@@ -8,14 +8,15 @@ import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.MMKeyConstants;
 import org.kuali.ext.mm.service.MMServiceLocator;
 import org.kuali.ext.mm.service.RentalService;
-import org.kuali.rice.kns.bo.PersistableBusinessObject;
+import org.kuali.rice.core.api.CoreApiServiceLocator;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
 import org.kuali.rice.kns.document.MaintenanceDocument;
 import org.kuali.rice.kns.maintenance.rules.MaintenanceDocumentRuleBase;
-import org.kuali.rice.kns.service.DataDictionaryService;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.util.GlobalVariables;
-import org.kuali.rice.kns.util.KNSConstants;
-import org.kuali.rice.kns.util.KualiDecimal;
+import org.kuali.rice.krad.bo.PersistableBusinessObject;
+import org.kuali.rice.krad.service.DataDictionaryService;
+import org.kuali.rice.krad.service.KRADServiceLocatorWeb;
+import org.kuali.rice.krad.util.GlobalVariables;
+import org.kuali.rice.krad.util.KRADConstants;
 
 
 public class RentalBusinessRule extends MaintenanceDocumentRuleBase {
@@ -23,7 +24,7 @@ public class RentalBusinessRule extends MaintenanceDocumentRuleBase {
     @Override
     protected boolean processCustomRouteDocumentBusinessRules(MaintenanceDocument document) {
         boolean isValid = true;        
-        DataDictionaryService dictionaryService = KNSServiceLocator.getDataDictionaryService();
+        DataDictionaryService dictionaryService = KRADServiceLocatorWeb.getDataDictionaryService();
         RentalService rentalService = MMServiceLocator.getRentalService();
         
         Rental oldRental = (Rental)document.getOldMaintainableObject().getBusinessObject();
@@ -33,7 +34,7 @@ public class RentalBusinessRule extends MaintenanceDocumentRuleBase {
             if(!StringUtils.isBlank(newRental.getStockId())) {
                 if(!newRental.getStock().isRental()) {
                     GlobalVariables.getMessageMap().putError(
-                            KNSConstants.MAINTENANCE_NEW_MAINTAINABLE + MMConstants.Rental.STOCK + "." + MMConstants.Stock.STOCK_DISTRIBUTOR_NBR,
+                            KRADConstants.MAINTENANCE_NEW_MAINTAINABLE + MMConstants.Rental.STOCK + "." + MMConstants.Stock.STOCK_DISTRIBUTOR_NBR,
                             MMKeyConstants.Rental.ERROR_RENTAL_STOCK_INVALID,
                             newRental.getStock().getStockDistributorNbr());
                     isValid = false;
@@ -45,7 +46,7 @@ public class RentalBusinessRule extends MaintenanceDocumentRuleBase {
                             newRental.getRentalSerialNumber(), null);
                     if(!isValidRental) {
                         GlobalVariables.getMessageMap().putError(
-                                KNSConstants.MAINTENANCE_NEW_MAINTAINABLE + MMConstants.Rental.RENTAL_SERIAL_NUMBER,
+                                KRADConstants.MAINTENANCE_NEW_MAINTAINABLE + MMConstants.Rental.RENTAL_SERIAL_NUMBER,
                                 MMKeyConstants.Rental.RENTAL_EXISTS,
                                 newRental.getRentalSerialNumber());
                         isValid = false;
@@ -58,7 +59,7 @@ public class RentalBusinessRule extends MaintenanceDocumentRuleBase {
             if(newRental.getLastChargeDate() != null 
                     && newRental.getLastChargeDate().before(newRental.getIssueDate())) {
                 GlobalVariables.getMessageMap().putError(
-                        KNSConstants.MAINTENANCE_NEW_MAINTAINABLE + MMConstants.Rental.LAST_CHARGE_DATE,
+                        KRADConstants.MAINTENANCE_NEW_MAINTAINABLE + MMConstants.Rental.LAST_CHARGE_DATE,
                         MMKeyConstants.Rental.ERROR_RENTAL_DATES_OUT_OF_SEQUENCE,
                         dictionaryService.getAttributeErrorLabel(Rental.class, MMConstants.Rental.LAST_CHARGE_DATE),
                         dictionaryService.getAttributeErrorLabel(Rental.class, MMConstants.Rental.ISSUE_DATE));
@@ -67,7 +68,7 @@ public class RentalBusinessRule extends MaintenanceDocumentRuleBase {
             if(newRental.getReturnDate()!= null 
                     && newRental.getReturnDate().before(newRental.getIssueDate())) {
                 GlobalVariables.getMessageMap().putError(
-                        KNSConstants.MAINTENANCE_NEW_MAINTAINABLE + MMConstants.Rental.RETURN_DATE,
+                        KRADConstants.MAINTENANCE_NEW_MAINTAINABLE + MMConstants.Rental.RETURN_DATE,
                         MMKeyConstants.Rental.ERROR_RENTAL_DATES_OUT_OF_SEQUENCE,
                         dictionaryService.getAttributeErrorLabel(Rental.class, MMConstants.Rental.RETURN_DATE),
                         dictionaryService.getAttributeErrorLabel(Rental.class, MMConstants.Rental.ISSUE_DATE));
@@ -79,7 +80,7 @@ public class RentalBusinessRule extends MaintenanceDocumentRuleBase {
             //Also cannot issue an item from this document, this rule is enforced in the presentation controller
             if(oldRental.getIssueDate() != null) {
                 GlobalVariables.getMessageMap().putError(
-                        KNSConstants.MAINTENANCE_NEW_MAINTAINABLE + MMConstants.Rental.ISSUE_DATE,
+                        KRADConstants.MAINTENANCE_NEW_MAINTAINABLE + MMConstants.Rental.ISSUE_DATE,
                         MMKeyConstants.Rental.ERROR_RENTAL_CANNOT_UNISSUE);
                 isValid = false;
             }
@@ -87,7 +88,7 @@ public class RentalBusinessRule extends MaintenanceDocumentRuleBase {
         if(newRental.getReturnDate()!= null && newRental.getLastChargeDate() != null
                 && newRental.getReturnDate().before(newRental.getLastChargeDate())) {
             GlobalVariables.getMessageMap().putError(
-                    KNSConstants.MAINTENANCE_NEW_MAINTAINABLE + MMConstants.Rental.RETURN_DATE,
+                    KRADConstants.MAINTENANCE_NEW_MAINTAINABLE + MMConstants.Rental.RETURN_DATE,
                     MMKeyConstants.Rental.ERROR_RENTAL_DATES_OUT_OF_SEQUENCE,
                     dictionaryService.getAttributeErrorLabel(Rental.class, MMConstants.Rental.RETURN_DATE),
                     dictionaryService.getAttributeErrorLabel(Rental.class, MMConstants.Rental.LAST_CHARGE_DATE));
@@ -96,7 +97,7 @@ public class RentalBusinessRule extends MaintenanceDocumentRuleBase {
         //User should not be able to erase the last change date
         if(newRental.getLastChargeDate() == null && oldRental.getLastChargeDate() != null) {
             GlobalVariables.getMessageMap().putError(
-                    KNSConstants.MAINTENANCE_NEW_MAINTAINABLE + MMConstants.Rental.RETURN_DATE,
+                    KRADConstants.MAINTENANCE_NEW_MAINTAINABLE + MMConstants.Rental.RETURN_DATE,
                     MMKeyConstants.Rental.ERROR_RENTAL_CANNOT_ERASE_LAST_CHARGE_DATE);
             isValid = false;
         }
@@ -105,7 +106,7 @@ public class RentalBusinessRule extends MaintenanceDocumentRuleBase {
         if(newRental.getReturnDate() == null && oldRental.getReturnDate() != null
                 && !currentRental.getRentalId().equals(newRental.getRentalId())) {
             GlobalVariables.getMessageMap().putError(
-                    KNSConstants.MAINTENANCE_NEW_MAINTAINABLE + MMConstants.Rental.RETURN_DATE,
+                    KRADConstants.MAINTENANCE_NEW_MAINTAINABLE + MMConstants.Rental.RETURN_DATE,
                     MMKeyConstants.Rental.ERROR_RENTAL_CANNOT_ERASE_RETURN_DATE);
             isValid = false;
         }
@@ -115,11 +116,11 @@ public class RentalBusinessRule extends MaintenanceDocumentRuleBase {
                     newRental.getRentalTypeCode(), newRental.getReturnDate());
             if(historicRental != null) {
                 GlobalVariables.getMessageMap().putError(
-                        KNSConstants.MAINTENANCE_NEW_MAINTAINABLE + MMConstants.Rental.RETURN_DATE,
+                        KRADConstants.MAINTENANCE_NEW_MAINTAINABLE + MMConstants.Rental.RETURN_DATE,
                         MMKeyConstants.Rental.ERROR_HISTORIC_RENTAL_RECORD_EXISTS,
                         newRental.getRentalSerialNumber(),
                         newRental.getRentalTypeCode(),
-                        KNSServiceLocator.getDateTimeService().toDateTimeString(newRental.getReturnDate()));
+                        CoreApiServiceLocator.getDateTimeService().toDateTimeString(newRental.getReturnDate()));
                 isValid = false;
             }
         }
@@ -134,13 +135,13 @@ public class RentalBusinessRule extends MaintenanceDocumentRuleBase {
             KualiDecimal accountsTotal = new KualiDecimal(0.0);
             for(Accounts account : newRental.getAccountingLines()) {
                 index = "[" + String.valueOf(i) + "]";
-                errorKey = KNSConstants.MAINTENANCE_NEW_MAINTAINABLE + "." + MMConstants.Rental.ACCOUNTING_LINES + index + ".";
+                errorKey = KRADConstants.MAINTENANCE_NEW_MAINTAINABLE + "." + MMConstants.Rental.ACCOUNTING_LINES + index + ".";
                 isValid &= MMServiceLocator.getOrderService().validateAccountingLine(account, errorKey);
                 accountsTotal = accountsTotal.add(account.getAccountFixedAmt());
             }
             if(costTotal != accountsTotal.doubleValue()) {
                 GlobalVariables.getMessageMap().putError(
-                        KNSConstants.MAINTENANCE_NEW_MAINTAINABLE + "." + MMConstants.Rental.ACCOUNTING_LINES + "[0]",
+                        KRADConstants.MAINTENANCE_NEW_MAINTAINABLE + "." + MMConstants.Rental.ACCOUNTING_LINES + "[0]",
                         MMKeyConstants.Rental.ERROR_RENTAL_ACCOUNTS_INVALID_TOTAL, 
                         String.valueOf(costTotal),
                         accountsTotal.toString());

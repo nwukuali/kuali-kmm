@@ -7,9 +7,9 @@ import org.kuali.ext.mm.businessobject.BackOrder;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.service.BackOrderService;
-import org.kuali.rice.kns.bo.DocumentHeader;
+import org.kuali.rice.kew.api.WorkflowDocument;
 import org.kuali.rice.kns.maintenance.KualiMaintainableImpl;
-import org.kuali.rice.kns.workflow.service.KualiWorkflowDocument;
+import org.kuali.rice.krad.bo.DocumentHeader;
 
 
 /**
@@ -25,8 +25,8 @@ public class BackOrderMaintainableImpl extends KualiMaintainableImpl {
 
     @Override
     public void doRouteStatusChange(DocumentHeader documentHeader) {
-        KualiWorkflowDocument workflowDocument = documentHeader.getWorkflowDocument();
-        if (workflowDocument.stateIsProcessed()) {
+        WorkflowDocument workflowDocument = documentHeader.getWorkflowDocument();
+        if (workflowDocument.isProcessed()) {
             BackOrder backorder = (BackOrder)this.getBusinessObject();
             BackOrderService backOrderService = SpringContext.getBean(BackOrderService.class);
             if(MMConstants.BackOrder.OPTION_CANCEL.equals(backorder.getActionCode()))
@@ -41,7 +41,7 @@ public class BackOrderMaintainableImpl extends KualiMaintainableImpl {
         }       
         
     }
-    
-    
-    
+
+
+
 }

@@ -2,13 +2,6 @@
  *
  */
 package org.kuali.ext.mm.document.dataaccess.impl.jdbc;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.kuali.ext.mm.common.sys.MMConstants;
@@ -18,11 +11,19 @@ import org.kuali.ext.mm.gl.GlConstants;
 import org.kuali.ext.mm.integration.FinancialSystemAdaptorFactory;
 import org.kuali.ext.mm.integration.fp.businessobject.FinancialInternalBillingItem;
 import org.kuali.ext.mm.integration.sys.businessobject.FinancialAccountingLine;
-import org.kuali.rice.kns.dao.jdbc.PlatformAwareDaoBaseJdbc;
-import org.kuali.rice.kns.util.KualiDecimal;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+import org.kuali.rice.core.framework.persistence.jdbc.dao.PlatformAwareDaoBaseJdbc;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.ResultSetExtractor;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 /**

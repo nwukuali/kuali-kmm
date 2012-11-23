@@ -16,17 +16,15 @@
 
 package org.kuali.ext.mm.integration.coa.businessobject;
 
-import java.util.LinkedHashMap;
-
 import org.kuali.ext.mm.integration.FinancialSystemComponent;
-import org.kuali.rice.kns.bo.ExternalizableBusinessObject;
-import org.kuali.rice.kns.bo.TransientBusinessObjectBase;
+import org.kuali.rice.krad.bo.ExternalizableBusinessObject;
+import org.kuali.rice.krad.bo.TransientBusinessObjectBase;
 
 /**
  *
  */
 public class FinancialSubObjectCode extends TransientBusinessObjectBase implements
-        ExternalizableBusinessObject, FinancialSystemComponent {
+	ExternalizableBusinessObject, FinancialSystemComponent {
     private static final long serialVersionUID = 393575954270343640L;
     private String chartOfAccountsCode;
     private String accountNumber;
@@ -102,17 +100,4 @@ public class FinancialSubObjectCode extends TransientBusinessObjectBase implemen
         this.universityFiscalYear = universityFiscalYear;
     }
 
-    /**
-     * @see org.kuali.rice.kns.bo.BusinessObjectBase#toStringMapper()
-     */
-    @Override
-    protected LinkedHashMap<String, Object> toStringMapper() {
-        LinkedHashMap<String, Object> m = new LinkedHashMap<String, Object>();
-        m.put("universityFiscalYear", this.universityFiscalYear);
-        m.put("chartOfAccountsCode", this.chartOfAccountsCode);
-        m.put("accountNumber", this.accountNumber);
-        m.put("financialObjectCode", this.financialObjectCode);
-        m.put("financialSubObjectCode", this.financialSubObjectCode);
-        return m;
-    }
 }

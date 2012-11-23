@@ -16,22 +16,22 @@
 package org.kuali.ext.mm.businessobject.lookup;
 
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-
 import org.kuali.ext.mm.businessobject.OrderDetail;
 import org.kuali.ext.mm.businessobject.VendorOrderDetailForReturns;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.service.MMServiceLocator;
-import org.kuali.rice.kns.bo.BusinessObject;
 import org.kuali.rice.kns.lookup.HtmlData;
 import org.kuali.rice.kns.lookup.HtmlData.AnchorHtmlData;
 import org.kuali.rice.kns.lookup.KualiLookupableHelperServiceImpl;
-import org.kuali.rice.kns.util.KNSConstants;
-import org.kuali.rice.kns.util.ObjectUtils;
-import org.kuali.rice.kns.util.UrlFactory;
+import org.kuali.rice.krad.bo.BusinessObject;
+import org.kuali.rice.krad.util.KRADConstants;
+import org.kuali.rice.krad.util.ObjectUtils;
+import org.kuali.rice.krad.util.UrlFactory;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
 
 /**
@@ -81,15 +81,15 @@ public class VendorOrderDetailForReturnsLookableHelperServiceImpl extends
         Properties params = new Properties();
         AnchorHtmlData anchorHtmlData = null;
         params
-                .setProperty(KNSConstants.DISPATCH_REQUEST_PARAMETER,
-                        KNSConstants.DOC_HANDLER_METHOD);
+                .setProperty(KRADConstants.DISPATCH_REQUEST_PARAMETER,
+                        KRADConstants.DOC_HANDLER_METHOD);
         params.setProperty(MMConstants.COMMAND, MMConstants.COMMAND_INITIATE);
         params.setProperty(MMConstants.CheckinDocument.ORDER_DOC_NUMBER, orderDetail
                 .getOrderDocumentNbr());
-        params.setProperty(KNSConstants.DOCUMENT_TYPE_NAME,
+        params.setProperty(KRADConstants.DOCUMENT_TYPE_NAME,
                 MMConstants.CHECKIN_VENDOR_RETURNDOC_TYPE);
-        String href = getKualiConfigurationService().getPropertyString(
-                KNSConstants.APPLICATION_URL_KEY)
+        String href = getKualiConfigurationService().getPropertyValueAsString(
+                KRADConstants.APPLICATION_URL_KEY)
                 + "/"
                 + UrlFactory.parameterizeUrl(
                         MMConstants.ReturnDocument.VENDOR_RETURN_DOCUMENT_RECEIVE_ACTION, params);

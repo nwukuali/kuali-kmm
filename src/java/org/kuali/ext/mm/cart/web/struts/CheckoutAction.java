@@ -1,11 +1,5 @@
 package org.kuali.ext.mm.cart.web.struts;
 
-import java.util.List;
-import java.util.Properties;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -20,8 +14,13 @@ import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.document.OrderDocument;
 import org.kuali.ext.mm.integration.FinancialSystemAdaptorFactory;
 import org.kuali.ext.mm.service.AddressService;
-import org.kuali.rice.kns.util.KNSConstants;
-import org.kuali.rice.kns.util.UrlFactory;
+import org.kuali.rice.krad.util.KRADConstants;
+import org.kuali.rice.krad.util.UrlFactory;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+import java.util.Properties;
 
 
 public class CheckoutAction extends StoresShoppingActionBase {
@@ -120,7 +119,7 @@ public class CheckoutAction extends StoresShoppingActionBase {
             else {
             if(!orderDocuments.isEmpty()) {
                 Properties parameters = new Properties();
-            	parameters.put(KNSConstants.DISPATCH_REQUEST_PARAMETER, ShopCartConstants.COMPLETE_METHOD);
+            	parameters.put(KRADConstants.DISPATCH_REQUEST_PARAMETER, ShopCartConstants.COMPLETE_METHOD);
             	actionForward = new ActionForward(UrlFactory.parameterizeUrl(ShopCartConstants.ORDER_COMPLETION_ACTION, parameters), true);
             	}
             }

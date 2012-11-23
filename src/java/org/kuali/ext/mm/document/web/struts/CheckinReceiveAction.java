@@ -15,20 +15,11 @@
  */
 package org.kuali.ext.mm.document.web.struts;
 
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.kuali.ext.mm.businessobject.CatalogItem;
-import org.kuali.ext.mm.businessobject.CheckinDetail;
-import org.kuali.ext.mm.businessobject.OrderDetail;
-import org.kuali.ext.mm.businessobject.StagingRental;
-import org.kuali.ext.mm.businessobject.Stock;
+import org.kuali.ext.mm.businessobject.*;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.MMKeyConstants;
 import org.kuali.ext.mm.document.CheckinDocument;
@@ -37,8 +28,12 @@ import org.kuali.ext.mm.service.CheckinOrderService;
 import org.kuali.ext.mm.service.MMServiceLocator;
 import org.kuali.ext.mm.service.StockService;
 import org.kuali.ext.mm.util.MMUtil;
-import org.kuali.rice.kns.util.GlobalVariables;
-import org.kuali.rice.kns.util.ObjectUtils;
+import org.kuali.rice.krad.util.GlobalVariables;
+import org.kuali.rice.krad.util.ObjectUtils;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 
 public class CheckinReceiveAction extends RentalTrackingActionBase {

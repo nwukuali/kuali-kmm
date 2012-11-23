@@ -1,12 +1,12 @@
 package org.kuali.ext.mm.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.kuali.rice.kns.bo.BusinessObject;
 import org.kuali.rice.kns.lookup.HtmlData;
 import org.kuali.rice.kns.lookup.KualiLookupableHelperServiceImpl;
-import org.kuali.rice.kns.util.KNSConstants;
+import org.kuali.rice.krad.bo.BusinessObject;
+import org.kuali.rice.krad.util.KRADConstants;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @SuppressWarnings("serial")
 public class CatalogPendingHelperServiceImpl extends
@@ -20,7 +20,7 @@ public class CatalogPendingHelperServiceImpl extends
 		List<HtmlData> htmlDataList = new ArrayList<HtmlData>();
 
 		if (allowsMaintenanceEditAction(businessObject)) {
-            htmlDataList.add(getUrlData(businessObject, KNSConstants.MAINTENANCE_EDIT_METHOD_TO_CALL, pkNames));
+            htmlDataList.add(getUrlData(businessObject, KRADConstants.MAINTENANCE_EDIT_METHOD_TO_CALL, pkNames));
         }
 
 		//if(catPend.isActive()){

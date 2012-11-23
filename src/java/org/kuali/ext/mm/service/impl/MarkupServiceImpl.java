@@ -1,27 +1,18 @@
 package org.kuali.ext.mm.service.impl;
 
-import java.sql.Date;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.commons.lang.StringUtils;
-import org.kuali.ext.mm.businessobject.CatalogItem;
-import org.kuali.ext.mm.businessobject.CatalogItemMarkup;
-import org.kuali.ext.mm.businessobject.CatalogSubgroup;
-import org.kuali.ext.mm.businessobject.Markup;
-import org.kuali.ext.mm.businessobject.Profile;
+import org.kuali.ext.mm.businessobject.*;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.dataaccess.MMBusinessObjectDao;
 import org.kuali.ext.mm.dataaccess.QueryElement;
 import org.kuali.ext.mm.service.CatalogService;
 import org.kuali.ext.mm.service.MarkupService;
 import org.kuali.ext.mm.util.MMDecimal;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.service.KNSServiceLocator;
+import org.kuali.rice.core.api.CoreApiServiceLocator;
+import org.kuali.rice.krad.service.BusinessObjectService;
+
+import java.sql.Date;
+import java.util.*;
 
 
 /**
@@ -424,7 +415,7 @@ public class MarkupServiceImpl implements MarkupService {
 		QueryElement root = new QueryElement(MMConstants.MMPersistableBusinessObject.ACTIVE, "Y");
 
 		//Date check
-		Date currentDate = KNSServiceLocator.getDateTimeService().getCurrentSqlDate();
+		Date currentDate = CoreApiServiceLocator.getDateTimeService().getCurrentSqlDate();
 		QueryElement beginDateLT = new QueryElement(MMConstants.Markup.BEGIN_DATE, currentDate);
 		beginDateLT.setLessThan(true);
 		QueryElement beginDate = new QueryElement();

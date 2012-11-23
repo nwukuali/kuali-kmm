@@ -3,17 +3,17 @@
  */
 package org.kuali.ext.mm.cart.dataaccess.impl;
 
+import org.kuali.ext.mm.businessobject.CatalogItem;
+import org.kuali.ext.mm.cart.dataaccess.ShopCartSearchDao;
+import org.kuali.rice.core.framework.persistence.jdbc.dao.PlatformAwareDaoBaseJdbc;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.ResultSetExtractor;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import org.kuali.ext.mm.businessobject.CatalogItem;
-import org.kuali.ext.mm.cart.dataaccess.ShopCartSearchDao;
-import org.kuali.rice.kns.dao.jdbc.PlatformAwareDaoBaseJdbc;
-import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.ResultSetExtractor;
 
 /**
  * @author schneppd

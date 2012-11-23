@@ -15,13 +15,13 @@
  */
 package org.kuali.ext.mm.service;
 
-import java.io.ByteArrayOutputStream;
-import java.util.List;
-
 import org.kuali.ext.mm.document.ReturnDocument;
 import org.kuali.ext.mm.report.ReportInfo;
 import org.kuali.ext.mm.sys.service.ReportGenerationService;
-import org.kuali.rice.kns.service.DateTimeService;
+import org.kuali.rice.core.api.datetime.DateTimeService;
+
+import java.io.ByteArrayOutputStream;
+import java.util.List;
 
 
 public interface RTVReportService {
