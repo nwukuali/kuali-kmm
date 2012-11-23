@@ -1,28 +1,23 @@
 package org.kuali.ext.mm.businessobject;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
 import org.apache.cxf.common.util.StringUtils;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.integration.sys.businessobject.FinancialUnitOfMeasure;
 import org.kuali.ext.mm.service.StockService;
 import org.kuali.ext.mm.util.MMDecimal;
 import org.kuali.ext.mm.util.MMUtil;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.util.KualiDecimal;
-import org.kuali.rice.kns.util.TypedArrayList;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+import org.kuali.rice.krad.service.BusinessObjectService;
+import org.springframework.util.AutoPopulatingList;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+//import org.kuali.rice.krad.service.BusinessObjectService;
+//import org.kuali.rice.core.api.util.type.KualiDecimal;
+//import org.kuali.rice.kns.util.TypedArrayList;
 
 
 
@@ -194,12 +189,12 @@ public class Stock extends MMPersistableBusinessObjectBase implements java.io.Se
 
     @SuppressWarnings("unchecked")
     public Stock() {
-        stockPrices = new TypedArrayList(StockCost.class);
-        stockPackNotes = new TypedArrayList(StockPackNote.class);
-        hazardousMateriels = new TypedArrayList(HazardousMateriel.class);
-        stockBalances = new TypedArrayList(StockBalance.class);
-        stockAttributes = new TypedArrayList(StockAttribute.class);
-        stockHistoryList = new TypedArrayList(StockHistory.class);
+        stockPrices = new AutoPopulatingList(StockCost.class);
+        stockPackNotes = new AutoPopulatingList(StockPackNote.class);
+        hazardousMateriels = new AutoPopulatingList(HazardousMateriel.class);
+        stockBalances = new AutoPopulatingList(StockBalance.class);
+        stockAttributes = new AutoPopulatingList(StockAttribute.class);
+        stockHistoryList = new AutoPopulatingList(StockHistory.class);
         rentals = new ArrayList<Rental>();
     }
 
@@ -812,17 +807,5 @@ public class Stock extends MMPersistableBusinessObjectBase implements java.io.Se
     public List<Rental> getRentals() {
         return rentals;
     }
-
-    /**
-     * toStringMapper
-     * 
-     * @return LinkedHashMap
-     */
-    @Override
-    @SuppressWarnings("unchecked")
-    public LinkedHashMap toStringMapper() {
-        LinkedHashMap propMap = new LinkedHashMap();
-        return propMap;
-    } 
 
 }

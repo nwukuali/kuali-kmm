@@ -1,14 +1,12 @@
 package org.kuali.ext.mm.businessobject;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import org.kuali.ext.mm.b2b.cxml.types.CXML;
 
 import javax.persistence.Transient;
-
-import org.kuali.ext.mm.b2b.cxml.types.CXML;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public class ShoppingCart extends StoresPersistableBusinessObject {
@@ -183,12 +181,5 @@ public class ShoppingCart extends StoresPersistableBusinessObject {
     public Map<String, CXML> getCxmlPayloadIdMap() {
         return cxmlPayloadIdMap;
     }
-
-    @Override
-	protected LinkedHashMap toStringMapper() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 
 }

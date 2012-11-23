@@ -1,19 +1,13 @@
 package org.kuali.ext.mm.businessobject;
 
-import java.sql.Timestamp;
-import java.util.LinkedHashMap;
+import org.kuali.rice.krad.bo.PersistableBusinessObject;
+import org.kuali.rice.krad.document.TransactionalDocumentBase;
 
 import javax.persistence.Column;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
-
-import org.apache.ojb.broker.PersistenceBroker;
-import org.apache.ojb.broker.PersistenceBrokerException;
-import org.kuali.rice.kns.bo.PersistableBusinessObject;
-import org.kuali.rice.kns.document.TransactionalDocumentBase;
+import java.sql.Timestamp;
 
 public class StoresTransactionalDocumentBase extends TransactionalDocumentBase implements
-        PersistableBusinessObject {
+	PersistableBusinessObject {
 
     /**
      *
@@ -31,40 +25,16 @@ public class StoresTransactionalDocumentBase extends TransactionalDocumentBase i
         this.lastUpdateDate = lastUpdateDate;
     }
 
-    @Override
-    public void beforeInsert(PersistenceBroker persistenceBroker) throws PersistenceBrokerException {
-        super.beforeInsert(persistenceBroker);
+	protected void prePersist() {
+		super.prePersist();
+		this.setLastUpdateDate(new Timestamp(new java.util.Date().getTime()));
+	}
 
-        this.setLastUpdateDate(new Timestamp(new java.util.Date().getTime()));
-    }
+	protected void preUpdate() {
+		super.preUpdate();
+		this.setLastUpdateDate(new Timestamp(new java.util.Date().getTime()));
+	}
 
-    @Override
-    public void beforeUpdate(PersistenceBroker persistenceBroker) throws PersistenceBrokerException {
-        super.beforeUpdate(persistenceBroker);
-        this.setLastUpdateDate(new Timestamp(new java.util.Date().getTime()));
-    }
-
-    @Override
-    @PrePersist
-    public void beforeInsert() {
-        super.beforeInsert();
-
-        this.setLastUpdateDate(new Timestamp(new java.util.Date().getTime()));
-    }
-
-    @Override
-    @PreUpdate
-    public void beforeUpdate() {
-        super.beforeUpdate();
-
-        this.setLastUpdateDate(new Timestamp(new java.util.Date().getTime()));
-    }
-
-    @Override
-    protected LinkedHashMap toStringMapper() {
-        // TODO Auto-generated method stub
-        return null;
-    }
 
     /**
      * @param nodeName
