@@ -15,13 +15,12 @@
  */
 package org.kuali.ext.mm.cart;
 
-import org.kuali.rice.core.util.JSTLConstants;
 
 
 /**
  * This class is used to define global constants.
  */
-public class ShopCartKeyConstants extends JSTLConstants {
+public class ShopCartKeyConstants {
 		/**
      *
      */
