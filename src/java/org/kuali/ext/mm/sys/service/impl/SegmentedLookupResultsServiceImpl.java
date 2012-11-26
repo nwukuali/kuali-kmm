@@ -16,29 +16,24 @@
 
 package org.kuali.ext.mm.sys.service.impl;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.kuali.ext.mm.sys.service.SegmentedLookupResultsService;
-import org.kuali.rice.kns.bo.LookupResults;
-import org.kuali.rice.kns.bo.PersistableBusinessObject;
-import org.kuali.rice.kns.bo.SelectedObjectIds;
-import org.kuali.rice.kns.exception.AuthorizationException;
+import org.kuali.rice.core.api.datetime.DateTimeService;
 import org.kuali.rice.kns.lookup.LookupResultsServiceImpl;
 import org.kuali.rice.kns.lookup.LookupUtils;
-import org.kuali.rice.kns.service.DateTimeService;
-import org.kuali.rice.kns.util.KNSPropertyConstants;
-import org.kuali.rice.kns.util.ObjectUtils;
 import org.kuali.rice.kns.web.ui.ResultRow;
+import org.kuali.rice.krad.bo.LookupResults;
+import org.kuali.rice.krad.bo.PersistableBusinessObject;
+import org.kuali.rice.krad.bo.SelectedObjectIds;
+import org.kuali.rice.krad.exception.AuthorizationException;
+import org.kuali.rice.krad.util.KRADPropertyConstants;
+import org.kuali.rice.krad.util.ObjectUtils;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.sql.Timestamp;
+import java.util.*;
 
 /**
  * Used for segemented lookup results
@@ -185,7 +180,7 @@ public class SegmentedLookupResultsServiceImpl extends LookupResultsServiceImpl 
             return new ArrayList<PersistableBusinessObject>();
         }
         Map<String, Collection<String>> queryCriteria = new HashMap<String, Collection<String>>();
-        queryCriteria.put(KNSPropertyConstants.OBJECT_ID, setOfSelectedObjIds);
+        queryCriteria.put(KRADPropertyConstants.OBJECT_ID, setOfSelectedObjIds);
         return getBusinessObjectService().findMatching(boClass, queryCriteria);
     }
 

@@ -3,23 +3,31 @@
  */
 package org.kuali.ext.mm.cart.web;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.log4j.MDC;
-import org.kuali.rice.kew.util.KEWConstants;
-import org.kuali.rice.kim.bo.entity.KimPrincipal;
-import org.kuali.rice.kim.bo.types.dto.AttributeSet;
-import org.kuali.rice.kim.util.KimConstants;
-import org.kuali.rice.kns.UserSession;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.util.GlobalVariables;
-import org.kuali.rice.kns.util.Guid;
-import org.kuali.rice.kns.util.KNSConstants;
+import org.kuali.rice.core.api.config.property.ConfigurationService;
+import org.kuali.rice.core.api.exception.RiceRuntimeException;
+import org.kuali.rice.core.api.resourceloader.GlobalResourceLoader;
+import org.kuali.rice.coreservice.framework.CoreFrameworkServiceLocator;
+import org.kuali.rice.kew.api.KewApiConstants;
+import org.kuali.rice.kim.api.KimConstants;
+import org.kuali.rice.kim.api.identity.AuthenticationService;
+import org.kuali.rice.kim.api.identity.principal.Principal;
+import org.kuali.rice.kim.api.services.KimApiServiceLocator;
 import org.kuali.rice.kns.web.struts.action.KualiRequestProcessor;
+import org.kuali.rice.krad.UserSession;
+import org.kuali.rice.krad.service.KRADServiceLocator;
+import org.kuali.rice.krad.util.GlobalVariables;
+import org.kuali.rice.krad.util.KRADConstants;
+import org.kuali.rice.krad.util.KRADUtils;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.xml.namespace.QName;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author schneppd
@@ -36,6 +44,7 @@ public class StoresRequestProcessor extends KualiRequestProcessor {
 	private static final String MDC_USER = "user";
 
 	private static final Logger LOG = Logger.getLogger(StoresRequestProcessor.class);
+	private ConfigurationService configurationService;
 
 	/**
 	 * override of the pre process for all struts requests which will ensure
@@ -47,19 +56,19 @@ public class StoresRequestProcessor extends KualiRequestProcessor {
 	protected boolean processPreprocess(HttpServletRequest request, HttpServletResponse response) {
 		UserSession userSession = null;
 		if (!isUserSessionEstablished(request)) {
-			String principalName = getIdentityManagementService().getAuthenticatedPrincipalName(request);
+			String principalName = ((AuthenticationService) GlobalResourceLoader.getResourceLoader().getService(new QName("kimAuthenticationService"))).getPrincipalName(request);
 			if ( StringUtils.isNotBlank(principalName) ) {
-				KimPrincipal principal = getIdentityManagementService().getPrincipalByPrincipalName( principalName );
+				Principal principal = KimApiServiceLocator.getIdentityService().getPrincipalByPrincipalName( principalName );
 				if ( principal != null ) {
-					AttributeSet qualification = new AttributeSet();
+					Map<String,String> qualification = new HashMap<String,String>();
 					qualification.put( "principalId", principal.getPrincipalId() );
 					// check to see if the given principal is an active principal/entity
-					if ( getIdentityManagementService().isAuthorized(
+					//TODO: NWU - Check if parameters passed in matches new api
+					if ( KimApiServiceLocator.getPermissionService().isAuthorized(
 							principal.getPrincipalId(),
 							KimConstants.KIM_TYPE_DEFAULT_NAMESPACE,
 							KimConstants.PermissionNames.LOG_IN,
-							null,
-							qualification ) ) {
+							null) ) {
 
 						// This is a temp solution to show KIM AuthN checking existence of Principals.
 						// We may want to move this code to the IdentityService once it is finished.
@@ -71,8 +80,8 @@ public class StoresRequestProcessor extends KualiRequestProcessor {
 
 						String kualiSessionId = this.getKualiSessionId(request, response);
 						if (kualiSessionId == null) {
-							kualiSessionId = new Guid().toString();
-							response.addCookie(new Cookie(KNSConstants.KUALI_SESSION_ID, kualiSessionId));
+							kualiSessionId = java.util.UUID.randomUUID().toString();
+							response.addCookie(new Cookie(KRADConstants.KUALI_SESSION_ID, kualiSessionId));
 						}
 						userSession.setKualiSessionId(kualiSessionId);
 					} /* if: principal is active */ else {
@@ -88,17 +97,21 @@ public class StoresRequestProcessor extends KualiRequestProcessor {
 				throw new RuntimeException( "Blank User from AuthenticationService - This should never happen." );
 			}
 		} else {
-			userSession = (UserSession) request.getSession().getAttribute(KNSConstants.USER_SESSION_KEY);
+			userSession = (UserSession) request.getSession().getAttribute(KRADConstants.USER_SESSION_KEY);
 		}
 
-		request.getSession().setAttribute(KNSConstants.USER_SESSION_KEY, userSession);
+		request.getSession().setAttribute(KRADConstants.USER_SESSION_KEY, userSession);
 		GlobalVariables.setUserSession(userSession);
 		GlobalVariables.clear();
-		if ( StringUtils.isNotBlank( request.getParameter(KNSConstants.BACKDOOR_PARAMETER) ) ) {
-			if ( !KNSServiceLocator.getKualiConfigurationService().isProductionEnvironment() ) {
-				if ( KNSServiceLocator.getParameterService().getIndicatorParameter(KNSConstants.KUALI_RICE_WORKFLOW_NAMESPACE, KNSConstants.DetailTypes.BACKDOOR_DETAIL_TYPE, KEWConstants.SHOW_BACK_DOOR_LOGIN_IND) ) {
-	    			userSession.setBackdoorUser(request.getParameter(KNSConstants.BACKDOOR_PARAMETER));
-	    			org.kuali.rice.kew.web.session.UserSession.getAuthenticatedUser().establishBackdoorWithPrincipalName(request.getParameter(KNSConstants.BACKDOOR_PARAMETER));
+		final String backdoorParameter = request.getParameter(KRADConstants.BACKDOOR_PARAMETER);
+		if (StringUtils.isNotBlank(backdoorParameter)) {
+			if (!getConfigurationService().getPropertyValueAsString(KRADConstants.PROD_ENVIRONMENT_CODE_KEY).equalsIgnoreCase(getConfigurationService().getPropertyValueAsString(KRADConstants.ENVIRONMENT_KEY))) {
+				if (CoreFrameworkServiceLocator.getParameterService().getParameterValueAsBoolean(KRADConstants.KUALI_RICE_WORKFLOW_NAMESPACE, KRADConstants.DetailTypes.BACKDOOR_DETAIL_TYPE, KewApiConstants.SHOW_BACK_DOOR_LOGIN_IND)) {
+					try {
+						KRADUtils.getUserSessionFromRequest(request).setBackdoorUser(backdoorParameter);
+					} catch (RiceRuntimeException re) {
+						//Ignore so BackdoorAction can redirect to invalid_backdoor_portal
+					}
 				}
 			}
 		}
@@ -121,7 +134,7 @@ public class StoresRequestProcessor extends KualiRequestProcessor {
 	 * @return true if the user session has been established, false otherwise
 	 */
 	private boolean isUserSessionEstablished(HttpServletRequest request) {
-		boolean result = (request.getSession().getAttribute(KNSConstants.USER_SESSION_KEY) != null);
+		boolean result = (request.getSession().getAttribute(KRADConstants.USER_SESSION_KEY) != null);
 		return result;
 	}
 
@@ -131,10 +144,17 @@ public class StoresRequestProcessor extends KualiRequestProcessor {
 		if(cookies != null) {
 			for (int i = 0; i < cookies.length; i++) {
 				Cookie cookie = cookies[i];
-				if (KNSConstants.KUALI_SESSION_ID.equals(cookie.getName()))
+				if (KRADConstants.KUALI_SESSION_ID.equals(cookie.getName()))
 					kualiSessionId = cookie.getValue();
 			}
 		}
 		return kualiSessionId;
 	}
+
+		private ConfigurationService getConfigurationService() {
+    	if (this.configurationService == null) {
+    		this.configurationService = KRADServiceLocator.getKualiConfigurationService();
+    	}
+    	return this.configurationService;
+    }
 }

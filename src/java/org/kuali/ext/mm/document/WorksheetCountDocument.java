@@ -1,23 +1,8 @@
 package org.kuali.ext.mm.document;
 
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-
-import javax.persistence.Entity;
-import javax.persistence.Table;
-
 import org.apache.commons.lang.StringUtils;
-import org.kuali.ext.mm.businessobject.StockCount;
-import org.kuali.ext.mm.businessobject.StockCountMap;
-import org.kuali.ext.mm.businessobject.StockHistory;
-import org.kuali.ext.mm.businessobject.StoresTransactionalDocumentBase;
-import org.kuali.ext.mm.businessobject.Warehouse;
-import org.kuali.ext.mm.businessobject.WorksheetCounter;
-import org.kuali.ext.mm.businessobject.WorksheetStatus;
+import org.kuali.ext.mm.businessobject.*;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.gl.GeneralLedgerPostable;
@@ -28,13 +13,20 @@ import org.kuali.ext.mm.integration.sys.businessobject.FinancialGeneralLedgerPen
 import org.kuali.ext.mm.service.MMServiceLocator;
 import org.kuali.ext.mm.util.MMDecimal;
 import org.kuali.ext.mm.util.MMUtil;
-import org.kuali.rice.kew.dto.DocumentRouteStatusChangeDTO;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.service.DataDictionaryService;
-import org.kuali.rice.kns.service.DateTimeService;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.util.KualiDecimal;
-import org.kuali.rice.kns.workflow.service.KualiWorkflowDocument;
+import org.kuali.rice.core.api.datetime.DateTimeService;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+import org.kuali.rice.coreservice.framework.CoreFrameworkServiceLocator;
+import org.kuali.rice.kew.api.WorkflowDocument;
+import org.kuali.rice.kew.framework.postprocessor.DocumentRouteStatusChange;
+import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.service.DataDictionaryService;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 
 /**
@@ -342,22 +334,23 @@ public class WorksheetCountDocument extends StoresTransactionalDocumentBase impl
     }
 
     @Override
-    public void doRouteStatusChange(DocumentRouteStatusChangeDTO documentroutestatuschangedto) {
+    public void doRouteStatusChange(DocumentRouteStatusChange documentroutestatuschangedto) {
         StockCountMap.reset();
         super.doRouteStatusChange(documentroutestatuschangedto);
-        KualiWorkflowDocument workflowDocument = getDocumentHeader().getWorkflowDocument();
+        WorkflowDocument workflowDocument = getDocumentHeader().getWorkflowDocument();
 
         /**
          * SETS THE STOCK TARNSACTION REAOSN CODE TO WITH_IN_TOLERANCE IF THE ENETERED QUANTITY IS LESS THAN OR EQUAL TO THE MAXIMUM
          * ALLOWED TOLERANCE
          */
 
-        if (workflowDocument.stateIsEnroute()) {
+        if (workflowDocument.isEnroute()) {
             String docStatusCode = this.getWorksheetStatusCode();
-            KualiDecimal maxToleranceVal = new KualiDecimal(KNSServiceLocator
-                    .getParameterServerService().getParameterValues(MMConstants.MM_NAMESPACE,
+            KualiDecimal maxToleranceVal = new KualiDecimal(CoreFrameworkServiceLocator
+								//TODO: NWU - Revisit iterator.next()
+                    .getParameterService().getParameterValuesAsString(MMConstants.MM_NAMESPACE,
                             MMConstants.Parameters.DOCUMENT,
-                            MMConstants.Parameters.MAX_PRICE_TOLERANCE_ALLOWED).get(0));
+                            MMConstants.Parameters.MAX_PRICE_TOLERANCE_ALLOWED).iterator().next());
 
             if (!StringUtils.isEmpty(docStatusCode)
                     && docStatusCode
@@ -374,16 +367,16 @@ public class WorksheetCountDocument extends StoresTransactionalDocumentBase impl
             }
         }
 
-        if (workflowDocument.stateIsCanceled() || workflowDocument.stateIsDisapproved()) {
+        if (workflowDocument.isCanceled() || workflowDocument.isDisapproved()) {
             cancelWorksheetCountDocument();
         }
-        if (!workflowDocument.stateIsFinal()) {
+        if (!workflowDocument.isFinal()) {
             // Update snapshot before changing stock balance
             for (StockCount scount : this.getStockCounts()) {
                 scount.setSnapshotQty(scount.getBeforeItemQty());
             }
         }
-        if (workflowDocument.stateIsProcessed()) {
+        if (workflowDocument.isProcessed()) {
             setWorksheetStatusCode(MMConstants.WorksheetStatus.WORKSHEET_CLOSED);
             setWorksheetCompletionDt(SpringContext.getBean(DateTimeService.class)
                     .getCurrentTimestamp());
@@ -422,19 +415,7 @@ public class WorksheetCountDocument extends StoresTransactionalDocumentBase impl
     }
 
     public boolean isDocInFinalState() {
-        return this.documentHeader.getWorkflowDocument().stateIsFinal();
-    }
-
-    /**
-     * toStringMapper
-     * 
-     * @return LinkedHashMap
-     */
-    @Override
-    public LinkedHashMap<String, String> toStringMapper() {
-        LinkedHashMap<String, String> propMap = new LinkedHashMap<String, String>();
-        propMap.put("WorksheetDocNumber", "WorksheetDocNumber");
-        return propMap;
+        return this.documentHeader.getWorkflowDocument().isFinal();
     }
 
 

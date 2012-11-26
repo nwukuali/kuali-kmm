@@ -15,23 +15,10 @@
  */
 package org.kuali.ext.mm.document.web.struts;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.lowagie.text.pdf.PdfCopy;
+import com.lowagie.text.pdf.PdfImportedPage;
+import com.lowagie.text.pdf.PdfReader;
+import com.lowagie.text.pdf.SimpleBookmark;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -46,15 +33,16 @@ import org.kuali.ext.mm.service.CountWorksheetReportService;
 import org.kuali.ext.mm.service.MMServiceLocator;
 import org.kuali.ext.mm.service.StockItemLookupService;
 import org.kuali.ext.mm.util.MMUtil;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.util.GlobalVariables;
-import org.kuali.rice.kns.util.ObjectUtils;
+import org.kuali.rice.coreservice.framework.CoreFrameworkServiceLocator;
 import org.kuali.rice.kns.web.struts.action.KualiAction;
+import org.kuali.rice.krad.util.GlobalVariables;
+import org.kuali.rice.krad.util.ObjectUtils;
 
-import com.lowagie.text.pdf.PdfCopy;
-import com.lowagie.text.pdf.PdfImportedPage;
-import com.lowagie.text.pdf.PdfReader;
-import com.lowagie.text.pdf.SimpleBookmark;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.util.*;
 
 
 
@@ -137,8 +125,8 @@ public class CountWorksheetPrintAction extends KualiAction {
 
         params.put("numOfCounters", String.valueOf(numCount));
         params.put("numOfCopies", String.valueOf(numOfCopies));
-        String basePath = getBasePath(request);
-
+				//TODO: NWU - Confirm getAppBaUrl returns the same result as getBasePath()
+        String basePath = getApplicationBaseUrl();
         String methodToCallPrintPDF = "printStatementPDF";
         String methodToCallStart = "start";
         String printPDFUrl = getUrlForPrintStatement(basePath, methodToCallPrintPDF, params);
@@ -523,9 +511,10 @@ public class CountWorksheetPrintAction extends KualiAction {
             return false;
         }
 
-        String confVal = KNSServiceLocator.getParameterService().getParameterValues(
+			//TODO: NWU - Confirm it has the same behaviour as before
+        String confVal = CoreFrameworkServiceLocator.getParameterService().getParameterValuesAsString(
                 MMConstants.MM_NAMESPACE, MMConstants.Parameters.DOCUMENT,
-                MMConstants.Parameters.MAX_NUMBER_OF_WORKSHEET_COUNTERS).get(0);
+                MMConstants.Parameters.MAX_NUMBER_OF_WORKSHEET_COUNTERS).iterator().next();
 
         if (!StringUtils.isEmpty(confVal)) {
             int confCounter = Integer.valueOf(confVal).intValue();
@@ -539,9 +528,10 @@ public class CountWorksheetPrintAction extends KualiAction {
             }
         }
 
-        confVal = KNSServiceLocator.getParameterService().getParameterValues(
+			  //TODO: NWU - Confirm it has the same behaviour as before
+        confVal = CoreFrameworkServiceLocator.getParameterService().getParameterValuesAsString(
                 MMConstants.MM_NAMESPACE, MMConstants.Parameters.DOCUMENT,
-                MMConstants.Parameters.MAX_NUMBER_OF_WORKSHEET_COPIES).get(0);
+                MMConstants.Parameters.MAX_NUMBER_OF_WORKSHEET_COPIES).iterator().next();
 
         if (!StringUtils.isEmpty(confVal)) {
             int confCopies = Integer.valueOf(confVal).intValue();

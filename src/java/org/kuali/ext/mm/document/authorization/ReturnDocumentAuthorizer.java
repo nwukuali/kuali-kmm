@@ -3,12 +3,12 @@
  */
 package org.kuali.ext.mm.document.authorization;
 
-import java.util.Map;
-
 import org.kuali.ext.mm.document.ReturnDocument;
-import org.kuali.rice.kns.bo.BusinessObject;
 import org.kuali.rice.kns.document.authorization.TransactionalDocumentAuthorizerBase;
-import org.kuali.rice.kns.util.ObjectUtils;
+import org.kuali.rice.krad.bo.BusinessObject;
+import org.kuali.rice.krad.util.ObjectUtils;
+
+import java.util.Map;
 
 /**
  * @author harsha07
@@ -18,7 +18,7 @@ public class ReturnDocumentAuthorizer extends TransactionalDocumentAuthorizerBas
      * @see org.kuali.rice.kns.document.authorization.DocumentAuthorizerBase#addRoleQualification(org.kuali.rice.kns.bo.BusinessObject,
      *      java.util.Map)
      */
-    @Override
+		//TODO: NWU - Investigate which method needs to be overriden
     protected void addRoleQualification(BusinessObject businessObject,
             Map<String, String> attributes) {
         super.addRoleQualification(businessObject, attributes);

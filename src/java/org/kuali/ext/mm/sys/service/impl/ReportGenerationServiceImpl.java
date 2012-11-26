@@ -15,33 +15,23 @@
  */
 package org.kuali.ext.mm.sys.service.impl;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.net.URL;
-import java.text.MessageFormat;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperRunManager;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-
 import org.apache.commons.lang.StringUtils;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.MMConstants.ReportGeneration;
 import org.kuali.ext.mm.sys.service.ReportGenerationService;
-import org.kuali.rice.kns.service.KNSServiceLocator;
+import org.kuali.rice.krad.service.KRADServiceLocator;
 import org.springframework.ui.jasperreports.JasperReportsUtils;
+
+import java.io.*;
+import java.net.URL;
+import java.text.MessageFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 
 /**
@@ -184,8 +174,8 @@ public class ReportGenerationServiceImpl implements ReportGenerationService {
      * @return
      */
     protected File buildJasperFilePath(String jasperFileName) {
-        File jasperFile = new File(KNSServiceLocator.getKualiConfigurationService()
-                .getPropertyString(MMConstants.ReportGeneration.EXTERNAL_REPORTS_DIR)
+        File jasperFile = new File(KRADServiceLocator.getKualiConfigurationService()
+                .getPropertyValueAsString(MMConstants.ReportGeneration.EXTERNAL_REPORTS_DIR)
                 + File.separator + jasperFileName);
         if (!jasperFile.isFile()) {
             new File(jasperFile.getAbsolutePath().substring(0,

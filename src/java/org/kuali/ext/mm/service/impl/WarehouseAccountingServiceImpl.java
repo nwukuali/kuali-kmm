@@ -3,15 +3,15 @@
  */
 package org.kuali.ext.mm.service.impl;
 
-import java.util.Collection;
-import java.util.HashMap;
-
 import org.kuali.ext.mm.businessobject.StockTransReason;
 import org.kuali.ext.mm.businessobject.WarehouseAccounts;
 import org.kuali.ext.mm.businessobject.WarehouseObject;
 import org.kuali.ext.mm.service.WarehouseAccountingService;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.util.spring.CacheNoCopy;
+import org.kuali.rice.krad.service.BusinessObjectService;
+
+import java.util.Collection;
+import java.util.HashMap;
+//import org.kuali.rice.kns.util.spring.CacheNoCopy;
 
 /**
  * @author harsha07
@@ -23,7 +23,8 @@ public class WarehouseAccountingServiceImpl implements WarehouseAccountingServic
      * @see org.kuali.ext.mm.service.WarehouseAccountingService#findWarehouseAccounts(java.lang.String, java.lang.String)
      */
     @SuppressWarnings("unchecked")
-    @CacheNoCopy
+		//TODO: NWU - Investigate the impact of removing this annotation
+//    @CacheNoCopy
     public WarehouseAccounts findWarehouseAccounts(String warehouseCd,
             String warehouseAccountTypeCode) {
         HashMap<String, String> fieldValues = new HashMap<String, String>();

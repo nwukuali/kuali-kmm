@@ -3,10 +3,6 @@
  */
 package org.kuali.ext.mm.service.impl;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.apache.commons.lang.StringUtils;
 import org.kuali.ext.mm.businessobject.Address;
 import org.kuali.ext.mm.businessobject.Profile;
@@ -17,12 +13,16 @@ import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.fp.service.FinancialDataService;
 import org.kuali.ext.mm.service.AddressService;
 import org.kuali.ext.mm.service.ProfileService;
-import org.kuali.rice.kns.bo.Campus;
-import org.kuali.rice.kns.bo.CampusImpl;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.util.GlobalVariables;
+import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.service.KRADServiceLocator;
+import org.kuali.rice.krad.util.GlobalVariables;
+import org.kuali.rice.location.api.campus.Campus;
+import org.kuali.rice.location.api.campus.CampusService;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -274,9 +274,11 @@ public class ProfileServiceImpl implements ProfileService {
             return valid;
         }
 
-        BusinessObjectService boService = KNSServiceLocator.getBusinessObjectService();
-        Campus campus = boService.findBySinglePrimaryKey(CampusImpl.class, campusCode);
-        if (campus == null || !campus.isActive()) {
+        BusinessObjectService boService = KRADServiceLocator.getBusinessObjectService();
+//        Campus campus = CampusService boService.findBySinglePrimaryKey(Campus.class, campusCode);
+				//TODO NWU - Determine if same behaviour as before
+        Campus campus = SpringContext.getBean(CampusService.class).getCampus(campusCode);
+				if (campus == null || !campus.isActive()) {
             valid = false;
         }
         return valid;

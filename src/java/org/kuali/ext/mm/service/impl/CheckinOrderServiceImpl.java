@@ -1,36 +1,7 @@
 package org.kuali.ext.mm.service.impl;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.apache.cxf.common.util.StringUtils;
-import org.kuali.ext.mm.businessobject.BackOrder;
-import org.kuali.ext.mm.businessobject.Bin;
-import org.kuali.ext.mm.businessobject.BinLookable;
-import org.kuali.ext.mm.businessobject.CatalogItem;
-import org.kuali.ext.mm.businessobject.CheckinDetail;
-import org.kuali.ext.mm.businessobject.CreditMemoExpected;
-import org.kuali.ext.mm.businessobject.OrderDetail;
-import org.kuali.ext.mm.businessobject.Rental;
-import org.kuali.ext.mm.businessobject.ReturnDetail;
-import org.kuali.ext.mm.businessobject.StagingRental;
-import org.kuali.ext.mm.businessobject.Stock;
-import org.kuali.ext.mm.businessobject.StockBalance;
-import org.kuali.ext.mm.businessobject.StockCost;
-import org.kuali.ext.mm.businessobject.StockHistory;
-import org.kuali.ext.mm.businessobject.StoresPersistableBusinessObject;
-import org.kuali.ext.mm.businessobject.Warehouse;
+import org.kuali.ext.mm.businessobject.*;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.MMKeyConstants;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
@@ -47,13 +18,13 @@ import org.kuali.ext.mm.service.StockHistoryService;
 import org.kuali.ext.mm.service.StockService;
 import org.kuali.ext.mm.util.MMDecimal;
 import org.kuali.ext.mm.util.MMUtil;
-import org.kuali.rice.kns.document.Document;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.service.KualiConfigurationService;
-import org.kuali.rice.kns.util.GlobalVariables;
-import org.kuali.rice.kns.util.ObjectUtils;
+import org.kuali.rice.core.api.config.property.ConfigurationService;
+import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.util.ObjectUtils;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.io.*;
+import java.util.*;
 
 
 @Transactional
@@ -842,27 +813,28 @@ public class CheckinOrderServiceImpl implements CheckinOrderService {
      * @throws Exception
      */
     private ReturnDocument createReturnDoc(CheckinDocument checkinDoc) throws Exception {
-
-        Document dd = KNSServiceLocator.getDocumentService().getNewDocument(
-                MMConstants.CHECKIN_VENDOR_RETURNDOC_TYPE);
-        dd.getDocumentHeader().setDocumentDescription("Return " + dd.getDocumentNumber());
-        dd.getDocumentHeader().getWorkflowDocument().getRouteHeader().setInitiatorPrincipalId(
-                GlobalVariables.getUserSession().getPrincipalId());
-        ReturnDocument rdoc = (ReturnDocument) dd;
-
-        rdoc.setReturnOrderId(rdoc.getDocumentNumber());
-        rdoc.setOrderDocumentNumber(checkinDoc.getOrderDocument().getDocumentNumber());
-        rdoc.setOrderDocument(checkinDoc.getOrderDocument());
-        rdoc.setReturnDocumentStatusCode(MMConstants.OrderStatus.INITIATED);
-        rdoc.setReturnTypeCode(MMConstants.CheckinDocument.VENDOR_RETURN_ORDER_LINE);
-        rdoc.setCustomerProfileId(checkinDoc.getOrderDocument().getCustomerProfileId());
-
-        if (rdoc.getDocumentHeader().getWorkflowDocument().stateIsInitiated())
-            rdoc = (ReturnDocument) KNSServiceLocator.getDocumentService().saveDocument(rdoc);
-
-        rdoc.setCheckinDocumentNumber(checkinDoc.getDocumentNumber());
-        checkinDoc.getReturnDocuments().add(rdoc);
-        return rdoc;
+			  //TODO: NWU - Implement return doc creation...
+				throw new RuntimeException("Unimplemented method.....");
+//        Document dd = KRADServiceLocatorWeb.getDocumentService().getNewDocument(
+//                MMConstants.CHECKIN_VENDOR_RETURNDOC_TYPE);
+//        dd.getDocumentHeader().setDocumentDescription("Return " + dd.getDocumentNumber());
+//        dd.getDocumentHeader().getWorkflowDocument().getRouteHeader().setInitiatorPrincipalId(
+//                GlobalVariables.getUserSession().getPrincipalId());
+//        ReturnDocument rdoc = (ReturnDocument) dd;
+//
+//        rdoc.setReturnOrderId(rdoc.getDocumentNumber());
+//        rdoc.setOrderDocumentNumber(checkinDoc.getOrderDocument().getDocumentNumber());
+//        rdoc.setOrderDocument(checkinDoc.getOrderDocument());
+//        rdoc.setReturnDocumentStatusCode(MMConstants.OrderStatus.INITIATED);
+//        rdoc.setReturnTypeCode(MMConstants.CheckinDocument.VENDOR_RETURN_ORDER_LINE);
+//        rdoc.setCustomerProfileId(checkinDoc.getOrderDocument().getCustomerProfileId());
+//
+//        if (rdoc.getDocumentHeader().getWorkflowDocument().isInitiated())
+//            rdoc = (ReturnDocument) KRADServiceLocatorWeb.getDocumentService().saveDocument(rdoc);
+//
+//        rdoc.setCheckinDocumentNumber(checkinDoc.getDocumentNumber());
+//        checkinDoc.getReturnDocuments().add(rdoc);
+//        return rdoc;
     }
 
     public CatalogItem getCatalogItem(String manufNumber, String distNumber) {
@@ -934,8 +906,8 @@ public class CheckinOrderServiceImpl implements CheckinOrderService {
     protected OutputStream createEInvoiceOutputStream(CheckinDocument document) {
         OutputStream os;
         try {
-            String invoiceDirectory = SpringContext.getBean(KualiConfigurationService.class)
-                    .getPropertyString(MMKeyConstants.EXTERNAL_EINVOICE_DIRECTORY_KEY);
+            String invoiceDirectory = SpringContext.getBean(ConfigurationService.class)
+                    .getPropertyValueAsString(MMKeyConstants.EXTERNAL_EINVOICE_DIRECTORY_KEY);
             // prepare the directory
             new File(invoiceDirectory).mkdirs();
             os = new BufferedOutputStream(new FileOutputStream(invoiceXMLFileName(document)));
@@ -952,8 +924,8 @@ public class CheckinOrderServiceImpl implements CheckinOrderService {
      * @return
      */
     public static String invoiceXMLFileName(CheckinDocument document) {
-        String invoiceDirectory = SpringContext.getBean(KualiConfigurationService.class)
-                .getPropertyString(MMKeyConstants.EXTERNAL_EINVOICE_DIRECTORY_KEY);
+        String invoiceDirectory = SpringContext.getBean(ConfigurationService.class)
+                .getPropertyValueAsString(MMKeyConstants.EXTERNAL_EINVOICE_DIRECTORY_KEY);
         return invoiceDirectory
                 + File.separator
                 + document.getDocumentNumber()

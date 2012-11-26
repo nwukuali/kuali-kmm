@@ -16,8 +16,6 @@
 
 package org.kuali.ext.mm.integration.service.impl.kfs;
 
-import java.util.List;
-
 import org.apache.log4j.Logger;
 import org.kuali.ext.mm.businessobject.Profile;
 import org.kuali.ext.mm.integration.fp.businessobject.FinancialCapitalAssetInformation;
@@ -38,9 +36,12 @@ import org.kuali.kfs.sys.businessobject.SourceAccountingLine;
 import org.kuali.kfs.sys.businessobject.TargetAccountingLine;
 import org.kuali.kfs.sys.service.NonTransactional;
 import org.kuali.kfs.sys.service.impl.KfsParameterConstants;
-import org.kuali.rice.kns.bo.DocumentHeader;
-import org.kuali.rice.kns.util.KualiDecimal;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+import org.kuali.rice.krad.bo.DocumentHeader;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * KFS Internal Billing Service implementation helps to submit an IB document directly to KFS
@@ -179,7 +180,7 @@ public class KfsInternalBillingService implements FinancialInternalBillingServic
                     }
                 }
             }
-            ibDocument.setCapitalAssetInformation(capitalAssetInformation);
+            ibDocument.setCapitalAssetInformation(Arrays.asList(capitalAssetInformation));
             try {
                 ibDocument = (InternalBillingDocument) financialDocumentService
                         .blanketApproveDocument(ibDocument, null, null, billingProfile
@@ -305,21 +306,19 @@ public class KfsInternalBillingService implements FinancialInternalBillingServic
      * @see org.kuali.ext.mm.integration.service.FinancialInternalBillingService#validateProperty(java.lang.String,
      *      java.lang.String)
      */
-    public boolean validateProperty(String parameterName, String propertyValue) {
-        boolean isAllowed = true;
-        if (financialParameterService.parameterExists(
-                KfsParameterConstants.FINANCIAL_PROCESSING_DOCUMENT.class, parameterName)) {
-            isAllowed = financialParameterService.getParameterEvaluator(
-                    KfsParameterConstants.FINANCIAL_PROCESSING_DOCUMENT.class, parameterName,
-                    propertyValue).evaluationSucceeds();
-        }
-        if (financialParameterService.parameterExists(InternalBillingDocument.class, parameterName)) {
-            isAllowed = financialParameterService.getParameterEvaluator(
-                    InternalBillingDocument.class, parameterName, propertyValue)
-                    .evaluationSucceeds();
-        }
-        return isAllowed;
-    }
+		public boolean validateProperty(String parameterName, String propertyValue) {
+			boolean isAllowed = true;
+			if (financialParameterService.parameterExists(
+				KfsParameterConstants.FINANCIAL_PROCESSING_DOCUMENT.class, parameterName)) {
+				//TODO: NWU - Determine if same behaviour as parameterEvaluator
+				isAllowed = propertyValue.equals(financialParameterService.getParameterValueAsString(KfsParameterConstants.FINANCIAL_PROCESSING_DOCUMENT.class, parameterName));
+			}
+			if (financialParameterService.parameterExists(InternalBillingDocument.class, parameterName)) {
+				//TODO: NWU - Determine if same behaviour as parameterEvaluator
+				isAllowed = propertyValue.equals(financialParameterService.getParameterValueAsString(InternalBillingDocument.class, parameterName));
+			}
+			return isAllowed;
+		}
 
     /**
      * Gets the financialDocumentService property

@@ -16,13 +16,13 @@
 
 package org.kuali.ext.mm.integration.service.impl.kfs;
 
-import javax.xml.namespace.QName;
-
 import org.apache.log4j.Logger;
 import org.kuali.ext.mm.integration.coa.businessobject.FinancialAccount;
 import org.kuali.ext.mm.integration.service.FinancialAccountService;
 import org.kuali.kfs.coa.businessobject.Account;
 import org.kuali.kfs.coa.service.AccountService;
+
+import javax.xml.namespace.QName;
 
 /**
  * {@link FinancialAccountService}
@@ -108,8 +108,9 @@ public class KfsAccountServiceAdaptor extends KfsServiceAdaptor<AccountService> 
         target.setContractControlAccountNumber(source.getContractControlAccountNumber());
         target.setIncomeStreamFinancialCoaCode(source.getIncomeStreamFinancialCoaCode());
         target.setIncomeStreamAccountNumber(source.getIncomeStreamAccountNumber());
-        target.setIndirectCostRcvyFinCoaCode(source.getIndirectCostRcvyFinCoaCode());
-        target.setIndirectCostRecoveryAcctNbr(source.getIndirectCostRecoveryAcctNbr());
+				//TODO: NWU - Find a way of passing list of indirect cost recovery accounts - Currently not used by MM FinancialAccount
+//        target.setIndirectCostRcvyFinCoaCode(source.getIndirectCostRcvyFinCoaCode());
+//        target.setIndirectCostRecoveryAcctNbr(source.getIndirectCostRecoveryAcctNbr());
         target.setContractsAndGrantsAccountResponsibilityId(source
                 .getContractsAndGrantsAccountResponsibilityId());
     }

@@ -15,16 +15,6 @@
  */
 package org.kuali.ext.mm.context;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-
-import javax.sql.DataSource;
-
 import org.apache.commons.lang.StringUtils;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -33,11 +23,18 @@ import org.kuali.ext.mm.ConfigureContext;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.suite.AnnotationTestSuite;
 import org.kuali.ext.mm.suite.PreCommitSuite;
-import org.kuali.rice.kns.datadictionary.LookupDefinition;
 import org.kuali.rice.krad.datadictionary.BusinessObjectEntry;
 import org.kuali.rice.krad.datadictionary.DataDictionary;
 import org.kuali.rice.krad.datadictionary.DocumentEntry;
 import org.kuali.rice.krad.service.DataDictionaryService;
+
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 
 
 @AnnotationTestSuite(PreCommitSuite.class)
@@ -129,7 +126,7 @@ public class DataDictionaryConfigurationTest extends KualiTestBase {
     @Test
 		@Ignore
     public void testActiveFieldExistInLookupAndResultSection() throws Exception {
-			//TODO: DV - Re-enable test once get lookup is resolved to new structure
+			//TODO: NWU - Re-enable test once get lookup is resolved to new structure
 //        List<Class> noActiveFieldClassList = new ArrayList<Class>();
 //
 //        List<Class> ignoreClasses = Arrays.asList(INACTIVATEABLE_LOOKUP_IGNORE_CLASSES);

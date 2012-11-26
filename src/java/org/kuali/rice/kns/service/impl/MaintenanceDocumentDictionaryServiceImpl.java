@@ -1,12 +1,12 @@
-/*
- * Copyright 2005-2007 The Kuali Foundation
- * 
+/**
+ * Copyright 2005-2012 The Kuali Foundation
+ *
  * Licensed under the Educational Community License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  * http://www.opensource.org/licenses/ecl2.php
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,53 +15,44 @@
  */
 package org.kuali.rice.kns.service.impl;
 
+import org.apache.commons.lang.StringUtils;
+import org.kuali.rice.core.api.util.RiceKeyConstants;
+import org.kuali.rice.kew.api.KewApiServiceLocator;
+import org.kuali.rice.kew.api.doctype.DocumentType;
+import org.kuali.rice.kns.datadictionary.*;
+import org.kuali.rice.kns.document.MaintenanceDocument;
+import org.kuali.rice.kns.maintenance.Maintainable;
+import org.kuali.rice.kns.service.MaintenanceDocumentDictionaryService;
+import org.kuali.rice.krad.bo.PersistableBusinessObject;
+import org.kuali.rice.krad.datadictionary.DataDictionary;
+import org.kuali.rice.krad.service.DataDictionaryService;
+import org.kuali.rice.krad.util.GlobalVariables;
+import org.kuali.rice.krad.util.ObjectUtils;
+import org.kuali.rice.krad.valuefinder.ValueFinder;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
-import org.kuali.rice.kew.dto.DocumentTypeDTO;
-import org.kuali.rice.kew.exception.WorkflowException;
-import org.kuali.rice.kns.bo.PersistableBusinessObject;
-import org.kuali.rice.kns.datadictionary.DataDictionary;
-import org.kuali.rice.kns.datadictionary.MaintainableCollectionDefinition;
-import org.kuali.rice.kns.datadictionary.MaintainableFieldDefinition;
-import org.kuali.rice.kns.datadictionary.MaintainableItemDefinition;
-import org.kuali.rice.kns.datadictionary.MaintainableSectionDefinition;
-import org.kuali.rice.kns.datadictionary.MaintenanceDocumentEntry;
-import org.kuali.rice.kns.document.MaintenanceDocument;
-import org.kuali.rice.kns.lookup.valueFinder.ValueFinder;
-import org.kuali.rice.kns.maintenance.Maintainable;
-import org.kuali.rice.kns.maintenance.rules.MaintenanceDocumentRuleBase;
-import org.kuali.rice.kns.service.DataDictionaryService;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.service.MaintenanceDocumentDictionaryService;
-import org.kuali.rice.kns.util.GlobalVariables;
-import org.kuali.rice.kns.util.ObjectUtils;
-import org.kuali.rice.kns.util.RiceKeyConstants;
-
 /**
  * This class is the service implementation for the MaintenanceDocumentDictionary structure. Defines the API for the interacting
  * with Document-related entries in the data dictionary. This is the default implementation, that is delivered with Kuali.
  */
+@Deprecated
 public class MaintenanceDocumentDictionaryServiceImpl implements MaintenanceDocumentDictionaryService {
     protected static org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(MaintenanceDocumentDictionaryServiceImpl.class);
 
     private DataDictionaryService dataDictionaryService;
 
     /**
-     * This method gets the workflow document type for the given documentTypeName
+     * Gets the workflow document type for the given documentTypeName
      * 
      * @param documentTypeName
      * @return
      */
-    protected DocumentTypeDTO getDocumentType(String documentTypeName) {
-        try {
-            return KNSServiceLocator.getWorkflowInfoService().getDocType(documentTypeName);
-        } catch (WorkflowException e) {
-            throw new RuntimeException("Caught exception attempting to get document type for doc type name '" + documentTypeName + "'", e);
-        }
+    protected DocumentType getDocumentType(String documentTypeName) {
+        return KewApiServiceLocator.getDocumentTypeService().getDocumentTypeByName(documentTypeName);
     }
 
     /**
@@ -70,9 +61,9 @@ public class MaintenanceDocumentDictionaryServiceImpl implements MaintenanceDocu
     public String getMaintenanceLabel(String docTypeName) {
         String label = null;
 
-        DocumentTypeDTO docType = getDocumentType(docTypeName);
+        DocumentType docType = getDocumentType(docTypeName);
         if (docType != null) {
-            label = docType.getDocTypeLabel();
+            label = docType.getLabel();
         }
 
         return label;
@@ -84,9 +75,9 @@ public class MaintenanceDocumentDictionaryServiceImpl implements MaintenanceDocu
     public String getMaintenanceDescription(String docTypeName) {
         String description = null;
 
-        DocumentTypeDTO docType = getDocumentType(docTypeName);
+        DocumentType docType = getDocumentType(docTypeName);
         if (docType != null) {
-            description = docType.getDocTypeDescription();
+            description = docType.getDescription();
         }
 
         return description;
@@ -95,6 +86,7 @@ public class MaintenanceDocumentDictionaryServiceImpl implements MaintenanceDocu
     /**
      * @see org.kuali.rice.kns.service.MaintenanceDocumentDictionaryService#getMaintainableClass(java.lang.String)
      */
+    @Deprecated
     public Class getMaintainableClass(String docTypeName) {
         Class maintainableClass = null;
 
@@ -108,17 +100,17 @@ public class MaintenanceDocumentDictionaryServiceImpl implements MaintenanceDocu
     }
 
     /**
-     * @see org.kuali.rice.kns.service.MaintenanceDocumentDictionaryService#getBusinessObjectClass(java.lang.String)
+     * @see org.kuali.rice.kns.service.MaintenanceDocumentDictionaryService#getDataObjectClass(java.lang.String)
      */
-    public Class getBusinessObjectClass(String docTypeName) {
-        Class businessObjectClass = null;
+    public Class getDataObjectClass(String docTypeName) {
+        Class dataObjectClass = null;
 
         MaintenanceDocumentEntry entry = getMaintenanceDocumentEntry(docTypeName);
         if (entry != null) {
-            businessObjectClass = entry.getBusinessObjectClass();
+            dataObjectClass = entry.getDataObjectClass();
         }
 
-        return businessObjectClass;
+        return dataObjectClass;
     }
 
     /**
@@ -138,6 +130,7 @@ public class MaintenanceDocumentDictionaryServiceImpl implements MaintenanceDocu
     /**
      * @see org.kuali.rice.kns.service.MaintenanceDocumentDictionaryService#getMaintainableSections(java.lang.String)
      */
+    @Deprecated
     public List getMaintainableSections(String docTypeName) {
         List sections = null;
 
@@ -149,30 +142,6 @@ public class MaintenanceDocumentDictionaryServiceImpl implements MaintenanceDocu
         return sections;
     }
 
-    /**
-     * @see org.kuali.rice.kns.service.MaintenanceDocumentDictionaryService#getBusinessRulesClass(MaintenanceDocument)
-     */
-    public Class getBusinessRulesClass(MaintenanceDocument document) {
-        Maintainable maintainable = document.getOldMaintainableObject();
-        if (maintainable == null) {
-            throw new IllegalArgumentException("unable to determine documentType for maintenanceDocument with no oldMaintainableObject");
-        }
-
-        Class businessRulesClass = null;
-
-        MaintenanceDocumentEntry entry = getMaintenanceDocumentEntry(maintainable.getBoClass());
-        if (entry != null) {
-            businessRulesClass = entry.getBusinessRulesClass();
-        }
-
-        if (businessRulesClass == null) {
-            return MaintenanceDocumentRuleBase.class; // default to a generic rule that will enforce Required fields
-        }
-
-        LOG.info("return class: " + businessRulesClass.getName());
-
-        return businessRulesClass;
-    }
 
     /**
      * @see org.kuali.rice.kns.service.MaintenanceDocumentDictionaryService#getDefaultExistenceChecks(java.lang.Class)
@@ -194,28 +163,6 @@ public class MaintenanceDocumentDictionaryServiceImpl implements MaintenanceDocu
         }
 
         return defaultExistenceChecks;
-    }
-
-    /**
-     * @see org.kuali.rice.kns.service.MaintenanceDocumentDictionaryService#getApplyApcRules(java.lang.Class)
-     */
-    public Collection getApplyApcRules(Class businessObjectClass) {
-        return getApplyApcRules(getDocumentTypeName(businessObjectClass));
-    }
-
-    /**
-     * @see org.kuali.rice.kns.service.MaintenanceDocumentDictionaryService#getApplyApcRules(java.lang.String)
-     */
-    public Collection getApplyApcRules(String docTypeName) {
-
-        Collection apcRules = null;
-
-        MaintenanceDocumentEntry entry = getMaintenanceDocumentEntry(docTypeName);
-        if (entry != null) {
-            apcRules = entry.getApcRules();
-        }
-
-        return apcRules;
     }
 
     /**
@@ -261,10 +208,10 @@ public class MaintenanceDocumentDictionaryServiceImpl implements MaintenanceDocu
 
     private MaintenanceDocumentEntry getMaintenanceDocumentEntry(Class businessObjectClass) {
         if (businessObjectClass == null) {
-            throw new IllegalArgumentException("invalid (blank) businessObjectClass");
+            throw new IllegalArgumentException("invalid (blank) dataObjectClass");
         }
 
-        MaintenanceDocumentEntry entry = getDataDictionary().getMaintenanceDocumentEntryForBusinessObjectClass(businessObjectClass);
+        MaintenanceDocumentEntry entry = (MaintenanceDocumentEntry) getDataDictionary().getMaintenanceDocumentEntryForBusinessObjectClass(businessObjectClass);
         return entry;
     }
 
@@ -521,7 +468,7 @@ public class MaintenanceDocumentDictionaryServiceImpl implements MaintenanceDocu
     }
 
     /**
-     * @see org.kuali.rice.kns.service.MaintenanceDocumentDictionaryService#validateMaintenanceRequiredFields(org.kuali.rice.kns.document.MaintenanceDocument)
+     * @see org.kuali.rice.kns.service.MaintenanceDocumentDictionaryService#validateMaintenanceRequiredFields(org.kuali.rice.krad.maintenance.MaintenanceDocument)
      */
     public void validateMaintenanceRequiredFields(MaintenanceDocument document) {
         Maintainable newMaintainableObject = document.getNewMaintainableObject();
@@ -679,8 +626,7 @@ public class MaintenanceDocumentDictionaryServiceImpl implements MaintenanceDocu
     private void validateMaintainableCollectionsRequiredFields(PersistableBusinessObject businessObject, MaintainableCollectionDefinition maintainableCollectionDefinition) {
         final String collectionName = maintainableCollectionDefinition.getName();
 
-        // validate required fields on fields withing collection definition
-        //FIXME - Added by Harsha, please remove when rice fixes this issue
+      //FIXME - Added by Harsha, please remove when rice fixes this issue
        Object value = ObjectUtils.getPropertyValue(businessObject, collectionName);
         if (value != null && Collection.class.isAssignableFrom(value.getClass()) && !((Collection<PersistableBusinessObject>)value).isEmpty() ) {
             Collection<PersistableBusinessObject> collection = (Collection<PersistableBusinessObject>) value;
@@ -709,7 +655,7 @@ public class MaintenanceDocumentDictionaryServiceImpl implements MaintenanceDocu
     /**
      * default implementation checks for duplicats based on keys of objects only
      * 
-     * @see org.kuali.rice.kns.service.MaintenanceDocumentDictionaryService#validateMaintainableCollectionsForDuplicateEntries(org.kuali.rice.kns.document.MaintenanceDocument)
+     * @see org.kuali.rice.kns.service.MaintenanceDocumentDictionaryService#validateMaintainableCollectionsForDuplicateEntries(org.kuali.rice.krad.maintenance.MaintenanceDocument)
      */
     public void validateMaintainableCollectionsForDuplicateEntries(MaintenanceDocument document) {
         Maintainable newMaintainableObject = document.getNewMaintainableObject();
@@ -809,7 +755,7 @@ public class MaintenanceDocumentDictionaryServiceImpl implements MaintenanceDocu
 	/**
 	 *  for issue KULRice3070, see if need delete button
 	 * 
-	 * @see org.kuali.rice.kns.service.MaintenanceDocumentDictionaryService#getAllowsRecordDeletion(org.kuali.rice.kns.document.MaintenanceDocument)
+	 * @see org.kuali.rice.kns.service.MaintenanceDocumentDictionaryService#getAllowsRecordDeletion(org.kuali.rice.krad.maintenance.MaintenanceDocument)
 	 */
 	public Boolean getAllowsRecordDeletion(MaintenanceDocument document) {
         return document != null ? this.getAllowsRecordDeletion(document.getNewMaintainableObject().getBoClass()) : Boolean.FALSE;
