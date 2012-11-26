@@ -17,13 +17,13 @@ package org.kuali.ext.mm.common.sys.context;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.directwebremoting.spring.SpringCreator;
 import org.kuali.rice.core.api.config.property.ConfigContext;
 import org.kuali.rice.core.api.resourceloader.GlobalResourceLoader;
 import org.kuali.rice.core.framework.resourceloader.SpringResourceLoader;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import uk.ltd.getahead.dwr.create.SpringCreator;
 
 import javax.xml.namespace.QName;
 import java.util.*;

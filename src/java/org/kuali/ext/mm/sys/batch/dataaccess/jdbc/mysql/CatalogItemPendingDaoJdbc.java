@@ -3,7 +3,6 @@
  */
 package org.kuali.ext.mm.sys.batch.dataaccess.jdbc.mysql;
 
-import org.apache.commons.collections.map.ListOrderedMap;
 import org.apache.log4j.Logger;
 import org.kuali.ext.mm.businessobject.Catalog;
 import org.kuali.ext.mm.businessobject.CatalogItemPending;
@@ -13,10 +12,7 @@ import org.kuali.rice.core.framework.persistence.jdbc.dao.PlatformAwareDaoBaseJd
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.*;
 
 /**
  * @author sravani
@@ -29,15 +25,8 @@ public class CatalogItemPendingDaoJdbc extends PlatformAwareDaoBaseJdbc implemen
     @SuppressWarnings("unchecked")
     public ArrayList<String> getCatalogCount() {
         String query = "SELECT FDOC_NBR FROM MM_CATALOG_PENDING_DOC_T WHERE CATALOG_UPLOAD_STATUS = 'UPLOADING' ORDER BY CATALOG_TIMESTAMP ASC";
-        Collection<ListOrderedMap> values = getJdbcTemplate().queryForList(query);
-        ArrayList<String> fDocs = new ArrayList<String>();
+        return (ArrayList)getJdbcTemplate().queryForList(query, String.class);
 
-        for (Iterator<ListOrderedMap> iterator = values.iterator(); iterator.hasNext();) {
-            ListOrderedMap lOM = iterator.next();
-            fDocs.add((String) lOM.get("FDOC_NBR"));
-        }
-
-        return fDocs;
     }
 
     public int getItemCount(String fDocNbr) {
@@ -67,12 +56,11 @@ public class CatalogItemPendingDaoJdbc extends PlatformAwareDaoBaseJdbc implemen
                 + catalogGroupCd10
                 + "')";
 
-        Collection<ListOrderedMap> values = getJdbcTemplate().queryForList(query);
-
-        for (ListOrderedMap lOM : values) {
-            catalogGroupCd = (String) lOM.get("CATALOG_GROUP_CD");
-            break;
-        }
+				//TODO: NWU Confirm same JdbcTemplate behaviour as before
+        List<String> values = getJdbcTemplate().queryForList(query,String.class);
+				if (!values.isEmpty()){
+					catalogGroupCd = values.get(0);
+				}
 
         return catalogGroupCd;
     }
@@ -89,13 +77,11 @@ public class CatalogItemPendingDaoJdbc extends PlatformAwareDaoBaseJdbc implemen
                 + "') AND UPPER(CATALOG_GROUP_CD) = UPPER('"
                 + catalogGroupCd + "')";
 
-        Collection<ListOrderedMap> values = getJdbcTemplate().queryForList(query);
-
-        for (ListOrderedMap lOM : values) {
-            catalogSubgroupCd = (String) lOM.get("CATALOG_SUBGROUP_CD");
-            break;
-        }
-
+				//TODO: NWU Confirm same JdbcTemplate behaviour as before
+        List<String> values = getJdbcTemplate().queryForList(query,String.class);
+				if (!values.isEmpty()){
+					catalogGroupCd = values.get(0);
+				}
         return catalogSubgroupCd;
     }
 
@@ -105,19 +91,16 @@ public class CatalogItemPendingDaoJdbc extends PlatformAwareDaoBaseJdbc implemen
         String ts = null;
         String query = "SELECT FDOC_NBR FROM MM_CATALOG_PENDING_DOC_T WHERE CATALOG_CD = '"
                 + catalogCd + "' ORDER BY CATALOG_TIMESTAMP DESC";
-        Collection<ListOrderedMap> values = getJdbcTemplate().queryForList(query);
-        Iterator<ListOrderedMap> itr = values.iterator();
 
-        while (itr.hasNext()) {
-
-            ListOrderedMap lOM = itr.next();
-            String fDNbr = (String) (lOM.get("FDOC_NBR"));
-
-            if (Integer.parseInt(fDocNbr) > Integer.parseInt(fDNbr)) {
-                ts = (String) lOM.get("FDOC_NBR");
+				//TODO: NWU Confirm same JdbcTemplate behaviour as before
+        List<Integer> values = getJdbcTemplate().queryForList(query,Integer.class);
+				for (Integer value : values){
+						if (Integer.parseInt(fDocNbr) > value) {
+                ts = Integer.toString(value);
                 break;
             }
-        }
+				}
+
         return ts;
     }
 
@@ -141,7 +124,7 @@ public class CatalogItemPendingDaoJdbc extends PlatformAwareDaoBaseJdbc implemen
                 + docNbr2
                 + "')";
 
-        Collection<ListOrderedMap> values = getJdbcTemplate().queryForList(query);
+        List<Map<String,Object>> values = getJdbcTemplate().queryForList(query);
         ArrayList<CatalogItemPending> returnedList = loadValues(values);
         return returnedList;
     }
@@ -165,7 +148,7 @@ public class CatalogItemPendingDaoJdbc extends PlatformAwareDaoBaseJdbc implemen
                 + "FROM MM_CATALOG_ITEM_PENDING_T WHERE CATALOG_PENDING_DOC_NBR = '"
                 + docNbr2
                 + "')";
-        Collection<ListOrderedMap> values = getJdbcTemplate().queryForList(query);
+				List<Map<String,Object>> values = getJdbcTemplate().queryForList(query);
         ArrayList<CatalogItemPending> returnedList = loadValues(values);
         return returnedList;
     }
@@ -210,7 +193,7 @@ public class CatalogItemPendingDaoJdbc extends PlatformAwareDaoBaseJdbc implemen
                 + "AND A.CATALOG_PRC <= (B.CATALOG_PRC * 0.05 + B.CATALOG_PRC))";
 
         // System.out.println(query);
-        Collection<ListOrderedMap> values = getJdbcTemplate().queryForList(query);
+        List<Map<String,Object>> values = getJdbcTemplate().queryForList(query);
         ArrayList<CatalogItemPending> returnedList = loadValues(values);
         return returnedList;
     }
@@ -235,7 +218,7 @@ public class CatalogItemPendingDaoJdbc extends PlatformAwareDaoBaseJdbc implemen
                 + docNbr2
                 + "' AND A.distributor_nbr = B.DISTRIBUTOR_NBR AND A.CATALOG_PRC < B.CATALOG_PRC)";
 
-        Collection<ListOrderedMap> values = getJdbcTemplate().queryForList(query);
+				List<Map<String,Object>> values = getJdbcTemplate().queryForList(query);
         ArrayList<CatalogItemPending> returnedList = loadValues(values);
         return returnedList;
     }
@@ -260,15 +243,15 @@ public class CatalogItemPendingDaoJdbc extends PlatformAwareDaoBaseJdbc implemen
                 + docNbr2
                 + "' AND A.distributor_nbr = B.DISTRIBUTOR_NBR AND A.CATALOG_PRC > B.CATALOG_PRC)";
 
-        Collection<ListOrderedMap> values = getJdbcTemplate().queryForList(query);
+				List<Map<String,Object>> values = getJdbcTemplate().queryForList(query);
         ArrayList<CatalogItemPending> returnedList = loadValues(values);
         return returnedList;
     }
 
-    private ArrayList<CatalogItemPending> loadValues(Collection<ListOrderedMap> values) {
+    private ArrayList<CatalogItemPending> loadValues(List<Map<String,Object>> values) {
 
         ArrayList<CatalogItemPending> returnedList = new ArrayList<CatalogItemPending>();
-        for (ListOrderedMap lOM : values) {
+        for (Map<String,Object> lOM : values) {
             CatalogItemPending cIP = new CatalogItemPending();
             cIP.setCatalogPendingDocNbr((String) lOM.get("CATALOG_PENDING_DOC_NBR"));
             cIP.setDistributorNbr((String) lOM.get("DISTRIBUTOR_NBR"));
@@ -320,13 +303,12 @@ public class CatalogItemPendingDaoJdbc extends PlatformAwareDaoBaseJdbc implemen
                     + catalogItemPending.getDistributorNbr()
                     + "' AND CATALOG_ITEM_PND_ID < "
                     + catalogItemPending.getCatalogItemPndId() + "ORDER BY CATALOG_ITEM_PND_ID";
-            Collection<ListOrderedMap> values = getJdbcTemplate().queryForList(query);
-            for (Iterator iterator2 = values.iterator(); iterator2.hasNext();) {
-                ListOrderedMap listOrderedMap = (ListOrderedMap) iterator2.next();
-                BigDecimal cP = (BigDecimal) listOrderedMap.get("CATALOG_PRC");
-                hm.put(catalogItemPending.getCatalogItemPndId(), cP.doubleValue());
-                break;
-            }
+						//TODO: NWU Confirm same JdbcTemplate behaviour as before
+						List<BigDecimal> values = getJdbcTemplate().queryForList(query, BigDecimal.class);
+						for (BigDecimal value : values){
+							hm.put(catalogItemPending.getCatalogItemPndId(), value.doubleValue());
+							break;
+						}
         }
         return hm;
     }
@@ -342,13 +324,13 @@ public class CatalogItemPendingDaoJdbc extends PlatformAwareDaoBaseJdbc implemen
                     + catalogItemPending.getDistributorNbr()
                     + "' AND CATALOG_ITEM_PND_ID < "
                     + catalogItemPending.getCatalogItemPndId() + "ORDER BY CATALOG_ITEM_PND_ID";
-            Collection<ListOrderedMap> values = getJdbcTemplate().queryForList(query);
-            for (Iterator iterator2 = values.iterator(); iterator2.hasNext();) {
-                ListOrderedMap listOrderedMap = (ListOrderedMap) iterator2.next();
-                BigDecimal cP = (BigDecimal) listOrderedMap.get("CATALOG_PRC");
-                hm.put(catalogItemPending.getCatalogItemPndId(), cP.doubleValue());
-                break;
-            }
+
+						//TODO: NWU Confirm same JdbcTemplate behaviour as before
+						List<BigDecimal> values = getJdbcTemplate().queryForList(query, BigDecimal.class);
+						for (BigDecimal value : values){
+							hm.put(catalogItemPending.getCatalogItemPndId(), value.doubleValue());
+							break;
+						}
         }
         return hm;
     }
