@@ -3,7 +3,6 @@
  */
 package org.kuali.ext.mm.sys.batch.dataaccess.jdbc;
 
-import org.apache.commons.collections.map.ListOrderedMap;
 import org.kuali.ext.mm.document.DiscrepancyLine;
 import org.kuali.ext.mm.sys.batch.dataaccess.DiscrepancyLineDao;
 import org.kuali.rice.core.framework.persistence.jdbc.dao.PlatformAwareDaoBaseJdbc;
@@ -11,9 +10,8 @@ import org.kuali.rice.core.framework.persistence.jdbc.dao.PlatformAwareDaoBaseJd
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author rshrivas
@@ -34,11 +32,10 @@ public class DiscrepancyLineDaoJdbc extends PlatformAwareDaoBaseJdbc implements 
             query = query + " WHERE VENDOR_NAME = '" + vendorName + "'";              
         }     
          
-        Collection<ListOrderedMap> lOM = getJdbcTemplate().queryForList(query);
-        for (Iterator iterator = lOM.iterator(); iterator.hasNext();) {
-            ListOrderedMap listOrderedMap = (ListOrderedMap) iterator.next();
-            String oN = (String)listOrderedMap.get("ORDER_NUMBER");
-            String iN = (String)listOrderedMap.get("INVOICE_NUMBER");      
+        List<Map<String,Object>> lOM = getJdbcTemplate().queryForList(query);
+        for (Map<String,Object> values : lOM) {
+            String oN = (String)values.get("ORDER_NUMBER");
+            String iN = (String)values.get("INVOICE_NUMBER");
             
             String query2 = "SELECT * FROM MM_DISCREPANCY_LINE_T WHERE ORDER_NUMBER = '" + oN + 
                             "' AND INVOICE_NUMBER = '" + iN + "'";
@@ -47,7 +44,7 @@ public class DiscrepancyLineDaoJdbc extends PlatformAwareDaoBaseJdbc implements 
                 query2 = query2 + " AND VENDOR_NAME = '" + vendorName + "'";              
             }
             
-            Collection<ListOrderedMap> vals = getJdbcTemplate().queryForList(query2);
+            List<Map<String,Object>> vals = getJdbcTemplate().queryForList(query2);
             ArrayList<DiscrepancyLine> valLoadValues = loadValues(vals);
             
             if(valLoadValues.size() == 1){
@@ -62,7 +59,7 @@ public class DiscrepancyLineDaoJdbc extends PlatformAwareDaoBaseJdbc implements 
                     query3 = query3 + " AND a.VENDOR_NAME = '" + vendorName + "'";              
                 }
                 
-                Collection<ListOrderedMap> lomV= getJdbcTemplate().queryForList(query3);
+                List<Map<String,Object>> lomV = getJdbcTemplate().queryForList(query3);
                 ArrayList<DiscrepancyLine> lomValues = loadValues(lomV);
                 if(!lomValues.isEmpty()){
                     returnedList.add(lomValues.get(0));
@@ -73,9 +70,9 @@ public class DiscrepancyLineDaoJdbc extends PlatformAwareDaoBaseJdbc implements 
         return returnedList;
     }    
     
-    private ArrayList<DiscrepancyLine> loadValues(Collection<ListOrderedMap> values) {
+    private ArrayList<DiscrepancyLine> loadValues(List<Map<String,Object>> values) {
         ArrayList<DiscrepancyLine> returnedList = new ArrayList<DiscrepancyLine>();
-        for (ListOrderedMap lOM : values) {
+        for (Map<String,Object> lOM : values) {
             DiscrepancyLine dL = new DiscrepancyLine();
             dL.setDiscrepancyLineDocNbr((String) lOM.get("DISCR_LINE_DOC_NBR"));
             dL.setVendorName((String) lOM.get("VENDOR_NAME"));

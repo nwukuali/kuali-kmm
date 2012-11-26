@@ -3,7 +3,6 @@
  */
 package org.kuali.ext.mm.sys.batch.dataaccess.jdbc.mysql;
 
-import org.apache.commons.collections.map.ListOrderedMap;
 import org.apache.struts.upload.FormFile;
 import org.kuali.ext.mm.businessobject.CatalogItemPending;
 import org.kuali.ext.mm.businessobject.CatalogPendingDoc;
@@ -17,9 +16,8 @@ import org.springframework.jdbc.core.ResultSetExtractor;
 import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
-import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author sravani
@@ -104,13 +102,13 @@ public class CatalogPendingDocDaoJdbc extends PlatformAwareDaoBaseJdbc implement
     public String getCatalogCodeFromPendingDocNbr(String catalogPendingDocNbr) {
         String sql = "SELECT CATALOG_CD FROM MM_CATALOG_PENDING_DOC_T WHERE FDOC_NBR = '"
                 + catalogPendingDocNbr + "'";
-        Collection<ListOrderedMap> values = getJdbcTemplate().queryForList(sql);
-        String catalogCode = null;
-        for (Iterator iterator = values.iterator(); iterator.hasNext();) {
-            ListOrderedMap listOrderedMap = (ListOrderedMap) iterator.next();
-            catalogCode = (String) listOrderedMap.get("CATALOG_CD");
-        }
-        return catalogCode;
+			//TODO: NWU Confirm same JdbcTemplate behaviour as before
+			List<String> values = getJdbcTemplate().queryForList(sql, String.class);
+			String catalogCode = null;
+			for (String value : values){
+				catalogCode = value;
+			}
+			return catalogCode;
     }
 
 
