@@ -41,8 +41,6 @@
 	</target>
 
 	<target name="make-source" depends="init,conf-expand-properties-project,conf-expand-context-file">
-		<property name="myclasspath" refid="compile.source.classpath"/>
-		<echo message="${myclasspath}"/>
 		<javac destdir="${build.classes.directory}" srcdir="${source.classes.directory}" debug="true" nowarn="true" optimize="true" fork="true" memoryinitialsize="${compile.min.memory}" memorymaximumsize="${compile.max.memory}" encoding="iso-8859-1">
 			<classpath refid="compile.source.classpath" />
 		</javac>
