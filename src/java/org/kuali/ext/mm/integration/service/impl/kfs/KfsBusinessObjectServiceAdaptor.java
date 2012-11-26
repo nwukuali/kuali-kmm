@@ -16,18 +16,17 @@
 
 package org.kuali.ext.mm.integration.service.impl.kfs;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-
-import javax.xml.namespace.QName;
-
 import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.integration.FinancialSystemConfiguration;
 import org.kuali.ext.mm.integration.service.FinancialBusinessObjectService;
-import org.kuali.rice.kns.bo.BusinessObject;
-import org.kuali.rice.kns.bo.PersistableBusinessObject;
-import org.kuali.rice.kns.service.BusinessObjectService;
+import org.kuali.rice.krad.bo.BusinessObject;
+import org.kuali.rice.krad.bo.PersistableBusinessObject;
+import org.kuali.rice.krad.service.BusinessObjectService;
+
+import javax.xml.namespace.QName;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -92,7 +91,7 @@ public class KfsBusinessObjectServiceAdaptor extends KfsServiceAdaptor<BusinessO
     /**
      * @see org.kuali.ext.mm.integration.service.FinancialBusinessObjectService#findByPrimaryKey(java.lang.Class, java.util.Map)
      */
-    public PersistableBusinessObject findByPrimaryKey(Class clazz, Map primaryKeys) {
+    public BusinessObject findByPrimaryKey(Class clazz, Map primaryKeys) {
         return getService().findByPrimaryKey(getTargetClass(clazz), primaryKeys);
     }
 
@@ -139,7 +138,7 @@ public class KfsBusinessObjectServiceAdaptor extends KfsServiceAdaptor<BusinessO
      * @see org.kuali.ext.mm.integration.service.FinancialBusinessObjectService#findBySinglePrimaryKey(java.lang.Class,
      *      java.lang.Object)
      */
-    public <T> T findBySinglePrimaryKey(Class<T> clazz, Object primaryKey) {
+    public <T extends BusinessObject> T findBySinglePrimaryKey(Class<T> clazz, Object primaryKey) {
         return getService().findBySinglePrimaryKey(getTargetClass(clazz), primaryKey);
     }
 

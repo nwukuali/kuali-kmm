@@ -16,17 +16,15 @@
 
 package org.kuali.ext.mm.integration.cam.businessobject;
 
-import java.util.LinkedHashMap;
-
 import org.kuali.ext.mm.integration.FinancialSystemComponent;
-import org.kuali.rice.kns.bo.ExternalizableBusinessObject;
-import org.kuali.rice.kns.bo.TransientBusinessObjectBase;
+import org.kuali.rice.krad.bo.ExternalizableBusinessObject;
+import org.kuali.rice.krad.bo.TransientBusinessObjectBase;
 
 /**
  * @author harsha07
  */
 public class FinancialAssetType extends TransientBusinessObjectBase implements
-        ExternalizableBusinessObject, FinancialSystemComponent {
+	ExternalizableBusinessObject, FinancialSystemComponent {
     private static final long serialVersionUID = 448909253709319918L;
     private String capitalAssetTypeCode;
     private String capitalAssetTypeDescription;
@@ -67,12 +65,4 @@ public class FinancialAssetType extends TransientBusinessObjectBase implements
         this.capitalAssetTypeDescription = capitalAssetTypeDescription;
     }
 
-    /**
-     * @see org.kuali.rice.kns.bo.BusinessObjectBase#toStringMapper()
-     */
-    @Override
-    protected LinkedHashMap<String, String> toStringMapper() {
-        // TODO Auto-generated method stub
-        return null;
-    }
 }

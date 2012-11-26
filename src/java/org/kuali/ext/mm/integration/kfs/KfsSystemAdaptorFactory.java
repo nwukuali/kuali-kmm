@@ -16,60 +16,18 @@
 
 package org.kuali.ext.mm.integration.kfs;
 
-import javax.xml.namespace.QName;
-
 import org.apache.log4j.Logger;
 import org.kuali.ext.mm.common.sys.MMKeyConstants;
 import org.kuali.ext.mm.integration.FinancialSystemAdaptorFactory;
 import org.kuali.ext.mm.integration.FinancialSystemConfiguration;
 import org.kuali.ext.mm.integration.ServiceNameInfo;
-import org.kuali.ext.mm.integration.service.FinancialAccountService;
-import org.kuali.ext.mm.integration.service.FinancialBusinessObjectService;
-import org.kuali.ext.mm.integration.service.FinancialCapitalAssetService;
-import org.kuali.ext.mm.integration.service.FinancialChartService;
-import org.kuali.ext.mm.integration.service.FinancialDocumentService;
-import org.kuali.ext.mm.integration.service.FinancialElectronicInvoiceService;
-import org.kuali.ext.mm.integration.service.FinancialGeneralLedgerPendingEntryService;
-import org.kuali.ext.mm.integration.service.FinancialGeneralLedgerService;
-import org.kuali.ext.mm.integration.service.FinancialInternalBillingService;
-import org.kuali.ext.mm.integration.service.FinancialLocationService;
-import org.kuali.ext.mm.integration.service.FinancialObjectCodeService;
-import org.kuali.ext.mm.integration.service.FinancialOrganizationService;
-import org.kuali.ext.mm.integration.service.FinancialParameterService;
-import org.kuali.ext.mm.integration.service.FinancialProjectCodeService;
-import org.kuali.ext.mm.integration.service.FinancialPurchaseOrderService;
-import org.kuali.ext.mm.integration.service.FinancialPurchasingService;
-import org.kuali.ext.mm.integration.service.FinancialRequisitionService;
-import org.kuali.ext.mm.integration.service.FinancialSubAccountService;
-import org.kuali.ext.mm.integration.service.FinancialSubObjectCodeService;
-import org.kuali.ext.mm.integration.service.FinancialTaxService;
-import org.kuali.ext.mm.integration.service.FinancialUniversityDateService;
-import org.kuali.ext.mm.integration.service.FinancialVendorService;
-import org.kuali.ext.mm.integration.service.impl.kfs.KfsAccountServiceAdaptor;
-import org.kuali.ext.mm.integration.service.impl.kfs.KfsBusinessObjectServiceAdaptor;
-import org.kuali.ext.mm.integration.service.impl.kfs.KfsCapitalAssetServiceAdaptor;
-import org.kuali.ext.mm.integration.service.impl.kfs.KfsChartServiceAdaptor;
-import org.kuali.ext.mm.integration.service.impl.kfs.KfsDocumentServiceAdaptor;
-import org.kuali.ext.mm.integration.service.impl.kfs.KfsElectronicInvoiceService;
-import org.kuali.ext.mm.integration.service.impl.kfs.KfsGeneralLedgerPendingEntryServiceAdaptor;
-import org.kuali.ext.mm.integration.service.impl.kfs.KfsGeneralLedgerServiceAdaptor;
-import org.kuali.ext.mm.integration.service.impl.kfs.KfsInternalBillingService;
-import org.kuali.ext.mm.integration.service.impl.kfs.KfsLocationServiceAdaptor;
-import org.kuali.ext.mm.integration.service.impl.kfs.KfsObjectCodeServiceAdaptor;
-import org.kuali.ext.mm.integration.service.impl.kfs.KfsOrganizationServiceAdaptor;
-import org.kuali.ext.mm.integration.service.impl.kfs.KfsParamServiceAdaptor;
-import org.kuali.ext.mm.integration.service.impl.kfs.KfsProjectCodeServiceAdaptor;
-import org.kuali.ext.mm.integration.service.impl.kfs.KfsPurchaseOrderServiceAdaptor;
-import org.kuali.ext.mm.integration.service.impl.kfs.KfsPurchasingService;
-import org.kuali.ext.mm.integration.service.impl.kfs.KfsRequisitionServiceAdaptor;
-import org.kuali.ext.mm.integration.service.impl.kfs.KfsSubAccountServiceAdaptor;
-import org.kuali.ext.mm.integration.service.impl.kfs.KfsSubObjectCodeServiceAdaptor;
-import org.kuali.ext.mm.integration.service.impl.kfs.KfsTaxServiceAdaptor;
-import org.kuali.ext.mm.integration.service.impl.kfs.KfsUniversityDateServiceAdaptor;
-import org.kuali.ext.mm.integration.service.impl.kfs.kfsVendorServiceAdaptor;
+import org.kuali.ext.mm.integration.service.*;
+import org.kuali.ext.mm.integration.service.impl.kfs.*;
 import org.kuali.kfs.sys.service.NonTransactional;
-import org.kuali.rice.kns.util.GlobalVariables;
-import org.kuali.rice.kns.util.KNSConstants;
+import org.kuali.rice.krad.util.GlobalVariables;
+import org.kuali.rice.krad.util.KRADConstants;
+
+import javax.xml.namespace.QName;
 
 
 /**
@@ -126,7 +84,7 @@ public class KfsSystemAdaptorFactory implements FinancialSystemAdaptorFactory {
     public boolean checkAndErrorSystemAvailability() {
         boolean financialSystemAvailable = isSystemAvailable();
         if (!financialSystemAvailable) {
-            GlobalVariables.getMessageMap().putError(KNSConstants.GLOBAL_ERRORS,
+            GlobalVariables.getMessageMap().putError(KRADConstants.GLOBAL_ERRORS,
                     MMKeyConstants.FIN_SERVICES_UNAVAILABLE);
         }
         return financialSystemAvailable;

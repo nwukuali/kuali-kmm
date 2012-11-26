@@ -16,29 +16,25 @@
 
 package org.kuali.ext.mm.integration.kfs;
 
-import java.lang.reflect.Modifier;
-import java.security.GeneralSecurityException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-
 import org.kuali.ext.mm.integration.FinancialSystemAdaptorFactory;
 import org.kuali.ext.mm.integration.FinancialSystemConfiguration;
 import org.kuali.ext.mm.integration.ServiceNameInfo;
-import org.kuali.rice.kns.bo.BusinessObject;
-import org.kuali.rice.kns.bo.BusinessObjectRelationship;
-import org.kuali.rice.kns.datadictionary.AttributeSecurity;
+import org.kuali.rice.core.api.CoreApiServiceLocator;
+import org.kuali.rice.core.web.format.Formatter;
 import org.kuali.rice.kns.lookup.HtmlData;
 import org.kuali.rice.kns.lookup.HtmlData.AnchorHtmlData;
 import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.util.KNSConstants;
-import org.kuali.rice.kns.util.ObjectUtils;
-import org.kuali.rice.kns.util.UrlFactory;
-import org.kuali.rice.kns.web.format.Formatter;
+import org.kuali.rice.krad.bo.BusinessObject;
+import org.kuali.rice.krad.bo.DataObjectRelationship;
+import org.kuali.rice.krad.datadictionary.AttributeSecurity;
+import org.kuali.rice.krad.util.KRADConstants;
+import org.kuali.rice.krad.util.ObjectUtils;
+import org.kuali.rice.krad.util.UrlFactory;
 import org.springframework.beans.factory.InitializingBean;
+
+import java.lang.reflect.Modifier;
+import java.security.GeneralSecurityException;
+import java.util.*;
 
 /**
  * KFS System configuration
@@ -224,7 +220,7 @@ public class KfsSystemConfiguration implements FinancialSystemConfiguration, Ini
         if (!inquiryUrl.endsWith("/")) {
             inquiryUrl = inquiryUrl + "/";
         }
-        return inquiryUrl + KNSConstants.INQUIRY_ACTION;
+        return inquiryUrl + KRADConstants.INQUIRY_ACTION;
     }
 
     /**
@@ -234,12 +230,12 @@ public class KfsSystemConfiguration implements FinancialSystemConfiguration, Ini
     public HtmlData getBusinessObjectInquiryUrl(BusinessObject businessObject,
             Class inquiryBusinessObjectClass, String attributeName, String attributeRefName) {
         Properties parameters = new Properties();
-        parameters.put(KNSConstants.DISPATCH_REQUEST_PARAMETER, "start");
-        parameters.put(KNSConstants.BUSINESS_OBJECT_CLASS_ATTRIBUTE, getIntegrationClassMap().get(
+        parameters.put(KRADConstants.DISPATCH_REQUEST_PARAMETER, "start");
+        parameters.put(KRADConstants.BUSINESS_OBJECT_CLASS_ATTRIBUTE, getIntegrationClassMap().get(
                 inquiryBusinessObjectClass).getName());
         List<String> keys = new ArrayList<String>();
         Map<String, String> targetKeyMap = new HashMap<String, String>();
-        BusinessObjectRelationship businessObjectRelationship = null;
+        DataObjectRelationship businessObjectRelationship = null;
 
         if (attributeRefName != null && !"".equals(attributeRefName)) {
             businessObjectRelationship = KNSServiceLocator.getBusinessObjectMetaDataService()
@@ -293,7 +289,7 @@ public class KfsSystemConfiguration implements FinancialSystemConfiguration, Ini
             if (attributeSecurity != null
                     && attributeSecurity.hasRestrictionThatRemovesValueFromUI()) {
                 try {
-                    keyValue = KNSServiceLocator.getEncryptionService().encrypt(keyValue);
+                    keyValue = CoreApiServiceLocator.getEncryptionService().encrypt(keyValue);
                 }
                 catch (GeneralSecurityException e) {
                     throw new RuntimeException(e);
@@ -303,7 +299,7 @@ public class KfsSystemConfiguration implements FinancialSystemConfiguration, Ini
             fieldList.put(targetKey, keyValue.toString());
         }
         return new AnchorHtmlData(UrlFactory.parameterizeUrl(getInquiryUrl(), parameters),
-            KNSConstants.EMPTY_STRING);
+            KRADConstants.EMPTY_STRING);
     }
 
     /**
@@ -317,11 +313,11 @@ public class KfsSystemConfiguration implements FinancialSystemConfiguration, Ini
         if (!lookupUrl.endsWith("/")) {
             lookupUrl = lookupUrl + "/";
         }
-        if (parameters.containsKey(KNSConstants.MULTIPLE_VALUE)) {
-            lookupUrl = lookupUrl + KNSConstants.MULTIPLE_VALUE_LOOKUP_ACTION;
+        if (parameters.containsKey(KRADConstants.MULTIPLE_VALUE)) {
+            lookupUrl = lookupUrl + KRADConstants.MULTIPLE_VALUE_LOOKUP_ACTION;
         }
         else {
-            lookupUrl = lookupUrl + KNSConstants.LOOKUP_ACTION;
+            lookupUrl = lookupUrl + KRADConstants.LOOKUP_ACTION;
         }
         for (String paramName : parameters.keySet()) {
             urlParameters.put(paramName, parameters.get(paramName));
@@ -331,7 +327,7 @@ public class KfsSystemConfiguration implements FinancialSystemConfiguration, Ini
         if (implementationClass == null) {
             throw new RuntimeException("Implementation class not found for " + businessObjectClass);
         }
-        urlParameters.put(KNSConstants.BUSINESS_OBJECT_CLASS_ATTRIBUTE, implementationClass
+        urlParameters.put(KRADConstants.BUSINESS_OBJECT_CLASS_ATTRIBUTE, implementationClass
                 .getName());
         int implClassModifiers = implementationClass.getModifiers();
         if (Modifier.isInterface(implClassModifiers) || Modifier.isAbstract(implClassModifiers)) {

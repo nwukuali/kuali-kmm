@@ -1,8 +1,5 @@
 package org.kuali.ext.mm.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.kuali.ext.mm.businessobject.StockCount;
 import org.kuali.ext.mm.businessobject.Warehouse;
 import org.kuali.ext.mm.businessobject.Zone;
@@ -13,14 +10,18 @@ import org.kuali.ext.mm.document.WorksheetCountDocument;
 import org.kuali.ext.mm.service.StockItemLookupService;
 import org.kuali.ext.mm.sys.batch.dataaccess.StockCountDao;
 import org.kuali.ext.mm.util.MMUtil;
-import org.kuali.rice.kew.exception.WorkflowException;
-import org.kuali.rice.kim.bo.Person;
-import org.kuali.rice.kim.service.PersonService;
-import org.kuali.rice.kns.UserSession;
-import org.kuali.rice.kns.document.Document;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.util.GlobalVariables;
-import org.kuali.rice.kns.util.ObjectUtils;
+import org.kuali.rice.kew.api.exception.WorkflowException;
+import org.kuali.rice.kim.api.identity.Person;
+import org.kuali.rice.kim.api.identity.PersonService;
+import org.kuali.rice.kim.api.services.KimApiServiceLocator;
+import org.kuali.rice.krad.UserSession;
+import org.kuali.rice.krad.document.Document;
+import org.kuali.rice.krad.service.KRADServiceLocatorWeb;
+import org.kuali.rice.krad.util.GlobalVariables;
+import org.kuali.rice.krad.util.ObjectUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class StockItemLookupServiceImpl implements StockItemLookupService {
@@ -39,7 +40,7 @@ public class StockItemLookupServiceImpl implements StockItemLookupService {
         }
         Document dd;
         try {
-            dd = KNSServiceLocator.getDocumentService().getNewDocument(docType);
+            dd = KRADServiceLocatorWeb.getDocumentService().getNewDocument(docType);
         }
         catch (WorkflowException e) {
             throw new RuntimeException(e);
@@ -163,7 +164,7 @@ public class StockItemLookupServiceImpl implements StockItemLookupService {
     }
 
     public Person getPersonWithName(String name) {
-        return org.kuali.rice.kim.bo.impl.PersonImpl.getPersonService().getPersonByPrincipalName(
+        return KimApiServiceLocator.getPersonService().getPersonByPrincipalName(
                 name);
     }
 
@@ -208,7 +209,7 @@ public class StockItemLookupServiceImpl implements StockItemLookupService {
             String principalName = getInitiatorPrincipalName(wdoc);
             GlobalVariables.setUserSession(new UserSession(principalName));
         }
-        KNSServiceLocator.getDocumentService().saveDocument(workSheetCountDoc);
+        KRADServiceLocatorWeb.getDocumentService().saveDocument(workSheetCountDoc);
         GlobalVariables.setUserSession(current);
     }
 
@@ -236,31 +237,33 @@ public class StockItemLookupServiceImpl implements StockItemLookupService {
         this.aStockItemLookupServiceDAO = aStockItemLookupServiceDAO;
     }
 
+		//TODO: NWU - Re-enable method if being used
     public List<WorksheetCountDocument> submitDocuments(List<WorksheetCountDocument> documents)
             throws Exception {
+
         // docList = submitDocuments(docList);
         List<WorksheetCountDocument> lisDocs = new ArrayList<WorksheetCountDocument>(0);
 
-        for (WorksheetCountDocument doc : documents) {
-            // doc.refresh();
-            String message = doc.getDocumentNumber() + " Submitted ";
-            // doc.prepareForWorkflow();
-            // KNSServiceLocator.getDocumentService().prepareWorkflowDocument(doc);
-            doc.prepareForWorkflow();
-            doc.getDocumentHeader().getWorkflowDocument().routeDocument(message);
-            doc.prepareForSave();
-            doc.getDocumentHeader().getWorkflowDocument().getRouteHeader().setDocRouteStatus("S");
-            KNSServiceLocator.getWorkflowDocumentService().save(
-                    doc.getDocumentHeader().getWorkflowDocument(), null);
-
-            lisDocs.add(doc);
-            /*
-             * doc.refresh(); doc.refreshPessimisticLocks();
-             * doc.getDocumentHeader().getWorkflowDocument().getRouteHeader().setDocRouteStatus("S");
-             * KNSServiceLocator.getBusinessObjectService().save(doc);
-             */
-            // SaveDocument(doc);
-        }
+//        for (WorksheetCountDocument doc : documents) {
+//            // doc.refresh();
+//            String message = doc.getDocumentNumber() + " Submitted ";
+//            // doc.prepareForWorkflow();
+//            KRADServiceLocatorWeb.getDocumentService().prepareWorkflowDocument(doc);
+////            doc.prepareForWorkflow();
+//            doc.getDocumentHeader().getWorkflowDocument().route(message);
+//            doc.prepareForSave();
+//            doc.getDocumentHeader().getWorkflowDocument().getRouteHeader().setDocRouteStatus("S");
+//						KewApiServiceLocator.getWorkflowDocumentService().save(
+//                    doc.getDocumentHeader().getWorkflowDocument(), null);
+//
+//            lisDocs.add(doc);
+//            /*
+//             * doc.refresh(); doc.refreshPessimisticLocks();
+//             * doc.getDocumentHeader().getWorkflowDocument().getRouteHeader().setDocRouteStatus("S");
+//             * KRADServiceLocator.getBusinessObjectService().save(doc);
+//             */
+//            // SaveDocument(doc);
+//        }
         return lisDocs;
     }
 

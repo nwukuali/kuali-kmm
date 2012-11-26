@@ -3,16 +3,15 @@
  */
 package org.kuali.ext.mm.document;
 
-import java.sql.Date;
-import java.util.List;
+import org.kuali.ext.mm.businessobject.StoresTransactionalDocumentBase;
+import org.springframework.util.AutoPopulatingList;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import org.kuali.ext.mm.businessobject.StoresTransactionalDocumentBase;
-import org.kuali.rice.kns.util.TypedArrayList;
+import java.sql.Date;
+import java.util.List;
 
 /**
  * @author rshrivas
@@ -32,7 +31,7 @@ public class DiscrepancyDocument extends StoresTransactionalDocumentBase{
     
     public DiscrepancyDocument() {
         super();      
-        this.setDiscrepancyLines(new TypedArrayList(DiscrepancyLine.class));
+        this.setDiscrepancyLines(new AutoPopulatingList(DiscrepancyLine.class));
     }  
     
     /**

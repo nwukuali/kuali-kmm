@@ -3,11 +3,6 @@
  */
 package org.kuali.ext.mm.service.impl;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.commons.lang.StringUtils;
 import org.kuali.ext.mm.businessobject.Profile;
 import org.kuali.ext.mm.service.MMDocumentUtilService;
@@ -15,8 +10,13 @@ import org.kuali.ext.mm.service.MMServiceLocator;
 import org.kuali.ext.mm.util.MMUtil;
 import org.kuali.rice.kew.actionitem.ActionItem;
 import org.kuali.rice.kew.service.KEWServiceLocator;
-import org.kuali.rice.kim.bo.Person;
-import org.kuali.rice.kns.util.GlobalVariables;
+import org.kuali.rice.kim.api.identity.Person;
+import org.kuali.rice.krad.util.GlobalVariables;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author rponraj
@@ -54,7 +54,7 @@ public class MMDocumentUtilServiceImpl implements MMDocumentUtilService {
         if(StringUtils.isEmpty(docNumber) || StringUtils.isEmpty(principalId))
             return false;
 
-        Collection<ActionItem> actionsItems = KEWServiceLocator.getActionListService().findByWorkflowUserRouteHeaderId(principalId, new Long(docNumber));
+        Collection<ActionItem> actionsItems = KEWServiceLocator.getActionListService().findByWorkflowUserDocumentId(principalId, docNumber);
 
         return !MMUtil.isCollectionEmpty(actionsItems);
     }
@@ -71,7 +71,7 @@ public class MMDocumentUtilServiceImpl implements MMDocumentUtilService {
 
 
 
-        Collection<ActionItem> actionsItems = KEWServiceLocator.getActionListService().findByWorkflowUserRouteHeaderId(principalId, new Long(docNumber));
+        Collection<ActionItem> actionsItems = KEWServiceLocator.getActionListService().findByWorkflowUserDocumentId(principalId, docNumber);
 
         return !MMUtil.isCollectionEmpty(actionsItems);
     }

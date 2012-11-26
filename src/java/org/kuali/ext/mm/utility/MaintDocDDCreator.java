@@ -4,17 +4,17 @@
  */
 package org.kuali.ext.mm.utility;
 
-import java.beans.PropertyDescriptor;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.List;
-
 import org.apache.commons.beanutils.PropertyUtils;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Node;
 import org.dom4j.io.SAXReader;
-import org.kuali.rice.kns.bo.BusinessObject;
+import org.kuali.rice.krad.bo.BusinessObject;
+
+import java.beans.PropertyDescriptor;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.List;
 
 public class MaintDocDDCreator {
 

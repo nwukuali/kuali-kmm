@@ -1,27 +1,19 @@
 package org.kuali.ext.mm.cart.service.impl;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.commons.lang.StringUtils;
-import org.kuali.ext.mm.businessobject.Catalog;
-import org.kuali.ext.mm.businessobject.CatalogItem;
-import org.kuali.ext.mm.businessobject.Customer;
-import org.kuali.ext.mm.businessobject.CustomerFavDetail;
-import org.kuali.ext.mm.businessobject.CustomerFavHeader;
+import org.kuali.ext.mm.businessobject.*;
 import org.kuali.ext.mm.cart.ShopCartConstants;
 import org.kuali.ext.mm.cart.ShopCartKeyConstants;
 import org.kuali.ext.mm.cart.service.ShopCartCatalogService;
 import org.kuali.ext.mm.cart.service.ShopCartFavoriteService;
 import org.kuali.ext.mm.common.sys.MMConstants;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.service.DictionaryValidationService;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.util.GlobalVariables;
+import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.service.DictionaryValidationService;
+import org.kuali.rice.krad.service.KRADServiceLocatorWeb;
+import org.kuali.rice.krad.util.GlobalVariables;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.*;
 
 
 @Transactional
@@ -142,7 +134,7 @@ public class ShopCartFavoriteServiceImpl implements ShopCartFavoriteService {
 	 */
 	public boolean validateNewFavoriteList(CustomerFavHeader header) {
 		boolean isValid = true;
-		DictionaryValidationService validationService = KNSServiceLocator.getDictionaryValidationService();
+		DictionaryValidationService validationService = KRADServiceLocatorWeb.getDictionaryValidationService();
 		isValid = validationService.isBusinessObjectValid(header);
 
 		CustomerFavHeader checkHeader = getFavoriteHeaderByName(header.getCustomerFavName(), header.getPrincipalName());

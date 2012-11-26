@@ -3,9 +3,9 @@
  */
 package org.kuali.ext.mm.document.authorization;
 
-import org.kuali.rice.kns.document.Document;
+import org.kuali.rice.kew.api.WorkflowDocument;
 import org.kuali.rice.kns.document.authorization.TransactionalDocumentPresentationControllerBase;
-import org.kuali.rice.kns.workflow.service.KualiWorkflowDocument;
+import org.kuali.rice.krad.document.Document;
 
 /**
  * @author rshrivas
@@ -13,22 +13,22 @@ import org.kuali.rice.kns.workflow.service.KualiWorkflowDocument;
  */
 public class DeliveryLabelDocumentPresentationController extends TransactionalDocumentPresentationControllerBase{
     @Override
-    protected boolean canSendAdhocRequests(Document document) {
+    public boolean canSendAdhocRequests(Document document) {
         return false;
     }
 
     @Override
-    protected boolean canEdit(Document document){
+    public boolean canEdit(Document document){
         boolean canEdit = false;
-        KualiWorkflowDocument workflowDocument = document.getDocumentHeader().getWorkflowDocument();
-        if (workflowDocument.stateIsInitiated() || workflowDocument.stateIsSaved() || workflowDocument.stateIsException()) {
+        WorkflowDocument workflowDocument = document.getDocumentHeader().getWorkflowDocument();
+        if (workflowDocument.isInitiated() || workflowDocument.isSaved() || workflowDocument.isException()) {
             canEdit = true; 
         }        
         return canEdit;
     }
 
     @Override
-    protected boolean canBlanketApprove(Document document) {
+    public boolean canBlanketApprove(Document document) {
         return false;
     }
 }

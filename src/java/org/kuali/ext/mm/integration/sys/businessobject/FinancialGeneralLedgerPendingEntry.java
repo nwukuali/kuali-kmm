@@ -16,23 +16,22 @@
 
 package org.kuali.ext.mm.integration.sys.businessobject;
 
-import static org.kuali.ext.mm.common.sys.MMConstants.LF;
+import org.kuali.ext.mm.businessobject.StoresPersistableBusinessObject;
+import org.kuali.ext.mm.integration.FinancialSystemComponent;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+import org.kuali.rice.krad.bo.ExternalizableBusinessObject;
 
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.LinkedHashMap;
 
-import org.kuali.ext.mm.businessobject.StoresPersistableBusinessObject;
-import org.kuali.ext.mm.integration.FinancialSystemComponent;
-import org.kuali.rice.kns.bo.ExternalizableBusinessObject;
-import org.kuali.rice.kns.util.KualiDecimal;
+import static org.kuali.ext.mm.common.sys.MMConstants.LF;
 
 /**
  * @author harsha07
  */
 public class FinancialGeneralLedgerPendingEntry extends StoresPersistableBusinessObject implements
-        ExternalizableBusinessObject, FinancialSystemComponent {
+	ExternalizableBusinessObject, FinancialSystemComponent {
 
     private static final long serialVersionUID = -1007528720894915767L;
     private Integer entryId;
@@ -649,15 +648,6 @@ public class FinancialGeneralLedgerPendingEntry extends StoresPersistableBusines
      */
     public void setTransactionEntryProcessedTs(Timestamp transactionEntryProcessedTs) {
         this.transactionEntryProcessedTs = transactionEntryProcessedTs;
-    }
-
-
-    /**
-     * @see org.kuali.rice.kns.bo.BusinessObjectBase#toStringMapper()
-     */
-    @Override
-    protected LinkedHashMap<String, String> toStringMapper() {
-        return null;
     }
 
 

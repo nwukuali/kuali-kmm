@@ -1,18 +1,18 @@
 package org.kuali.ext.mm.document.authorization;
 
-import org.kuali.rice.kns.document.Document;
 import org.kuali.rice.kns.document.authorization.TransactionalDocumentPresentationControllerBase;
+import org.kuali.rice.krad.document.Document;
 
 public class MassUpdateDocumentPresentationController extends	TransactionalDocumentPresentationControllerBase {
 
 
 	@Override
-	protected boolean canSendAdhocRequests(Document document) {
+	public boolean canSendAdhocRequests(Document document) {
     	return false;
     }
 
 	@Override
-    protected boolean canSave(Document document){
+    public boolean canSave(Document document){
     	return false;
     }
 

@@ -1,15 +1,13 @@
 package org.kuali.ext.mm.businessobject;
 
-import java.sql.Timestamp;
-import java.util.LinkedHashMap;
+import org.kuali.ext.mm.util.MMDecimal;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import org.kuali.ext.mm.util.MMDecimal;
-import org.kuali.rice.kns.util.KualiDecimal;
+import java.sql.Timestamp;
 
 @SuppressWarnings("serial")
 @Entity
@@ -266,14 +264,5 @@ public class CatalogItemPending extends MMPersistableBusinessObjectBase {
 		this.shippingLh = shippingLh;
 	}
 
-	/**
-	 * toStringMapper
-	 * @return LinkedHashMap
-	 */
-	@Override
-    public LinkedHashMap toStringMapper() {
-		LinkedHashMap propMap = new LinkedHashMap();
-		return propMap;
-	}
 
 }

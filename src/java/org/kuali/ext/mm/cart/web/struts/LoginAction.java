@@ -1,10 +1,5 @@
 package org.kuali.ext.mm.cart.web.struts;
 
-import java.util.Properties;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -14,11 +9,18 @@ import org.kuali.ext.mm.cart.ShopCartKeyConstants;
 import org.kuali.ext.mm.cart.service.ShopCartCustomerService;
 import org.kuali.ext.mm.cart.service.ShopCartServiceLocator;
 import org.kuali.ext.mm.common.sys.MMConstants;
-import org.kuali.rice.kim.bo.Person;
-import org.kuali.rice.kim.service.KIMServiceLocator;
-import org.kuali.rice.kns.util.GlobalVariables;
-import org.kuali.rice.kns.util.KNSConstants;
-import org.kuali.rice.kns.util.UrlFactory;
+import org.kuali.rice.kim.api.identity.Person;
+import org.kuali.rice.kim.api.services.KimApiServiceLocator;
+import org.kuali.rice.krad.util.GlobalVariables;
+import org.kuali.rice.krad.util.KRADConstants;
+import org.kuali.rice.krad.util.UrlFactory;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Properties;
+
+//import org.kuali.rice.kim.api.identity.Person;
+//import org.kuali.rice.kim.api.services.KimApiServiceLocator;
 
 
 public class LoginAction extends StoresShoppingActionBase {
@@ -51,7 +53,7 @@ public class LoginAction extends StoresShoppingActionBase {
         	return mapping.findForward(MMConstants.MAPPING_BASIC);
         }
 
-        Person user = KIMServiceLocator.getPersonService().getPersonByPrincipalName(lForm.getUsername());
+        Person user = KimApiServiceLocator.getPersonService().getPersonByPrincipalName(lForm.getUsername());
         Customer customer = customerService.getCustomerById(lForm.getUsername());
         if(user == null) {
         	request.getSession().setAttribute(ShopCartConstants.PUBLIC_ID, ShopCartConstants.User.SHOP_GUEST);
@@ -72,7 +74,7 @@ public class LoginAction extends StoresShoppingActionBase {
         }
 
         Properties parameters = new Properties();
-        parameters.put(KNSConstants.DISPATCH_REQUEST_PARAMETER, ShopCartConstants.START_METHOD);
+        parameters.put(KRADConstants.DISPATCH_REQUEST_PARAMETER, ShopCartConstants.START_METHOD);
 
 		return new ActionForward(UrlFactory.parameterizeUrl(ShopCartConstants.HOME_ACTION, parameters), true);
     }

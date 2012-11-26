@@ -16,17 +16,16 @@
 
 package org.kuali.ext.mm.integration.service.impl.kfs;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.xml.namespace.QName;
-
 import org.kuali.ext.mm.integration.service.FinancialLocationService;
 import org.kuali.ext.mm.integration.sys.businessobject.FinancialBuilding;
 import org.kuali.ext.mm.integration.sys.businessobject.FinancialRoom;
 import org.kuali.kfs.sys.businessobject.Building;
 import org.kuali.kfs.sys.businessobject.Room;
-import org.kuali.rice.kns.service.BusinessObjectService;
+import org.kuali.rice.krad.service.BusinessObjectService;
+
+import javax.xml.namespace.QName;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author harsha07

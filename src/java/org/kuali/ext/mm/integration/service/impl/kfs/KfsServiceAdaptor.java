@@ -16,11 +16,10 @@
 
 package org.kuali.ext.mm.integration.service.impl.kfs;
 
-import java.io.Serializable;
+import org.kuali.rice.core.api.resourceloader.GlobalResourceLoader;
 
 import javax.xml.namespace.QName;
-
-import org.kuali.rice.core.resourceloader.GlobalResourceLoader;
+import java.io.Serializable;
 
 /**
  * Abstract base class for all KFS implemented adaptors

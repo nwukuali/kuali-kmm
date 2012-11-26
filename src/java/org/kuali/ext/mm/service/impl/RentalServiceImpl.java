@@ -1,30 +1,21 @@
 package org.kuali.ext.mm.service.impl;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.commons.lang.StringUtils;
-import org.kuali.ext.mm.businessobject.Accounts;
-import org.kuali.ext.mm.businessobject.OrderDetail;
-import org.kuali.ext.mm.businessobject.PickListLine;
-import org.kuali.ext.mm.businessobject.Rental;
-import org.kuali.ext.mm.businessobject.Stock;
+import org.kuali.ext.mm.businessobject.*;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.dataaccess.MMBusinessObjectDao;
 import org.kuali.ext.mm.service.RentalService;
 import org.kuali.ext.mm.util.MMUtil;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.util.KualiDecimal;
-import org.kuali.rice.kns.util.ObjectUtils;
-import org.kuali.rice.kns.util.TransactionalServiceUtils;
+import org.kuali.rice.core.api.CoreApiServiceLocator;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.util.ObjectUtils;
+import org.kuali.rice.krad.util.TransactionalServiceUtils;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.sql.Timestamp;
+import java.util.*;
 
 
 @Transactional
@@ -40,7 +31,7 @@ public class RentalServiceImpl implements RentalService {
 
 		if(availableRental != null) {
 		    availableRental.setRentalStatusCode(MMConstants.Rental.RENTAL_STATUS_ISSUED);
-			availableRental.setIssueDate(KNSServiceLocator.getDateTimeService().getCurrentTimestamp());
+			availableRental.setIssueDate(CoreApiServiceLocator.getDateTimeService().getCurrentTimestamp());
 			List<Accounts> rentalAccounts = new ArrayList<Accounts>();
 			for(Accounts account : line.getOrderDetail().getAccounts()) {
 			    Double total = line.getStock().getRentalObject().getDailyDemurragePrice().doubleValue();

@@ -4,20 +4,15 @@
 package org.kuali.ext.mm.b2b.cxml.transform;
 
 import org.apache.commons.lang.StringUtils;
-import org.kuali.ext.mm.b2b.cxml.types.Address;
-import org.kuali.ext.mm.b2b.cxml.types.Country;
-import org.kuali.ext.mm.b2b.cxml.types.CountryCode;
-import org.kuali.ext.mm.b2b.cxml.types.Email;
-import org.kuali.ext.mm.b2b.cxml.types.Name;
-import org.kuali.ext.mm.b2b.cxml.types.Phone;
-import org.kuali.ext.mm.b2b.cxml.types.PostalAddress;
-import org.kuali.ext.mm.b2b.cxml.types.TelephoneNumber;
+import org.kuali.ext.mm.b2b.cxml.types.*;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.MMKeyConstants;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.service.AddressService;
-import org.kuali.rice.kns.service.CountryService;
-import org.kuali.rice.kns.service.KNSServiceLocator;
+import org.kuali.rice.krad.service.KRADServiceLocator;
+import org.kuali.rice.location.api.country.CountryService;
+
+import java.lang.Object;
 
 
 /**
@@ -39,7 +34,7 @@ public class AddressToCxml implements CxmlTransformer<Address, org.kuali.ext.mm.
         org.kuali.ext.mm.b2b.cxml.types.Address cxmlAddress = new org.kuali.ext.mm.b2b.cxml.types.Address();
         cxmlAddress.setName(new Name());
         cxmlAddress.getName().setLang("en");
-        cxmlAddress.getName().setContent(KNSServiceLocator.getKualiConfigurationService().getPropertyString(MMKeyConstants.B2B_COMPANY_NAME));
+        cxmlAddress.getName().setContent(KRADServiceLocator.getKualiConfigurationService().getPropertyValueAsString(MMKeyConstants.B2B_COMPANY_NAME));
         cxmlAddress.setAddressID(address.getAddressId());
 
         Email email = new Email();
@@ -56,8 +51,9 @@ public class AddressToCxml implements CxmlTransformer<Address, org.kuali.ext.mm.
         postalAddress.setState(address.getAddressStateCode());
         postalAddress.setPostalCode(address.getAddressPostalCode());
         Country country = new Country();
-        String countryName = SpringContext.getBean(CountryService.class).getByPrimaryId(
-                address.getAddressCountryCode()).getPostalCountryName();
+				//TODO: NWU - Not sure if getCountry is the same as findByPrimaryKey
+        String countryName = SpringContext.getBean(CountryService.class).getCountry(
+                address.getAddressCountryCode()).getName();
         country.setContent(countryName);
         country.setIsoCountryCode(address.getAddressCountryCode());
         postalAddress.setCountry(country);

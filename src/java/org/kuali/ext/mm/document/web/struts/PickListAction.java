@@ -1,17 +1,6 @@
 package org.kuali.ext.mm.document.web.struts;
 
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -24,13 +13,17 @@ import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.document.PickListDocument;
 import org.kuali.ext.mm.service.PickListService;
 import org.kuali.ext.mm.sys.service.SegmentedLookupResultsService;
-import org.kuali.rice.kns.bo.PersistableBusinessObject;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.util.GlobalVariables;
-import org.kuali.rice.kns.util.KNSConstants;
-import org.kuali.rice.kns.util.TypedArrayList;
-import org.kuali.rice.kns.util.UrlFactory;
 import org.kuali.rice.kns.web.struts.action.KualiTransactionalDocumentActionBase;
+import org.kuali.rice.krad.bo.PersistableBusinessObject;
+import org.kuali.rice.krad.service.KRADServiceLocator;
+import org.kuali.rice.krad.util.GlobalVariables;
+import org.kuali.rice.krad.util.KRADConstants;
+import org.kuali.rice.krad.util.UrlFactory;
+import org.springframework.util.AutoPopulatingList;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.*;
 
 
 public class PickListAction extends KualiTransactionalDocumentActionBase {
@@ -50,7 +43,7 @@ public class PickListAction extends KualiTransactionalDocumentActionBase {
         PickListForm plForm = (PickListForm) form;
 
         //TODO: test this to make sure the correct path is coming
-        String basePath = KNSServiceLocator.getKualiConfigurationService().getPropertyString(MMKeyConstants.KMM_URL_KEY);
+        String basePath = KRADServiceLocator.getKualiConfigurationService().getPropertyValueAsString(MMKeyConstants.KMM_URL_KEY);
         String backLocation = basePath + "/" + MMConstants.PICK_LIST_ACTION;
 
         Properties parameters = new Properties();
@@ -58,18 +51,18 @@ public class PickListAction extends KualiTransactionalDocumentActionBase {
         parameters.put(MMConstants.ACTION_PARM_PICK_STATUS,
                 MMConstants.PickStatusCode.PICK_STATUS_INIT);
         parameters.put(MMConstants.ACTION_PARM_PICKLIST_DOC_NBR, plForm.getDocId());
-        parameters.put(KNSConstants.DOC_FORM_KEY, plForm.getFormKey());
-        parameters.put(KNSConstants.DOC_NUM, plForm.getDocId());
-        parameters.put(KNSConstants.BUSINESS_OBJECT_CLASS_ATTRIBUTE, PickTicket.class
+        parameters.put(KRADConstants.DOC_FORM_KEY, plForm.getFormKey());
+        parameters.put(KRADConstants.DOC_NUM, plForm.getDocId());
+        parameters.put(KRADConstants.BUSINESS_OBJECT_CLASS_ATTRIBUTE, PickTicket.class
                 .getCanonicalName());
         parameters.put(MMConstants.SHOW_MAINT_LINKS, "true");
-        parameters.put(KNSConstants.HIDE_LOOKUP_RETURN_LINK, "true");
-        parameters.put(KNSConstants.RETURN_LOCATION_PARAMETER, backLocation);
-        parameters.put(KNSConstants.DISPATCH_REQUEST_PARAMETER, KNSConstants.SEARCH_METHOD);
+        parameters.put(KRADConstants.HIDE_LOOKUP_RETURN_LINK, "true");
+        parameters.put(KRADConstants.RETURN_LOCATION_PARAMETER, backLocation);
+        parameters.put(KRADConstants.DISPATCH_REQUEST_PARAMETER, KRADConstants.SEARCH_METHOD);
 
-        String lookupUrl = getKualiConfigurationService().getPropertyString(
-                KNSConstants.APPLICATION_URL_KEY)
-                + "/kr/" + KNSConstants.LOOKUP_ACTION;
+        String lookupUrl = getKualiConfigurationService().getPropertyValueAsString(
+                KRADConstants.APPLICATION_URL_KEY)
+                + "/kr/" + KRADConstants.LOOKUP_ACTION;
 
         return new ActionForward(UrlFactory.parameterizeUrl(lookupUrl, parameters), true);
     }
@@ -86,21 +79,21 @@ public class PickListAction extends KualiTransactionalDocumentActionBase {
 
         // automatically create document description template
         plForm.getDocument().getDocumentHeader().setDocumentDescription(
-                getKualiConfigurationService().getPropertyString(
-                        MMKeyConstants.PickList.PICK_LIST_GENERATE_DOC_DESC));
+                getKualiConfigurationService().getPropertyValueAsString(
+									MMKeyConstants.PickList.PICK_LIST_GENERATE_DOC_DESC));
 
         // Set Default Property values for document
         // TODO: is there a better place to set these?
-        if (plForm.getDocument().getDocumentHeader().getWorkflowDocument().stateIsInitiated()) {
+        if (plForm.getDocument().getDocumentHeader().getWorkflowDocument().isInitiated()) {
             plForm.getPickListDocument().setWarehouseCd(
-                    getParameterService().getParameterValue(MMConstants.MM_NAMESPACE,
-                            MMConstants.Parameters.DOCUMENT,
-                            MMConstants.Parameters.DEFAULT_WAREHOUSE_CD));
+                    getParameterService().getParameterValueAsString(MMConstants.MM_NAMESPACE,
+											MMConstants.Parameters.DOCUMENT,
+											MMConstants.Parameters.DEFAULT_WAREHOUSE_CD));
             plForm.getPickListDocument().setSortCode(
                     getParameterService()
-                            .getParameterValue(MMConstants.MM_NAMESPACE,
-                                    MMConstants.Parameters.DOCUMENT,
-                                    MMConstants.Parameters.DEFAULT_SORT_CD));
+                            .getParameterValueAsString(MMConstants.MM_NAMESPACE,
+															MMConstants.Parameters.DOCUMENT,
+															MMConstants.Parameters.DEFAULT_SORT_CD));
         }
 
         resetSummaryValues((PickListForm) form);
@@ -159,7 +152,7 @@ public class PickListAction extends KualiTransactionalDocumentActionBase {
             }
 
             // Reset line list and Summary values
-            List<PickListLine> pickListLineList = new TypedArrayList(PickListLine.class);
+            List<PickListLine> pickListLineList = new AutoPopulatingList(PickListLine.class);
             resetSummaryValues(pickListForm);
 
             if (rawValues != null) {

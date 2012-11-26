@@ -1,28 +1,7 @@
 package org.kuali.ext.mm.service.impl;
 
-import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.apache.commons.lang.StringUtils;
-import org.kuali.ext.mm.businessobject.Accounts;
-import org.kuali.ext.mm.businessobject.CatalogItem;
-import org.kuali.ext.mm.businessobject.CreditMemoExpected;
-import org.kuali.ext.mm.businessobject.MMCapitalAssetInformation;
-import org.kuali.ext.mm.businessobject.MMCapitalAssetInformationDetail;
-import org.kuali.ext.mm.businessobject.OrderDetail;
-import org.kuali.ext.mm.businessobject.Profile;
-import org.kuali.ext.mm.businessobject.Rental;
-import org.kuali.ext.mm.businessobject.ReturnDetail;
-import org.kuali.ext.mm.businessobject.StagingRental;
-import org.kuali.ext.mm.businessobject.Stock;
-import org.kuali.ext.mm.businessobject.StoresPersistableBusinessObject;
-import org.kuali.ext.mm.businessobject.Warehouse;
-import org.kuali.ext.mm.businessobject.WarehouseAccounts;
+import org.kuali.ext.mm.businessobject.*;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.dataaccess.CheckinOrderDAO;
@@ -38,21 +17,22 @@ import org.kuali.ext.mm.integration.fp.businessobject.FinancialCapitalAssetInfor
 import org.kuali.ext.mm.integration.fp.businessobject.FinancialCapitalAssetInformationDetail;
 import org.kuali.ext.mm.integration.fp.businessobject.FinancialInternalBillingItem;
 import org.kuali.ext.mm.integration.sys.businessobject.FinancialAccountingLine;
-import org.kuali.ext.mm.service.IReturnCommand;
-import org.kuali.ext.mm.service.MMServiceLocator;
-import org.kuali.ext.mm.service.ProfileService;
-import org.kuali.ext.mm.service.RTVPDFService;
-import org.kuali.ext.mm.service.ReturnActionService;
-import org.kuali.ext.mm.service.ReturnOrderService;
-import org.kuali.ext.mm.service.StockService;
+import org.kuali.ext.mm.service.*;
 import org.kuali.ext.mm.util.MMDecimal;
 import org.kuali.ext.mm.util.MMUtil;
-import org.kuali.rice.kns.bo.DocumentHeader;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.util.GlobalVariables;
-import org.kuali.rice.kns.util.KualiDecimal;
-import org.kuali.rice.kns.util.ObjectUtils;
+import org.kuali.rice.core.api.CoreApiServiceLocator;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+import org.kuali.rice.krad.bo.DocumentHeader;
+import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.service.KRADServiceLocator;
+import org.kuali.rice.krad.service.KRADServiceLocatorWeb;
+import org.kuali.rice.krad.util.GlobalVariables;
+import org.kuali.rice.krad.util.ObjectUtils;
+
+import java.io.ByteArrayOutputStream;
+import java.util.*;
+
+//import org.kuali.rice.krad.bo.DocumentHeader;
 
 
 /**
@@ -423,7 +403,7 @@ public class ReturnOrderServiceImpl implements ReturnOrderService {
                     for(Rental rental : currentRentals) {
                             rental.setReturnDetailId(rdetail.getReturnDetailId());
                             rental.setReturnDetail(rdetail);
-                            rental.setReturnDate(KNSServiceLocator.getDateTimeService().getCurrentTimestamp());
+                            rental.setReturnDate(CoreApiServiceLocator.getDateTimeService().getCurrentTimestamp());
                             rental.setRentalStatusCode(MMConstants.Rental.RENTAL_STATUS_RETURNED);
                             rdetail.getRentals().add(rental);
                     }
@@ -577,14 +557,14 @@ public class ReturnOrderServiceImpl implements ReturnOrderService {
             ReturnDocument vdoc = rdoc.getVendorReturnDoc();
             try {
 
-                KNSServiceLocator.getDocumentService().saveDocument(vdoc);
+                KRADServiceLocatorWeb.getDocumentService().saveDocument(vdoc);
 
                 if (!vdoc.getDocumentHeader().hasWorkflowDocument())
-                    vdoc = (ReturnDocument) KNSServiceLocator.getDocumentService()
+                    vdoc = (ReturnDocument) KRADServiceLocatorWeb.getDocumentService()
                             .getByDocumentHeaderId(vdoc.getDocumentNumber());
 
-                vdoc.getDocumentHeader().getWorkflowDocument().routeDocument(
-                        "Document submitted automatically");
+                vdoc.getDocumentHeader().getWorkflowDocument().route(
+									"Document submitted automatically");
 
             }
             catch (Exception e) {
@@ -821,7 +801,7 @@ public class ReturnOrderServiceImpl implements ReturnOrderService {
         fieldValues.put(MMConstants.ReturnDetail.ORDER_DETAIL_ID, returnDetail.getOrderDetailId());
         fieldValues.put(MMConstants.ReturnDetail.RETURN_DOCUMENT 
                 + "." + MMConstants.ReturnDocument.RETURN_DOCUMENT_STATUS_CODE, MMConstants.OrderStatus.ORDER_LINE_OPEN);
-        Collection<ReturnDetail> returnDetails = KNSServiceLocator.getBusinessObjectService().findMatching(ReturnDetail.class, fieldValues);
+        Collection<ReturnDetail> returnDetails = KRADServiceLocator.getBusinessObjectService().findMatching(ReturnDetail.class, fieldValues);
         for(ReturnDetail detail : returnDetails) {
             qty += detail.getReturnQuantity();
         }
@@ -858,7 +838,7 @@ public class ReturnOrderServiceImpl implements ReturnOrderService {
         if(!orderDetails.isEmpty()) {
             Map<String, Object> fieldValues = new HashMap<String, Object>();
             fieldValues.put(MMConstants.Accounts.ORDER_DETAIL_ID, orderDetails.keySet());
-            Collection<Accounts> accountingLines = KNSServiceLocator.getBusinessObjectService().findMatching(Accounts.class, fieldValues);
+            Collection<Accounts> accountingLines = KRADServiceLocator.getBusinessObjectService().findMatching(Accounts.class, fieldValues);
             accountingLinesMap.put(document.getOrderDocumentNumber(), combineAndConvertAccountingLines(orderDetails, accountingLines, document.getOrderDocumentNumber()));
         }
         
@@ -866,7 +846,7 @@ public class ReturnOrderServiceImpl implements ReturnOrderService {
             String orderDetailAssetKey = document.getOrderDocumentNumber() + "-" + String.valueOf(orderDetailId);
             Map<String, Object> fieldValuesAssets = new HashMap<String, Object>();
             fieldValuesAssets.put(MMConstants.Accounts.ORDER_DETAIL_ID, orderDetailId);
-            Collection<Accounts> accountingLinesAssets = KNSServiceLocator.getBusinessObjectService().findMatching(Accounts.class, fieldValuesAssets);
+            Collection<Accounts> accountingLinesAssets = KRADServiceLocator.getBusinessObjectService().findMatching(Accounts.class, fieldValuesAssets);
             accountingLinesMap.put(orderDetailAssetKey, combineAndConvertAccountingLines(orderDetailsAssets, accountingLinesAssets, document.getOrderDocumentNumber()));
         }
         return accountingLinesMap;
@@ -915,7 +895,7 @@ public class ReturnOrderServiceImpl implements ReturnOrderService {
      * @return
      */
     private boolean isReturningAsset(ReturnDetail rdetail) {
-        MMCapitalAssetInformation asset = KNSServiceLocator.getBusinessObjectService()
+        MMCapitalAssetInformation asset = KRADServiceLocator.getBusinessObjectService()
             .findBySinglePrimaryKey(MMCapitalAssetInformation.class, rdetail.getOrderDetailId());
         return asset != null;
     }

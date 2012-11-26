@@ -15,27 +15,24 @@
  */
 package org.kuali.ext.mm.common.sys.context;
 
+import org.apache.log4j.Logger;
+import org.kuali.ext.mm.util.MMDecimal;
+import org.kuali.ext.mm.web.format.MMDecimalFormatter;
+import org.kuali.rice.core.api.config.property.ConfigContext;
+import org.kuali.rice.core.framework.config.property.SimpleConfig;
+import org.kuali.rice.core.web.format.Formatter;
+import org.kuali.rice.core.web.listener.KualiInitializeListener;
+import org.springframework.util.Log4jConfigurer;
+
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Properties;
 
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
-
-import org.apache.log4j.Logger;
-import org.kuali.ext.mm.util.MMDecimal;
-import org.kuali.ext.mm.web.format.MMDecimalFormatter;
-import org.kuali.rice.core.config.ConfigContext;
-import org.kuali.rice.core.config.SimpleConfig;
-import org.kuali.rice.core.util.JSTLConstants;
-import org.kuali.rice.kew.util.KEWConstants;
-import org.kuali.rice.kns.web.format.Formatter;
-import org.kuali.rice.kns.web.listener.JstlConstantsInitListener;
-import org.springframework.util.Log4jConfigurer;
-
 
 @SuppressWarnings("unchecked")
-public class WebApplicationInitListener extends JstlConstantsInitListener implements
+public class WebApplicationInitListener extends KualiInitializeListener /*extends JstlConstantsInitListener*/ implements
         ServletContextListener {
     /**
      *
@@ -47,9 +44,9 @@ public class WebApplicationInitListener extends JstlConstantsInitListener implem
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        sce.getServletContext().setAttribute("Constants", new JSTLConstants(KEWConstants.class));
-        SimpleConfig config = new SimpleConfig("classpath:"
-                + ContextConstants.CONFIGURATION_LOCATIONS_FILE);
+			//TODO: Expose Constants attribute on servlet context if required....
+//        sce.getServletContext().setAttribute("Constants", new JSTLConstants(KEWConstants.class));
+        SimpleConfig config = new SimpleConfig("classpath:" + ContextConstants.CONFIGURATION_LOCATIONS_FILE);
         try {
             config.parseConfig();
         }

@@ -3,27 +3,17 @@
  */
 package org.kuali.ext.mm.b2b.cxml.util;
 
-import static org.kuali.ext.mm.common.sys.MMConstants.LF;
-
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.Reader;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.io.Writer;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Enumeration;
+import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
+import org.kuali.ext.mm.b2b.cxml.types.*;
+import org.kuali.ext.mm.common.sys.MMConstants;
+import org.kuali.ext.mm.common.sys.MMPropertyConstants;
+import org.kuali.ext.mm.common.sys.context.SpringContext;
+import org.kuali.ext.mm.util.MMDecimal;
+import org.kuali.kfs.sys.KFSConstants;
+import org.kuali.rice.core.api.config.property.ConfigurationService;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.XMLConstants;
@@ -33,24 +23,17 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Enumeration;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
-import org.kuali.ext.mm.b2b.cxml.types.CXML;
-import org.kuali.ext.mm.b2b.cxml.types.Money;
-import org.kuali.ext.mm.b2b.cxml.types.ObjectFactory;
-import org.kuali.ext.mm.b2b.cxml.types.Response;
-import org.kuali.ext.mm.b2b.cxml.types.SharedSecret;
-import org.kuali.ext.mm.b2b.cxml.types.Status;
-import org.kuali.ext.mm.common.sys.MMConstants;
-import org.kuali.ext.mm.common.sys.MMPropertyConstants;
-import org.kuali.ext.mm.common.sys.context.SpringContext;
-import org.kuali.ext.mm.util.MMDecimal;
-import org.kuali.rice.core.config.ConfigContext;
-import org.kuali.rice.kew.util.KEWConstants;
-import org.kuali.rice.kns.service.KualiConfigurationService;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
+import static org.kuali.ext.mm.common.sys.MMConstants.LF;
+
+import java.lang.Object;
 
 
 /**
@@ -81,8 +64,8 @@ public final class CxmlUtil {
         //
         if (schema == null) {
             schema = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI).newSchema(
-                    new URL(SpringContext.getBean(KualiConfigurationService.class)
-                            .getPropertyString(MMPropertyConstants.APPLICATION_URL)
+                    new URL(SpringContext.getBean(ConfigurationService.class)
+                            .getPropertyValueAsString(MMPropertyConstants.APPLICATION_URL)
                             + "/static/xsd/cxml/cXML.xsd"));
         }
         return schema;
@@ -347,11 +330,11 @@ public final class CxmlUtil {
         return amount;
     }
 
-    public static final boolean isProductionEnvironment() {
-        return ConfigContext.getCurrentContextConfig().getProperty(
-                KEWConstants.PROD_DEPLOYMENT_CODE).equalsIgnoreCase(
-                ConfigContext.getCurrentContextConfig().getEnvironment());
-    }
+	public static final boolean isProductionEnvironment() {
+		String productionEnvironmentCode = org.kuali.kfs.sys.context.SpringContext.getBean(ConfigurationService.class).getPropertyValueAsString(KFSConstants.PROD_ENVIRONMENT_CODE_KEY);
+		String environmentCode = org.kuali.kfs.sys.context.SpringContext.getBean(ConfigurationService.class).getPropertyValueAsString(KFSConstants.ENVIRONMENT_KEY);
+		return StringUtils.equals(productionEnvironmentCode, environmentCode);
+	}
 
     public static final boolean canAccept(String deploymentMode) {
         // This check is to block any accidental commit from a TEST system into PRODUCTION

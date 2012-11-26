@@ -1,7 +1,5 @@
 package org.kuali.ext.mm.sys.identity;
 
-import java.util.LinkedHashMap;
-
 public class MMKimAttributes extends org.kuali.rice.kim.bo.impl.KimAttributes {
 
 	/**
@@ -20,13 +18,6 @@ public class MMKimAttributes extends org.kuali.rice.kim.bo.impl.KimAttributes {
 	public void setWorksheetStatusCode(String worksheetStatusCode) {
 		this.worksheetStatusCode = worksheetStatusCode;
 	}
-
-    @SuppressWarnings("unchecked")
-    @Override
-    protected LinkedHashMap toStringMapper() {
-        LinkedHashMap m = new LinkedHashMap();
-        return m;
-    }
 
 
 }

@@ -16,10 +16,10 @@
 
 package org.kuali.ext.mm.integration.service;
 
-import java.util.List;
+import org.kuali.rice.kew.api.exception.WorkflowException;
+import org.kuali.rice.krad.document.Document;
 
-import org.kuali.rice.kew.exception.WorkflowException;
-import org.kuali.rice.kns.document.Document;
+import java.util.List;
 
 @SuppressWarnings("unchecked")
 public interface FinancialDocumentService {

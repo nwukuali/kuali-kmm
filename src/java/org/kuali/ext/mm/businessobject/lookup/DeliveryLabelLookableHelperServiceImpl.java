@@ -3,11 +3,6 @@
  */
 package org.kuali.ext.mm.businessobject.lookup;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Properties;
-
 import org.apache.commons.lang.StringUtils;
 import org.kuali.ext.mm.businessobject.Delivery;
 import org.kuali.ext.mm.businessobject.DeliveryLine;
@@ -15,18 +10,19 @@ import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.document.DeliveryLabelDocument;
 import org.kuali.ext.mm.document.DeliveryLabelDocumentLines;
-import org.kuali.rice.kim.bo.impl.KimAttributes;
-import org.kuali.rice.kim.bo.types.dto.AttributeSet;
-import org.kuali.rice.kim.service.IdentityManagementService;
-import org.kuali.rice.kim.util.KimConstants;
-import org.kuali.rice.kns.authorization.BusinessObjectRestrictions;
-import org.kuali.rice.kns.bo.BusinessObject;
+import org.kuali.rice.kew.api.KewApiConstants;
+import org.kuali.rice.kim.api.KimConstants;
+import org.kuali.rice.kim.api.services.KimApiServiceLocator;
+import org.kuali.rice.kns.document.authorization.BusinessObjectRestrictions;
 import org.kuali.rice.kns.lookup.HtmlData;
 import org.kuali.rice.kns.lookup.KualiLookupableHelperServiceImpl;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.util.GlobalVariables;
-import org.kuali.rice.kns.util.KNSConstants;
 import org.kuali.rice.kns.web.struts.form.LookupForm;
+import org.kuali.rice.krad.bo.BusinessObject;
+import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.util.GlobalVariables;
+import org.kuali.rice.krad.util.KRADConstants;
+
+import java.util.*;
 
 
 /**
@@ -43,19 +39,19 @@ public class DeliveryLabelLookableHelperServiceImpl  extends KualiLookupableHelp
     public HtmlData getReturnUrl(BusinessObject businessObject, LookupForm lookupForm,
             List returnKeys, BusinessObjectRestrictions businessObjectRestrictions) {
 
-        String nameSpaceCode = KNSConstants.KUALI_RICE_SYSTEM_NAMESPACE;
-        AttributeSet permissionDetails = new AttributeSet();
-        permissionDetails.put(KimAttributes.DOCUMENT_TYPE_NAME, "DMDT");
+        String nameSpaceCode = KRADConstants.KUALI_RICE_SYSTEM_NAMESPACE;
+        Map<String, String> permissionDetails = new HashMap<String, String>();
+        permissionDetails.put(KimConstants.AttributeConstants.DOCUMENT_TYPE_NAME, "DMDT");
         
         BusinessObjectService bOService = SpringContext.getBean(BusinessObjectService.class);
         
         String conversionField = lookupForm.getConversionFields();
         if (StringUtils.isNotBlank(conversionField)
                 && conversionField.contains("documentNumber:packListDocNbr")) {
-            if (SpringContext.getBean(IdentityManagementService.class)
-                    .isAuthorizedByTemplateName(GlobalVariables.getUserSession().getPrincipalId(),
-                            nameSpaceCode, KimConstants.PermissionTemplateNames.INITIATE_DOCUMENT,
-                            permissionDetails, null)) {
+            if (KimApiServiceLocator.getPermissionService().isAuthorizedByTemplate(
+							GlobalVariables.getUserSession().getPrincipalId(),
+							nameSpaceCode, KewApiConstants.INITIATE_PERMISSION,
+							permissionDetails, null)) {
                 
                 DeliveryLabelDocument dLD = (DeliveryLabelDocument) businessObject;
                 String documentNumber = dLD.getDocumentNumber();

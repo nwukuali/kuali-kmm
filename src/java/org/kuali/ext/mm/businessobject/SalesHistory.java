@@ -4,10 +4,10 @@
 package org.kuali.ext.mm.businessobject;
 
 
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+
 import java.io.Serializable;
 import java.util.Date;
-
-import org.kuali.rice.kns.util.KualiDecimal;
 
 /**
  * @author rponraj

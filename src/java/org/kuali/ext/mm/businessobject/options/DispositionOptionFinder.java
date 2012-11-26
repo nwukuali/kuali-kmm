@@ -2,7 +2,7 @@ package org.kuali.ext.mm.businessobject.options;
 
 import org.kuali.ext.mm.businessobject.DispositionCode;
 import org.kuali.ext.mm.common.sys.MMConstants;
-import org.kuali.rice.kns.lookup.valueFinder.ValueFinder;
+import org.kuali.rice.krad.valuefinder.ValueFinder;
 
 
 public class DispositionOptionFinder extends MMKeyValuesBase implements ValueFinder {

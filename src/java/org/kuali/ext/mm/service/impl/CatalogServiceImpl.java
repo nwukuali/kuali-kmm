@@ -1,22 +1,7 @@
 package org.kuali.ext.mm.service.impl;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.commons.lang.StringUtils;
-import org.kuali.ext.mm.businessobject.Address;
-import org.kuali.ext.mm.businessobject.Catalog;
-import org.kuali.ext.mm.businessobject.CatalogGroup;
-import org.kuali.ext.mm.businessobject.CatalogItem;
-import org.kuali.ext.mm.businessobject.CatalogRestriction;
-import org.kuali.ext.mm.businessobject.CatalogSubgroup;
-import org.kuali.ext.mm.businessobject.CatalogSubgroupItem;
-import org.kuali.ext.mm.businessobject.Markup;
-import org.kuali.ext.mm.businessobject.Profile;
+import org.kuali.ext.mm.businessobject.*;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.dataaccess.MMBusinessObjectDao;
@@ -26,11 +11,13 @@ import org.kuali.ext.mm.service.AddressService;
 import org.kuali.ext.mm.service.CatalogService;
 import org.kuali.ext.mm.service.MarkupService;
 import org.kuali.ext.mm.util.MMDecimal;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.service.DateTimeService;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.util.KualiDecimal;
-import org.kuali.rice.kns.util.ObjectUtils;
+import org.kuali.rice.core.api.CoreApiServiceLocator;
+import org.kuali.rice.core.api.datetime.DateTimeService;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.util.ObjectUtils;
+
+import java.util.*;
 
 
 /**
@@ -85,7 +72,7 @@ public class CatalogServiceImpl implements CatalogService {
 	}
 	
 	public MMDecimal computeCatalogItemTax(CatalogItem item, MMDecimal priceAmount, Address shippingAddress, boolean willCall) {
-	    DateTimeService dateService = KNSServiceLocator.getDateTimeService();
+	    	DateTimeService dateService = CoreApiServiceLocator.getDateTimeService();
         FinancialSystemAdaptorFactory adaptorFactory = SpringContext.getBean(FinancialSystemAdaptorFactory.class);
         FinancialTaxService taxService = null;
         if(adaptorFactory.isSystemAvailable()) {

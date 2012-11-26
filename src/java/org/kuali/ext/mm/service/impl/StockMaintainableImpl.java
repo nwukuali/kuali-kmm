@@ -1,23 +1,7 @@
 package org.kuali.ext.mm.service.impl;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import org.apache.commons.lang.StringUtils;
-import org.kuali.ext.mm.businessobject.Bin;
-import org.kuali.ext.mm.businessobject.CatalogItem;
-import org.kuali.ext.mm.businessobject.Stock;
-import org.kuali.ext.mm.businessobject.StockBalance;
-import org.kuali.ext.mm.businessobject.StockCost;
-import org.kuali.ext.mm.businessobject.StockHistory;
-import org.kuali.ext.mm.businessobject.StockTransReason;
-import org.kuali.ext.mm.businessobject.Warehouse;
+import org.kuali.ext.mm.businessobject.*;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.gl.GeneralLedgerPostable;
@@ -29,14 +13,19 @@ import org.kuali.ext.mm.service.StockHistoryService;
 import org.kuali.ext.mm.service.StockService;
 import org.kuali.ext.mm.sys.batch.service.CatalogItemService;
 import org.kuali.ext.mm.util.MMDecimal;
-import org.kuali.rice.kns.bo.DocumentHeader;
-import org.kuali.rice.kns.bo.PersistableBusinessObject;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
 import org.kuali.rice.kns.document.MaintenanceDocument;
 import org.kuali.rice.kns.maintenance.KualiMaintainableImpl;
 import org.kuali.rice.kns.maintenance.Maintainable;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.util.GlobalVariables;
-import org.kuali.rice.kns.util.KualiDecimal;
+import org.kuali.rice.krad.bo.DocumentHeader;
+import org.kuali.rice.krad.bo.PersistableBusinessObject;
+import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.util.GlobalVariables;
+
+import java.sql.Timestamp;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class StockMaintainableImpl extends KualiMaintainableImpl implements GeneralLedgerPostable {
@@ -57,7 +46,6 @@ public class StockMaintainableImpl extends KualiMaintainableImpl implements Gene
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public Map populateBusinessObject(Map<String, String> fieldValues,
             MaintenanceDocument maintenanceDocument, String methodToCall) {
         BusinessObjectService bOS = SpringContext.getBean(BusinessObjectService.class);
@@ -198,14 +186,14 @@ public class StockMaintainableImpl extends KualiMaintainableImpl implements Gene
         Stock oldStockObject = stockService.retrieveStock(stock.getStockId()); // Old Stock Object
 
         List<StockHistory> stockHist = null;
-        if (documentHeader.getWorkflowDocument().stateIsEnroute()) {
+        if (documentHeader.getWorkflowDocument().isEnroute()) {
             GlobalVariables.getUserSession().removeObject("actionCode");
         }
 
         if (null != stock.getActionCode()) {
             String action = stock.getActionCode();
 
-            if (documentHeader.getWorkflowDocument().stateIsProcessed()) {
+            if (documentHeader.getWorkflowDocument().isProcessed()) {
 
                 // Code for Adjusting Stock Balance
                 if ("adjustBalance".equalsIgnoreCase(action)) {
@@ -880,7 +868,7 @@ public class StockMaintainableImpl extends KualiMaintainableImpl implements Gene
      * @see org.kuali.ext.mm.gl.GeneralLedgerPostable#getDocumentNumber()
      */
     public String getDocumentNumber() {
-        return this.documentNumber;
+        return getDocumentNumber();
     }
 
     /**

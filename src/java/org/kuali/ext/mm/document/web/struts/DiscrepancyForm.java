@@ -3,16 +3,15 @@
  */
 package org.kuali.ext.mm.document.web.struts;
 
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.document.DiscrepancyDocument;
-import org.kuali.rice.kns.service.KNSServiceLocator;
+import org.kuali.rice.kew.api.WorkflowDocument;
 import org.kuali.rice.kns.web.struts.form.KualiTransactionalDocumentFormBase;
 import org.kuali.rice.kns.web.ui.ExtraButton;
-import org.kuali.rice.kns.workflow.service.KualiWorkflowDocument;
+import org.kuali.rice.krad.service.KRADServiceLocator;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 
 /**
@@ -48,9 +47,9 @@ public class DiscrepancyForm extends KualiTransactionalDocumentFormBase{
 
     public List<ExtraButton> getExtraButtons() {        
         extraButtons.clear();        
-        KualiWorkflowDocument workflowDoc = this.getDiscrepancyDocument().getDocumentHeader().getWorkflowDocument();
-        String imageUrl = KNSServiceLocator.getKualiConfigurationService().getPropertyString(MMConstants.EXTERNALIZABLE_IMAGES_URL_KEY);
-        if(!(workflowDoc.stateIsApproved() || workflowDoc.stateIsEnroute() || workflowDoc.stateIsProcessed() || workflowDoc.stateIsFinal())) {
+        WorkflowDocument workflowDoc = this.getDiscrepancyDocument().getDocumentHeader().getWorkflowDocument();
+        String imageUrl = KRADServiceLocator.getKualiConfigurationService().getPropertyValueAsString(MMConstants.EXTERNALIZABLE_IMAGES_URL_KEY);
+        if(!(workflowDoc.isApproved() || workflowDoc.isEnroute() || workflowDoc.isProcessed() || workflowDoc.isFinal())) {
             extraButtons.add(createPrintButton(imageUrl));
         }   
         return extraButtons;

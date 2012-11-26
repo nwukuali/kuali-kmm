@@ -3,8 +3,6 @@
  */
 package org.kuali.ext.mm.cart.service.impl;
 
-import java.security.GeneralSecurityException;
-
 import org.apache.commons.lang.StringUtils;
 import org.kuali.ext.mm.businessobject.Customer;
 import org.kuali.ext.mm.cart.ShopCartConstants;
@@ -12,14 +10,17 @@ import org.kuali.ext.mm.cart.ShopCartKeyConstants;
 import org.kuali.ext.mm.cart.service.ShopCartCustomerService;
 import org.kuali.ext.mm.cart.service.ShopCartServiceLocator;
 import org.kuali.ext.mm.common.sys.MMConstants;
-import org.kuali.rice.core.service.EncryptionService;
-import org.kuali.rice.kim.bo.Person;
-import org.kuali.rice.kim.service.KIMServiceLocator;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.service.DictionaryValidationService;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.util.GlobalVariables;
+import org.kuali.rice.core.api.CoreApiServiceLocator;
+import org.kuali.rice.core.api.encryption.EncryptionService;
+import org.kuali.rice.kim.api.identity.Person;
+import org.kuali.rice.kim.api.services.KimApiServiceLocator;
+import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.service.DictionaryValidationService;
+import org.kuali.rice.krad.service.KRADServiceLocatorWeb;
+import org.kuali.rice.krad.util.GlobalVariables;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.security.GeneralSecurityException;
 
 
 /**
@@ -78,7 +79,7 @@ public class ShopCartCustomerServiceImpl implements ShopCartCustomerService {
 		if(!GlobalVariables.getUserSession().getPrincipalName().equals(ShopCartConstants.User.SHOP_GUEST)) {
 			customer = getCustomerById(GlobalVariables.getUserSession().getPrincipalName());
 			if(customer == null) {
-			    Person user = KIMServiceLocator.getPersonService().getPersonByPrincipalName(GlobalVariables.getUserSession().getPrincipalName());
+			    Person user = KimApiServiceLocator.getPersonService().getPersonByPrincipalName(GlobalVariables.getUserSession().getPrincipalName());
 			    if(user != null)
 			        customer = ShopCartServiceLocator.getShopCartCustomerService().createAndSaveNewCustomerFromPerson(user);
 			}
@@ -100,7 +101,7 @@ public class ShopCartCustomerServiceImpl implements ShopCartCustomerService {
 	 */
 	public boolean validateNewCustomer(Customer customer, String errorPath) {
 		boolean isValid = true;
-		DictionaryValidationService validationService = KNSServiceLocator.getDictionaryValidationService();
+		DictionaryValidationService validationService = KRADServiceLocatorWeb.getDictionaryValidationService();
 		isValid = validationService.isBusinessObjectValid(customer, errorPath);
 
 		if(StringUtils.isBlank(customer.getPrincipalName())) {
@@ -109,7 +110,7 @@ public class ShopCartCustomerServiceImpl implements ShopCartCustomerService {
 		}
 
 		if(isValid) {
-			Person user = KIMServiceLocator.getPersonService().getPersonByPrincipalName(customer.getPrincipalName());
+			Person user = KimApiServiceLocator.getPersonService().getPersonByPrincipalName(customer.getPrincipalName());
 			if(user != null || getCustomerById(customer.getPrincipalName()) != null) {
 				 GlobalVariables.getMessageMap().putError(errorPath + "." + MMConstants.Customer.PRINCIPAL_NAME, ShopCartKeyConstants.ERROR_CUSTOMER_PRINCIPAL_EXISTS);
 				 isValid=false;
@@ -169,7 +170,7 @@ public class ShopCartCustomerServiceImpl implements ShopCartCustomerService {
 
 		String hashword=null;
 		try {
-			hashword = KNSServiceLocator.getEncryptionService().hash(suppliedPassword);
+			hashword = CoreApiServiceLocator.getEncryptionService().hash(suppliedPassword);
 		} catch (GeneralSecurityException e) {
 			throw new RuntimeException(e);
 		}

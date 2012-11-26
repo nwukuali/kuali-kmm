@@ -3,22 +3,16 @@
  */
 package org.kuali.ext.mm.businessobject.lookup;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 import org.kuali.ext.mm.businessobject.Delivery;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
-import org.kuali.rice.kns.bo.BusinessObject;
 import org.kuali.rice.kns.lookup.HtmlData;
 import org.kuali.rice.kns.lookup.HtmlData.AnchorHtmlData;
 import org.kuali.rice.kns.lookup.KualiLookupableHelperServiceImpl;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.util.KNSConstants;
+import org.kuali.rice.krad.bo.BusinessObject;
+import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.util.KRADConstants;
+
+import java.util.*;
 
 
 /**
@@ -59,7 +53,7 @@ public class DeliveryLookableServiceImpl extends KualiLookupableHelperServiceImp
         if (fDocNbr == Integer.parseInt(delivery.getDocumentNumber())) {
             if (allowsMaintenanceEditAction(businessObject)) {
                 htmlDataList.add(getUrlData(businessObject,
-                        KNSConstants.MAINTENANCE_EDIT_METHOD_TO_CALL, pkNames));
+                        KRADConstants.MAINTENANCE_EDIT_METHOD_TO_CALL, pkNames));
             }
         }
         return htmlDataList;

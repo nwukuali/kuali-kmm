@@ -1,8 +1,5 @@
 package org.kuali.ext.mm.document.validation.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.commons.lang.StringUtils;
 import org.kuali.ext.mm.businessobject.PickListLine;
 import org.kuali.ext.mm.businessobject.Rental;
@@ -17,10 +14,13 @@ import org.kuali.ext.mm.service.MMServiceLocator;
 import org.kuali.ext.mm.service.PickVerifyService;
 import org.kuali.ext.mm.service.RentalService;
 import org.kuali.ext.mm.service.StockService;
-import org.kuali.rice.kns.document.Document;
 import org.kuali.rice.kns.rules.DocumentRuleBase;
-import org.kuali.rice.kns.util.GlobalVariables;
-import org.kuali.rice.kns.util.ObjectUtils;
+import org.kuali.rice.krad.document.Document;
+import org.kuali.rice.krad.util.GlobalVariables;
+import org.kuali.rice.krad.util.ObjectUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class PickVerifyDocumentRule extends DocumentRuleBase {

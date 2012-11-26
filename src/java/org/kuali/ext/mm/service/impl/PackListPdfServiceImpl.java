@@ -1,16 +1,11 @@
 package org.kuali.ext.mm.service.impl;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
-import java.util.List;
-
+import com.lowagie.text.Document;
+import com.lowagie.text.ExceptionConverter;
+import com.lowagie.text.PageSize;
+import com.lowagie.text.pdf.*;
 import org.apache.commons.lang.StringUtils;
-import org.kuali.ext.mm.businessobject.OrderDetail;
-import org.kuali.ext.mm.businessobject.PickListLine;
-import org.kuali.ext.mm.businessobject.Profile;
-import org.kuali.ext.mm.businessobject.Rental;
-import org.kuali.ext.mm.businessobject.StockPackNote;
+import org.kuali.ext.mm.businessobject.*;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.MMKeyConstants;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
@@ -21,27 +16,23 @@ import org.kuali.ext.mm.service.BackOrderService;
 import org.kuali.ext.mm.service.PackListPdfService;
 import org.kuali.ext.mm.service.PickVerifyService;
 import org.kuali.ext.mm.util.MMDecimal;
-import org.kuali.rice.kns.service.DateTimeService;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.service.KualiConfigurationService;
-import org.kuali.rice.kns.service.ParameterService;
-import org.kuali.rice.kns.util.KualiDecimal;
+import org.kuali.rice.core.api.CoreApiServiceLocator;
+import org.kuali.rice.core.api.config.property.ConfigurationService;
+import org.kuali.rice.core.api.datetime.DateTimeService;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+import org.kuali.rice.coreservice.framework.parameter.ParameterService;
 
-import com.lowagie.text.Document;
-import com.lowagie.text.ExceptionConverter;
-import com.lowagie.text.PageSize;
-import com.lowagie.text.pdf.AcroFields;
-import com.lowagie.text.pdf.PdfCopy;
-import com.lowagie.text.pdf.PdfImportedPage;
-import com.lowagie.text.pdf.PdfReader;
-import com.lowagie.text.pdf.PdfStamper;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class PackListPdfServiceImpl implements PackListPdfService {
 	protected static org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(PickListServiceImpl.class);
 
 	private ParameterService parameterService;
-	private KualiConfigurationService KualiConfigurationService;
+	private ConfigurationService KualiConfigurationService;
 	private ByteArrayOutputStream pdfContent;
 	private PdfCopy copy;
 	
@@ -151,13 +142,13 @@ public class PackListPdfServiceImpl implements PackListPdfService {
 	public void addPackingList(List<PickListLine> pickListLines, String messages) {
 		List<PdfPackingLine> pdfPackingLines = expandToPdfPackingLines(pickListLines);
 		PdfStamper stamper = null;
-		Integer maxLinesPerPage = Integer.parseInt(getParameterService().getParameterValue(MMConstants.MM_NAMESPACE, MMConstants.Parameters.DOCUMENT,  MMConstants.Parameters.PACKING_LIST_PDF_MAX_LINES));
-		String pdfTemplate = getParameterService().getParameterValue(MMConstants.MM_NAMESPACE, MMConstants.Parameters.DOCUMENT,  MMConstants.Parameters.PACKING_LIST_PDF);
+		Integer maxLinesPerPage = Integer.parseInt(getParameterService().getParameterValueAsString(MMConstants.MM_NAMESPACE, MMConstants.Parameters.DOCUMENT, MMConstants.Parameters.PACKING_LIST_PDF_MAX_LINES));
+		String pdfTemplate = getParameterService().getParameterValueAsString(MMConstants.MM_NAMESPACE, MMConstants.Parameters.DOCUMENT, MMConstants.Parameters.PACKING_LIST_PDF);
 		try {
 			//split up data that requires more than one page and repeat stamping for each necessary page
 			while(!pdfPackingLines.isEmpty()) {
 				ByteArrayOutputStream packingListContent = new ByteArrayOutputStream();
-				PdfReader reader = new PdfReader(getKualiConfigurationService().getPropertyString(MMKeyConstants.EXTERNAL_REPORTS_DIRECTORY_KEY) + "/" + pdfTemplate);
+				PdfReader reader = new PdfReader(getKualiConfigurationService().getPropertyValueAsString(MMKeyConstants.EXTERNAL_REPORTS_DIRECTORY_KEY) + "/" + pdfTemplate);
 	            stamper = new PdfStamper(reader, packingListContent);
 	            stampPackingListHeader(stamper, pickListLines);	                
 	            if(pdfPackingLines.size() > maxLinesPerPage) {
@@ -192,7 +183,7 @@ public class PackListPdfServiceImpl implements PackListPdfService {
     private List<PdfPackingLine> expandToPdfPackingLines(List<PickListLine> pickListLines) {
         List<PdfPackingLine> pdfPackingLines = new ArrayList<PdfPackingLine>();
         BackOrderService backOrderService = SpringContext.getBean(BackOrderService.class);
-        String serialLabel = getKualiConfigurationService().getPropertyString(MMKeyConstants.PackingList.LINE_SERIAL_LABEL);
+        String serialLabel = getKualiConfigurationService().getPropertyValueAsString(MMKeyConstants.PackingList.LINE_SERIAL_LABEL);
         
         int lineNumber = 0;
         for(PickListLine pickLine : pickListLines) {
@@ -229,39 +220,39 @@ public class PackListPdfServiceImpl implements PackListPdfService {
     private void stampPackingListHeader(PdfStamper stamper, List<PickListLine> pickListLines) {
 	    if(pickListLines.size() <= 0)
             return;
-	    KualiConfigurationService configService = getKualiConfigurationService();
+	    ConfigurationService configService = getKualiConfigurationService();
         OrderDocument orderDocument = pickListLines.get(0).getSalesInstance().getOrderDocument();
         Profile orderProfile = orderDocument.getCustomerProfile();
         FinancialSystemAdaptorFactory adaptorFactory = SpringContext.getBean(FinancialSystemAdaptorFactory.class);
         FinancialBuilding deliveryBuilding = adaptorFactory.getFinancialLocationService().getBuilding(orderDocument.getCampusCd(), orderDocument.getDeliveryBuildingCd());
        // FinancialRoom deliveryRoom = adaptorFactory.getFinancialLocationService().getRoom(orderDocument.getCampusCd(), orderDocument.getDeliveryBuildingCd(), orderDocument.getDeliveryBuildingRmNbr());
         try {
-            DateTimeService dateTimeService = KNSServiceLocator.getDateTimeService();
+            DateTimeService dateTimeService = CoreApiServiceLocator.getDateTimeService();
             AcroFields formFields = stamper.getAcroFields();
             if(pickListLines.get(0).getPickTicket().getPickTicketName().contains(MMConstants.PickTicket.NAME_ZONE))
-                formFields.setField(configService.getPropertyString(MMKeyConstants.PackingList.HEADER_FIELD_ZONE), pickListLines.get(0).getPickTicket().getPickTicketName());
-            formFields.setField(configService.getPropertyString(MMKeyConstants.PackingList.HEADER_FIELD_TIMESTAMP), dateTimeService.toDateTimeString(dateTimeService.getCurrentDate()));
-            formFields.setField(configService.getPropertyString(MMKeyConstants.PackingList.HEADER_FIELD_PICKING_LIST), pickListLines.get(0).getPickTicket().getPickTicketNumber());
-            formFields.setField(configService.getPropertyString(MMKeyConstants.PackingList.HEADER_FIELD_ORDER_NUMBER), String.valueOf(orderDocument.getOrderId()));
-            formFields.setField(configService.getPropertyString(MMKeyConstants.PackingList.HEADER_FIELD_TUB), String.valueOf(pickListLines.get(0).getPickTubNbr()));
+                formFields.setField(configService.getPropertyValueAsString(MMKeyConstants.PackingList.HEADER_FIELD_ZONE), pickListLines.get(0).getPickTicket().getPickTicketName());
+            formFields.setField(configService.getPropertyValueAsString(MMKeyConstants.PackingList.HEADER_FIELD_TIMESTAMP), dateTimeService.toDateTimeString(dateTimeService.getCurrentDate()));
+            formFields.setField(configService.getPropertyValueAsString(MMKeyConstants.PackingList.HEADER_FIELD_PICKING_LIST), pickListLines.get(0).getPickTicket().getPickTicketNumber());
+            formFields.setField(configService.getPropertyValueAsString(MMKeyConstants.PackingList.HEADER_FIELD_ORDER_NUMBER), String.valueOf(orderDocument.getOrderId()));
+            formFields.setField(configService.getPropertyValueAsString(MMKeyConstants.PackingList.HEADER_FIELD_TUB), String.valueOf(pickListLines.get(0).getPickTubNbr()));
             if(!pickListLines.get(0).getSalesInstance().getOrderDocument().getAccounts().isEmpty())
-                formFields.setField(configService.getPropertyString(MMKeyConstants.PackingList.HEADER_FIELD_REFERENCE_NUMBER), orderDocument.getAccounts().get(0).getDepartmentReferenceText());
-            formFields.setField(configService.getPropertyString(MMKeyConstants.PackingList.HEADER_FIELD_DATE_ORDERED), dateTimeService.toDateTimeString(pickListLines.get(0).getCreatedDate()));
-            formFields.setField(configService.getPropertyString(MMKeyConstants.PackingList.HEADER_FIELD_DEPARTMENT), orderDocument.getDeliveryDepartmentNm());
+                formFields.setField(configService.getPropertyValueAsString(MMKeyConstants.PackingList.HEADER_FIELD_REFERENCE_NUMBER), orderDocument.getAccounts().get(0).getDepartmentReferenceText());
+            formFields.setField(configService.getPropertyValueAsString(MMKeyConstants.PackingList.HEADER_FIELD_DATE_ORDERED), dateTimeService.toDateTimeString(pickListLines.get(0).getCreatedDate()));
+            formFields.setField(configService.getPropertyValueAsString(MMKeyConstants.PackingList.HEADER_FIELD_DEPARTMENT), orderDocument.getDeliveryDepartmentNm());
             orderProfile.refreshReferenceObject(MMConstants.Profile.CUSTOMER);
-            formFields.setField(configService.getPropertyString(MMKeyConstants.PackingList.HEADER_FIELD_REQUESTED_BY), orderProfile.getCustomer().getCustomerName());
-            formFields.setField(configService.getPropertyString(MMKeyConstants.PackingList.HEADER_FIELD_REQUEST_BUILDING), (deliveryBuilding!=null && StringUtils.isNotBlank(deliveryBuilding.getBuildingName()) ? deliveryBuilding.getBuildingName(): orderDocument.getDeliveryBuildingCd()));
-            formFields.setField(configService.getPropertyString(MMKeyConstants.PackingList.HEADER_FIELD_REQUEST_ROOM), orderProfile.getDeliveryBuildingRoomNumber());
-            formFields.setField(configService.getPropertyString(MMKeyConstants.PackingList.HEADER_FIELD_PHONE), orderProfile.getProfilePhoneNumber());
-            formFields.setField(configService.getPropertyString(MMKeyConstants.PackingList.HEADER_FIELD_DELIVER_TO), orderDocument.getShippingAddress().getAddressName());
+            formFields.setField(configService.getPropertyValueAsString(MMKeyConstants.PackingList.HEADER_FIELD_REQUESTED_BY), orderProfile.getCustomer().getCustomerName());
+            formFields.setField(configService.getPropertyValueAsString(MMKeyConstants.PackingList.HEADER_FIELD_REQUEST_BUILDING), (deliveryBuilding!=null && StringUtils.isNotBlank(deliveryBuilding.getBuildingName()) ? deliveryBuilding.getBuildingName(): orderDocument.getDeliveryBuildingCd()));
+            formFields.setField(configService.getPropertyValueAsString(MMKeyConstants.PackingList.HEADER_FIELD_REQUEST_ROOM), orderProfile.getDeliveryBuildingRoomNumber());
+            formFields.setField(configService.getPropertyValueAsString(MMKeyConstants.PackingList.HEADER_FIELD_PHONE), orderProfile.getProfilePhoneNumber());
+            formFields.setField(configService.getPropertyValueAsString(MMKeyConstants.PackingList.HEADER_FIELD_DELIVER_TO), orderDocument.getShippingAddress().getAddressName());
 //          formFields.setField(configService.getPropertyString(MMKeyConstants.PackingList.HEADER_FIELD_DEPARTMENT_NAME), orderDocument.getDeliveryDepartmentNm());
             //formFields.setField(configService.getPropertyString(MMKeyConstants.PackingList.HEADER_FIELD_DELIVER_BUILDING), (deliveryBuilding != null && deliveryBuilding.getBuildingName() != null ? deliveryBuilding.getBuildingName() : orderDocument.getDeliveryBuildingCd()));
-            formFields.setField(configService.getPropertyString(MMKeyConstants.PackingList.HEADER_FIELD_DEPARTMENT_NAME), orderDocument.getShippingAddress().getAddressLine1());
-            formFields.setField(configService.getPropertyString(MMKeyConstants.PackingList.HEADER_FIELD_DELIVER_BUILDING), orderDocument.getShippingAddress().getAddressLine2());
+            formFields.setField(configService.getPropertyValueAsString(MMKeyConstants.PackingList.HEADER_FIELD_DEPARTMENT_NAME), orderDocument.getShippingAddress().getAddressLine1());
+            formFields.setField(configService.getPropertyValueAsString(MMKeyConstants.PackingList.HEADER_FIELD_DELIVER_BUILDING), orderDocument.getShippingAddress().getAddressLine2());
             String cityStateZip = orderDocument.getShippingAddress().getAddressCityName() + ", "
                 + orderDocument.getShippingAddress().getAddressStateCode() + " "
                 + orderDocument.getShippingAddress().getAddressPostalCode();
-            formFields.setField(configService.getPropertyString(MMKeyConstants.PackingList.HEADER_FIELD_CITY_STATE_ZIP), cityStateZip);
+            formFields.setField(configService.getPropertyValueAsString(MMKeyConstants.PackingList.HEADER_FIELD_CITY_STATE_ZIP), cityStateZip);
         }
         catch (Exception e) {
             throw new ExceptionConverter(e);
@@ -269,20 +260,20 @@ public class PackListPdfServiceImpl implements PackListPdfService {
 	}
 	
 	private void stampPackingListContent(PdfStamper stamper, List<PdfPackingLine> pdfPackingLines) {
-        KualiConfigurationService configService = getKualiConfigurationService();
+        ConfigurationService configService = getKualiConfigurationService();
 	    try {
             AcroFields formFields = stamper.getAcroFields();
             for(int i=0; i < pdfPackingLines.size(); i++) {
     			String index = "[" + String.valueOf(i) + "]";
-    			formFields.setField(configService.getPropertyString(MMKeyConstants.PackingList.LINE_FIELD_LINE) + index, pdfPackingLines.get(i).getLineNumber());
-    			formFields.setField(configService.getPropertyString(MMKeyConstants.PackingList.LINE_FIELD_ORDER_QUANTITY) + index, pdfPackingLines.get(i).getOrderQuantity());
-    			formFields.setField(configService.getPropertyString(MMKeyConstants.PackingList.LINE_FIELD_SHIP_QUANTITY) + index, pdfPackingLines.get(i).getShipQuantity());
-    			formFields.setField(configService.getPropertyString(MMKeyConstants.PackingList.LINE_FIELD_BACKORDER_QUANTITY) + index, pdfPackingLines.get(i).getBackOrderQuantity());
-    			formFields.setField(configService.getPropertyString(MMKeyConstants.PackingList.LINE_FIELD_BACKORDER_DATE) + index, pdfPackingLines.get(i).getBackOrderExpectedDate());
-    			formFields.setField(configService.getPropertyString(MMKeyConstants.PackingList.LINE_FIELD_UI) + index, pdfPackingLines.get(i).getUnitOfIssue());
-    			formFields.setField(configService.getPropertyString(MMKeyConstants.PackingList.LINE_FIELD_ITEM_NUMBER) + index, pdfPackingLines.get(i).getItemNumber());
-    			formFields.setField(configService.getPropertyString(MMKeyConstants.PackingList.LINE_FIELD_DESCRIPTION) + index, pdfPackingLines.get(i).getDescription());
-    			formFields.setField(configService.getPropertyString(MMKeyConstants.PackingList.LINE_FIELD_TOTAL_PRICE) + index, pdfPackingLines.get(i).getTotalPrice());
+    			formFields.setField(configService.getPropertyValueAsString(MMKeyConstants.PackingList.LINE_FIELD_LINE) + index, pdfPackingLines.get(i).getLineNumber());
+    			formFields.setField(configService.getPropertyValueAsString(MMKeyConstants.PackingList.LINE_FIELD_ORDER_QUANTITY) + index, pdfPackingLines.get(i).getOrderQuantity());
+    			formFields.setField(configService.getPropertyValueAsString(MMKeyConstants.PackingList.LINE_FIELD_SHIP_QUANTITY) + index, pdfPackingLines.get(i).getShipQuantity());
+    			formFields.setField(configService.getPropertyValueAsString(MMKeyConstants.PackingList.LINE_FIELD_BACKORDER_QUANTITY) + index, pdfPackingLines.get(i).getBackOrderQuantity());
+    			formFields.setField(configService.getPropertyValueAsString(MMKeyConstants.PackingList.LINE_FIELD_BACKORDER_DATE) + index, pdfPackingLines.get(i).getBackOrderExpectedDate());
+    			formFields.setField(configService.getPropertyValueAsString(MMKeyConstants.PackingList.LINE_FIELD_UI) + index, pdfPackingLines.get(i).getUnitOfIssue());
+    			formFields.setField(configService.getPropertyValueAsString(MMKeyConstants.PackingList.LINE_FIELD_ITEM_NUMBER) + index, pdfPackingLines.get(i).getItemNumber());
+    			formFields.setField(configService.getPropertyValueAsString(MMKeyConstants.PackingList.LINE_FIELD_DESCRIPTION) + index, pdfPackingLines.get(i).getDescription());
+    			formFields.setField(configService.getPropertyValueAsString(MMKeyConstants.PackingList.LINE_FIELD_TOTAL_PRICE) + index, pdfPackingLines.get(i).getTotalPrice());
             }
 		}
 		catch (Exception e) {
@@ -291,7 +282,7 @@ public class PackListPdfServiceImpl implements PackListPdfService {
 	}
 	
 	private void stampPackingListFooter(PdfStamper stamper, List<PickListLine> pickListLines, String messages) {
-	    KualiConfigurationService configService = getKualiConfigurationService();	    
+	    ConfigurationService configService = getKualiConfigurationService();
 	    PickVerifyService pickverifyService = SpringContext.getBean(PickVerifyService.class);
 	    List<OrderDetail> orderDetails = new ArrayList<OrderDetail>();	    
 	    
@@ -302,9 +293,9 @@ public class PackListPdfServiceImpl implements PackListPdfService {
         KualiDecimal totalAmountSaved = pickverifyService.computePickedAmountSaved(pickListLines);
         try {
     	    AcroFields formFields = stamper.getAcroFields();
-            formFields.setField(configService.getPropertyString(MMKeyConstants.PackingList.LINE_FIELD_TOTAL_ORDER), totalOrder.toString());
-            formFields.setField(configService.getPropertyString(MMKeyConstants.PackingList.LINE_FIELD_TOTAL_SAVED), totalAmountSaved.toString());
-            formFields.setField(configService.getPropertyString(MMKeyConstants.PackingList.FOOTER_FIELD_MESSAGES), messages);
+            formFields.setField(configService.getPropertyValueAsString(MMKeyConstants.PackingList.LINE_FIELD_TOTAL_ORDER), totalOrder.toString());
+            formFields.setField(configService.getPropertyValueAsString(MMKeyConstants.PackingList.LINE_FIELD_TOTAL_SAVED), totalAmountSaved.toString());
+            formFields.setField(configService.getPropertyValueAsString(MMKeyConstants.PackingList.FOOTER_FIELD_MESSAGES), messages);
         }
         catch (Exception e) {
             throw new ExceptionConverter(e);
@@ -320,11 +311,11 @@ public class PackListPdfServiceImpl implements PackListPdfService {
 		return parameterService;
 	}
 
-	public void setKualiConfigurationService(KualiConfigurationService kualiConfigurationService) {
+	public void setKualiConfigurationService(ConfigurationService kualiConfigurationService) {
 		KualiConfigurationService = kualiConfigurationService;
 	}
 
-	public KualiConfigurationService getKualiConfigurationService() {
+	public ConfigurationService getKualiConfigurationService() {
 		return KualiConfigurationService;
 	}
 

@@ -15,12 +15,12 @@
  */
 package org.kuali.ext.mm.integration.sys.businessobject;
 
+import org.kuali.ext.mm.gl.GlLineGroup;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+import org.kuali.rice.krad.util.ObjectUtils;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import org.kuali.ext.mm.gl.GlLineGroup;
-import org.kuali.rice.kns.util.KualiDecimal;
-import org.kuali.rice.kns.util.ObjectUtils;
 
 /**
  * Accounting line grouped data for GL Line

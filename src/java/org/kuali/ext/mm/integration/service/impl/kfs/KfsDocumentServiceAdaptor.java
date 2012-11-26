@@ -16,14 +16,13 @@
 
 package org.kuali.ext.mm.integration.service.impl.kfs;
 
-import java.util.List;
-
-import javax.xml.namespace.QName;
-
 import org.kuali.ext.mm.integration.kfs.adaptor.KfsDocumentService;
 import org.kuali.ext.mm.integration.service.FinancialDocumentService;
-import org.kuali.rice.kew.exception.WorkflowException;
-import org.kuali.rice.kns.document.Document;
+import org.kuali.rice.kew.api.exception.WorkflowException;
+import org.kuali.rice.krad.document.Document;
+
+import javax.xml.namespace.QName;
+import java.util.List;
 
 /**
  */

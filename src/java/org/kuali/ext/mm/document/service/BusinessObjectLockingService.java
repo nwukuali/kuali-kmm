@@ -1,8 +1,8 @@
 package org.kuali.ext.mm.document.service;
 
-import java.util.List;
+import org.kuali.rice.krad.bo.PersistableBusinessObject;
 
-import org.kuali.rice.kns.bo.PersistableBusinessObject;
+import java.util.List;
 
 public interface BusinessObjectLockingService {
     

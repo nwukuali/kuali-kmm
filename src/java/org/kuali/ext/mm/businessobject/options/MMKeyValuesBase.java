@@ -1,12 +1,12 @@
 package org.kuali.ext.mm.businessobject.options;
 
+import org.kuali.ext.mm.util.MMUtil;
+import org.kuali.rice.core.api.util.KeyValue;
+import org.kuali.rice.krad.keyvalues.KeyValuesBase;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.kuali.ext.mm.util.MMUtil;
-import org.kuali.rice.core.util.KeyLabelPair;
-import org.kuali.rice.kns.lookup.keyvalues.KeyValuesBase;
 
 
 /**
@@ -45,16 +45,16 @@ public class MMKeyValuesBase extends KeyValuesBase {
 
     public List getKeyValues() {
         if (MMUtil.isMapEmpty(param))
-            return optionsValueFinder.getKeyLabelPair(className, codeProperty, valProperty);
-        return optionsValueFinder.getKeyLabelPair(className, codeProperty, valProperty, param);
+            return optionsValueFinder.getKeyValue(className, codeProperty, valProperty);
+        return optionsValueFinder.getKeyValue(className, codeProperty, valProperty, param);
     }
 
     public String getValue() {
-        List<KeyLabelPair> labels = optionsValueFinder.getKeyLabelPair(className, codeProperty,
+        List<KeyValue> labels = optionsValueFinder.getKeyValue(className, codeProperty,
                 valProperty);
         if (labels != null) {
             if (labels.size() > 1)
-                return labels.get(1).getLabel();
+                return labels.get(1).getValue();
         }
         return "";
     }

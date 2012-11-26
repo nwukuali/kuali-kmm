@@ -1,19 +1,5 @@
 package org.kuali.ext.mm.document;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
 import org.apache.cxf.common.util.StringUtils;
 import org.kuali.ext.mm.businessobject.CheckinDetail;
 import org.kuali.ext.mm.businessobject.OrderDetail;
@@ -31,16 +17,31 @@ import org.kuali.ext.mm.service.CheckinOrderService;
 import org.kuali.ext.mm.service.MMServiceLocator;
 import org.kuali.ext.mm.util.MMDecimal;
 import org.kuali.ext.mm.util.MMUtil;
-import org.kuali.rice.kew.dto.DocumentRouteStatusChangeDTO;
-import org.kuali.rice.kim.service.KIMServiceLocator;
-import org.kuali.rice.kns.UserSession;
-import org.kuali.rice.kns.rule.event.KualiDocumentEvent;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.service.DataDictionaryService;
-import org.kuali.rice.kns.util.GlobalVariables;
-import org.kuali.rice.kns.util.KualiDecimal;
-import org.kuali.rice.kns.util.ObjectUtils;
-import org.kuali.rice.kns.workflow.service.KualiWorkflowDocument;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+import org.kuali.rice.kew.api.WorkflowDocument;
+import org.kuali.rice.kew.framework.postprocessor.DocumentRouteStatusChange;
+import org.kuali.rice.krad.rules.rule.event.KualiDocumentEvent;
+import org.kuali.rice.krad.rules.rule.event.RouteDocumentEvent;
+import org.kuali.rice.krad.rules.rule.event.SaveDocumentEvent;
+import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.service.DataDictionaryService;
+import org.kuali.rice.krad.util.ObjectUtils;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+//import org.kuali.rice.kew.dto.DocumentRouteStatusChangeDTO;
+//import org.kuali.rice.kim.api.services.KimApiServiceLocator;
+//import org.kuali.rice.krad.UserSession;
+//import org.kuali.rice.kns.rule.event.KualiDocumentEvent;
+//import org.kuali.rice.krad.service.BusinessObjectService;
+//import org.kuali.rice.kns.service.DataDictionaryService;
+//import org.kuali.rice.krad.util.GlobalVariables;
+//import org.kuali.rice.core.api.util.type.KualiDecimal;
+//import org.kuali.rice.krad.util.ObjectUtils;
+//import org.kuali.rice.kew.api.WorkflowDocument;
 
 
 /**
@@ -169,7 +170,7 @@ public class CheckinDocument extends StoresTransactionalDocumentBase implements
     }
 
     public boolean isCorrectedDocument() {
-        return this.documentHeader.getWorkflowDocument().getDocumentType().equalsIgnoreCase(
+        return this.documentHeader.getWorkflowDocument().getDocumentTypeId().equalsIgnoreCase(
                 MMConstants.ReceiptCorrection.DOCUMENT_TYPE);
     }
 
@@ -190,7 +191,7 @@ public class CheckinDocument extends StoresTransactionalDocumentBase implements
     }
 
     @Override
-    public void doRouteStatusChange(DocumentRouteStatusChangeDTO statusChangeEvent) {
+    public void doRouteStatusChange(DocumentRouteStatusChange statusChangeEvent) {
 
         super.doRouteStatusChange(statusChangeEvent);
 
@@ -199,9 +200,9 @@ public class CheckinDocument extends StoresTransactionalDocumentBase implements
 
         Map<String, MMDecimal> stockCosts = null;
         CheckinOrderService checkinOrderService = MMServiceLocator.getCheckinOrderService();
-        KualiWorkflowDocument workflowDocument = getDocumentHeader().getWorkflowDocument();
+        WorkflowDocument workflowDocument = getDocumentHeader().getWorkflowDocument();
 
-        if (workflowDocument.stateIsProcessed()) {
+        if (workflowDocument.isProcessed()) {
             applyProcessLocks();
             checkinOrderService = MMServiceLocator.getCheckinOrderService();
             stockCosts = checkinOrderService.processCheckinDocument(this);
@@ -222,7 +223,7 @@ public class CheckinDocument extends StoresTransactionalDocumentBase implements
             }
             removeProcessLocks();
         }
-        this.setFinalInd(workflowDocument.stateIsProcessed() || workflowDocument.stateIsFinal());
+        this.setFinalInd(workflowDocument.isProcessed() || workflowDocument.isFinal());
         SpringContext.getBean(GeneralLedgerProcessor.class).doRouteStatusChange(this,
                 getDocumentHeader());
     }
@@ -290,18 +291,6 @@ public class CheckinDocument extends StoresTransactionalDocumentBase implements
 
 
     /**
-     * toStringMapper
-     * 
-     * @return LinkedHashMap
-     */
-    @Override
-    public LinkedHashMap<String, String> toStringMapper() {
-        LinkedHashMap<String, String> propMap = new LinkedHashMap<String, String>();
-        propMap.put("documentNumber", "documentNumber");
-        return propMap;
-    }
-
-    /**
      * @see org.kuali.ext.mm.gl.GeneralLedgerPostable#generateGlpeEntries()
      */
     public List<FinancialGeneralLedgerPendingEntry> generateGlpeEntries() {
@@ -331,7 +320,7 @@ public class CheckinDocument extends StoresTransactionalDocumentBase implements
     public void prepareForSave(KualiDocumentEvent event) {
 
 
-        if (event instanceof org.kuali.rice.kns.rule.event.RouteDocumentEvent) {
+        if (event instanceof RouteDocumentEvent) {
             if (this.isCorrectedDocument()) {
                 List<CheckinDetail> result = new ArrayList<CheckinDetail>(0);
                 for (CheckinDetail cdetail : this.checkinDetails) {
@@ -348,7 +337,7 @@ public class CheckinDocument extends StoresTransactionalDocumentBase implements
             }
         }
 
-        if (event instanceof org.kuali.rice.kns.rule.event.SaveDocumentEvent) {
+        if (event instanceof SaveDocumentEvent) {
             if (!this.isCorrectedDocument()) {
                 for (CheckinDetail cdetail : this.checkinDetails) {
                     if (cdetail.getAcceptedItemQty() == null || cdetail.getAcceptedItemQty() == 0) {

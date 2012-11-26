@@ -1,16 +1,11 @@
 package org.kuali.ext.mm.service;
 
-import java.util.List;
-
-import org.kuali.ext.mm.businessobject.Bin;
-import org.kuali.ext.mm.businessobject.CatalogItem;
-import org.kuali.ext.mm.businessobject.Stock;
-import org.kuali.ext.mm.businessobject.StockBalance;
-import org.kuali.ext.mm.businessobject.StockCost;
-import org.kuali.ext.mm.businessobject.StockCount;
+import org.kuali.ext.mm.businessobject.*;
 import org.kuali.ext.mm.document.CheckinDocument;
 import org.kuali.ext.mm.util.MMDecimal;
-import org.kuali.rice.kns.service.BusinessObjectService;
+import org.kuali.rice.krad.service.BusinessObjectService;
+
+import java.util.List;
 
 public interface StockService {
 

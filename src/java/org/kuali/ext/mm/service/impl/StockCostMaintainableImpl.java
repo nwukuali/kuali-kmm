@@ -1,16 +1,6 @@
 package org.kuali.ext.mm.service.impl;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-
-import org.kuali.ext.mm.businessobject.CatalogItem;
-import org.kuali.ext.mm.businessobject.Stock;
-import org.kuali.ext.mm.businessobject.StockBalance;
-import org.kuali.ext.mm.businessobject.StockCost;
-import org.kuali.ext.mm.businessobject.StockHistory;
-import org.kuali.ext.mm.businessobject.Warehouse;
+import org.kuali.ext.mm.businessobject.*;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.gl.GeneralLedgerPostable;
@@ -19,11 +9,16 @@ import org.kuali.ext.mm.gl.service.GeneralLedgerBuilderService;
 import org.kuali.ext.mm.gl.service.GeneralLedgerProcessor;
 import org.kuali.ext.mm.integration.sys.businessobject.FinancialGeneralLedgerPendingEntry;
 import org.kuali.ext.mm.service.StockHistoryService;
-import org.kuali.rice.kns.bo.DocumentHeader;
-import org.kuali.rice.kns.bo.PersistableBusinessObject;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
 import org.kuali.rice.kns.maintenance.KualiMaintainableImpl;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.util.KualiDecimal;
+import org.kuali.rice.krad.bo.DocumentHeader;
+import org.kuali.rice.krad.bo.PersistableBusinessObject;
+import org.kuali.rice.krad.service.BusinessObjectService;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 
 
 public class StockCostMaintainableImpl extends KualiMaintainableImpl implements
@@ -46,7 +41,7 @@ public class StockCostMaintainableImpl extends KualiMaintainableImpl implements
         
         List<StockCost> oldStockCostList = (List<StockCost>) bOS.findMatching(StockCost.class, hm);
 
-        if (documentHeader.getWorkflowDocument().stateIsProcessed()) {
+        if (documentHeader.getWorkflowDocument().isProcessed()) {
             updateCostInCatalogItemTable(stockCost, bOS);
             if (!oldStockCostList.isEmpty()) {
                 for (int m = 0; m < oldStockCostList.size(); m++) {
@@ -168,7 +163,7 @@ public class StockCostMaintainableImpl extends KualiMaintainableImpl implements
      * @see org.kuali.ext.mm.gl.GeneralLedgerPostable#getDocumentNumber()
      */
     public String getDocumentNumber() {
-        return this.documentNumber;
+        return getDocumentNumber();
     }
 
     /**

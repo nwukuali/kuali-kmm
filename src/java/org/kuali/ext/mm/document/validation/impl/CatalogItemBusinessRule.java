@@ -1,48 +1,28 @@
 package org.kuali.ext.mm.document.validation.impl;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-
 import org.apache.commons.lang.StringUtils;
-import org.kuali.ext.mm.businessobject.Agreement;
-import org.kuali.ext.mm.businessobject.BackOrder;
-import org.kuali.ext.mm.businessobject.CatalogItem;
-import org.kuali.ext.mm.businessobject.CatalogItemImage;
-import org.kuali.ext.mm.businessobject.CatalogItemMarkup;
-import org.kuali.ext.mm.businessobject.CatalogSubgroupItem;
-import org.kuali.ext.mm.businessobject.CycleCount;
-import org.kuali.ext.mm.businessobject.DotHazardous;
-import org.kuali.ext.mm.businessobject.EhsContainer;
-import org.kuali.ext.mm.businessobject.EhsHazardous;
-import org.kuali.ext.mm.businessobject.EhsHazardousState;
-import org.kuali.ext.mm.businessobject.HazardousMateriel;
-import org.kuali.ext.mm.businessobject.HazardousUn;
-import org.kuali.ext.mm.businessobject.OrderDetail;
-import org.kuali.ext.mm.businessobject.RentalObjectCode;
-import org.kuali.ext.mm.businessobject.RestrictedRouteCode;
-import org.kuali.ext.mm.businessobject.Stock;
-import org.kuali.ext.mm.businessobject.StockBalance;
-import org.kuali.ext.mm.businessobject.StockPackNote;
-import org.kuali.ext.mm.businessobject.StockType;
-import org.kuali.ext.mm.businessobject.UnitOfIssue;
+import org.kuali.ext.mm.businessobject.*;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.MMKeyConstants;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.integration.FinancialSystemAdaptorFactory;
 import org.kuali.ext.mm.integration.sys.businessobject.FinancialUnitOfMeasure;
 import org.kuali.ext.mm.service.BackOrderService;
-import org.kuali.rice.kns.bo.PersistableBusinessObject;
+import org.kuali.rice.core.api.util.RiceKeyConstants;
 import org.kuali.rice.kns.document.MaintenanceDocument;
-import org.kuali.rice.kns.maintenance.Maintainable;
 import org.kuali.rice.kns.maintenance.rules.MaintenanceDocumentRuleBase;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.util.GlobalVariables;
-import org.kuali.rice.kns.util.KNSConstants;
-import org.kuali.rice.kns.util.ObjectUtils;
-import org.kuali.rice.kns.util.RiceKeyConstants;
+import org.kuali.rice.krad.bo.PersistableBusinessObject;
+import org.kuali.rice.krad.maintenance.Maintainable;
+import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.service.KRADServiceLocator;
+import org.kuali.rice.krad.util.GlobalVariables;
+import org.kuali.rice.krad.util.KRADConstants;
+import org.kuali.rice.krad.util.ObjectUtils;
+
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 
 
 /*
@@ -92,11 +72,11 @@ public class CatalogItemBusinessRule extends MaintenanceDocumentRuleBase {
         boolean isValid = true;       
         CatalogItem newCatalogItem = (CatalogItem) document.getNewMaintainableObject().getBusinessObject();
         if(ObjectUtils.isNotNull(newCatalogItem.getStock())){
-        	PersistableBusinessObject pbObject = KNSServiceLocator.getBusinessObjectService().retrieve(newCatalogItem.getStock());
+        	PersistableBusinessObject pbObject = KRADServiceLocator.getBusinessObjectService().retrieve(newCatalogItem.getStock());
         	Long pbObjectVerNbr = ObjectUtils.isNull(pbObject) ? null : pbObject.getVersionNumber();
         	Long newObjectVerNbr = newCatalogItem.getStock().getVersionNumber();
         	if (pbObjectVerNbr != null && !(pbObjectVerNbr.equals(newObjectVerNbr))) {
-            	GlobalVariables.getMessageMap().putError(KNSConstants.GLOBAL_ERRORS, RiceKeyConstants.ERROR_VERSION_MISMATCH);
+            	GlobalVariables.getMessageMap().putError(KRADConstants.GLOBAL_ERRORS, RiceKeyConstants.ERROR_VERSION_MISMATCH);
             	isValid = false;
         	}
         }
@@ -108,10 +88,11 @@ public class CatalogItemBusinessRule extends MaintenanceDocumentRuleBase {
 
         BusinessObjectService bOS = SpringContext.getBean(BusinessObjectService.class);
         Maintainable newMaintaibaleCatalogItem = document.getNewMaintainableObject();
-        CatalogItem newCatalogItem = (CatalogItem) newMaintaibaleCatalogItem.getBusinessObject();
-
+				//TODO: NWU - Confirm api name change from getBu.. to getData is the same
+        CatalogItem newCatalogItem = (CatalogItem) newMaintaibaleCatalogItem.getDataObject();
+			  //TODO: NWU - Confirm api name change from getBu.. to getData is the same
         Maintainable oldMaintaibaleCatalogItem = document.getOldMaintainableObject();
-        CatalogItem oldCatalogItem = (CatalogItem) oldMaintaibaleCatalogItem.getBusinessObject();
+        CatalogItem oldCatalogItem = (CatalogItem) oldMaintaibaleCatalogItem.getDataObject();
 
         String userAction = document.getNewMaintainableObject().getMaintenanceAction();
 

@@ -16,30 +16,21 @@
 
 package org.kuali.ext.mm.integration.purap.document;
 
-import java.util.LinkedHashMap;
-
 import org.kuali.ext.mm.integration.FinancialSystemComponent;
-import org.kuali.rice.kns.bo.ExternalizableBusinessObject;
-import org.kuali.rice.kns.bo.TransientBusinessObjectBase;
+import org.kuali.rice.krad.bo.ExternalizableBusinessObject;
+import org.kuali.rice.krad.bo.TransientBusinessObjectBase;
 
 /**
  * @author harsha07
  */
 public class FinancialRequisitionDocument extends TransientBusinessObjectBase implements
-        ExternalizableBusinessObject, FinancialSystemComponent {
+	ExternalizableBusinessObject, FinancialSystemComponent {
     private Integer reqsId;
     private String documentNumber;
     private String workflowStatusCode;
 
     private static final long serialVersionUID = 7605772696214619909L;
 
-    /**
-     * @see org.kuali.rice.kns.bo.BusinessObjectBase#toStringMapper()
-     */
-    @Override
-    protected LinkedHashMap<String, String> toStringMapper() {
-        return null;
-    }
 
     /**
      * Gets the documentNumber property

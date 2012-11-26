@@ -1,13 +1,5 @@
 package org.kuali.ext.mm.cart.web.struts;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Properties;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.struts.action.ActionForm;
@@ -26,7 +18,14 @@ import org.kuali.ext.mm.cart.valueobject.BrowseManager;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.service.B2BPunchOutService;
 import org.kuali.ext.mm.service.MMServiceLocator;
-import org.kuali.rice.kns.util.UrlFactory;
+import org.kuali.rice.krad.util.UrlFactory;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Properties;
 
 
 public class B2BReceiveAction extends StoresShoppingActionBase {

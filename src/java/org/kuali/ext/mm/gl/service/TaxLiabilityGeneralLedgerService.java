@@ -3,11 +3,11 @@
  */
 package org.kuali.ext.mm.gl.service;
 
-import java.util.HashMap;
-
 import org.kuali.ext.mm.businessobject.Warehouse;
 import org.kuali.ext.mm.gl.WarehouseGlGroup;
-import org.kuali.rice.kns.util.KualiDecimal;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+
+import java.util.HashMap;
 
 /**
  * @author harsha07

@@ -15,11 +15,6 @@
  */
 package org.kuali.ext.mm.document.web.struts;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.struts.action.ActionMapping;
 import org.kuali.ext.mm.businessobject.StockCount;
 import org.kuali.ext.mm.businessobject.StockCountMap;
@@ -27,10 +22,14 @@ import org.kuali.ext.mm.businessobject.WorksheetCounter;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.document.WorksheetCountDocument;
-import org.kuali.rice.kns.service.KualiConfigurationService;
+import org.kuali.rice.core.api.config.property.ConfigurationService;
+import org.kuali.rice.kew.api.WorkflowDocument;
 import org.kuali.rice.kns.web.struts.form.KualiTransactionalDocumentFormBase;
 import org.kuali.rice.kns.web.ui.ExtraButton;
-import org.kuali.rice.kns.workflow.service.KualiWorkflowDocument;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 
 
@@ -93,10 +92,10 @@ public class CycleCountLookupForm extends KualiTransactionalDocumentFormBase {
     @Override
     public List<ExtraButton> getExtraButtons() {
         extraButtons.clear();
-        KualiWorkflowDocument workflowDoc = this.getWorksheetCountDocument().getDocumentHeader()
+        WorkflowDocument workflowDoc = this.getWorksheetCountDocument().getDocumentHeader()
                 .getWorkflowDocument();
-        if (!workflowDoc.stateIsApproved() && !workflowDoc.stateIsDisapproved()
-                && !workflowDoc.stateIsCanceled()) {
+        if (!workflowDoc.isApproved() && !workflowDoc.isDisapproved()
+                && !workflowDoc.isCanceled()) {
             extraButtons.add(createPrintButton());
         }
         return extraButtons;
@@ -105,8 +104,8 @@ public class CycleCountLookupForm extends KualiTransactionalDocumentFormBase {
     private ExtraButton createPrintButton() {
         ExtraButton printButton = new ExtraButton();
         printButton.setExtraButtonProperty("methodToCall.reprintDocument");
-        String externalImageURL = SpringContext.getBean(KualiConfigurationService.class)
-                .getPropertyString(MMConstants.EXTERNALIZABLE_IMAGES_URL_KEY);
+        String externalImageURL = SpringContext.getBean(ConfigurationService.class)
+                .getPropertyValueAsString(MMConstants.EXTERNALIZABLE_IMAGES_URL_KEY);
         printButton.setExtraButtonSource(externalImageURL + "buttonsmall_print.gif");
         printButton.setExtraButtonAltText("Reprint Worksheet");
         return printButton;

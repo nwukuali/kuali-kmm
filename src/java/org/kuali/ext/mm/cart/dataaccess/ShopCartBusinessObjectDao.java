@@ -1,12 +1,12 @@
 package org.kuali.ext.mm.cart.dataaccess;
 
-import java.util.Collection;
-import java.util.Map;
-
 import org.kuali.ext.mm.cart.valueobject.PagingElement;
 import org.kuali.ext.mm.cart.valueobject.SortElement;
 import org.kuali.ext.mm.dataaccess.QueryElement;
-import org.kuali.rice.kns.dao.BusinessObjectDao;
+import org.kuali.rice.krad.dao.BusinessObjectDao;
+
+import java.util.Collection;
+import java.util.Map;
 
 public interface ShopCartBusinessObjectDao extends BusinessObjectDao {
 

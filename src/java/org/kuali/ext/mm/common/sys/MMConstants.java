@@ -15,18 +15,18 @@
  */
 package org.kuali.ext.mm.common.sys;
 
+import org.kuali.rice.coreservice.framework.parameter.ParameterConstants.COMPONENT;
+import org.kuali.rice.coreservice.framework.parameter.ParameterConstants.NAMESPACE;
+
 import java.math.BigDecimal;
 
-import org.kuali.rice.core.util.JSTLConstants;
-import org.kuali.rice.kns.authorization.AuthorizationConstants.EditMode;
-import org.kuali.rice.kns.service.ParameterConstants.COMPONENT;
-import org.kuali.rice.kns.service.ParameterConstants.NAMESPACE;
+//import org.kuali.rice.core.util.JSTLConstants;
 
 
 /**
  * This class is used to define global constants.
  */
-public class MMConstants extends JSTLConstants {
+public class MMConstants /*extends JSTLConstants */{
     private static final long serialVersionUID = 2882277719647128949L;
 
     public static final String MM_NAMESPACE = "KFS-MM";
@@ -840,8 +840,12 @@ public class MMConstants extends JSTLConstants {
         public static final String PRICE_CODE_2 = "02";
     }
 
-    public static class CountWorksheetEditMode extends EditMode {
-        public static final String DOC_NUMBER_ENTRY = "documentNumberEntry";
+    public static class CountWorksheetEditMode {
+
+			public CountWorksheetEditMode() {
+			}
+
+			public static final String DOC_NUMBER_ENTRY = "documentNumberEntry";
         public static final String WAREHOUSE_CODE_ENTRY = "warehouseCodeEntry";
         public static final String ZONE_CODE_ENTRY = "zoneCodeEntry";
         public static final String WORKSHEET_COUNT_NBR_ENTRY = "worksheetCountNumberEntry";
@@ -849,7 +853,13 @@ public class MMConstants extends JSTLConstants {
         public static final String QTY_GRT_THAN_ZERO_ENTRY = "qtyGrtThanEntry";
         public static final String COPIES_ENTRY = "copiesEntry";
         public static final String STOCK_ITEMS_DISPLAY_ENTRY = "stockItemsDisplayEntry";
-    }
+
+				public static final java.lang.String UNVIEWABLE = "unviewable";
+    		public static final java.lang.String VIEW_ONLY = "viewOnly";
+    		public static final java.lang.String FULL_ENTRY = "fullEntry";
+
+
+		}
 
     public static class WorksheetDocument {
         public static final String DOC_TYPE_NAME = "SWKD";
@@ -931,12 +941,20 @@ public class MMConstants extends JSTLConstants {
         public static final String OPTION_NO_VALUE_BLANK_LABEL = "";
     }
 
-    public static class ReturnDocEditMode extends EditMode {
-        public static final String DOC_READY_TO_BE_REVIEWED = "docReadyToBeReviewed";
+    public static class ReturnDocEditMode{
+
+			public ReturnDocEditMode() {
+			}
+
+			public static final String DOC_READY_TO_BE_REVIEWED = "docReadyToBeReviewed";
         public static final String DOC_IN_MY_ACTIONLIST = "docInMyActonList";
         public static final String DOC_RETURN_DOC_TO_VENDOR = "isVendorReturnDoc";
         public static final String DOC_CAN_BE_EDITED = "docCanBeEdited";
         public static final String DOC_IN_FINAL_STATE = "docInFinalState";
+
+				public static final java.lang.String UNVIEWABLE = "unviewable";
+    		public static final java.lang.String VIEW_ONLY = "viewOnly";
+    		public static final java.lang.String FULL_ENTRY = "fullEntry";
     }
 
     public static class CountParameter {

@@ -3,13 +3,13 @@
  */
 package org.kuali.ext.mm.document.authorization;
 
-import java.util.List;
-
 import org.apache.commons.lang.StringUtils;
 import org.kuali.ext.mm.document.DiscrepancyDocument;
 import org.kuali.ext.mm.document.DiscrepancyLine;
-import org.kuali.rice.kns.document.Document;
 import org.kuali.rice.kns.document.authorization.TransactionalDocumentPresentationControllerBase;
+import org.kuali.rice.krad.document.Document;
+
+import java.util.List;
 
 /**
  * @author rshrivas
@@ -17,27 +17,27 @@ import org.kuali.rice.kns.document.authorization.TransactionalDocumentPresentati
  */
 public class DiscrepancyDocumentPresentationController extends TransactionalDocumentPresentationControllerBase{
     @Override
-    protected boolean canSendAdhocRequests(Document document) {
+    public boolean canSendAdhocRequests(Document document) {
         return false;
     }
 
     @Override
-    protected boolean canSave(Document document){
+    public boolean canSave(Document document){
         return false;
     }
 
     @Override
-    protected boolean canBlanketApprove(Document document) {
+    public boolean canBlanketApprove(Document document) {
         return false;
     }
     
     @Override
-    protected boolean canReload(Document document) {        
+    public boolean canReload(Document document) {
         return false;
     }
    
     @Override
-    protected boolean canCancel(Document document) {
+    public boolean canCancel(Document document) {
         DiscrepancyDocument rDoc = (DiscrepancyDocument) document;        
         if(!StringUtils.isBlank(rDoc.getReportName()) && "PCard/Invoice - Transaction Discrepancies".equalsIgnoreCase(rDoc.getReportName())) {
             return true;
@@ -46,7 +46,7 @@ public class DiscrepancyDocumentPresentationController extends TransactionalDocu
     }
     
     @Override
-    protected boolean canRoute(Document document) {
+    public boolean canRoute(Document document) {
         DiscrepancyDocument rDoc = (DiscrepancyDocument) document;        
         if(!StringUtils.isBlank(rDoc.getReportName()) && "PCard/Invoice - Transaction Discrepancies".equalsIgnoreCase(rDoc.getReportName())) {
             List<DiscrepancyLine> rLines = rDoc.getDiscrepancyLines();

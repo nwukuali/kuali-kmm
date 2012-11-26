@@ -1,10 +1,5 @@
 package org.kuali.ext.mm.dataaccess.impl;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Map;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.QueryByCriteria;
@@ -15,10 +10,15 @@ import org.kuali.ext.mm.dataaccess.MMBusinessObjectDao;
 import org.kuali.ext.mm.dataaccess.QueryElement;
 import org.kuali.ext.mm.sys.service.MMPersistenceStructureService;
 import org.kuali.ext.mm.utility.StopWatch;
-import org.kuali.rice.core.database.platform.MySQLDatabasePlatform;
-import org.kuali.rice.core.database.platform.OracleDatabasePlatform;
-import org.kuali.rice.kns.dao.impl.PlatformAwareDaoBaseOjb;
-import org.kuali.rice.kns.util.OjbCollectionAware;
+import org.kuali.rice.core.framework.persistence.ojb.dao.PlatformAwareDaoBaseOjb;
+import org.kuali.rice.core.framework.persistence.platform.MySQLDatabasePlatform;
+import org.kuali.rice.core.framework.persistence.platform.OracleDatabasePlatform;
+import org.kuali.rice.krad.util.OjbCollectionAware;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Map;
 
 public class MMBusinessObjectDaoOjb extends PlatformAwareDaoBaseOjb implements MMBusinessObjectDao, OjbCollectionAware {
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(MMBusinessObjectDaoOjb.class);

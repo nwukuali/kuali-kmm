@@ -16,17 +16,8 @@
 
 package org.kuali.ext.mm.integration.service.impl.kfs;
 
-import java.math.BigDecimal;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-
 import org.apache.commons.lang.StringUtils;
-import org.kuali.ext.mm.businessobject.Accounts;
-import org.kuali.ext.mm.businessobject.Address;
-import org.kuali.ext.mm.businessobject.OrderDetail;
-import org.kuali.ext.mm.businessobject.Profile;
-import org.kuali.ext.mm.businessobject.WarehouseAccounts;
+import org.kuali.ext.mm.businessobject.*;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.document.OrderDocument;
@@ -34,12 +25,7 @@ import org.kuali.ext.mm.integration.coa.businessobject.FinancialAccount;
 import org.kuali.ext.mm.integration.purap.document.FinancialPurchaseOrderAccount;
 import org.kuali.ext.mm.integration.purap.document.FinancialPurchaseOrderDetail;
 import org.kuali.ext.mm.integration.purap.document.FinancialPurchaseOrderDocument;
-import org.kuali.ext.mm.integration.service.FinancialAccountService;
-import org.kuali.ext.mm.integration.service.FinancialBusinessObjectService;
-import org.kuali.ext.mm.integration.service.FinancialDocumentService;
-import org.kuali.ext.mm.integration.service.FinancialParameterService;
-import org.kuali.ext.mm.integration.service.FinancialPurchasingService;
-import org.kuali.ext.mm.integration.service.FinancialVendorService;
+import org.kuali.ext.mm.integration.service.*;
 import org.kuali.ext.mm.integration.vnd.businessobject.FinancialVendorAddress;
 import org.kuali.ext.mm.integration.vnd.businessobject.FinancialVendorContract;
 import org.kuali.ext.mm.integration.vnd.businessobject.FinancialVendorDetail;
@@ -48,25 +34,25 @@ import org.kuali.kfs.module.purap.PurapConstants;
 import org.kuali.kfs.module.purap.PurapConstants.POTransmissionMethods;
 import org.kuali.kfs.module.purap.PurapParameterConstants;
 import org.kuali.kfs.module.purap.PurapPropertyConstants;
-import org.kuali.kfs.module.purap.businessobject.BillingAddress;
-import org.kuali.kfs.module.purap.businessobject.PurchaseOrderAccount;
-import org.kuali.kfs.module.purap.businessobject.PurchaseOrderItem;
-import org.kuali.kfs.module.purap.businessobject.ReceivingAddress;
-import org.kuali.kfs.module.purap.businessobject.RequisitionAccount;
-import org.kuali.kfs.module.purap.businessobject.RequisitionItem;
+import org.kuali.kfs.module.purap.businessobject.*;
 import org.kuali.kfs.module.purap.document.PurchaseOrderDocument;
 import org.kuali.kfs.module.purap.document.RequisitionDocument;
-import org.kuali.kfs.sys.businessobject.FinancialSystemDocumentHeader;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
 import org.kuali.rice.kew.routeheader.DocumentRouteHeaderValue;
 import org.kuali.rice.kew.routeheader.service.RouteHeaderService;
-import org.kuali.rice.kim.bo.Person;
-import org.kuali.rice.kim.service.PersonService;
-import org.kuali.rice.kns.document.Document;
-import org.kuali.rice.kns.exception.ValidationException;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.util.KualiDecimal;
-import org.kuali.rice.kns.util.ObjectUtils;
+import org.kuali.rice.kim.api.identity.Person;
+import org.kuali.rice.kim.api.identity.PersonService;
+import org.kuali.rice.krad.bo.DocumentHeader;
+import org.kuali.rice.krad.document.Document;
+import org.kuali.rice.krad.exception.ValidationException;
+import org.kuali.rice.krad.service.KRADServiceLocator;
+import org.kuali.rice.krad.util.ObjectUtils;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.math.BigDecimal;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
 
 
 /**
@@ -216,11 +202,11 @@ public class KfsPurchasingService implements FinancialPurchasingService {
      */
     protected void populateRequisitionHeader(OrderDocument order, RequisitionDocument reqs,
             FinancialAccount account, boolean noPrint) {
-        FinancialSystemDocumentHeader documentHeader = reqs.getDocumentHeader();
+        DocumentHeader documentHeader = reqs.getDocumentHeader();
         documentHeader.setDocumentDescription("Stores Order - " + order.getDocumentNumber());
         reqs.setChartOfAccountsCode(account.getChartOfAccountsCode());
         reqs.setUseTaxIndicator(false);
-        reqs.setStatusCode(PurapConstants.RequisitionStatuses.IN_PROCESS);
+        reqs.setStatusCode(PurapConstants.RequisitionStatuses.APPDOC_IN_PROCESS);
         reqs.setOrganizationCode(account.getOrganizationCode());
         // reqs.setPurchaseOrderCostSourceCode(POCostSources.ESTIMATE);
         reqs.setPurchaseOrderCostSourceCode(COST_SOURCE_STORES);
@@ -357,7 +343,7 @@ public class KfsPurchasingService implements FinancialPurchasingService {
         reqs.setDeliveryInstructionText(order.getDeliveryInstructionTxt());
         reqs.setDeliveryPostalCode(shippingAddress.getAddressPostalCode());
         reqs.setDeliveryStateCode(shippingAddress.getAddressStateCode());
-        String noreplyemail = KNSServiceLocator.getKualiConfigurationService().getPropertyString(
+        String noreplyemail = KRADServiceLocator.getKualiConfigurationService().getPropertyValueAsString(
                 "MailMessage.from");
         String email = StringUtils.isBlank(customerPerson.getEmailAddressUnmasked()) ? noreplyemail
                 : customerPerson.getEmailAddressUnmasked();
@@ -512,7 +498,7 @@ public class KfsPurchasingService implements FinancialPurchasingService {
                 && ("OPEN".equals(purchaseOrderDocument.getStatusCode()) || "VOID"
                         .equals(purchaseOrderDocument.getStatusCode()))) {
             DocumentRouteHeaderValue routeHeader = SpringContext.getBean(RouteHeaderService.class)
-                    .getRouteHeader(Long.valueOf(purchaseOrderDocument.getDocumentNumber()));
+                    .getRouteHeader(purchaseOrderDocument.getDocumentNumber());
             financialPurchaseOrderDocument = new FinancialPurchaseOrderDocument();
             financialPurchaseOrderDocument.setWorkflowStatusCode(routeHeader.getDocRouteStatus());
             financialPurchaseOrderDocument.setPoStatusCode(purchaseOrderDocument.getStatusCode());
@@ -590,8 +576,8 @@ public class KfsPurchasingService implements FinancialPurchasingService {
      * @return
      */
     public KualiDecimal getSeparationOfDutiesDollarAmount() {
-        String amount = financialParameterService.getParameterValue(RequisitionDocument.class,
-                PurapParameterConstants.SEPARATION_OF_DUTIES_DOLLAR_AMOUNT);
+        String amount = financialParameterService.getParameterValueAsString(RequisitionDocument.class,
+					PurapParameterConstants.SEPARATION_OF_DUTIES_DOLLAR_AMOUNT);
         return new KualiDecimal(amount == null ? "0" : amount);
     }
 

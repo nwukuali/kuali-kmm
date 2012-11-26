@@ -22,7 +22,9 @@ import java.lang.annotation.Target;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.kuali.rice.kns.util.AssertionUtils;
+import static junit.framework.Assert.assertTrue;
+import static org.junit.Assert.assertThat;
+
 
 /**
  * This annotation marks test classes or methods which have failed for reasons relating to certain JIRA issues. Ideally these issues
@@ -67,7 +69,7 @@ public @interface RelatesTo {
         public String toString() {
             Matcher m = PATTERN.matcher(name());
             final boolean matched = m.matches();
-            AssertionUtils.assertThat(matched);
+            assertTrue(matched);
             return m.group(1) + "-" + m.group(2);
         }
     }

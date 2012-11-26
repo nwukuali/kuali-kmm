@@ -5,7 +5,7 @@ import org.kuali.ext.mm.common.sys.MMKeyConstants;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.integration.FinancialSystemAdaptorFactory;
 import org.kuali.rice.kns.document.MaintenanceDocument;
-import org.kuali.rice.kns.util.KNSConstants;
+import org.kuali.rice.krad.util.KRADConstants;
 
 
 public class CatalogRestrictionRule extends FinancialMaintenanceDocumentRuleBase {
@@ -17,15 +17,15 @@ public class CatalogRestrictionRule extends FinancialMaintenanceDocumentRuleBase
                 .checkAndErrorSystemAvailability();
         CatalogRestriction restriction = (CatalogRestriction) document.getNewMaintainableObject().getBusinessObject();
         // validate chart code
-        valid &= validateChart(restriction.getFinacialChartOfAccountsCode(), KNSConstants.MAINTENANCE_NEW_MAINTAINABLE
+        valid &= validateChart(restriction.getFinacialChartOfAccountsCode(), KRADConstants.MAINTENANCE_NEW_MAINTAINABLE
                 + "finacialChartOfAccountsCode", MMKeyConstants.CatalogRestriction.CHART_NOT_VALID);
         // validate org code
         valid &= validateOrg(restriction.getFinacialChartOfAccountsCode(), restriction.getOrganizationCode(),
-                KNSConstants.MAINTENANCE_NEW_MAINTAINABLE + "organizationCode",
+                KRADConstants.MAINTENANCE_NEW_MAINTAINABLE + "organizationCode",
                 MMKeyConstants.CatalogRestriction.ORG_NOT_VALID);
         // validate account number
         valid &= validateAccount(restriction.getFinacialChartOfAccountsCode(), restriction.getAccountNumber(),
-                KNSConstants.MAINTENANCE_NEW_MAINTAINABLE + "accountNumber",
+                KRADConstants.MAINTENANCE_NEW_MAINTAINABLE + "accountNumber",
                 MMKeyConstants.CatalogRestriction.ACCT_NOT_VALID);
 
 

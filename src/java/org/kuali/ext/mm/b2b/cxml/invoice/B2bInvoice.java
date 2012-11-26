@@ -36,8 +36,8 @@ import org.kuali.ext.mm.integration.sys.businessobject.FinancialAccountingLine;
 import org.kuali.ext.mm.service.MMServiceLocator;
 import org.kuali.ext.mm.sys.batch.service.B2bInvoiceService;
 import org.kuali.ext.mm.util.MMDecimal;
-import org.kuali.rice.kns.util.KualiDecimal;
-import org.kuali.rice.kns.util.ObjectUtils;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+import org.kuali.rice.krad.util.ObjectUtils;
 
 
 /**

@@ -1,22 +1,8 @@
 package org.kuali.ext.mm.document;
 
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-
-import javax.persistence.Entity;
-import javax.persistence.Table;
-
 import org.apache.commons.lang.StringUtils;
-import org.kuali.ext.mm.businessobject.Profile;
-import org.kuali.ext.mm.businessobject.ReturnDetail;
-import org.kuali.ext.mm.businessobject.ReturnStatusCode;
-import org.kuali.ext.mm.businessobject.ReturnType;
-import org.kuali.ext.mm.businessobject.StoresTransactionalDocumentBase;
-import org.kuali.ext.mm.businessobject.Warehouse;
+import org.kuali.ext.mm.businessobject.*;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.document.service.BusinessObjectLockingService;
@@ -34,19 +20,39 @@ import org.kuali.ext.mm.service.MMServiceLocator;
 import org.kuali.ext.mm.service.ReturnOrderService;
 import org.kuali.ext.mm.util.MMDecimal;
 import org.kuali.ext.mm.util.MMUtil;
-import org.kuali.rice.kew.dto.DocumentRouteStatusChangeDTO;
-import org.kuali.rice.kew.exception.WorkflowException;
-import org.kuali.rice.kim.bo.Person;
-import org.kuali.rice.kim.service.KIMServiceLocator;
-import org.kuali.rice.kns.UserSession;
-import org.kuali.rice.kns.rule.event.KualiDocumentEvent;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.service.DataDictionaryService;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.util.GlobalVariables;
-import org.kuali.rice.kns.util.KualiDecimal;
-import org.kuali.rice.kns.util.ObjectUtils;
-import org.kuali.rice.kns.workflow.service.KualiWorkflowDocument;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+import org.kuali.rice.kew.api.WorkflowDocument;
+import org.kuali.rice.kew.framework.postprocessor.DocumentRouteStatusChange;
+import org.kuali.rice.kim.api.identity.Person;
+import org.kuali.rice.kim.api.services.KimApiServiceLocator;
+import org.kuali.rice.krad.UserSession;
+import org.kuali.rice.krad.rules.rule.event.KualiDocumentEvent;
+import org.kuali.rice.krad.rules.rule.event.RouteDocumentEvent;
+import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.service.DataDictionaryService;
+import org.kuali.rice.krad.service.KRADServiceLocatorWeb;
+import org.kuali.rice.krad.util.GlobalVariables;
+import org.kuali.rice.krad.util.ObjectUtils;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+//import org.kuali.rice.kew.dto.DocumentRouteStatusChangeDTO;
+//import org.kuali.rice.kew.exception.WorkflowException;
+//import org.kuali.rice.kim.api.identity.Person;
+//import org.kuali.rice.kim.api.services.KimApiServiceLocator;
+//import org.kuali.rice.krad.UserSession;
+//import org.kuali.rice.kns.rule.event.KualiDocumentEvent;
+//import org.kuali.rice.krad.service.BusinessObjectService;
+//import org.kuali.rice.kns.service.DataDictionaryService;
+//import org.kuali.rice.kns.service.KNSServiceLocator;
+//import org.kuali.rice.krad.util.GlobalVariables;
+//import org.kuali.rice.core.api.util.type.KualiDecimal;
+//import org.kuali.rice.krad.util.ObjectUtils;
+//import org.kuali.rice.kew.api.WorkflowDocument;
 
 
 
@@ -519,7 +525,7 @@ public class ReturnDocument extends StoresTransactionalDocumentBase implements
 
         // boolean isDocToBeReviewed = isDocReadyToBeReviewed();
 
-        if (event instanceof org.kuali.rice.kns.rule.event.RouteDocumentEvent) {
+        if (event instanceof RouteDocumentEvent) {
             for (ReturnDetail rd : this.returnDetails) {
                 if (!rd.isItemReturned())
                     lisData.add(rd);
@@ -554,15 +560,15 @@ public class ReturnDocument extends StoresTransactionalDocumentBase implements
     public boolean isDocReadyToBeReviewed() {
 
         boolean result = false;
-        if (KNSServiceLocator.getDocumentService().documentExists(this.documentNumber)) {
+        if (KRADServiceLocatorWeb.getDocumentService().documentExists(this.documentNumber)) {
             if (this.getDocumentHeader().hasWorkflowDocument()) {
-                result = this.getDocumentHeader().getWorkflowDocument().stateIsEnroute();
+                result = this.getDocumentHeader().getWorkflowDocument().isEnroute();
             }
             else {
                 try {
-                    result = KNSServiceLocator.getDocumentService().getByDocumentHeaderId(
+                    result = KRADServiceLocatorWeb.getDocumentService().getByDocumentHeaderId(
                             this.documentNumber).getDocumentHeader().getWorkflowDocument()
-                            .stateIsEnroute();
+                            .isEnroute();
                 }
                 catch (Exception e) {
                     throw new RuntimeException(e);
@@ -573,25 +579,20 @@ public class ReturnDocument extends StoresTransactionalDocumentBase implements
     }
 
     @Override
-    public void doRouteStatusChange(DocumentRouteStatusChangeDTO statusChangeEvent) {
+    public void doRouteStatusChange(DocumentRouteStatusChange statusChangeEvent) {
         super.doRouteStatusChange(statusChangeEvent);
-        KualiWorkflowDocument workflowDocument = getDocumentHeader().getWorkflowDocument();
-        if (workflowDocument.stateIsProcessed()) {
+        WorkflowDocument workflowDocument = getDocumentHeader().getWorkflowDocument();
+        if (workflowDocument.isProcessed()) {
             applyProcessLocks();
             MMServiceLocator.getReturnOrderService().processReturnDocument(this);
             UserSession curSession = GlobalVariables.getUserSession();
             String name = null;
-            try {
-                Iterator<Person> approversIterator = this.getDocumentHeader().getWorkflowDocument()
-                        .getAllPriorApprovers().iterator();
-                if (approversIterator.hasNext())
-                    name = approversIterator.next().getPrincipalName();
-            }
-            catch (WorkflowException e) {
-                e.printStackTrace();
-            }
+						Iterator<Person> approversIterator = getPriorApprovers(this.getDocumentHeader().getWorkflowDocument()).iterator();
+						if (approversIterator.hasNext())
+								name = approversIterator.next().getPrincipalName();
+
             if (StringUtils.isBlank(name))
-                name = KIMServiceLocator.getIdentityManagementService().getPrincipal(
+                name = KimApiServiceLocator.getIdentityService().getPrincipal(
                         this.getDocumentHeader().getWorkflowDocument().getRoutedByPrincipalId())
                         .getPrincipalName();
             GlobalVariables.setUserSession(new UserSession(name));
@@ -605,11 +606,10 @@ public class ReturnDocument extends StoresTransactionalDocumentBase implements
             removeProcessLocks();
         }
         updateReturnDocStatus(workflowDocument);
-        SpringContext.getBean(GeneralLedgerProcessor.class).doRouteStatusChange(this,
-                getDocumentHeader());
+        SpringContext.getBean(GeneralLedgerProcessor.class).doRouteStatusChange(this, getDocumentHeader());
     }
 
-    /**
+	/**
      * Convenience method to apply the process locks for business objects affected by this document's In-Process state
      */
     private void applyProcessLocks() {
@@ -636,15 +636,15 @@ public class ReturnDocument extends StoresTransactionalDocumentBase implements
     /**
      * @param workflowDocument
      */
-    private void updateReturnDocStatus(KualiWorkflowDocument workflowDocument) {
+    private void updateReturnDocStatus(WorkflowDocument workflowDocument) {
         String statusCode = MMConstants.OrderStatus.ORDER_LINE_OPEN;
-        if (workflowDocument.stateIsEnroute()) {
+        if (workflowDocument.isEnroute()) {
             statusCode = MMConstants.OrderStatus.REVIEW;
         }
-        else if (workflowDocument.stateIsCanceled()) {
+        else if (workflowDocument.isCanceled()) {
             statusCode = MMConstants.OrderStatus.ORDER_LINE_CANCELED;
         }
-        else if (workflowDocument.stateIsDisapproved()) {
+        else if (workflowDocument.isDisapproved()) {
             statusCode = MMConstants.OrderStatus.DISAPPROVE;
         }
         setReturnDocumentStatusCode(statusCode);
@@ -753,16 +753,6 @@ public class ReturnDocument extends StoresTransactionalDocumentBase implements
      * @return LinkedHashMap
      */
 
-    /**
-     * toStringMapper
-     * 
-     * @return LinkedHashMap
-     */
-    @Override
-    public LinkedHashMap toStringMapper() {
-        LinkedHashMap propMap = new LinkedHashMap();
-        return propMap;
-    }
 
     public List<FinancialGeneralLedgerPendingEntry> getApprovedGeneralLedgerPendingEntries() {
         return SpringContext.getBean(GeneralLedgerProcessor.class)

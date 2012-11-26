@@ -3,21 +3,21 @@
  */
 package org.kuali.ext.mm.document.validation.impl;
 
-import java.sql.Timestamp;
-import java.util.Calendar;
-
 import org.apache.commons.lang.time.DateUtils;
 import org.apache.cxf.common.util.StringUtils;
 import org.kuali.ext.mm.businessobject.OrderDetail;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.MMKeyConstants;
 import org.kuali.ext.mm.document.ReOrderDocument;
-import org.kuali.rice.kns.document.Document;
-import org.kuali.rice.kns.rules.DocumentRuleBase;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.util.GlobalVariables;
-import org.kuali.rice.kns.util.KualiDecimal;
-import org.kuali.rice.kns.util.ObjectUtils;
+import org.kuali.rice.core.api.CoreApiServiceLocator;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+import org.kuali.rice.krad.document.Document;
+import org.kuali.rice.krad.rules.DocumentRuleBase;
+import org.kuali.rice.krad.util.GlobalVariables;
+import org.kuali.rice.krad.util.ObjectUtils;
+
+import java.sql.Timestamp;
+import java.util.Calendar;
 
 
 /**
@@ -108,7 +108,7 @@ public class ReOrderDocumentRule extends DocumentRuleBase {
                 }
             }
             
-            today = KNSServiceLocator.getDateTimeService().getCurrentTimestamp();
+            today = CoreApiServiceLocator.getDateTimeService().getCurrentTimestamp();
             today.setTime(DateUtils.truncate(today, Calendar.DAY_OF_MONTH).getTime());
             if(odetail.getExpectedDate().before(today)){
                 GlobalVariables.getMessageMap().putError(MMConstants.OrderDocument.ORDER_DETAILS+dispString+MMConstants.OrderDocument.EXPECTED_DATE,MMKeyConstants.OrderDocument.ERROR_EXPECTED_DATE_INVALID);

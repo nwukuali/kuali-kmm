@@ -3,8 +3,6 @@ package org.kuali.ext.mm.businessobject;
 // Generated Apr 8, 2009 10:12:44 AM by Hibernate Tools 3.2.4.GA
 
 
-import java.util.LinkedHashMap;
-
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -192,15 +190,5 @@ public class PunchOutVendor extends MMPersistableBusinessObjectBase implements j
         this.procurementCardId = procurementCardId;
     }
 
-    /**
-     * toStringMapper
-     * 
-     * @return LinkedHashMap
-     */
-    @Override
-    public LinkedHashMap toStringMapper() {
-        LinkedHashMap propMap = new LinkedHashMap();
-        return propMap;
-    }
 
 }

@@ -1,20 +1,20 @@
 package org.kuali.ext.mm.document.authorization;
 
-import java.util.List;
-import java.util.Set;
-
 import org.kuali.ext.mm.businessobject.Catalog;
 import org.kuali.ext.mm.businessobject.CatalogItem;
 import org.kuali.ext.mm.businessobject.StockBalance;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
-import org.kuali.rice.kns.bo.BusinessObject;
-import org.kuali.rice.kns.document.Document;
 import org.kuali.rice.kns.document.MaintenanceDocument;
 import org.kuali.rice.kns.document.MaintenanceDocumentBase;
 import org.kuali.rice.kns.document.authorization.MaintenanceDocumentPresentationControllerBase;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.util.KNSConstants;
+import org.kuali.rice.krad.bo.BusinessObject;
+import org.kuali.rice.krad.document.Document;
+import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.util.KRADConstants;
+
+import java.util.List;
+import java.util.Set;
 
 
 public class CatalogItemPresentationController extends MaintenanceDocumentPresentationControllerBase {
@@ -82,7 +82,7 @@ public class CatalogItemPresentationController extends MaintenanceDocumentPresen
 	        readOnlyFields.add("distributorNbr");
 	        readOnlyFields.add("catalogPrc");
 	    }
-	    else if(KNSConstants.MAINTENANCE_COPY_ACTION.equalsIgnoreCase(document.getNewMaintainableObject().getMaintenanceAction())) {
+	    else if(KRADConstants.MAINTENANCE_COPY_ACTION.equalsIgnoreCase(document.getNewMaintainableObject().getMaintenanceAction())) {
 	        readOnlyFields.add(MMConstants.CatalogItem.CATALOGPRC);
 	    }
 	    return readOnlyFields;
@@ -139,7 +139,7 @@ public class CatalogItemPresentationController extends MaintenanceDocumentPresen
 	}
 
    @Override
-protected boolean canCopy(Document document){
+public boolean canCopy(Document document){
          return false;
     }
 

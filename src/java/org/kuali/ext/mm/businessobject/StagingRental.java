@@ -1,8 +1,6 @@
 package org.kuali.ext.mm.businessobject;
 
 
-import java.util.LinkedHashMap;
-
 public class StagingRental extends MMPersistableBusinessObjectBase implements Cloneable{
 
 	/**
@@ -89,18 +87,6 @@ public class StagingRental extends MMPersistableBusinessObjectBase implements Cl
         }
     }
 
-	/**
-	 * toStringMapper
-	 *
-	 * @return LinkedHashMap
-	 */
-	@Override
-    public LinkedHashMap toStringMapper() {
-		LinkedHashMap propMap = new LinkedHashMap();
-		propMap.put("checkinSerialNbr", serialNumber);
-
-		return propMap;
-	}
 
     public void setRentalTrackingDetailId(RentalTrackingDetail rentalDetail, Integer rentalTrackingDetailId) {
         if(rentalDetail instanceof CheckinDetail)

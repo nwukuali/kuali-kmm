@@ -1,27 +1,27 @@
 package org.kuali.ext.mm.document.authorization;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
-
 import org.kuali.ext.mm.businessobject.Stock;
 import org.kuali.ext.mm.businessobject.StockBalance;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.util.MMDecimal;
-import org.kuali.rice.kns.bo.BusinessObject;
-import org.kuali.rice.kns.document.Document;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
 import org.kuali.rice.kns.document.MaintenanceDocument;
 import org.kuali.rice.kns.document.MaintenanceDocumentBase;
 import org.kuali.rice.kns.document.authorization.MaintenanceDocumentPresentationControllerBase;
-import org.kuali.rice.kns.util.GlobalVariables;
-import org.kuali.rice.kns.util.KualiDecimal;
+import org.kuali.rice.krad.bo.BusinessObject;
+import org.kuali.rice.krad.document.Document;
+import org.kuali.rice.krad.util.GlobalVariables;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
 
 
 public class StockPresentationController extends MaintenanceDocumentPresentationControllerBase {
 
 
     @Override
-    protected boolean canSave(Document document) {
+    public boolean canSave(Document document) {
         return false;
     }
 

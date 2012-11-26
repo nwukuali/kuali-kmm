@@ -1,7 +1,5 @@
 package org.kuali.ext.mm.businessobject;
 
-import java.util.LinkedHashMap;
-
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 
@@ -23,10 +21,5 @@ public class MMPersistableBusinessObjectBase extends StoresPersistableBusinessOb
 		this.active = activeInd;
 	}
 
-	@Override
-	protected LinkedHashMap toStringMapper() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }

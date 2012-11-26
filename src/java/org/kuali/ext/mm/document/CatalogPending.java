@@ -1,23 +1,15 @@
 package org.kuali.ext.mm.document;
 
-import java.sql.Date;
-import java.sql.Timestamp;
-import java.util.LinkedHashMap;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import org.apache.ojb.broker.PersistenceBroker;
-import org.apache.ojb.broker.PersistenceBrokerException;
 import org.apache.struts.upload.FormFile;
 import org.kuali.ext.mm.businessobject.StoresTransactionalDocumentBase;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.sys.batch.service.CatalogPendingDocQueryService;
-import org.kuali.rice.kew.dto.DocumentRouteStatusChangeDTO;
-import org.kuali.rice.kns.workflow.service.KualiWorkflowDocument;
+import org.kuali.rice.kew.api.WorkflowDocument;
+import org.kuali.rice.kew.framework.postprocessor.DocumentRouteStatusChange;
+
+import javax.persistence.*;
+import java.sql.Date;
+import java.sql.Timestamp;
 
 
 @SuppressWarnings("serial")
@@ -201,42 +193,26 @@ public class CatalogPending extends StoresTransactionalDocumentBase {
         this.fileName = fileName;
     }
 
-    /**
-     * toStringMapper
-     * @return LinkedHashMap
-     */
     @Override
-    @SuppressWarnings("unchecked")
-    public LinkedHashMap toStringMapper() {
-        LinkedHashMap propMap = new LinkedHashMap();
-        propMap.put("documentNumber", documentNumber);
-        return propMap;
-    }
-
-    @Override
-    public void doRouteStatusChange(DocumentRouteStatusChangeDTO statusChangeEvent) {
+    public void doRouteStatusChange(DocumentRouteStatusChange statusChangeEvent) {
         super.doRouteStatusChange(statusChangeEvent);
-        KualiWorkflowDocument workflowDocument = getDocumentHeader().getWorkflowDocument();
-        if (workflowDocument.stateIsProcessed()) {
+        WorkflowDocument workflowDocument = getDocumentHeader().getWorkflowDocument();
+        if (workflowDocument.isProcessed()) {
             this.setCatalogUploadStatus("UPLOAD_READY");
         }
     }
 
-    /**
-     * @see org.kuali.rice.kns.bo.PersistableBusinessObjectBase#afterInsert(org.apache.ojb.broker.PersistenceBroker)
-     */
-    @Override
-    public void afterInsert(PersistenceBroker persistenceBroker) throws PersistenceBrokerException {
 
-        super.afterInsert(persistenceBroker);
+	protected void postPersist() {
+		super.postPersist();
+		CatalogPendingDocQueryService cPDQS = SpringContext
+						.getBean(CatalogPendingDocQueryService.class);
 
-        CatalogPendingDocQueryService cPDQS = SpringContext
-                .getBean(CatalogPendingDocQueryService.class);
+		FormFile uploadedFile = this.getFileContent();
+		if (uploadedFile != null) {
+				cPDQS.uploadCatalogActionSave(this.getDocumentNumber(), this.getCatalogCd(), this
+								.getCatalogDesc(), uploadedFile);
+		}
+	}
 
-        FormFile uploadedFile = this.getFileContent();
-        if (uploadedFile != null) {
-            cPDQS.uploadCatalogActionSave(this.getDocumentNumber(), this.getCatalogCd(), this
-                    .getCatalogDesc(), uploadedFile);
-        }
-    }
 }

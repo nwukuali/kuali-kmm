@@ -13,10 +13,10 @@ import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.service.PickListHelperService;
 import org.kuali.ext.mm.service.StockService;
 import org.kuali.ext.mm.service.impl.PickListHelperServiceImpl;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.service.ParameterService;
-import org.kuali.rice.kns.util.ObjectUtils;
+import org.kuali.rice.coreservice.framework.CoreFrameworkServiceLocator;
+import org.kuali.rice.coreservice.framework.parameter.ParameterService;
+import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.util.ObjectUtils;
 
 
 /**
@@ -108,7 +108,7 @@ protected static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.get
      * @return a list of ZonesCodes for carousel zones in a warehouse.
      */
     private List<String> getCarouselZonesForWarehouse(String warehouseCode) {
-        List<String> zonesByWarehouse = KNSServiceLocator.getParameterService().getParameterValues(MMConstants.MM_NAMESPACE, MMConstants.Parameters.BATCH, MMConstants.Parameters.CAROUSEL_WAREHOUSE_ZONES);
+        List<String> zonesByWarehouse = new ArrayList(CoreFrameworkServiceLocator.getParameterService().getParameterValuesAsString(MMConstants.MM_NAMESPACE, MMConstants.Parameters.BATCH, MMConstants.Parameters.CAROUSEL_WAREHOUSE_ZONES));
         List<String> zoneList = new ArrayList<String>();
 
         for(String parm : zonesByWarehouse) {

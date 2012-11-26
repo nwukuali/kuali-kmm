@@ -1,14 +1,7 @@
 package org.kuali.ext.mm.document.validation.impl;
 
-import java.util.List;
-
 import org.apache.commons.lang.StringUtils;
-import org.kuali.ext.mm.businessobject.Accounts;
-import org.kuali.ext.mm.businessobject.CatalogItem;
-import org.kuali.ext.mm.businessobject.MMCapitalAssetInformation;
-import org.kuali.ext.mm.businessobject.MMCapitalAssetInformationDetail;
-import org.kuali.ext.mm.businessobject.OrderDetail;
-import org.kuali.ext.mm.businessobject.RecurringOrder;
+import org.kuali.ext.mm.businessobject.*;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.MMKeyConstants;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
@@ -18,15 +11,15 @@ import org.kuali.ext.mm.integration.FinancialSystemAdaptorFactory;
 import org.kuali.ext.mm.integration.service.FinancialCapitalAssetService;
 import org.kuali.ext.mm.service.MMServiceLocator;
 import org.kuali.ext.mm.service.OrderService;
-import org.kuali.rice.kns.bo.Campus;
-import org.kuali.rice.kns.bo.CampusImpl;
-import org.kuali.rice.kns.document.Document;
-import org.kuali.rice.kns.rule.event.ApproveDocumentEvent;
-import org.kuali.rice.kns.rules.DocumentRuleBase;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.util.GlobalVariables;
-import org.kuali.rice.kns.util.ObjectUtils;
+import org.kuali.rice.krad.document.Document;
+import org.kuali.rice.krad.rules.DocumentRuleBase;
+import org.kuali.rice.krad.rules.rule.event.ApproveDocumentEvent;
+import org.kuali.rice.krad.util.GlobalVariables;
+import org.kuali.rice.krad.util.ObjectUtils;
+import org.kuali.rice.location.api.campus.Campus;
+import org.kuali.rice.location.api.campus.CampusService;
+
+import java.util.List;
 
 
 public class OrderDocumentRule extends DocumentRuleBase {
@@ -86,7 +79,7 @@ public class OrderDocumentRule extends DocumentRuleBase {
     /**
      * (non-Javadoc)
      *
-     * @see org.kuali.rice.kns.rules.DocumentRuleBase#processCustomApproveDocumentBusinessRules(org.kuali.rice.kns.rule.event.ApproveDocumentEvent)
+     * @see org.kuali.rice.kns.rules.DocumentRuleBase#processCustomApproveDocumentBusinessRules(org.kuali.rice.krad.rules.rule.event.ApproveDocumentEvent)
      */
     @Override
     protected boolean processCustomApproveDocumentBusinessRules(ApproveDocumentEvent approveEvent) {
@@ -358,8 +351,8 @@ public class OrderDocumentRule extends DocumentRuleBase {
             return valid;
         }
 
-        BusinessObjectService boService = KNSServiceLocator.getBusinessObjectService();
-        Campus campus = boService.findBySinglePrimaryKey(CampusImpl.class, campusCode);
+				//TODO NWU - Determine if same behaviour as before
+        Campus campus = SpringContext.getBean(CampusService.class).getCampus(campusCode);
         if (campus == null || !campus.isActive()) {
             valid = false;
         }

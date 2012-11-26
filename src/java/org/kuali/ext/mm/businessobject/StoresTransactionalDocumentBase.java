@@ -1,19 +1,22 @@
 package org.kuali.ext.mm.businessobject;
 
-import java.sql.Timestamp;
-import java.util.LinkedHashMap;
+import org.kuali.rice.kew.api.KewApiConstants;
+import org.kuali.rice.kew.api.WorkflowDocument;
+import org.kuali.rice.kew.api.action.ActionTaken;
+import org.kuali.rice.kim.api.identity.Person;
+import org.kuali.rice.kim.api.identity.PersonService;
+import org.kuali.rice.kim.api.services.KimApiServiceLocator;
+import org.kuali.rice.krad.bo.PersistableBusinessObject;
+import org.kuali.rice.krad.document.TransactionalDocumentBase;
 
 import javax.persistence.Column;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
-
-import org.apache.ojb.broker.PersistenceBroker;
-import org.apache.ojb.broker.PersistenceBrokerException;
-import org.kuali.rice.kns.bo.PersistableBusinessObject;
-import org.kuali.rice.kns.document.TransactionalDocumentBase;
+import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class StoresTransactionalDocumentBase extends TransactionalDocumentBase implements
-        PersistableBusinessObject {
+	PersistableBusinessObject {
 
     /**
      *
@@ -31,40 +34,16 @@ public class StoresTransactionalDocumentBase extends TransactionalDocumentBase i
         this.lastUpdateDate = lastUpdateDate;
     }
 
-    @Override
-    public void beforeInsert(PersistenceBroker persistenceBroker) throws PersistenceBrokerException {
-        super.beforeInsert(persistenceBroker);
+	protected void prePersist() {
+		super.prePersist();
+		this.setLastUpdateDate(new Timestamp(new java.util.Date().getTime()));
+	}
 
-        this.setLastUpdateDate(new Timestamp(new java.util.Date().getTime()));
-    }
+	protected void preUpdate() {
+		super.preUpdate();
+		this.setLastUpdateDate(new Timestamp(new java.util.Date().getTime()));
+	}
 
-    @Override
-    public void beforeUpdate(PersistenceBroker persistenceBroker) throws PersistenceBrokerException {
-        super.beforeUpdate(persistenceBroker);
-        this.setLastUpdateDate(new Timestamp(new java.util.Date().getTime()));
-    }
-
-    @Override
-    @PrePersist
-    public void beforeInsert() {
-        super.beforeInsert();
-
-        this.setLastUpdateDate(new Timestamp(new java.util.Date().getTime()));
-    }
-
-    @Override
-    @PreUpdate
-    public void beforeUpdate() {
-        super.beforeUpdate();
-
-        this.setLastUpdateDate(new Timestamp(new java.util.Date().getTime()));
-    }
-
-    @Override
-    protected LinkedHashMap toStringMapper() {
-        // TODO Auto-generated method stub
-        return null;
-    }
 
     /**
      * @param nodeName
@@ -74,4 +53,22 @@ public class StoresTransactionalDocumentBase extends TransactionalDocumentBase i
         throw new UnsupportedOperationException(
             "Concrete class has to implement this method for this node " + nodeName);
     }
+
+	protected Set<Person> getPriorApprovers(WorkflowDocument workflowDocument) {
+		PersonService personService = KimApiServiceLocator.getPersonService();
+		List<ActionTaken> actionsTaken = workflowDocument.getActionsTaken();
+		Set<String> principalIds = new HashSet<String>();
+		Set<Person> persons = new HashSet<Person>();
+
+		for (ActionTaken actionTaken : actionsTaken) {
+			if (KewApiConstants.ACTION_TAKEN_APPROVED_CD.equals(actionTaken.getActionTaken())) {
+				String principalId = actionTaken.getPrincipalId();
+				if (!principalIds.contains(principalId)) {
+					principalIds.add(principalId);
+					persons.add(personService.getPerson(principalId));
+				}
+			}
+		}
+		return persons;
+	}
 }

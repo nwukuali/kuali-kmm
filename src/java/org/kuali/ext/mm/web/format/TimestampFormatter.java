@@ -16,15 +16,16 @@
 // begin Kuali Foundation modification
 package org.kuali.ext.mm.web.format;
 // import order changed, and java.util.Calendar, org.kuali.KeyConstants and org.kuali.rice.KNSServiceLocator added
+
+import org.kuali.rice.core.api.CoreApiServiceLocator;
+import org.kuali.rice.core.api.datetime.DateTimeService;
+import org.kuali.rice.core.api.util.RiceKeyConstants;
+import org.kuali.rice.core.web.format.FormatException;
+import org.kuali.rice.core.web.format.Formatter;
+
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.Calendar;
-
-import org.kuali.rice.kns.service.DateTimeService;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.util.RiceKeyConstants;
-import org.kuali.rice.kns.web.format.FormatException;
-import org.kuali.rice.kns.web.format.Formatter;
 
 /**
  * begin Kuali Foundation modification
@@ -112,7 +113,7 @@ public class TimestampFormatter extends Formatter {
 
     public static DateTimeService getDateTimeService() {
         if ( dateTimeService == null ) {
-            dateTimeService = KNSServiceLocator.getDateTimeService();
+            dateTimeService = CoreApiServiceLocator.getDateTimeService();
         }
         return dateTimeService;
     }

@@ -1,14 +1,13 @@
 package org.kuali.ext.mm.service;
 
-import javax.xml.namespace.QName;
-
 import org.apache.log4j.Logger;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.document.service.BusinessObjectLockingService;
 import org.kuali.ext.mm.sys.batch.service.CatalogItemService;
-import org.kuali.rice.core.resourceloader.GlobalResourceLoader;
-import org.kuali.rice.kns.service.BusinessObjectService;
+import org.kuali.rice.core.api.resourceloader.GlobalResourceLoader;
+import org.kuali.rice.krad.service.BusinessObjectService;
 
+import javax.xml.namespace.QName;
 
 
 public final class MMServiceLocator {

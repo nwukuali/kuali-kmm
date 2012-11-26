@@ -1,6 +1,7 @@
 package org.kuali.ext.mm.web.format;
 
-import org.kuali.rice.kns.web.format.Formatter;
+import org.kuali.rice.core.web.format.Formatter;
+
 /**
  * @author rponraj
  *

@@ -10,8 +10,8 @@ import org.kuali.ext.mm.integration.FinancialSystemAdaptorFactory;
 import org.kuali.ext.mm.integration.vnd.businessobject.FinancialVendorContract;
 import org.kuali.rice.kns.document.MaintenanceDocument;
 import org.kuali.rice.kns.maintenance.rules.MaintenanceDocumentRuleBase;
-import org.kuali.rice.kns.util.GlobalVariables;
-import org.kuali.rice.kns.util.KNSConstants;
+import org.kuali.rice.krad.util.GlobalVariables;
+import org.kuali.rice.krad.util.KRADConstants;
 
 
 /**
@@ -33,7 +33,7 @@ public class AgreementRule extends MaintenanceDocumentRuleBase {
                     .getVendorContract(agreement.getVndrContrGnrtdId());
             if (vendorContract == null || !vendorContract.isActive()) {
                 GlobalVariables.getMessageMap().putError(
-                        KNSConstants.MAINTENANCE_NEW_MAINTAINABLE + "vndrContrGnrtdId",
+                        KRADConstants.MAINTENANCE_NEW_MAINTAINABLE + "vndrContrGnrtdId",
                         MMKeyConstants.Agreement.CONTRACT_NOT_VALID);
                 valid &= false;
             }

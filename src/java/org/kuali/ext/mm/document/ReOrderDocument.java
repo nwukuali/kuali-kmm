@@ -3,9 +3,6 @@
  */
 package org.kuali.ext.mm.document;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.kuali.ext.mm.businessobject.OrderDetail;
 import org.kuali.ext.mm.businessobject.Stock;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
@@ -13,7 +10,11 @@ import org.kuali.ext.mm.integration.FinancialSystemAdaptorFactory;
 import org.kuali.ext.mm.integration.purap.document.FinancialRequisitionDocument;
 import org.kuali.ext.mm.service.MMServiceLocator;
 import org.kuali.ext.mm.util.MMUtil;
-import org.kuali.rice.kns.rule.event.KualiDocumentEvent;
+import org.kuali.rice.krad.rules.rule.event.KualiDocumentEvent;
+import org.kuali.rice.krad.rules.rule.event.RouteDocumentEvent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -53,7 +54,7 @@ public class ReOrderDocument extends OrderDocument {
             this.getOrderDetailsForReorder().clear();
         }
 
-        if (event instanceof org.kuali.rice.kns.rule.event.RouteDocumentEvent) {
+        if (event instanceof RouteDocumentEvent) {
             for (OrderDetail rd : this.getOrderDetails()) {
                 if (rd.isItemToBeRemoved())
                     lisData.add(rd);

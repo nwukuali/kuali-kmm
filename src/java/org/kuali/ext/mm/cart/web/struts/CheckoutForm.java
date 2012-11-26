@@ -1,16 +1,15 @@
 package org.kuali.ext.mm.cart.web.struts;
 
-import java.util.Calendar;
-import java.util.Collection;
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.lang.StringUtils;
 import org.kuali.ext.mm.businessobject.Profile;
 import org.kuali.ext.mm.cart.service.ShopCartServiceLocator;
 import org.kuali.ext.mm.common.sys.MMConstants;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.util.ObjectUtils;
+import org.kuali.rice.krad.service.KRADServiceLocator;
+import org.kuali.rice.krad.util.ObjectUtils;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Calendar;
+import java.util.Collection;
 
 
 
@@ -140,7 +139,7 @@ public class CheckoutForm extends ShopCartFormBase {
             setProfileId(getCheckOutAsProfile().getProfileId());
         }
         else {
-            setCheckOutAsProfile((Profile)KNSServiceLocator.getBusinessObjectService().retrieve(getCheckOutAsProfile()));
+            setCheckOutAsProfile((Profile) KRADServiceLocator.getBusinessObjectService().retrieve(getCheckOutAsProfile()));
             if(!StringUtils.equals(getProfileId(), getCheckOutAsProfile().getProfileId())) {
                 ShopCartServiceLocator.getShopCartService().setShoppingCartCustomerInfo(getSessionCart(), getCheckOutAsProfile());
                 setProfileId(getCheckOutAsProfile().getProfileId());

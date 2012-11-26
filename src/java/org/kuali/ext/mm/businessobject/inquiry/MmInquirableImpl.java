@@ -3,18 +3,18 @@
  */
 package org.kuali.ext.mm.businessobject.inquiry;
 
+import org.kuali.ext.mm.common.sys.context.SpringContext;
+import org.kuali.ext.mm.integration.FinancialSystemComponent;
+import org.kuali.ext.mm.integration.FinancialSystemConfiguration;
+import org.kuali.rice.kns.inquiry.KualiInquirableImpl;
+import org.kuali.rice.kns.lookup.HtmlData;
+import org.kuali.rice.kns.lookup.LookupUtils;
+import org.kuali.rice.krad.bo.BusinessObject;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
-import org.kuali.ext.mm.common.sys.context.SpringContext;
-import org.kuali.ext.mm.integration.FinancialSystemComponent;
-import org.kuali.ext.mm.integration.FinancialSystemConfiguration;
-import org.kuali.rice.kns.bo.BusinessObject;
-import org.kuali.rice.kns.inquiry.KualiInquirableImpl;
-import org.kuali.rice.kns.lookup.HtmlData;
-import org.kuali.rice.kns.lookup.LookupUtils;
 
 
 /**

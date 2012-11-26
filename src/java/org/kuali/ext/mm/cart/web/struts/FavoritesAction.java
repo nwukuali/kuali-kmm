@@ -1,15 +1,5 @@
 package org.kuali.ext.mm.cart.web.struts;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -22,10 +12,14 @@ import org.kuali.ext.mm.cart.ShopCartKeyConstants;
 import org.kuali.ext.mm.cart.service.ShopCartFavoriteService;
 import org.kuali.ext.mm.cart.service.ShopCartServiceLocator;
 import org.kuali.ext.mm.common.sys.MMConstants;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.util.KNSConstants;
-import org.kuali.rice.kns.util.ObjectUtils;
-import org.kuali.rice.kns.util.UrlFactory;
+import org.kuali.rice.krad.service.KRADServiceLocator;
+import org.kuali.rice.krad.util.KRADConstants;
+import org.kuali.rice.krad.util.ObjectUtils;
+import org.kuali.rice.krad.util.UrlFactory;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.*;
 
 
 public class FavoritesAction extends StoresShoppingActionBase {
@@ -140,7 +134,7 @@ public class FavoritesAction extends StoresShoppingActionBase {
 			ShopCartServiceLocator.getShopCartService().addCatalogItemToSessionCart(favForm.getSessionCart(), favForm.getCustomerProfile(), detail.getCatalogItem(), 1, detail.getCatalogItem().isWillcallInd());
 
 		Properties parameters = new Properties();
-        parameters.put(KNSConstants.DISPATCH_REQUEST_PARAMETER, ShopCartConstants.START_METHOD);
+        parameters.put(KRADConstants.DISPATCH_REQUEST_PARAMETER, ShopCartConstants.START_METHOD);
 
 		return new ActionForward(UrlFactory.parameterizeUrl(ShopCartConstants.VIEW_CART_ACTION, parameters), true);
 	}
@@ -267,7 +261,7 @@ public class FavoritesAction extends StoresShoppingActionBase {
 		favForm.createNewConfirmAction(request);
 		favForm.getConfirmAction().setConfirmAction(ShopCartConstants.FAVORITES_ACTION);
 		favForm.getConfirmAction().setDeclineAction(ShopCartConstants.FAVORITES_ACTION);
-		favForm.getConfirmAction().setMessage(KNSServiceLocator.getKualiConfigurationService().getPropertyString(ShopCartKeyConstants.QUESTION_CONFIRM_DELETE_FAVORITE_LIST));
+		favForm.getConfirmAction().setMessage(KRADServiceLocator.getKualiConfigurationService().getPropertyValueAsString(ShopCartKeyConstants.QUESTION_CONFIRM_DELETE_FAVORITE_LIST));
 		confirmParameters.put(MMConstants.DISPATCH_REQUEST_PARAMETER, ShopCartConstants.DELETE_LIST_METHOD);
 		confirmParameters.put(ShopCartConstants.FAVORITES_ID, favForm.getSelectedFavoriteHeaderId());
 		declineParameters.put(MMConstants.DISPATCH_REQUEST_PARAMETER, ShopCartConstants.START_METHOD);

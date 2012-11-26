@@ -3,25 +3,8 @@
  */
 package org.kuali.ext.mm.service.impl;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.commons.lang.StringUtils;
-import org.kuali.ext.mm.businessobject.Accounts;
-import org.kuali.ext.mm.businessobject.Address;
-import org.kuali.ext.mm.businessobject.Agreement;
-import org.kuali.ext.mm.businessobject.CatalogItem;
-import org.kuali.ext.mm.businessobject.OrderDetail;
-import org.kuali.ext.mm.businessobject.OrderDocumentLookable;
-import org.kuali.ext.mm.businessobject.Profile;
-import org.kuali.ext.mm.businessobject.ReorderCatalogItemDetail;
-import org.kuali.ext.mm.businessobject.StoresPersistableBusinessObject;
-import org.kuali.ext.mm.businessobject.Warehouse;
-import org.kuali.ext.mm.businessobject.WarehouseAccounts;
+import org.kuali.ext.mm.businessobject.*;
 import org.kuali.ext.mm.cart.ShopCartConstants;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
@@ -32,11 +15,14 @@ import org.kuali.ext.mm.service.ProfileService;
 import org.kuali.ext.mm.service.ReOrderService;
 import org.kuali.ext.mm.util.MMDecimal;
 import org.kuali.ext.mm.util.MMUtil;
-import org.kuali.rice.kim.service.KIMServiceLocator;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.util.KualiDecimal;
-import org.kuali.rice.kns.util.ObjectUtils;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+import org.kuali.rice.kim.api.services.KimApiServiceLocator;
+import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.service.KRADServiceLocator;
+import org.kuali.rice.krad.util.ObjectUtils;
+
+import java.math.BigDecimal;
+import java.util.*;
 
 
 /**
@@ -281,7 +267,7 @@ public class ReorderServiceImpl implements ReOrderService {
      */
     private ReOrderDocument setDocParams(ReOrderDocument orderDoc, Agreement agreement,
             String warehouseCode) {
-        orderDoc.setOrderId(KNSServiceLocator.getSequenceAccessorService()
+        orderDoc.setOrderId(KRADServiceLocator.getSequenceAccessorService()
                 .getNextAvailableSequenceNumber(ShopCartConstants.Sequence.ORDER_ID_SEQ));
         orderDoc.setOrderTypeCode(MMConstants.OrderDocument.ORDER_TYPE_STOCK);
         orderDoc.setOrderStatusCd(MMConstants.OrderStatus.INITIATED);
@@ -292,7 +278,7 @@ public class ReorderServiceImpl implements ReOrderService {
         orderDoc.setWarehouse(warehouse);
 
         String initPrincipalId = orderDoc.getDocumentHeader().getWorkflowDocument().getInitiatorPrincipalId();
-        String initiator = KIMServiceLocator.getPersonService().getPerson(initPrincipalId).getPrincipalName();
+        String initiator = KimApiServiceLocator.getPersonService().getPerson(initPrincipalId).getPrincipalName();
         Profile profile = SpringContext.getBean(ProfileService.class).getDefaultCustomerProfile(initiator);
 
         // populating the billing and shipping address

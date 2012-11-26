@@ -15,23 +15,21 @@
  */
 package org.kuali.rice.kns.dao.impl;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.QueryByCriteria;
 import org.apache.ojb.broker.query.QueryFactory;
-import org.kuali.rice.kns.bo.PersistableBusinessObject;
-import org.kuali.rice.kns.dao.BusinessObjectDao;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.service.PersistenceStructureService;
-import org.kuali.rice.kns.util.KNSPropertyConstants;
-import org.kuali.rice.kns.util.ObjectUtils;
-import org.kuali.rice.kns.util.OjbCollectionAware;
+import org.kuali.rice.core.framework.persistence.ojb.dao.PlatformAwareDaoBaseOjb;
+import org.kuali.rice.krad.bo.BusinessObject;
+import org.kuali.rice.krad.bo.PersistableBusinessObject;
+import org.kuali.rice.krad.dao.BusinessObjectDao;
+import org.kuali.rice.krad.service.KRADServiceLocatorInternal;
+import org.kuali.rice.krad.service.PersistenceStructureService;
+import org.kuali.rice.krad.util.KRADPropertyConstants;
+import org.kuali.rice.krad.util.ObjectUtils;
+import org.kuali.rice.krad.util.OjbCollectionAware;
 import org.springframework.dao.DataAccessException;
+
+import java.util.*;
 
 /**
  * This class is the OJB implementation of the BusinessObjectDao interface and should be used for generic business object unit
@@ -197,7 +195,7 @@ public class BusinessObjectDaoOjb extends PlatformAwareDaoBaseOjb implements Bus
 	 *
 	 * @see org.kuali.rice.kns.dao.BusinessObjectDao#save(org.kuali.rice.kns.bo.PersistableBusinessObject)
 	 */
-	public void save(PersistableBusinessObject bo) throws DataAccessException {
+	public PersistableBusinessObject save(PersistableBusinessObject bo) throws DataAccessException {
 		// if collections exist on the BO, create a copy and use to process the
 		// collections to ensure
 		// that removed elements are deleted from the database
@@ -217,10 +215,11 @@ public class BusinessObjectDaoOjb extends PlatformAwareDaoBaseOjb implements Bus
                     savedBo.refreshReferenceObject(boReference);
                 }
             }
-            KNSServiceLocator.getOjbCollectionHelper().processCollections(this, bo, savedBo);
+            KRADServiceLocatorInternal.getOjbCollectionHelper().processCollections(this, bo, savedBo);
         }
 
 		getPersistenceBrokerTemplate().store(bo);
+		return bo;
 	}
 
     /**
@@ -228,7 +227,7 @@ public class BusinessObjectDaoOjb extends PlatformAwareDaoBaseOjb implements Bus
      *
      * @see org.kuali.rice.kns.dao.BusinessObjectDao#save(org.kuali.rice.kns.bo.PersistableBusinessObject)
      */
-    public void save(List businessObjects) throws DataAccessException {
+    public java.util.List<? extends org.kuali.rice.krad.bo.PersistableBusinessObject>  save(List businessObjects) throws DataAccessException {
     	if ( LOG.isDebugEnabled() ) {
     		LOG.debug( "About to persist the following BOs:" );
     		for ( Object bo : businessObjects ) {
@@ -239,10 +238,12 @@ public class BusinessObjectDaoOjb extends PlatformAwareDaoBaseOjb implements Bus
             Object bo = i.next();
             getPersistenceBrokerTemplate().store(bo);
         }
+			//TODO: NWU - Confirm if bo's should be re-hydrated objects
+			return businessObjects;
     }
 
 
-    /**
+	/**
      * Deletes the business object passed in.
      *
      * @param bo
@@ -263,7 +264,7 @@ public class BusinessObjectDaoOjb extends PlatformAwareDaoBaseOjb implements Bus
     }
 
 
-    /**
+	/**
      * @see org.kuali.rice.kns.dao.BusinessObjectDao#deleteMatching(java.lang.Class, java.util.Map)
      */
     public void deleteMatching(Class clazz, Map fieldValues) {
@@ -313,7 +314,7 @@ public class BusinessObjectDaoOjb extends PlatformAwareDaoBaseOjb implements Bus
      */
     private Criteria buildActiveCriteria(){
         Criteria criteria = new Criteria();
-        criteria.addEqualTo(KNSPropertyConstants.ACTIVE, true);
+        criteria.addEqualTo(KRADPropertyConstants.ACTIVE, true);
 
         return criteria;
     }
@@ -324,7 +325,7 @@ public class BusinessObjectDaoOjb extends PlatformAwareDaoBaseOjb implements Bus
      */
     private Criteria buildInactiveCriteria(){
         Criteria criteria = new Criteria();
-        criteria.addEqualTo(KNSPropertyConstants.ACTIVE, false);
+        criteria.addEqualTo(KRADPropertyConstants.ACTIVE, false);
 
         return criteria;
     }
@@ -368,5 +369,16 @@ public class BusinessObjectDaoOjb extends PlatformAwareDaoBaseOjb implements Bus
     public void setPersistenceStructureService(PersistenceStructureService persistenceStructureService) {
         this.persistenceStructureService = persistenceStructureService;
     }
+
+
+
+	public <T extends BusinessObject> T findByPrimaryKeyUsingKeyObject(Class<T> tClass, Object o) {
+			throw new UnsupportedOperationException("OJB does not support this option");
+	}
+
+
+	public PersistableBusinessObject manageReadOnly(PersistableBusinessObject persistableBusinessObject) {
+		return persistableBusinessObject;
+	}
 
 }

@@ -1,17 +1,16 @@
 package org.kuali.ext.mm.cart.web.struts;
 
-import java.util.Properties;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.kuali.ext.mm.cart.ShopCartConstants;
 import org.kuali.ext.mm.common.sys.MMConstants;
-import org.kuali.rice.kns.util.KNSConstants;
-import org.kuali.rice.kns.util.UrlFactory;
+import org.kuali.rice.krad.util.KRADConstants;
+import org.kuali.rice.krad.util.UrlFactory;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Properties;
 
 
 public class SearchAction extends StoresShoppingActionBase {
@@ -41,7 +40,7 @@ public class SearchAction extends StoresShoppingActionBase {
 
 		Properties parameters = new Properties();
 
-        parameters.put(KNSConstants.DISPATCH_REQUEST_PARAMETER, ShopCartConstants.ADVACNED_SEARCH_METHOD);
+        parameters.put(KRADConstants.DISPATCH_REQUEST_PARAMETER, ShopCartConstants.ADVACNED_SEARCH_METHOD);
 
 		return new ActionForward(UrlFactory.parameterizeUrl(ShopCartConstants.BROWSE_ACTION, parameters), true);
 

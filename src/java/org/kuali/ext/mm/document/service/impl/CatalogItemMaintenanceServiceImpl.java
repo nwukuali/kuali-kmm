@@ -5,7 +5,7 @@ package org.kuali.ext.mm.document.service.impl;
 
 import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.document.service.CatalogItemMaintenanceService;
-import org.kuali.rice.kns.service.SequenceAccessorService;
+import org.kuali.rice.krad.service.SequenceAccessorService;
 
 
 /**

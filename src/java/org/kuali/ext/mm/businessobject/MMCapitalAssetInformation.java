@@ -15,19 +15,18 @@
  */
 package org.kuali.ext.mm.businessobject;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.commons.lang.StringUtils;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.integration.cam.businessobject.FinancialAsset;
 import org.kuali.ext.mm.integration.cam.businessobject.FinancialAssetType;
 import org.kuali.ext.mm.integration.vnd.businessobject.FinancialVendorDetail;
-import org.kuali.rice.kns.bo.PersistableBusinessObjectBase;
-import org.kuali.rice.kns.util.ObjectUtils;
+import org.kuali.rice.krad.bo.PersistableBusinessObjectBase;
+import org.kuali.rice.krad.util.ObjectUtils;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public class MMCapitalAssetInformation extends PersistableBusinessObjectBase {
@@ -64,14 +63,6 @@ public class MMCapitalAssetInformation extends PersistableBusinessObjectBase {
         capitalAssetInformationDetails = new ArrayList<MMCapitalAssetInformationDetail>();
     }
 
-    @Override
-    protected LinkedHashMap toStringMapper() {
-        LinkedHashMap m = new LinkedHashMap();
-
-        m.put(MMConstants.OrderDetail.ORDER_DETAIL_ID, getOrderDetailId());
-
-        return m;
-    }
 
     public void setOrderDetailId(Integer orderDetailId) {
 		this.orderDetailId = orderDetailId;

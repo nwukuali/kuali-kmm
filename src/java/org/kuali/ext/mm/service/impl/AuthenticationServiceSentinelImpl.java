@@ -1,16 +1,15 @@
 package org.kuali.ext.mm.service.impl;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
+import edu.msu.ais.d6501.sentinel.Credential;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.kuali.ext.mm.common.filter.AuthenticationFilter;
-import org.kuali.rice.kim.service.AuthenticationService;
-import org.kuali.rice.kns.dao.BusinessObjectDao;
-import org.kuali.rice.kns.service.KualiConfigurationService;
+import org.kuali.rice.core.api.config.property.ConfigurationService;
+import org.kuali.rice.kim.api.identity.AuthenticationService;
+import org.kuali.rice.krad.dao.BusinessObjectDao;
 
-import edu.msu.ais.d6501.sentinel.Credential;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 public class AuthenticationServiceSentinelImpl implements AuthenticationService {
 
@@ -18,13 +17,13 @@ public class AuthenticationServiceSentinelImpl implements AuthenticationService 
         this.validatePassword = validatePassword;
     }
 
-    private KualiConfigurationService configService;
+    private ConfigurationService configService;
 
-    public KualiConfigurationService getConfigService() {
+    public ConfigurationService getConfigService() {
         return configService;
     }
 
-    public void setConfigService(KualiConfigurationService configService) {
+    public void setConfigService(ConfigurationService configService) {
         this.configService = configService;
     }
 
@@ -80,9 +79,9 @@ public class AuthenticationServiceSentinelImpl implements AuthenticationService 
         if (principalName == null) {
             principalName = "";
         }
-        if (configService.isProductionEnvironment()) {
-            
-        }
+//        if (configService.isProductionEnvironment()) {
+//
+//        }
         return principalName;
 
     }

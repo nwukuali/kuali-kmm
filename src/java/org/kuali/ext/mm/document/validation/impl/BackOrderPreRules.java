@@ -6,12 +6,12 @@ import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.MMKeyConstants;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.service.StockService;
-import org.kuali.rice.core.util.RiceConstants;
-import org.kuali.rice.kns.document.Document;
+import org.kuali.rice.core.api.config.property.ConfigurationService;
+import org.kuali.rice.core.api.util.RiceConstants;
 import org.kuali.rice.kns.document.MaintenanceDocumentBase;
 import org.kuali.rice.kns.rules.PromptBeforeValidationBase;
-import org.kuali.rice.kns.service.KualiConfigurationService;
-import org.kuali.rice.kns.util.ObjectUtils;
+import org.kuali.rice.krad.document.Document;
+import org.kuali.rice.krad.util.ObjectUtils;
 
 
 public class BackOrderPreRules extends PromptBeforeValidationBase {
@@ -75,8 +75,8 @@ public class BackOrderPreRules extends PromptBeforeValidationBase {
      * @return true if the user wants to proceed with filling the
      */
     private boolean isOkFillingWithoutStockQuantity(Integer fillQuantity, Integer quantityOnHand) {
-        KualiConfigurationService kualiConfiguration = SpringContext.getBean(KualiConfigurationService.class);
-        String warningMessage = kualiConfiguration.getPropertyString(MMKeyConstants.BackOrder.FILL_WITHOUT_STOCK_QUESTION);
+        ConfigurationService kualiConfiguration = SpringContext.getBean(ConfigurationService.class);
+        String warningMessage = kualiConfiguration.getPropertyValueAsString(MMKeyConstants.BackOrder.FILL_WITHOUT_STOCK_QUESTION);
         warningMessage = warningMessage.replace("{0}", fillQuantity.toString());
         warningMessage = warningMessage.replace("{1}", quantityOnHand.toString());
         return super.askOrAnalyzeYesNoQuestion(MMKeyConstants.BackOrder.FILL_WITHOUT_STOCK_QUESTION, warningMessage);
@@ -86,8 +86,8 @@ public class BackOrderPreRules extends PromptBeforeValidationBase {
      * @return True if the user wants to proceed with reducing the quantity and filling the backorder
      */
     private boolean isOkReduceAndFill(Integer fillQuantity, Integer remainingQuantity) {
-        KualiConfigurationService kualiConfiguration = SpringContext.getBean(KualiConfigurationService.class);
-        String warningMessage = kualiConfiguration.getPropertyString(MMKeyConstants.BackOrder.REDUCE_AND_FILL_QUESTION);
+        ConfigurationService kualiConfiguration = SpringContext.getBean(ConfigurationService.class);
+        String warningMessage = kualiConfiguration.getPropertyValueAsString(MMKeyConstants.BackOrder.REDUCE_AND_FILL_QUESTION);
         warningMessage = warningMessage.replace("{0}", fillQuantity.toString());
         warningMessage = warningMessage.replace("{1}", remainingQuantity.toString());
         return super.askOrAnalyzeYesNoQuestion(MMKeyConstants.BackOrder.REDUCE_AND_FILL_QUESTION, warningMessage);
@@ -97,8 +97,8 @@ public class BackOrderPreRules extends PromptBeforeValidationBase {
 	 * @return True if the user wants to proceed with canceling the backorder
 	 */
 	private boolean isOkCancelingBackOrder() {
-        KualiConfigurationService kualiConfiguration = SpringContext.getBean(KualiConfigurationService.class);
-        String warningMessage = kualiConfiguration.getPropertyString(MMKeyConstants.BackOrder.CANCEL_QUESTION);
+        ConfigurationService kualiConfiguration = SpringContext.getBean(ConfigurationService.class);
+        String warningMessage = kualiConfiguration.getPropertyValueAsString(MMKeyConstants.BackOrder.CANCEL_QUESTION);
         return super.askOrAnalyzeYesNoQuestion(MMKeyConstants.BackOrder.CANCEL_QUESTION, warningMessage);
 	}
 	
@@ -106,8 +106,8 @@ public class BackOrderPreRules extends PromptBeforeValidationBase {
      * @return True if the user wants to proceed with altering the quantity on the backorder
      */
     private boolean isOkAlteringQuantity() {
-        KualiConfigurationService kualiConfiguration = SpringContext.getBean(KualiConfigurationService.class);
-        String warningMessage = kualiConfiguration.getPropertyString(MMKeyConstants.BackOrder.QUANTITY_MODIFY_QUESTION);
+        ConfigurationService kualiConfiguration = SpringContext.getBean(ConfigurationService.class);
+        String warningMessage = kualiConfiguration.getPropertyValueAsString(MMKeyConstants.BackOrder.QUANTITY_MODIFY_QUESTION);
         return super.askOrAnalyzeYesNoQuestion(MMKeyConstants.BackOrder.QUANTITY_MODIFY_QUESTION, warningMessage);
     }
 

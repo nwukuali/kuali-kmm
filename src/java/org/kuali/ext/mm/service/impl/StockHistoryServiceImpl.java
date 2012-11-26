@@ -1,26 +1,7 @@
 package org.kuali.ext.mm.service.impl;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.commons.lang.StringUtils;
-import org.kuali.ext.mm.businessobject.CheckinDetail;
-import org.kuali.ext.mm.businessobject.CurrentStockHistoryInformation;
-import org.kuali.ext.mm.businessobject.OrderDetail;
-import org.kuali.ext.mm.businessobject.PurchaseHistory;
-import org.kuali.ext.mm.businessobject.ReturnDetail;
-import org.kuali.ext.mm.businessobject.SalesHistory;
-import org.kuali.ext.mm.businessobject.Stock;
-import org.kuali.ext.mm.businessobject.StockBalance;
-import org.kuali.ext.mm.businessobject.StockCount;
-import org.kuali.ext.mm.businessobject.StockHistory;
-import org.kuali.ext.mm.businessobject.StockHistoryLookupObject;
-import org.kuali.ext.mm.businessobject.StoresPersistableBusinessObject;
+import org.kuali.ext.mm.businessobject.*;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.dataaccess.StockHistoryDAO;
 import org.kuali.ext.mm.document.CheckinDocument;
@@ -30,9 +11,13 @@ import org.kuali.ext.mm.service.MMServiceLocator;
 import org.kuali.ext.mm.service.StockHistoryService;
 import org.kuali.ext.mm.util.MMDecimal;
 import org.kuali.ext.mm.util.MMUtil;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.util.ObjectUtils;
-import org.kuali.rice.kns.util.TransactionalServiceUtils;
+import org.kuali.rice.core.api.CoreApiServiceLocator;
+import org.kuali.rice.krad.service.KRADServiceLocator;
+import org.kuali.rice.krad.util.ObjectUtils;
+import org.kuali.rice.krad.util.TransactionalServiceUtils;
+
+import java.sql.Timestamp;
+import java.util.*;
 
 
 public class StockHistoryServiceImpl implements StockHistoryService {
@@ -137,13 +122,13 @@ public class StockHistoryServiceImpl implements StockHistoryService {
         fieldValues.put(MMConstants.StockHistory.STOCK_ID, stockId);
         fieldValues.put(MMConstants.StockHistory.CHECKIN_DOCUMENT_NUMBER, checkinDocNumber);
 
-        Collection result = KNSServiceLocator.getBusinessObjectService().findMatching(StockHistory.class, fieldValues);
+        Collection result = KRADServiceLocator.getBusinessObjectService().findMatching(StockHistory.class, fieldValues);
 
         Iterator it = result.iterator();
         if(!it.hasNext())
             return null;
         
-        return (StockHistory)TransactionalServiceUtils.retrieveFirstAndExhaustIterator(it);
+        return (StockHistory) TransactionalServiceUtils.retrieveFirstAndExhaustIterator(it);
     }
 
     public StockHistory createStockHistoryForReturnLine(ReturnDocument rdoc, ReturnDetail rdetail, StockBalance afterStockBalance) {
@@ -253,7 +238,7 @@ public class StockHistoryServiceImpl implements StockHistoryService {
 
         stockHistory.setStockId(afterStockBalance.getStockId());
         stockHistory.setBinId(afterStockBalance.getBinId());
-        stockHistory.setHistoryTransTimestamp(KNSServiceLocator.getDateTimeService()
+        stockHistory.setHistoryTransTimestamp(CoreApiServiceLocator.getDateTimeService()
                 .getCurrentTimestamp());
         stockHistory.setStockTransReasonCode(transReasonCode);
 
@@ -277,7 +262,7 @@ public class StockHistoryServiceImpl implements StockHistoryService {
         stockHistory.setStockId(stockBalance.getStockId());
         stockHistory.setBinId(stockBalance.getBinId());
         stockHistory.setStockTransReasonCode(MMConstants.StockTransReason.AVGCOST);
-        stockHistory.setHistoryTransTimestamp(KNSServiceLocator.getDateTimeService()
+        stockHistory.setHistoryTransTimestamp(CoreApiServiceLocator.getDateTimeService()
                 .getCurrentTimestamp());
         
         return stockHistory;

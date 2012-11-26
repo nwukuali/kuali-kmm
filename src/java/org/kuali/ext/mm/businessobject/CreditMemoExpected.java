@@ -16,7 +16,6 @@
 package org.kuali.ext.mm.businessobject;
 
 import java.sql.Date;
-import java.util.LinkedHashMap;
 
 public class CreditMemoExpected extends StoresPersistableBusinessObject {
     private static final long serialVersionUID = -515984463909296550L;
@@ -122,12 +121,5 @@ public class CreditMemoExpected extends StoresPersistableBusinessObject {
         this.checkinDetail = checkinDetail;
     }
 
-
-    @Override
-    public LinkedHashMap toStringMapper() {
-        LinkedHashMap mp = new LinkedHashMap();
-        mp.put("warehouseCode", warehouseCode);
-        return mp;
-    }
 
 }

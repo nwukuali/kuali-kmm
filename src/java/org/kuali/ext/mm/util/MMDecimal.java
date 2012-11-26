@@ -3,10 +3,10 @@
  */
 package org.kuali.ext.mm.util;
 
-import java.math.BigDecimal;
+import org.kuali.rice.core.api.util.type.AbstractKualiDecimal;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
 
-import org.kuali.rice.kns.util.AbstractKualiDecimal;
-import org.kuali.rice.kns.util.KualiDecimal;
+import java.math.BigDecimal;
 
 /**
  * @author schneppd

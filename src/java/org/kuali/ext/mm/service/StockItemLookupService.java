@@ -1,12 +1,12 @@
 package org.kuali.ext.mm.service;
 
-import java.util.List;
-
 import org.kuali.ext.mm.businessobject.StockCount;
 import org.kuali.ext.mm.businessobject.Warehouse;
 import org.kuali.ext.mm.businessobject.Zone;
 import org.kuali.ext.mm.document.WorksheetCountDocument;
-import org.kuali.rice.kim.bo.Person;
+import org.kuali.rice.kim.api.identity.Person;
+
+import java.util.List;
 
 public interface StockItemLookupService {
 

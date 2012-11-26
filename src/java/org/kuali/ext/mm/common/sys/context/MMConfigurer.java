@@ -15,22 +15,20 @@
  */
 package org.kuali.ext.mm.common.sys.context;
 
+import org.kuali.rice.core.api.config.property.Config;
+import org.kuali.rice.core.api.lifecycle.Lifecycle;
+import org.kuali.rice.core.framework.config.module.ModuleConfigurer;
+
+import javax.sql.DataSource;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.sql.DataSource;
-
-import org.kuali.rice.core.config.Config;
-import org.kuali.rice.core.config.ModuleConfigurer;
-import org.kuali.rice.core.lifecycle.Lifecycle;
 
 public class MMConfigurer extends ModuleConfigurer {
     private DataSource applicationDataSource;
 
     public MMConfigurer() {
-        super();
-        setHasWebInterface(true);
-        setModuleName("MM");
+        super("MM");
     }
 
     /**
@@ -39,7 +37,7 @@ public class MMConfigurer extends ModuleConfigurer {
      * @see org.kuali.rice.core.config.BaseModuleConfigurer#loadLifecycles()
      */
     @Override
-    protected List<Lifecycle> loadLifecycles() throws Exception {
+    public List<Lifecycle> loadLifecycles() throws Exception {
         List<Lifecycle> lifecycles = new LinkedList<Lifecycle>();
         return lifecycles;
     }
@@ -47,12 +45,13 @@ public class MMConfigurer extends ModuleConfigurer {
     /**
      * @see org.kuali.rice.core.config.ModuleConfigurer#loadConfig(org.kuali.rice.core.config.Config)
      */
-    @Override
-    public Config loadConfig(Config parentConfig) throws Exception {
-        Config currentConfig = super.loadConfig(parentConfig);
-        configureDataSource(currentConfig);
-        return currentConfig;
-    }
+		//TODO: NWU - Revisit if method is still required
+//    @Override
+//    public Config loadConfig(Config parentConfig) throws Exception {
+//        Config currentConfig = super.loadConfig(parentConfig);
+//        configureDataSource(currentConfig);
+//        return currentConfig;
+//    }
 
     protected void configureDataSource(Config config) {
         config.getObjects().put("kmmDataSource", getApplicationDataSource());

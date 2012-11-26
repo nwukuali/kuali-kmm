@@ -3,9 +3,6 @@
  */
 package org.kuali.ext.mm.sys.batch.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.kuali.ext.mm.businessobject.Accounts;
 import org.kuali.ext.mm.businessobject.OrderDetail;
 import org.kuali.ext.mm.common.sys.MMConstants;
@@ -20,9 +17,12 @@ import org.kuali.ext.mm.integration.service.FinancialPurchasingService;
 import org.kuali.ext.mm.sys.batch.service.OrderDocumentQueryService;
 import org.kuali.ext.mm.sys.batch.service.OrderReconciliationService;
 import org.kuali.ext.mm.util.MMDecimal;
-import org.kuali.rice.kew.util.KEWConstants;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.util.KualiDecimal;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+import org.kuali.rice.kew.api.KewApiConstants;
+import org.kuali.rice.krad.service.BusinessObjectService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -61,12 +61,12 @@ public class OrderReconciliationServiceImpl implements OrderReconciliationServic
                             .getReqsId());
                     if (isReadyForProcessing(financialOrder)) {
                         String orderStatusCd = null;
-                        if (KEWConstants.ROUTE_HEADER_CANCEL_CD.equals(financialOrder
+                        if (KewApiConstants.ROUTE_HEADER_CANCEL_CD.equals(financialOrder
                                 .getWorkflowStatusCode())
                                 || "VOID".equals(financialOrder.getPoStatusCode())) {
                             orderStatusCd = MMConstants.OrderStatus.ORDER_LINE_CANCELED;
                         }
-                        if (KEWConstants.ROUTE_HEADER_DISAPPROVED_CD.equals(financialOrder
+                        if (KewApiConstants.ROUTE_HEADER_DISAPPROVED_CD.equals(financialOrder
                                 .getWorkflowStatusCode())) {
                             orderStatusCd = MMConstants.OrderStatus.DISAPPROVE;
                         }
@@ -121,10 +121,10 @@ public class OrderReconciliationServiceImpl implements OrderReconciliationServic
                 .getRequisitionById(orderDoc.getReqsId());
         if (requisitionDoc != null) {
             String orderStatusCd = null;
-            if (KEWConstants.ROUTE_HEADER_CANCEL_CD.equals(requisitionDoc.getWorkflowStatusCode())) {
+            if (KewApiConstants.ROUTE_HEADER_CANCEL_CD.equals(requisitionDoc.getWorkflowStatusCode())) {
                 orderStatusCd = MMConstants.OrderStatus.ORDER_LINE_CANCELED;
             }
-            if (KEWConstants.ROUTE_HEADER_DISAPPROVED_CD.equals(requisitionDoc
+            if (KewApiConstants.ROUTE_HEADER_DISAPPROVED_CD.equals(requisitionDoc
                     .getWorkflowStatusCode())) {
                 orderStatusCd = MMConstants.OrderStatus.DISAPPROVE;
             }
@@ -145,11 +145,11 @@ public class OrderReconciliationServiceImpl implements OrderReconciliationServic
      */
     private boolean isReadyForProcessing(FinancialPurchaseOrderDocument financialOrder) {
         return financialOrder != null
-                && !KEWConstants.ROUTE_HEADER_INITIATED_CD.equals(financialOrder
+                && !KewApiConstants.ROUTE_HEADER_INITIATED_CD.equals(financialOrder
                         .getWorkflowStatusCode())
-                && !KEWConstants.ROUTE_HEADER_SAVED_CD.equals(financialOrder
+                && !KewApiConstants.ROUTE_HEADER_SAVED_CD.equals(financialOrder
                         .getWorkflowStatusCode())
-                && !KEWConstants.ROUTE_HEADER_ENROUTE_CD.equals(financialOrder
+                && !KewApiConstants.ROUTE_HEADER_ENROUTE_CD.equals(financialOrder
                         .getWorkflowStatusCode());
     }
 

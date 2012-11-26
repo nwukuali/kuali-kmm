@@ -1,17 +1,16 @@
 package org.kuali.ext.mm.document.web.struts;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.kuali.ext.mm.businessobject.PickListLine;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.document.PickVerifyDocument;
+import org.kuali.rice.kew.api.WorkflowDocument;
 import org.kuali.rice.kns.web.struts.form.KualiTransactionalDocumentFormBase;
 import org.kuali.rice.kns.web.ui.ExtraButton;
-import org.kuali.rice.kns.workflow.service.KualiWorkflowDocument;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public class PickVerifyForm extends KualiTransactionalDocumentFormBase {
@@ -60,7 +59,7 @@ public class PickVerifyForm extends KualiTransactionalDocumentFormBase {
      * @return True if verify document has gone beyond initiated state
      */
     public boolean getCanPrintPackingList() {
-        return !getDocument().getDocumentHeader().getWorkflowDocument().stateIsInitiated();
+        return !getDocument().getDocumentHeader().getWorkflowDocument().isInitiated();
     }
 
     /*******************************************************************************************************************************
@@ -81,10 +80,10 @@ public class PickVerifyForm extends KualiTransactionalDocumentFormBase {
     public List<ExtraButton> getExtraButtons() {
         extraButtons.clear();
 
-        KualiWorkflowDocument workflowDoc = this.getPickVerifyDocument().getDocumentHeader()
+        WorkflowDocument workflowDoc = this.getPickVerifyDocument().getDocumentHeader()
                 .getWorkflowDocument();
 
-        if (!workflowDoc.stateIsInitiated()) {
+        if (!workflowDoc.isInitiated()) {
             extraButtons.add(createPrintButton());
         }
 
@@ -96,7 +95,7 @@ public class PickVerifyForm extends KualiTransactionalDocumentFormBase {
                 && this.getPickVerifyDocument().getDocumentHeader() != null
                 && this.getPickVerifyDocument().getDocumentHeader().getWorkflowDocument() != null
                 && !this.getPickVerifyDocument().getDocumentHeader().getWorkflowDocument()
-                        .stateIsInitiated()) {
+                        .isInitiated()) {
             return true;
         }
         return false;

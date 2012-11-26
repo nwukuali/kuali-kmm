@@ -15,6 +15,10 @@
  */
 package org.kuali.rice.kns.util;
 
+import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.collections.comparators.ComparableComparator;
+import org.kuali.rice.core.api.util.type.TypeUtils;
+
 import java.beans.PropertyDescriptor;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
@@ -22,10 +26,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
-
-import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.commons.collections.comparators.ComparableComparator;
-import org.kuali.rice.kns.exception.BeanComparisonException;
 
 /**
  * This class compares the two beans using multiple property names.
@@ -130,7 +130,7 @@ public class BeanPropertyComparator implements Comparator, Serializable {
                     }
                 }
                 catch (NullPointerException e) {
-                    throw new BeanComparisonException("unable to find property '" + o1.getClass().getName() + "." + currentProperty + "'", e);
+                    throw new org.kuali.rice.krad.util.BeanPropertyComparator.BeanComparisonException("unable to find property '" + o1.getClass().getName() + "." + currentProperty + "'", e);
                 }
 
                 // compare the values
@@ -148,13 +148,13 @@ public class BeanPropertyComparator implements Comparator, Serializable {
             }
         }
         catch (IllegalAccessException e) {
-            throw new BeanComparisonException("unable to compare property values", e);
+            throw new org.kuali.rice.krad.util.BeanPropertyComparator.BeanComparisonException("unable to compare property values", e);
         }
         catch (NoSuchMethodException e) {
-            throw new BeanComparisonException("unable to compare property values", e);
+            throw new org.kuali.rice.krad.util.BeanPropertyComparator.BeanComparisonException("unable to compare property values", e);
         }
         catch (InvocationTargetException e) {
-            throw new BeanComparisonException("unable to compare property values", e);
+            throw new org.kuali.rice.krad.util.BeanPropertyComparator.BeanComparisonException("unable to compare property values", e);
         }
 
         return compared;

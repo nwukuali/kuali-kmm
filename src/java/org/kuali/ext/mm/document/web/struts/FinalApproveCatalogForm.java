@@ -3,11 +3,6 @@
  */
 package org.kuali.ext.mm.document.web.struts;
 
-import java.util.HashMap;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.lang.StringUtils;
 import org.kuali.ext.mm.businessobject.CatalogPendingHelper;
 import org.kuali.ext.mm.common.sys.MMConstants;
@@ -15,11 +10,15 @@ import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.document.CatalogPending;
 import org.kuali.ext.mm.sys.batch.service.CatalogItemPendingQueryService;
 import org.kuali.kfs.sys.KFSConstants;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.service.KualiConfigurationService;
+import org.kuali.rice.core.api.config.property.ConfigurationService;
 import org.kuali.rice.kns.web.struts.form.KualiTransactionalDocumentFormBase;
 import org.kuali.rice.kns.web.ui.ExtraButton;
+import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.service.KRADServiceLocator;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.List;
 
 
 /**
@@ -109,8 +108,8 @@ public class FinalApproveCatalogForm extends KualiTransactionalDocumentFormBase{
     @Override
     public List<ExtraButton> getExtraButtons() {
         String fDocNbr = this.getDocId();
-        String krImageUrl = SpringContext.getBean(KualiConfigurationService.class).getPropertyString(KFSConstants.RICE_EXTERNALIZABLE_IMAGES_URL_KEY);
-        String imageUrl = KNSServiceLocator.getKualiConfigurationService().getPropertyString(MMConstants.EXTERNALIZABLE_IMAGES_URL_KEY);
+        String krImageUrl = SpringContext.getBean(ConfigurationService.class).getPropertyValueAsString(KFSConstants.RICE_EXTERNALIZABLE_IMAGES_URL_KEY);
+        String imageUrl = KRADServiceLocator.getKualiConfigurationService().getPropertyValueAsString(MMConstants.EXTERNALIZABLE_IMAGES_URL_KEY);
         CatalogItemPendingQueryService cIPQS = SpringContext.getBean(CatalogItemPendingQueryService.class);
         CatalogPendingHelper catalog = getCatalogFromCatalogPendingDocObject(fDocNbr);
         String documentNumber = cIPQS.getPreviousCatalogTimeStamp(catalog.getCatalogCd(), fDocNbr);

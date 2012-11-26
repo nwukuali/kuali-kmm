@@ -2,22 +2,20 @@ package org.kuali.ext.mm.businessobject;
 
 // Generated Apr 16, 2009 10:01:00 AM by Hibernate Tools 3.2.4.GA
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-
 import org.apache.cxf.common.util.StringUtils;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.document.ReturnDocument;
 import org.kuali.ext.mm.service.StockService;
 import org.kuali.ext.mm.util.MMDecimal;
-import org.kuali.rice.kns.util.ObjectUtils;
+import org.kuali.rice.krad.util.ObjectUtils;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -621,17 +619,6 @@ public class ReturnDetail extends MMPersistableBusinessObjectBase implements Ren
 
     public void setDepartmentCreditInd(boolean departmentCreditInd) {
         this.departmentCreditInd = departmentCreditInd;
-    }
-
-    /**
-     * toStringMapper
-     * 
-     * @return LinkedHashMap
-     */
-    @Override
-    public LinkedHashMap toStringMapper() {
-        LinkedHashMap propMap = new LinkedHashMap();
-        return propMap;
     }
 
     public boolean requiresDummyOrder() {

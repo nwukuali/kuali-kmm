@@ -3,11 +3,11 @@
  */
 package org.kuali.ext.mm.integration.service.impl.kfs;
 
-import javax.xml.namespace.QName;
-
 import org.kuali.ext.mm.integration.kfs.adaptor.KfsPurchaseOrderService;
 import org.kuali.ext.mm.integration.service.FinancialPurchaseOrderService;
-import org.kuali.rice.kns.util.KualiDecimal;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+
+import javax.xml.namespace.QName;
 
 /**
  * @author harsha07

@@ -3,11 +3,6 @@
  */
 package org.kuali.ext.mm.integration.service.impl.kfs;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.xml.namespace.QName;
-
 import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.integration.purap.document.FinancialRequisitionDocument;
 import org.kuali.ext.mm.integration.service.FinancialRequisitionService;
@@ -15,6 +10,10 @@ import org.kuali.kfs.module.purap.document.RequisitionDocument;
 import org.kuali.kfs.module.purap.document.service.RequisitionService;
 import org.kuali.rice.kew.routeheader.DocumentRouteHeaderValue;
 import org.kuali.rice.kew.routeheader.service.RouteHeaderService;
+
+import javax.xml.namespace.QName;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -45,7 +44,7 @@ public class KfsRequisitionServiceAdaptor extends KfsServiceAdaptor<RequisitionS
         if (requisitionById != null) {
             FinancialRequisitionDocument financialRequisitionDocument = new FinancialRequisitionDocument();
             DocumentRouteHeaderValue routeHeader = SpringContext.getBean(RouteHeaderService.class)
-                    .getRouteHeader(Long.valueOf(requisitionById.getDocumentNumber()));
+                    .getRouteHeader(requisitionById.getDocumentNumber());
             financialRequisitionDocument.setWorkflowStatusCode(routeHeader.getDocRouteStatus());
             financialRequisitionDocument.setReqsId(requisitionById.getPurapDocumentIdentifier());
             financialRequisitionDocument.setDocumentNumber(requisitionById.getDocumentNumber());

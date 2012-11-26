@@ -1,19 +1,19 @@
 package org.kuali.ext.mm.document.validation.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.kuali.ext.mm.businessobject.PickListLine;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.MMKeyConstants;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.document.PickVerifyDocument;
 import org.kuali.ext.mm.service.PickVerifyService;
-import org.kuali.rice.core.util.RiceConstants;
-import org.kuali.rice.kns.document.Document;
+import org.kuali.rice.core.api.config.property.ConfigurationService;
+import org.kuali.rice.core.api.util.RiceConstants;
 import org.kuali.rice.kns.rules.PromptBeforeValidationBase;
-import org.kuali.rice.kns.service.KualiConfigurationService;
-import org.kuali.rice.kns.util.ObjectUtils;
+import org.kuali.rice.krad.document.Document;
+import org.kuali.rice.krad.util.ObjectUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class PickVerifyDocumentPreRules extends PromptBeforeValidationBase {
@@ -26,8 +26,8 @@ public class PickVerifyDocumentPreRules extends PromptBeforeValidationBase {
 		PickVerifyDocument verifyDocument = (PickVerifyDocument)document;
 
 		if(ObjectUtils.isNotNull(verifyDocument.getPickTicket())
-		        && (document.getDocumentHeader().getWorkflowDocument().stateIsInitiated()
-		                || document.getDocumentHeader().getWorkflowDocument().stateIsSaved())) {
+		        && (document.getDocumentHeader().getWorkflowDocument().isInitiated()
+		                || document.getDocumentHeader().getWorkflowDocument().isSaved())) {
 
 			if(hasQuantitySumMismatch(verifyDocument)) {
 				if (!isOkHavingQuantitySumMismatch()) {
@@ -81,8 +81,8 @@ public class PickVerifyDocumentPreRules extends PromptBeforeValidationBase {
 	 * @return True if the user wants to proceed with the Quantity sum is match
 	 */
 	private boolean isOkHavingQuantitySumMismatch() {
-        KualiConfigurationService kualiConfiguration = SpringContext.getBean(KualiConfigurationService.class);
-        String warningMessage = kualiConfiguration.getPropertyString(MMKeyConstants.PickVerifyDocument.SUM_QUANTITY_QUESTION);
+        ConfigurationService kualiConfiguration = SpringContext.getBean(ConfigurationService.class);
+        String warningMessage = kualiConfiguration.getPropertyValueAsString(MMKeyConstants.PickVerifyDocument.SUM_QUANTITY_QUESTION);
         return super.askOrAnalyzeYesNoQuestion(MMConstants.PickVerifyDocument.SUM_QUANTITY_QUESTION, warningMessage);
 	}
 
@@ -91,13 +91,13 @@ public class PickVerifyDocumentPreRules extends PromptBeforeValidationBase {
 	 * @return True if the user wants to proceed with BackOrders despite a positive quantity on hand
 	 */
 	private boolean isOkBackOrderWithQuantityOnHand(PickVerifyDocument document) {
-		KualiConfigurationService kualiConfiguration = SpringContext.getBean(KualiConfigurationService.class);
+		ConfigurationService kualiConfiguration = SpringContext.getBean(ConfigurationService.class);
 		List<String> itemNumbers = new ArrayList<String>();
 		for(PickListLine line : document.getPickTicket().getPickListLines()) {
 			if(line.getBackOrderQty() > 0 && getPickVerifyService().hasPickedLessThanQuantityOnHand(line))
         		itemNumbers.add(line.getStock().getStockDistributorNbr());
 		}
-        String warningMessage = kualiConfiguration.getPropertyString(MMKeyConstants.PickVerifyDocument.QTY_ON_HAND_QUESTION);
+        String warningMessage = kualiConfiguration.getPropertyValueAsString(MMKeyConstants.PickVerifyDocument.QTY_ON_HAND_QUESTION);
         warningMessage = warningMessage.replace("{0}", itemNumbers.toString());
         return super.askOrAnalyzeYesNoQuestion(MMConstants.PickVerifyDocument.QTY_ON_HAND_QUESTION, warningMessage);
 	}

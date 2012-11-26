@@ -1,11 +1,5 @@
 package org.kuali.ext.mm.cart.web.struts;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -24,7 +18,12 @@ import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.service.B2BPunchOutService;
 import org.kuali.ext.mm.service.MMServiceLocator;
 import org.kuali.ext.mm.service.PunchOutVendorService;
-import org.kuali.rice.kns.service.KNSServiceLocator;
+import org.kuali.rice.krad.service.KRADServiceLocator;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class PunchOutAction extends StoresShoppingActionBase {
@@ -68,7 +67,7 @@ public class PunchOutAction extends StoresShoppingActionBase {
             PunchOutVendor punchOutVendor = punchOutVendorService.getPunchOutVendorByCatalogId(catalog.getCatalogId());
             //Get the punchout service for the vendor
             B2BPunchOutService punchOutService = MMServiceLocator.getB2BPunchOutServiceLocator().getB2BPunchOutService(punchOutVendor.getVendorCredentialDomain(), punchOutVendor.getVendorIdentity());
-            String cxmlReceiveUrl = KNSServiceLocator.getKualiConfigurationService().getPropertyString(MMKeyConstants.Shopping.SHOPPING_URL) + "/" + ShopCartConstants.PunchOut.VENDOR_REQUEST_ACTION;
+            String cxmlReceiveUrl = KRADServiceLocator.getKualiConfigurationService().getPropertyValueAsString(MMKeyConstants.Shopping.SHOPPING_URL) + "/" + ShopCartConstants.PunchOut.VENDOR_REQUEST_ACTION;
             CXML cxml = punchOutService.createPunchOutSetupRequest(catalog, pForm.getCustomerProfile(), cxmlReceiveUrl);
             CXML cxmlResponse = CxmlUtil.sendRequest(cxml, punchOutVendor.getPunchOutUrl());
             String punchOutUrl = null;
@@ -96,7 +95,7 @@ public class PunchOutAction extends StoresShoppingActionBase {
         pForm.createNewConfirmAction(request);
         pForm.getConfirmAction().setConfirmAction(ShopCartConstants.PUNCHOUT_ACTION);
         pForm.getConfirmAction().setDeclineAction(ShopCartConstants.HOME_ACTION);
-        pForm.getConfirmAction().setMessage(KNSServiceLocator.getKualiConfigurationService().getPropertyString(ShopCartKeyConstants.QUESTION_CONFIRM_PUNCH_OUT));
+        pForm.getConfirmAction().setMessage(KRADServiceLocator.getKualiConfigurationService().getPropertyValueAsString(ShopCartKeyConstants.QUESTION_CONFIRM_PUNCH_OUT));
         confirmParameters.put(MMConstants.DISPATCH_REQUEST_PARAMETER, ShopCartConstants.PunchOut.PUNCHOUT_ACTION_METHOD);
         declineParameters.put(MMConstants.DISPATCH_REQUEST_PARAMETER, ShopCartConstants.START_METHOD);
         pForm.getConfirmAction().setConfirmParameters(confirmParameters);

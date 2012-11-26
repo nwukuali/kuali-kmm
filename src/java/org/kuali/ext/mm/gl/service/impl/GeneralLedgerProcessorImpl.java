@@ -15,13 +15,6 @@
  */
 package org.kuali.ext.mm.gl.service.impl;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-
 import org.apache.commons.lang.StringUtils;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.gl.GeneralLedgerPostable;
@@ -32,11 +25,14 @@ import org.kuali.ext.mm.integration.coa.businessobject.FinancialObjectCode;
 import org.kuali.ext.mm.integration.service.FinancialObjectCodeService;
 import org.kuali.ext.mm.integration.service.FinancialUniversityDateService;
 import org.kuali.ext.mm.integration.sys.businessobject.FinancialGeneralLedgerPendingEntry;
-import org.kuali.rice.kns.bo.DocumentHeader;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.service.DateTimeService;
-import org.kuali.rice.kns.util.KualiDecimal;
-import org.kuali.rice.kns.workflow.service.KualiWorkflowDocument;
+import org.kuali.rice.core.api.CoreApiServiceLocator;
+import org.kuali.rice.core.api.datetime.DateTimeService;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+import org.kuali.rice.kew.api.WorkflowDocument;
+import org.kuali.rice.krad.bo.DocumentHeader;
+import org.kuali.rice.krad.service.BusinessObjectService;
+
+import java.util.*;
 
 
 /**
@@ -50,15 +46,15 @@ public class GeneralLedgerProcessorImpl implements GeneralLedgerProcessor {
      *      org.kuali.rice.kns.bo.DocumentHeader)
      */
     public void doRouteStatusChange(GeneralLedgerPostable postable, DocumentHeader documentHeader) {
-        KualiWorkflowDocument workflowDocument = documentHeader.getWorkflowDocument();
-        if (workflowDocument.stateIsProcessed()) {
+        WorkflowDocument workflowDocument = documentHeader.getWorkflowDocument();
+        if (workflowDocument.isProcessed()) {
             // remove existing GLPE entries
             delete(documentHeader.getDocumentNumber());
             postable.setFinancialGeneralLedgerPendingEntries(null);
             // create and save approved ones
             createAndSaveGlpeEntries(postable, true);
         }
-        if (workflowDocument.stateIsCanceled() || workflowDocument.stateIsDisapproved()) {
+        if (workflowDocument.isCanceled() || workflowDocument.isDisapproved()) {
             // remove the GLPE entries
             delete(documentHeader.getDocumentNumber());
             postable.setFinancialGeneralLedgerPendingEntries(null);
@@ -112,7 +108,7 @@ public class GeneralLedgerProcessorImpl implements GeneralLedgerProcessor {
                 .getFinancialObjectCodeService();
         Integer currentFiscalYear = univDtService.getCurrentFiscalYear();
         String currentFiscalPeriod = univDtService.getCurrentFiscalPeriod();
-        DateTimeService dateTimeService = SpringContext.getBean(DateTimeService.class);
+        DateTimeService dateTimeService = CoreApiServiceLocator.getDateTimeService();
         FinancialObjectCode finObjCode = null;
         int entrySequenceNum = 1;
         // for each entry set the common information

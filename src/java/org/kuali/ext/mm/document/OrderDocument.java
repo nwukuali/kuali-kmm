@@ -1,40 +1,9 @@
 package org.kuali.ext.mm.document;
 
 
-import java.math.BigDecimal;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Set;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.kuali.ext.mm.businessobject.Accounts;
-import org.kuali.ext.mm.businessobject.Address;
-import org.kuali.ext.mm.businessobject.Agreement;
-import org.kuali.ext.mm.businessobject.OrderAutoLimit;
-import org.kuali.ext.mm.businessobject.OrderDetail;
-import org.kuali.ext.mm.businessobject.OrderDetailForReturns;
-import org.kuali.ext.mm.businessobject.OrderStatus;
-import org.kuali.ext.mm.businessobject.OrderType;
-import org.kuali.ext.mm.businessobject.Profile;
-import org.kuali.ext.mm.businessobject.RecurringOrder;
-import org.kuali.ext.mm.businessobject.ShoppingCart;
-import org.kuali.ext.mm.businessobject.StoresTransactionalDocumentBase;
-import org.kuali.ext.mm.businessobject.Warehouse;
-import org.kuali.ext.mm.businessobject.WarehouseAccounts;
+import org.kuali.ext.mm.businessobject.*;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.dataaccess.MMBusinessObjectDao;
@@ -47,19 +16,37 @@ import org.kuali.ext.mm.service.MMServiceLocator;
 import org.kuali.ext.mm.service.OrderService;
 import org.kuali.ext.mm.util.MMDecimal;
 import org.kuali.ext.mm.util.MMUtil;
-import org.kuali.rice.kew.dto.DocumentRouteStatusChangeDTO;
-import org.kuali.rice.kew.exception.WorkflowException;
-import org.kuali.rice.kim.bo.Person;
-import org.kuali.rice.kim.bo.entity.dto.KimPrincipalInfo;
-import org.kuali.rice.kim.service.KIMServiceLocator;
-import org.kuali.rice.kns.document.Document;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.service.ParameterService;
-import org.kuali.rice.kns.util.KualiDecimal;
-import org.kuali.rice.kns.util.ObjectUtils;
-import org.kuali.rice.kns.util.TransactionalServiceUtils;
-import org.kuali.rice.kns.workflow.service.KualiWorkflowDocument;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+import org.kuali.rice.coreservice.framework.parameter.ParameterService;
+import org.kuali.rice.kew.api.WorkflowDocument;
+import org.kuali.rice.kew.api.exception.WorkflowException;
+import org.kuali.rice.kew.framework.postprocessor.DocumentRouteStatusChange;
+import org.kuali.rice.kim.api.identity.Person;
+import org.kuali.rice.kim.api.identity.principal.Principal;
+import org.kuali.rice.kim.api.services.KimApiServiceLocator;
+import org.kuali.rice.krad.document.Document;
+import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.service.KRADServiceLocatorWeb;
+import org.kuali.rice.krad.util.ObjectUtils;
+import org.kuali.rice.krad.util.TransactionalServiceUtils;
+
+import javax.persistence.*;
+import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.util.*;
+//import org.kuali.rice.kew.dto.DocumentRouteStatusChangeDTO;
+//import org.kuali.rice.kew.exception.WorkflowException;
+//import org.kuali.rice.kim.api.identity.Person;
+//import org.kuali.rice.kim.bo.entity.dto.KimPrincipalInfo;
+//import org.kuali.rice.kim.api.services.KimApiServiceLocator;
+//import org.kuali.rice.krad.document.Document;
+//import org.kuali.rice.krad.service.BusinessObjectService;
+//import org.kuali.rice.kns.service.KNSServiceLocator;
+//import org.kuali.rice.kns.service.ParameterService;
+//import org.kuali.rice.core.api.util.type.KualiDecimal;
+//import org.kuali.rice.krad.util.ObjectUtils;
+//import org.kuali.rice.krad.util.TransactionalServiceUtils;
+//import org.kuali.rice.kew.api.WorkflowDocument;
 
 
 /**
@@ -490,13 +477,13 @@ public class OrderDocument extends StoresTransactionalDocumentBase {
             princplId = getDocument().getDocumentHeader().getWorkflowDocument()
                     .getInitiatorPrincipalId();
 
-        Person person = KIMServiceLocator.getPersonService().getPerson(princplId);
+        Person person = KimApiServiceLocator.getPersonService().getPerson(princplId);
 
         if (person != null)
             return person.getFirstName() + "  " + person.getLastName();
 
-        KimPrincipalInfo kinfo = KIMServiceLocator.getIdentityManagementService().getPrincipal(
-                princplId);
+        Principal kinfo = KimApiServiceLocator.getIdentityService().getPrincipal(
+					princplId);
 
         if (kinfo != null)
             return kinfo.getPrincipalName();
@@ -508,7 +495,7 @@ public class OrderDocument extends StoresTransactionalDocumentBase {
     public Document getDocument() {
         Document doc = null;
         try {
-            doc = KNSServiceLocator.getDocumentService().getByDocumentHeaderId(this.documentNumber);
+            doc = KRADServiceLocatorWeb.getDocumentService().getByDocumentHeaderId(this.documentNumber);
         }
         catch (Exception e) {
             throw new RuntimeException(e);
@@ -549,15 +536,15 @@ public class OrderDocument extends StoresTransactionalDocumentBase {
         }
         try {
             for (ReturnDocument cdoc : docs) {
-                if (KNSServiceLocator.getDocumentService().documentExists(cdoc.getDocumentNumber())) {
+                if (KRADServiceLocatorWeb.getDocumentService().documentExists(cdoc.getDocumentNumber())) {
                     if (!cdoc.getDocumentHeader().hasWorkflowDocument()) {
-                        cdoc = (ReturnDocument) KNSServiceLocator.getDocumentService()
+                        cdoc = (ReturnDocument) KRADServiceLocatorWeb.getDocumentService()
                                 .getByDocumentHeaderId(cdoc.getDocumentNumber());
                     }
 
                     if (cdoc.getDocumentHeader().hasWorkflowDocument()
-                            && cdoc.getDocumentHeader().getWorkflowDocument().stateIsSaved()
-                            || cdoc.getDocumentHeader().getWorkflowDocument().stateIsInitiated())
+                            && cdoc.getDocumentHeader().getWorkflowDocument().isSaved()
+                            || cdoc.getDocumentHeader().getWorkflowDocument().isInitiated())
                         return cdoc;
                 }
             }
@@ -578,10 +565,10 @@ public class OrderDocument extends StoresTransactionalDocumentBase {
         try {
             for (ReturnDocument cdoc : docs) {
                 Document doc = null;
-                doc = KNSServiceLocator.getDocumentService().getByDocumentHeaderId(
+                doc = KRADServiceLocatorWeb.getDocumentService().getByDocumentHeaderId(
                         cdoc.getDocumentNumber());
                 if (doc.getDocumentHeader().hasWorkflowDocument()) {
-                    if (!doc.getDocumentHeader().getWorkflowDocument().stateIsFinal())
+                    if (!doc.getDocumentHeader().getWorkflowDocument().isFinal())
                         return false;
                 }
 
@@ -625,33 +612,33 @@ public class OrderDocument extends StoresTransactionalDocumentBase {
      * @see org.kuali.rice.kns.document.Document#doRouteStatusChange(org.kuali.rice.kew.dto.DocumentRouteStatusChangeDTO)
      */
     @Override
-    public void doRouteStatusChange(DocumentRouteStatusChangeDTO statusChangeEvent) {
+    public void doRouteStatusChange(DocumentRouteStatusChange statusChangeEvent) {
         super.doRouteStatusChange(statusChangeEvent);
-        KualiWorkflowDocument workflowDocument = getDocumentHeader().getWorkflowDocument();
+        WorkflowDocument workflowDocument = getDocumentHeader().getWorkflowDocument();
         OrderService orderService = SpringContext.getBean(OrderService.class);
-        if (workflowDocument.stateIsDisapproved()) {
+        if (workflowDocument.isDisapproved()) {
             orderService.setOrderDocumentStatus(this, MMConstants.OrderStatus.DISAPPROVE);
             if(MMConstants.OrderType.TRUE_BUYOUT.equals(this.getOrderTypeCode()))
                 MMServiceLocator.getTrueBuyoutService().inactivateTrueBuyoutStock(this);
         }
-        else if (workflowDocument.stateIsCanceled()) {
+        else if (workflowDocument.isCanceled()) {
             orderService.setOrderDocumentStatus(this, MMConstants.OrderStatus.ORDER_LINE_CANCELED);
             if(MMConstants.OrderType.TRUE_BUYOUT.equals(this.getOrderTypeCode()))
                 MMServiceLocator.getTrueBuyoutService().inactivateTrueBuyoutStock(this);
         }
-        else if (workflowDocument.stateIsEnroute()) {
+        else if (workflowDocument.isEnroute()) {
             if (MMConstants.OrderStatus.INITIATED.equals(this.getOrderStatusCd())) {
                 orderService.setOrderDocumentStatus(this, MMConstants.OrderStatus.REVIEW);
             }
         }
-        else if (workflowDocument.stateIsProcessed()) {
+        else if (workflowDocument.isProcessed()) {
             orderService.processOrderDocument(this);
         }
     }
 
     /**
      * returns the number of order lines in the order document
-     * 
+     *
      * @return
      */
     public int getOrderDetailsCountForReorder() {
@@ -662,21 +649,9 @@ public class OrderDocument extends StoresTransactionalDocumentBase {
     }
 
     /**
-     * toStringMapper
-     * 
-     * @return LinkedHashMap
-     */
-    @Override
-    public LinkedHashMap<String, String> toStringMapper() {
-        LinkedHashMap<String, String> propMap = new LinkedHashMap<String, String>();
-        propMap.put("WorksheetDocNumber", "WorksheetDocNumber");
-        return propMap;
-    }
-
-    /**
      * This method will create a new warehouse order document that can be passed to financial system without mark up prices and
      * using warehouse accounting information
-     * 
+     *
      * @return
      */
     @SuppressWarnings("unchecked")
@@ -781,7 +756,7 @@ public class OrderDocument extends StoresTransactionalDocumentBase {
 
     /**
      * Gets the agreement property
-     * 
+     *
      * @return Returns the agreement
      */
     public Agreement getAgreement() {
@@ -790,7 +765,7 @@ public class OrderDocument extends StoresTransactionalDocumentBase {
 
     /**
      * Sets the agreement property value
-     * 
+     *
      * @param agreement The agreement to set
      */
     public void setAgreement(Agreement agreement) {
@@ -840,8 +815,8 @@ public class OrderDocument extends StoresTransactionalDocumentBase {
                 MMConstants.Parameters.OrderDocument.class,
                 MMConstants.Parameters.MM_ORDER_APPROVALS_BEGIN_AT_AMOUNT)) {
             defaultBuyLimitAmount = new KualiDecimal(SpringContext.getBean(ParameterService.class)
-                    .getParameterValue(MMConstants.Parameters.OrderDocument.class,
-                            MMConstants.Parameters.MM_ORDER_APPROVALS_BEGIN_AT_AMOUNT));
+                    .getParameterValueAsString(MMConstants.Parameters.OrderDocument.class,
+											MMConstants.Parameters.MM_ORDER_APPROVALS_BEGIN_AT_AMOUNT));
         }
 
         // Total order amount
@@ -932,18 +907,10 @@ public class OrderDocument extends StoresTransactionalDocumentBase {
     }
 
     protected boolean isSeparationOfDutiesReviewRequired() {
-        try {
-            Set<Person> priorApprovers = getDocumentHeader().getWorkflowDocument()
-                    .getAllPriorApprovers();
-            if (priorApprovers != null && !priorApprovers.isEmpty()) {
-                return false;
-            }
-        }
-        catch (WorkflowException we) {
-            LOG.error("Exception while attempting to retrieve all prior approvers from workflow: "
-                    + we);
-            throw new RuntimeException(we);
-        }
+			Set<Person> priorApprovers = getPriorApprovers(getDocumentHeader().getWorkflowDocument());
+			if (priorApprovers != null && !priorApprovers.isEmpty()) {
+				return false;
+			}
         KualiDecimal computeTotal = SpringContext.getBean(OrderService.class).computeTotal(
                 getOrderDetails());
         KualiDecimal totalAmount = (computeTotal == null ? new KualiDecimal(0.0) : computeTotal);
@@ -963,7 +930,7 @@ public class OrderDocument extends StoresTransactionalDocumentBase {
 
     /**
      * Returns the customer profile chart code
-     * 
+     *
      * @return
      */
     public String getChartOfAccountsCode() {
@@ -975,7 +942,7 @@ public class OrderDocument extends StoresTransactionalDocumentBase {
 
     /**
      * Returns the customer profile organization code
-     * 
+     *
      * @return
      */
     public String getOrganizationCode() {
@@ -987,7 +954,7 @@ public class OrderDocument extends StoresTransactionalDocumentBase {
 
     /**
      * Gets all account lines from all items
-     * 
+     *
      * @return
      */
     public List<Accounts> getAccountsForRouting() {
@@ -1021,7 +988,7 @@ public class OrderDocument extends StoresTransactionalDocumentBase {
 
     /**
      * Gets the financialGeneralLedgerPendingEntries property
-     * 
+     *
      * @return Returns the financialGeneralLedgerPendingEntries
      */
     public List<FinancialGeneralLedgerPendingEntry> getFinancialGeneralLedgerPendingEntries() {
@@ -1030,12 +997,13 @@ public class OrderDocument extends StoresTransactionalDocumentBase {
 
     /**
      * Sets the financialGeneralLedgerPendingEntries property value
-     * 
+     *
      * @param financialGeneralLedgerPendingEntries The financialGeneralLedgerPendingEntries to set
      */
     public void setFinancialGeneralLedgerPendingEntries(
             List<FinancialGeneralLedgerPendingEntry> financialGeneralLedgerPendingEntries) {
         this.financialGeneralLedgerPendingEntries = financialGeneralLedgerPendingEntries;
     }
+
 
 }

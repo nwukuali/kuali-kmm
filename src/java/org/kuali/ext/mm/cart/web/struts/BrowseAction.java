@@ -1,14 +1,5 @@
 package org.kuali.ext.mm.cart.web.struts;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Properties;
-import java.util.Set;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -25,8 +16,12 @@ import org.kuali.ext.mm.cart.valueobject.BrowseManager;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.service.MMServiceLocator;
 import org.kuali.ext.mm.utility.NanoTimer;
-import org.kuali.rice.kns.util.KNSConstants;
-import org.kuali.rice.kns.util.UrlFactory;
+import org.kuali.rice.krad.util.KRADConstants;
+import org.kuali.rice.krad.util.UrlFactory;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.*;
 
 
 public class BrowseAction extends StoresShoppingActionBase {
@@ -307,7 +302,7 @@ public class BrowseAction extends StoresShoppingActionBase {
      */
     private ActionForward redirectToBrowseCatalogAction(String catalogId) {
         Properties parameters = new Properties();
-        parameters.put(KNSConstants.DISPATCH_REQUEST_PARAMETER, ShopCartConstants.START_METHOD);
+        parameters.put(KRADConstants.DISPATCH_REQUEST_PARAMETER, ShopCartConstants.START_METHOD);
         parameters.put(ShopCartConstants.ACTION_PARM_CATALOG, catalogId);
 
         return new ActionForward(UrlFactory.parameterizeUrl(ShopCartConstants.BROWSE_CATALOG_ACTION, parameters), true);

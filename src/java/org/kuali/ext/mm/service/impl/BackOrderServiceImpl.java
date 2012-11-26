@@ -1,10 +1,5 @@
 package org.kuali.ext.mm.service.impl;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.kuali.ext.mm.businessobject.BackOrder;
 import org.kuali.ext.mm.businessobject.OrderDetail;
 import org.kuali.ext.mm.businessobject.PickListLine;
@@ -14,10 +9,15 @@ import org.kuali.ext.mm.document.dataaccess.OrderStatusDao;
 import org.kuali.ext.mm.service.BackOrderService;
 import org.kuali.ext.mm.service.OrderService;
 import org.kuali.ext.mm.service.PickListService;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.util.ObjectUtils;
+import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.service.KRADServiceLocator;
+import org.kuali.rice.krad.util.ObjectUtils;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 @Transactional
@@ -45,7 +45,7 @@ public class BackOrderServiceImpl implements BackOrderService {
 	 * @see org.kuali.ext.mm.service.BackOrderService#save(org.kuali.ext.mm.businessobject.BackOrder)
 	 */
 	public void save(BackOrder bo) {
-		KNSServiceLocator.getBusinessObjectService().save(bo);
+		KRADServiceLocator.getBusinessObjectService().save(bo);
 	}
 
 	public void relieveBackOrder(BackOrder backOrder, boolean strictQuantity) {	    

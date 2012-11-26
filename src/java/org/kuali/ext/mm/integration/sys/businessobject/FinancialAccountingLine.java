@@ -16,9 +16,9 @@
 
 package org.kuali.ext.mm.integration.sys.businessobject;
 
-import java.io.Serializable;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
 
-import org.kuali.rice.kns.util.KualiDecimal;
+import java.io.Serializable;
 
 /**
  * @author harsha07

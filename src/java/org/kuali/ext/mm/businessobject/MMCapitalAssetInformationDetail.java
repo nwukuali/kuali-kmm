@@ -15,18 +15,14 @@
  */
 package org.kuali.ext.mm.businessobject;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.integration.sys.businessobject.FinancialBuilding;
 import org.kuali.ext.mm.integration.sys.businessobject.FinancialRoom;
 import org.kuali.kfs.sys.KFSPropertyConstants;
-import org.kuali.kfs.sys.context.SpringContext;
-import org.kuali.rice.kns.bo.Campus;
-import org.kuali.rice.kns.bo.PersistableBusinessObjectBase;
-import org.kuali.rice.kns.service.KualiModuleService;
+import org.kuali.rice.krad.bo.PersistableBusinessObjectBase;
+import org.kuali.rice.location.api.campus.Campus;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class MMCapitalAssetInformationDetail extends PersistableBusinessObjectBase {
@@ -49,15 +45,6 @@ public class MMCapitalAssetInformationDetail extends PersistableBusinessObjectBa
     private FinancialRoom room;
     private MMCapitalAssetInformation capitalAssetInformation;
 
-	/**
-     * @see org.kuali.rice.kns.bo.BusinessObjectBase#toStringMapper()
-     */
-    @Override
-    protected LinkedHashMap toStringMapper() {
-        LinkedHashMap<String, Object> m = new LinkedHashMap<String, Object>();
-        m.put(MMConstants.OrderDetail.ORDER_DETAIL_ID, this.orderDetailId);
-        return m;
-    }
 
     public void setOrderDetailId(Integer orderDetailId) {
 		this.orderDetailId = orderDetailId;
@@ -172,8 +159,11 @@ public class MMCapitalAssetInformationDetail extends PersistableBusinessObjectBa
      *
      * @return Returns the campus.
      */
+		//TODO: NWU - Determine if method is used othewise remove
     public Campus getCampus() {
-        return campus = SpringContext.getBean(KualiModuleService.class).getResponsibleModuleService(Campus.class).retrieveExternalizableBusinessObjectIfNecessary(this, campus, "campus");
+//        return campus = SpringContext.getBean(KualiModuleService.class).getResponsibleModuleService(Campus.class).
+//					retrieveExternalizableBusinessObjectIfNecessary(this, campus, "campus");
+			return null;
     }
 
     /**

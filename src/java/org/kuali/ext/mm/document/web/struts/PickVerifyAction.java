@@ -1,14 +1,6 @@
 package org.kuali.ext.mm.document.web.struts;
 
 
-import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -21,18 +13,21 @@ import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.MMKeyConstants;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.document.PickVerifyDocument;
-import org.kuali.ext.mm.service.MMServiceLocator;
-import org.kuali.ext.mm.service.PickListService;
-import org.kuali.ext.mm.service.PickVerifyService;
-import org.kuali.ext.mm.service.RentalService;
-import org.kuali.ext.mm.service.StockService;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.service.KualiConfigurationService;
-import org.kuali.rice.kns.util.GlobalVariables;
-import org.kuali.rice.kns.util.KNSConstants;
-import org.kuali.rice.kns.util.ObjectUtils;
+import org.kuali.ext.mm.service.*;
+import org.kuali.rice.core.api.CoreApiServiceLocator;
+import org.kuali.rice.core.api.config.property.ConfigurationService;
 import org.kuali.rice.kns.util.WebUtils;
 import org.kuali.rice.kns.web.struts.action.KualiTransactionalDocumentActionBase;
+import org.kuali.rice.krad.util.GlobalVariables;
+import org.kuali.rice.krad.util.KRADConstants;
+import org.kuali.rice.krad.util.ObjectUtils;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 
 public class PickVerifyAction extends KualiTransactionalDocumentActionBase {
@@ -64,11 +59,11 @@ public class PickVerifyAction extends KualiTransactionalDocumentActionBase {
         PickVerifyDocument document = pvForm.getPickVerifyDocument();
 
         // Set Default Property values for document
-        if (document.getDocumentHeader().getWorkflowDocument().stateIsInitiated()) {
+        if (document.getDocumentHeader().getWorkflowDocument().isInitiated()) {
             // automatically create document description template
             document.getDocumentHeader().setDocumentDescription(
-                    getKualiConfigurationService().getPropertyString(
-                            MMKeyConstants.PickList.PICK_VERIFY_DOC_DESC));
+                    getKualiConfigurationService().getPropertyValueAsString(
+											MMKeyConstants.PickList.PICK_VERIFY_DOC_DESC));
         }
 
         if (request.getParameter(MMConstants.ACTION_PARM_PICK_TICKET_NUMBER) != null)
@@ -135,7 +130,7 @@ public class PickVerifyAction extends KualiTransactionalDocumentActionBase {
         ByteArrayOutputStream baos = SpringContext.getBean(PickVerifyService.class)
                 .generatePackLists(document.getPickTicket());
 
-        String filename = SpringContext.getBean(KualiConfigurationService.class).getPropertyString(
+        String filename = SpringContext.getBean(ConfigurationService.class).getPropertyValueAsString(
                 MMKeyConstants.PackingList.FILE_PREFIX)
                 + document.getPickTicketNumber() + ".pdf";
         WebUtils.saveMimeOutputStreamAsFile(response, "application/pdf", baos, filename);
@@ -322,7 +317,7 @@ public class PickVerifyAction extends KualiTransactionalDocumentActionBase {
         PickListLine newLine = new PickListLine();
         newLine.setBackOrder(originalLine.getBackOrder());
         newLine.setBackOrderId(originalLine.getBackOrderId());
-        newLine.setCreatedDate(KNSServiceLocator.getDateTimeService().getCurrentTimestamp());
+        newLine.setCreatedDate(CoreApiServiceLocator.getDateTimeService().getCurrentTimestamp());
         newLine.setOrderDetail(originalLine.getOrderDetail());
         newLine.setOrderDetailId(originalLine.getOrderDetailId());
         newLine.setOrderLineNbr(originalLine.getOrderLineNbr());
@@ -383,8 +378,8 @@ public class PickVerifyAction extends KualiTransactionalDocumentActionBase {
                 return false;
             }
             else if(!MMConstants.PickStatusCode.PICK_STATUS_PRTD.equals(ticket.getPickStatusCodeCd())
-            		&& (document.getDocumentHeader().getWorkflowDocument().stateIsInitiated()
-            				|| document.getDocumentHeader().getWorkflowDocument().stateIsSaved())) {
+            		&& (document.getDocumentHeader().getWorkflowDocument().isInitiated()
+            				|| document.getDocumentHeader().getWorkflowDocument().isSaved())) {
             	GlobalVariables.getMessageMap().putError(
             			MMConstants.DOCUMENT + "." + MMConstants.PickTicket.PICK_TICKET_NUMBER,
                         MMKeyConstants.ERROR_PICK_STATUS_NOT_PRTD, ticket.getPickTicketNumber());
@@ -407,7 +402,7 @@ public class PickVerifyAction extends KualiTransactionalDocumentActionBase {
     
     protected int getSelectedLineItem(HttpServletRequest request) {
         int selectedLine = -1;
-        String parameterName = (String) request.getAttribute(KNSConstants.METHOD_TO_CALL_ATTRIBUTE);
+        String parameterName = (String) request.getAttribute(KRADConstants.METHOD_TO_CALL_ATTRIBUTE);
         if (StringUtils.isNotBlank(parameterName)) {
             String lineNumber = StringUtils.substringBetween(parameterName, ".item", ".");
             try {

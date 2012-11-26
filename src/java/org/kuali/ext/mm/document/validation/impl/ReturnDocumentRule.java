@@ -1,9 +1,5 @@
 package org.kuali.ext.mm.document.validation.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
-
 import org.apache.commons.lang.StringUtils;
 import org.kuali.ext.mm.businessobject.Rental;
 import org.kuali.ext.mm.businessobject.ReturnDetail;
@@ -18,15 +14,19 @@ import org.kuali.ext.mm.service.OrderService;
 import org.kuali.ext.mm.service.RentalService;
 import org.kuali.ext.mm.service.ReturnOrderService;
 import org.kuali.ext.mm.util.MMUtil;
-import org.kuali.rice.kns.document.Document;
-import org.kuali.rice.kns.rule.event.ApproveDocumentEvent;
+import org.kuali.rice.core.api.util.RiceKeyConstants;
 import org.kuali.rice.kns.rules.DocumentRuleBase;
-import org.kuali.rice.kns.service.DataDictionaryService;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.util.GlobalVariables;
-import org.kuali.rice.kns.util.KNSConstants;
-import org.kuali.rice.kns.util.RiceKeyConstants;
-import org.kuali.rice.kns.util.UrlFactory;
+import org.kuali.rice.krad.document.Document;
+import org.kuali.rice.krad.rules.rule.event.ApproveDocumentEvent;
+import org.kuali.rice.krad.service.DataDictionaryService;
+import org.kuali.rice.krad.service.KRADServiceLocatorWeb;
+import org.kuali.rice.krad.util.GlobalVariables;
+import org.kuali.rice.krad.util.KRADConstants;
+import org.kuali.rice.krad.util.UrlFactory;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
 
 
 public class ReturnDocumentRule extends DocumentRuleBase {
@@ -46,10 +46,10 @@ public class ReturnDocumentRule extends DocumentRuleBase {
         }
         if(!lockingDocIds.isEmpty()) {
             Properties parameters = new Properties();
-            parameters.put(KNSConstants.PARAMETER_DOC_ID, lockingDocIds.get(0));
-            parameters.put(KNSConstants.PARAMETER_COMMAND, KNSConstants.METHOD_DISPLAY_DOC_SEARCH_VIEW);
-            String blockingUrl = UrlFactory.parameterizeUrl(getKualiConfigurationService().getPropertyString(KNSConstants.WORKFLOW_URL_KEY) + "/" + KNSConstants.DOC_HANDLER_ACTION, parameters);
-            GlobalVariables.getMessageMap().putError(KNSConstants.GLOBAL_ERRORS, RiceKeyConstants.ERROR_MAINTENANCE_LOCKED, blockingUrl, lockingDocIds.get(0));
+            parameters.put(KRADConstants.PARAMETER_DOC_ID, lockingDocIds.get(0));
+            parameters.put(KRADConstants.PARAMETER_COMMAND, KRADConstants.METHOD_DISPLAY_DOC_SEARCH_VIEW);
+            String blockingUrl = UrlFactory.parameterizeUrl(getKualiConfigurationService().getPropertyValueAsString(KRADConstants.WORKFLOW_URL_KEY) + "/" + KRADConstants.DOC_HANDLER_ACTION, parameters);
+            GlobalVariables.getMessageMap().putError(KRADConstants.GLOBAL_ERRORS, RiceKeyConstants.ERROR_MAINTENANCE_LOCKED, blockingUrl, lockingDocIds.get(0));
             isValid = false;
         }
         
@@ -57,14 +57,14 @@ public class ReturnDocumentRule extends DocumentRuleBase {
     }
     
     /**
-     * @see org.kuali.rice.kns.rules.DocumentRuleBase#processCustomApproveDocumentBusinessRules(org.kuali.rice.kns.rule.event.ApproveDocumentEvent)
+     * @see org.kuali.rice.kns.rules.DocumentRuleBase#processCustomApproveDocumentBusinessRules(org.kuali.rice.krad.rules.rule.event.ApproveDocumentEvent)
      */
     @Override
     protected boolean processCustomApproveDocumentBusinessRules(ApproveDocumentEvent approveEvent) {
         boolean isValid = true;
         
         ReturnDocument document = (ReturnDocument)approveEvent.getDocument();
-        DataDictionaryService dictionaryService = KNSServiceLocator.getDataDictionaryService();
+        DataDictionaryService dictionaryService = KRADServiceLocatorWeb.getDataDictionaryService();
         
         int i=0;
         for(ReturnDetail detail : document.getReturnDetails()) {
@@ -100,7 +100,7 @@ public class ReturnDocumentRule extends DocumentRuleBase {
     }
     
     private boolean validateYesNoField(String fieldValue, String attribute, String errorPath) {
-        DataDictionaryService dictionaryService = KNSServiceLocator.getDataDictionaryService();
+        DataDictionaryService dictionaryService = KRADServiceLocatorWeb.getDataDictionaryService();
         if(StringUtils.isBlank(fieldValue)) {
             String errorLabel = dictionaryService.getAttributeErrorLabel(ReturnDetail.class, attribute);
             GlobalVariables.getMessageMap().putError(
@@ -131,8 +131,8 @@ public class ReturnDocumentRule extends DocumentRuleBase {
         }
 
         if (count < 1
-                && (document.getDocumentHeader().getWorkflowDocument().stateIsInitiated() || document
-                        .getDocumentHeader().getWorkflowDocument().stateIsSaved())) {
+                && (document.getDocumentHeader().getWorkflowDocument().isInitiated() || document
+                        .getDocumentHeader().getWorkflowDocument().isSaved())) {
             GlobalVariables.getMessageMap().putError(
                     MMConstants.ReturnDocument.RETURN_DETAILS + "[" + 0 + "]."
                             + MMConstants.ReturnDocument.RETURN_DETAIL_LINE_SELECTED,
@@ -146,8 +146,8 @@ public class ReturnDocumentRule extends DocumentRuleBase {
     private boolean validateReturnDetails(ReturnDocument returnDocument) {
         OrderService orderService = MMServiceLocator.getOrderService();
         ReturnOrderService returnOrderService = MMServiceLocator.getReturnOrderService();
-        boolean isRouted = !(returnDocument.getDocumentHeader().getWorkflowDocument().stateIsInitiated()
-                || returnDocument.getDocumentHeader().getWorkflowDocument().stateIsSaved());
+        boolean isRouted = !(returnDocument.getDocumentHeader().getWorkflowDocument().isInitiated()
+                || returnDocument.getDocumentHeader().getWorkflowDocument().isSaved());
         List<ReturnDetail> rdetails = returnDocument.getReturnDetails();
         List<String> serialNumberList = getAllRentalSerialNumbers(rdetails);
         

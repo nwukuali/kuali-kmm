@@ -3,7 +3,7 @@
  */
 package org.kuali.ext.mm.sys.service;
 
-import org.kuali.rice.kns.service.PersistenceStructureService;
+import org.kuali.rice.krad.service.PersistenceStructureService;
 
 
 /**

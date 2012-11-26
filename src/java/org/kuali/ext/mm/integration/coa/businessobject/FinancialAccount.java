@@ -16,23 +16,21 @@
 
 package org.kuali.ext.mm.integration.coa.businessobject;
 
-import java.sql.Date;
-import java.util.Calendar;
-import java.util.LinkedHashMap;
-
 import org.apache.commons.lang.time.DateUtils;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.integration.FinancialSystemComponent;
-import org.kuali.rice.kns.bo.ExternalizableBusinessObject;
-import org.kuali.rice.kns.bo.TransientBusinessObjectBase;
-import org.kuali.rice.kns.service.DateTimeService;
+import org.kuali.rice.core.api.datetime.DateTimeService;
+import org.kuali.rice.krad.bo.ExternalizableBusinessObject;
+import org.kuali.rice.krad.bo.TransientBusinessObjectBase;
 
+import java.sql.Date;
+import java.util.Calendar;
 
 /**
  *
  */
 public class FinancialAccount extends TransientBusinessObjectBase implements
-        ExternalizableBusinessObject, FinancialSystemComponent {
+	ExternalizableBusinessObject, FinancialSystemComponent {
     private static final long serialVersionUID = 6650842976182882495L;
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger
             .getLogger(FinancialAccount.class);
@@ -611,11 +609,4 @@ public class FinancialAccount extends TransientBusinessObjectBase implements
     }
 
 
-    /**
-     * @see org.kuali.rice.kns.bo.BusinessObjectBase#toStringMapper()
-     */
-    @Override
-    protected LinkedHashMap<String, String> toStringMapper() {
-        return null;
-    }
 }

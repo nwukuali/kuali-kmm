@@ -1,27 +1,17 @@
 package org.kuali.ext.mm.businessobject;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
-import org.apache.ojb.broker.PersistenceBroker;
-import org.apache.ojb.broker.PersistenceBrokerException;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.integration.sys.businessobject.FinancialUnitOfMeasure;
 import org.kuali.ext.mm.service.CatalogService;
 import org.kuali.ext.mm.service.MMServiceLocator;
 import org.kuali.ext.mm.util.MMDecimal;
-import org.kuali.rice.kns.util.KualiDecimal;
-import org.kuali.rice.kns.util.ObjectUtils;
-import org.kuali.rice.kns.util.TypedArrayList;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+import org.kuali.rice.krad.util.ObjectUtils;
+import org.springframework.util.AutoPopulatingList;
+
+import javax.persistence.*;
+import java.util.List;
 
 
 /**
@@ -115,9 +105,9 @@ public class CatalogItem extends MMPersistableBusinessObjectBase {
     @SuppressWarnings("unchecked")
     public CatalogItem() {
         stock = new Stock();
-        catalogItemImages = new TypedArrayList(CatalogItemImage.class);
-        catalogItemMarkups = new TypedArrayList(CatalogItemMarkup.class);
-        catalogSubgroupItems = new TypedArrayList(CatalogSubgroupItem.class);
+        catalogItemImages = new AutoPopulatingList(CatalogItemImage.class);
+        catalogItemMarkups = new AutoPopulatingList(CatalogItemMarkup.class);
+        catalogSubgroupItems = new AutoPopulatingList(CatalogSubgroupItem.class);
     }
 
     public Stock getStock() {
@@ -372,16 +362,6 @@ public class CatalogItem extends MMPersistableBusinessObjectBase {
         return deletableCollection;
     }
 
-    /**
-     * toStringMapper
-     * 
-     * @return LinkedHashMap
-     */
-    @Override
-    public LinkedHashMap toStringMapper() {
-        LinkedHashMap propMap = new LinkedHashMap();
-        return propMap;
-    }
 
     /**
      * Gets the buyUnitOfIssue property
@@ -408,13 +388,12 @@ public class CatalogItem extends MMPersistableBusinessObjectBase {
         
     public MMDecimal getBrowsePrice() {
         return SpringContext.getBean(CatalogService.class).computeCatalogItemPriceNoPersonalUse(this, null, 1);
-    }       
-
-    @Override
-    public void afterInsert(PersistenceBroker persistenceBroker) throws PersistenceBrokerException {
-        super.afterInsert(persistenceBroker);
-        if (ObjectUtils.isNotNull(getStock())) {            
-            MMServiceLocator.getStockService().initializeStockCosts(this.getStock(), this.getCatalogPrc());
-        }
     }
+
+	protected void postPersist() {
+		super.postPersist();
+		if (ObjectUtils.isNotNull(getStock())) {
+			MMServiceLocator.getStockService().initializeStockCosts(this.getStock(), this.getCatalogPrc());
+		}
+	}
 }

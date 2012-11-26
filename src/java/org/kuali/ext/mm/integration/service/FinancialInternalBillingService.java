@@ -16,13 +16,13 @@
 
 package org.kuali.ext.mm.integration.service;
 
-import java.util.List;
-
 import org.kuali.ext.mm.businessobject.Profile;
 import org.kuali.ext.mm.integration.fp.businessobject.FinancialCapitalAssetInformation;
 import org.kuali.ext.mm.integration.fp.businessobject.FinancialInternalBillingItem;
 import org.kuali.ext.mm.integration.sys.businessobject.FinancialAccountingLine;
-import org.kuali.rice.kns.bo.DocumentHeader;
+import org.kuali.rice.krad.bo.DocumentHeader;
+
+import java.util.List;
 
 /**
  * This interfaces declares the methods required to submit an Internal Billing Document to financial system supported by MM.

@@ -15,17 +15,17 @@
  */
 package org.kuali.ext.mm.integration.sys.businessobject;
 
-import java.util.LinkedHashMap;
-
 import org.kuali.ext.mm.integration.FinancialSystemComponent;
-import org.kuali.rice.kns.bo.ExternalizableBusinessObject;
-import org.kuali.rice.kns.bo.TransientBusinessObjectBase;
+import org.kuali.rice.krad.bo.ExternalizableBusinessObject;
+import org.kuali.rice.krad.bo.TransientBusinessObjectBase;
+
+import java.util.LinkedHashMap;
 
 /**
  * Unit Of Measure Business Object.
  */
 public class FinancialUnitOfMeasure extends TransientBusinessObjectBase implements
-        ExternalizableBusinessObject, FinancialSystemComponent {
+	ExternalizableBusinessObject, FinancialSystemComponent {
     private static final long serialVersionUID = 2318408801326832458L;
     private String itemUnitOfMeasureCode;
     private String itemUnitOfMeasureDescription;

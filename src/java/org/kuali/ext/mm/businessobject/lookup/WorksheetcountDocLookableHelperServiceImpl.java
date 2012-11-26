@@ -16,26 +16,20 @@
 package org.kuali.ext.mm.businessobject.lookup;
 
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-
 import org.apache.commons.lang.StringUtils;
 import org.kuali.ext.mm.businessobject.WorksheetCountDocumentLookable;
 import org.kuali.ext.mm.common.sys.MMConstants;
-import org.kuali.rice.kim.bo.types.dto.AttributeSet;
-import org.kuali.rice.kim.service.KIMServiceLocator;
-import org.kuali.rice.kim.util.KimCommonUtils;
-import org.kuali.rice.kns.bo.BusinessObject;
-import org.kuali.rice.kns.document.Document;
+import org.kuali.rice.kim.api.services.KimApiServiceLocator;
 import org.kuali.rice.kns.lookup.HtmlData;
 import org.kuali.rice.kns.lookup.HtmlData.AnchorHtmlData;
 import org.kuali.rice.kns.lookup.KualiLookupableHelperServiceImpl;
-import org.kuali.rice.kns.util.GlobalVariables;
-import org.kuali.rice.kns.util.KNSConstants;
-import org.kuali.rice.kns.util.UrlFactory;
+import org.kuali.rice.krad.bo.BusinessObject;
+import org.kuali.rice.krad.document.Document;
+import org.kuali.rice.krad.util.GlobalVariables;
+import org.kuali.rice.krad.util.KRADConstants;
+import org.kuali.rice.krad.util.UrlFactory;
+
+import java.util.*;
 
 
 /**
@@ -68,9 +62,9 @@ public class WorksheetcountDocLookableHelperServiceImpl extends KualiLookupableH
 
         HtmlData printURLData = this.getWorksheetCountDocPrintUrl(worksheet);
         HtmlData countEnterURLData = null;
-        boolean authorized = KIMServiceLocator.getIdentityManagementService().isAuthorized(
+        boolean authorized = KimApiServiceLocator.getPermissionService().isAuthorized(
                 GlobalVariables.getUserSession().getPrincipalId(), MMConstants.MM_NAMESPACE,
-                MMConstants.WorksheetCountDocument.EDIT_WORKSHEET_PERMISSION, null, null);
+                MMConstants.WorksheetCountDocument.EDIT_WORKSHEET_PERMISSION, null);
         if (worksheet.getWorksheetStatusCode().equals("PRTD")
                 || worksheet.getWorksheetStatusCode().equals("ENTR")) {
             if (authorized) {
@@ -97,8 +91,8 @@ public class WorksheetcountDocLookableHelperServiceImpl extends KualiLookupableH
         params.setProperty(MMConstants.WORKSHEET_DOC_NUMBER, worksheetDoc.getDocumentNumber());
         params.setProperty(MMConstants.WORKSHEET_DOC_STATUS, worksheetDoc.getWorksheetStatusCode());
 
-        String href = getKualiConfigurationService().getPropertyString(
-                KNSConstants.APPLICATION_URL_KEY)
+        String href = getKualiConfigurationService().getPropertyValueAsString(
+                KRADConstants.APPLICATION_URL_KEY)
                 + "/"
                 + UrlFactory
                         .parameterizeUrl(
@@ -109,16 +103,16 @@ public class WorksheetcountDocLookableHelperServiceImpl extends KualiLookupableH
         return anchorHtmlData;
     }
 
-    protected AttributeSet buildPermissionDetails(Document document) {
+    protected Map<String, String> buildPermissionDetails(Document document) {
         Map<String, String> permissionDetails = new HashMap<String, String>();
         permissionDetails.put("documentTypeName", "SWKC"); // document type name
         permissionDetails.put("routeNodeName", "CycleCountWorksheetPrint"); // route node = PreRoute
         permissionDetails.put("namespaceCode", MMConstants.MM_NAMESPACE);
-        permissionDetails.putAll(KimCommonUtils.getNamespaceAndComponentSimpleName(document
-                .getClass()));
-        AttributeSet aa = new AttributeSet(permissionDetails);
+				//TODO: NWU - Find a workaround to add namespace & simple name
+//        permissionDetails.putAll(KimCommonUtils.getNamespaceAndComponentSimpleName(document
+//                .getClass()));
+        return permissionDetails;
         // permissionDetails.put(KfsKimAttributes.PROPERTY_NAME, "sourceAccountingLines"); // property = sourceAccountingLines
-        return aa;
     }
 
     protected HtmlData getWorksheetCountDocEnterUrl(WorksheetCountDocumentLookable worksheetDoc) {
@@ -128,13 +122,13 @@ public class WorksheetcountDocLookableHelperServiceImpl extends KualiLookupableH
 
         Properties params = new Properties();
         params
-                .setProperty(KNSConstants.DISPATCH_REQUEST_PARAMETER,
-                        KNSConstants.DOC_HANDLER_METHOD);
+                .setProperty(KRADConstants.DISPATCH_REQUEST_PARAMETER,
+                        KRADConstants.DOC_HANDLER_METHOD);
         params.setProperty(MMConstants.COMMAND, MMConstants.DISPLAY_DOC_SEARCH_VIEW);
         params.setProperty(MMConstants.DOCUMENT_ID, worksheetDoc.getDocumentNumber());
 
-        String href = getKualiConfigurationService().getPropertyString(
-                KNSConstants.APPLICATION_URL_KEY)
+        String href = getKualiConfigurationService().getPropertyValueAsString(
+                KRADConstants.APPLICATION_URL_KEY)
                 + "/"
                 + UrlFactory.parameterizeUrl(
                         MMConstants.WorksheetCountDocument.WORKSHEET_COUNT_DOC_DISPLAY_ACTION,

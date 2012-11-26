@@ -1,10 +1,5 @@
 package org.kuali.ext.mm.document.validation.impl;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import org.kuali.ext.mm.businessobject.CheckinDetail;
 import org.kuali.ext.mm.businessobject.StagingRental;
 import org.kuali.ext.mm.businessobject.Stock;
@@ -17,11 +12,16 @@ import org.kuali.ext.mm.integration.FinancialSystemAdaptorFactory;
 import org.kuali.ext.mm.service.MMServiceLocator;
 import org.kuali.ext.mm.service.RentalService;
 import org.kuali.ext.mm.util.MMUtil;
-import org.kuali.rice.kns.document.Document;
 import org.kuali.rice.kns.rules.DocumentRuleBase;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.util.GlobalVariables;
-import org.kuali.rice.kns.util.ObjectUtils;
+import org.kuali.rice.krad.document.Document;
+import org.kuali.rice.krad.service.KRADServiceLocator;
+import org.kuali.rice.krad.util.GlobalVariables;
+import org.kuali.rice.krad.util.ObjectUtils;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 
 public class ReceiptCorrectionDocumentRule extends DocumentRuleBase {
@@ -79,7 +79,7 @@ public class ReceiptCorrectionDocumentRule extends DocumentRuleBase {
                                     cdetail.getBuyUnitOfIssueRt().toString());
                 }
                 
-                Stock stockObject = KNSServiceLocator.getBusinessObjectService().findBySinglePrimaryKey(Stock.class, cdetail.getStockId());
+                Stock stockObject = KRADServiceLocator.getBusinessObjectService().findBySinglePrimaryKey(Stock.class, cdetail.getStockId());
                 List<String> lockingIds = lockService.getLockingDocumentIds(stockObject, 
                         MMConstants.CheckinDetail.STOCK_ID, correctionDocument.getDocumentNumber());
                 
@@ -98,8 +98,8 @@ public class ReceiptCorrectionDocumentRule extends DocumentRuleBase {
         }
 
         if (count < 1
-                && (document.getDocumentHeader().getWorkflowDocument().stateIsInitiated() || document
-                        .getDocumentHeader().getWorkflowDocument().stateIsSaved())) {
+                && (document.getDocumentHeader().getWorkflowDocument().isInitiated() || document
+                        .getDocumentHeader().getWorkflowDocument().isSaved())) {
             GlobalVariables.getMessageMap().putError(
                     MMConstants.ReceiptCorrection.RECEIPT_CORRECTION_DOCUEMNT + "[" + 0 + "]."
                             + MMConstants.ReceiptCorrection.LINE_CORRECTED,

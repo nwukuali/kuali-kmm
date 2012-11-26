@@ -3,19 +3,10 @@
  */
 package org.kuali.ext.mm.document.web.struts;
 
-import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.lowagie.text.*;
+import com.lowagie.text.pdf.PdfPCell;
+import com.lowagie.text.pdf.PdfPTable;
+import com.lowagie.text.pdf.PdfWriter;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -32,23 +23,20 @@ import org.kuali.ext.mm.integration.FinancialSystemAdaptorFactory;
 import org.kuali.ext.mm.integration.sys.businessobject.FinancialBuilding;
 import org.kuali.ext.mm.service.PickListService;
 import org.kuali.ext.mm.sys.service.SegmentedLookupResultsService;
-import org.kuali.rice.kew.exception.WorkflowException;
-import org.kuali.rice.kns.bo.PersistableBusinessObject;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.service.DocumentService;
-import org.kuali.rice.kns.util.GlobalVariables;
-import org.kuali.rice.kns.util.TypedArrayList;
+import org.kuali.rice.kew.api.exception.WorkflowException;
 import org.kuali.rice.kns.util.WebUtils;
 import org.kuali.rice.kns.web.struts.action.KualiTransactionalDocumentActionBase;
+import org.kuali.rice.krad.bo.PersistableBusinessObject;
+import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.service.DocumentService;
+import org.kuali.rice.krad.util.GlobalVariables;
+import org.springframework.util.AutoPopulatingList;
 
-import com.lowagie.text.Document;
-import com.lowagie.text.Element;
-import com.lowagie.text.Font;
-import com.lowagie.text.PageSize;
-import com.lowagie.text.Paragraph;
-import com.lowagie.text.pdf.PdfPCell;
-import com.lowagie.text.pdf.PdfPTable;
-import com.lowagie.text.pdf.PdfWriter;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayOutputStream;
+import java.util.*;
+import java.util.List;
 
 
 /**
@@ -107,11 +95,11 @@ public class DeliveryLabelAction extends KualiTransactionalDocumentActionBase{
         // automatically create document description template
         dlForm.getDocument().getDocumentHeader().setDocumentDescription("Delivery Label Number: " +  documentNumber);
 
-        if (dlForm.getDocument().getDocumentHeader().getWorkflowDocument().stateIsInitiated()) {
+        if (dlForm.getDocument().getDocumentHeader().getWorkflowDocument().isInitiated()) {
             dlForm.getDeliveryLabelDocument().setPickStatusCodeCd(MMConstants.PickStatusCode.PICK_STATUS_PRTD);
         }
         
-        if (dlForm.getDocument().getDocumentHeader().getWorkflowDocument().stateIsFinal()) {
+        if (dlForm.getDocument().getDocumentHeader().getWorkflowDocument().isFinal()) {
             dlForm.getDeliveryLabelDocument().setPickStatusCodeCd(MMConstants.PickStatusCode.PICK_STATUS_PRTD);
             BusinessObjectService bOS = SpringContext.getBean(BusinessObjectService.class);
             HashMap<String, String> fieldValues = new HashMap<String, String>();
@@ -307,7 +295,7 @@ public class DeliveryLabelAction extends KualiTransactionalDocumentActionBase{
             }
 
             // Reset line list and Summary values
-            List<PickListLine> pickListLineList = new TypedArrayList(PickListLine.class);
+            List<PickListLine> pickListLineList = new AutoPopulatingList(PickListLine.class);
             resetSummaryValues(dLForm);
 
             if (rawValues != null) {

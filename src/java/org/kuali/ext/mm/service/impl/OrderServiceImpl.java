@@ -1,34 +1,11 @@
 package org.kuali.ext.mm.service.impl;
 
-import static org.kuali.ext.mm.common.sys.MMConstants.LF;
-
-import java.beans.PropertyDescriptor;
-import java.math.BigDecimal;
-import java.sql.Date;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.kuali.ext.mm.b2b.cxml.types.CXML;
 import org.kuali.ext.mm.b2b.cxml.util.CxmlUtil;
-import org.kuali.ext.mm.businessobject.Accounts;
-import org.kuali.ext.mm.businessobject.Address;
-import org.kuali.ext.mm.businessobject.Agreement;
-import org.kuali.ext.mm.businessobject.BackOrder;
-import org.kuali.ext.mm.businessobject.CxmlPurchaseOrder;
-import org.kuali.ext.mm.businessobject.OrderDetail;
-import org.kuali.ext.mm.businessobject.PickListLine;
-import org.kuali.ext.mm.businessobject.Profile;
-import org.kuali.ext.mm.businessobject.PunchOutVendor;
-import org.kuali.ext.mm.businessobject.RecurringOrder;
-import org.kuali.ext.mm.businessobject.SalesInstance;
+import org.kuali.ext.mm.businessobject.*;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.MMKeyConstants;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
@@ -37,28 +14,29 @@ import org.kuali.ext.mm.fp.service.FinancialDataService;
 import org.kuali.ext.mm.integration.FinancialSystemAdaptorFactory;
 import org.kuali.ext.mm.integration.coa.businessobject.FinancialObjectCode;
 import org.kuali.ext.mm.integration.service.FinancialObjectCodeService;
-import org.kuali.ext.mm.service.B2BPunchOutService;
-import org.kuali.ext.mm.service.BackOrderService;
-import org.kuali.ext.mm.service.MMServiceLocator;
-import org.kuali.ext.mm.service.OrderService;
-import org.kuali.ext.mm.service.PickListService;
-import org.kuali.ext.mm.service.PunchOutVendorService;
-import org.kuali.ext.mm.service.RecurringOrderService;
-import org.kuali.ext.mm.service.SalesInstanceService;
+import org.kuali.ext.mm.service.*;
 import org.kuali.ext.mm.util.MMDecimal;
-import org.kuali.rice.kim.bo.Person;
-import org.kuali.rice.kim.service.PersonService;
-import org.kuali.rice.kns.mail.MailMessage;
-import org.kuali.rice.kns.service.BusinessObjectService;
+import org.kuali.rice.core.api.config.property.ConfigurationService;
+import org.kuali.rice.core.api.mail.MailMessage;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+import org.kuali.rice.coreservice.framework.CoreFrameworkServiceLocator;
+import org.kuali.rice.kim.api.identity.Person;
+import org.kuali.rice.kim.api.identity.PersonService;
 import org.kuali.rice.kns.service.DictionaryValidationService;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.service.KualiConfigurationService;
-import org.kuali.rice.kns.service.MailService;
-import org.kuali.rice.kns.util.GlobalVariables;
-import org.kuali.rice.kns.util.KualiDecimal;
-import org.kuali.rice.kns.util.MessageMap;
-import org.kuali.rice.kns.util.ObjectUtils;
+import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.service.KRADServiceLocator;
+import org.kuali.rice.krad.service.MailService;
+import org.kuali.rice.krad.util.GlobalVariables;
+import org.kuali.rice.krad.util.MessageMap;
+import org.kuali.rice.krad.util.ObjectUtils;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.beans.PropertyDescriptor;
+import java.math.BigDecimal;
+import java.sql.Date;
+import java.util.*;
+
+import static org.kuali.ext.mm.common.sys.MMConstants.LF;
 
 
 /**
@@ -256,14 +234,14 @@ public class OrderServiceImpl implements OrderService {
      */
     private void sendConfirmationEmail(OrderDocument orderDocument) {
         MailMessage message = new MailMessage();
-        KualiConfigurationService configService = KNSServiceLocator.getKualiConfigurationService();
-        message.setFromAddress(configService.getPropertyString(MMKeyConstants.Shopping.SHOPPING_EMAIL_FROM_ADDRESS));
+        ConfigurationService configService = KRADServiceLocator.getKualiConfigurationService();
+        message.setFromAddress(configService.getPropertyValueAsString(MMKeyConstants.Shopping.SHOPPING_EMAIL_FROM_ADDRESS));
         message.setToAddresses(new HashSet<String>());
         message.getToAddresses().add(orderDocument.getCustomerProfile().getProfileEmail());
-        message.setSubject(configService.getPropertyString(MMKeyConstants.Shopping.SHOPPING_EMAIL_CONFIRMATION_SUBJECT));
+        message.setSubject(configService.getPropertyValueAsString(MMKeyConstants.Shopping.SHOPPING_EMAIL_CONFIRMATION_SUBJECT));
         
         StringBuffer emailBody = new StringBuffer();
-        emailBody.append(configService.getPropertyString(MMKeyConstants.Shopping.SHOPPING_EMAIL_CONFIRMATION_HEADER));
+        emailBody.append(configService.getPropertyValueAsString(MMKeyConstants.Shopping.SHOPPING_EMAIL_CONFIRMATION_HEADER));
         emailBody.append(LF + LF + "Order Summary");
         emailBody.append(LF + "Order #: " + orderDocument.getOrderId());
         emailBody.append(LF + "Subtotal: " + orderDocument.getDisplaySubTotal());
@@ -276,7 +254,7 @@ public class OrderServiceImpl implements OrderService {
         emailBody.append(LF + getAddressEmailString(orderDocument.getBillingAddress()));
         emailBody.append(LF + LF + "Shipping Address:");
         emailBody.append(LF + getAddressEmailString(orderDocument.getShippingAddress()));
-        emailBody.append(LF + configService.getPropertyString(MMKeyConstants.Shopping.SHOPPING_EMAIL_CONFIRMATION_FOOTER));
+        emailBody.append(LF + configService.getPropertyValueAsString(MMKeyConstants.Shopping.SHOPPING_EMAIL_CONFIRMATION_FOOTER));
         message.setMessage(emailBody.toString());
         try {
             mailService.sendMessage(message);
@@ -502,9 +480,9 @@ public class OrderServiceImpl implements OrderService {
      * @see org.kuali.ext.mm.service.OrderService#isAssetObjectCode(java.lang.String)
      */
     public boolean isAssetObjectCode(String finObjectCd) {
-        Collection<String> values = KNSServiceLocator.getParameterService().getParameterValues(
-                MMConstants.MM_NAMESPACE, MMConstants.Parameters.DOCUMENT,
-                MMConstants.Parameters.ASSET_OBJECT_CODES);
+        Collection<String> values = CoreFrameworkServiceLocator.getParameterService().getParameterValuesAsString(
+					MMConstants.MM_NAMESPACE, MMConstants.Parameters.DOCUMENT,
+					MMConstants.Parameters.ASSET_OBJECT_CODES);
         for (String code : values) {
             if (code.equals(finObjectCd))
                 return true;
@@ -671,7 +649,7 @@ public class OrderServiceImpl implements OrderService {
     public boolean isOrderDetailComplete(Integer orderDetailId) {
         Map<String, Object> fieldValues = new HashMap<String, Object>();
         fieldValues.put(MMConstants.PickListLine.ORDER_DETAIL_ID, orderDetailId);
-        Collection<PickListLine> pickLines = KNSServiceLocator.getBusinessObjectService().findMatching(PickListLine.class, fieldValues);
+        Collection<PickListLine> pickLines = KRADServiceLocator.getBusinessObjectService().findMatching(PickListLine.class, fieldValues);
         Collection<BackOrder> backOrders = SpringContext.getBean(BackOrderService.class)
                 .getBackOrdersForOrderDetail(orderDetailId);        
                 
@@ -710,7 +688,7 @@ public class OrderServiceImpl implements OrderService {
         Map<String, Object> fieldValues = new HashMap<String, Object>();
         fieldValues.put(MMConstants.PickListLine.ORDER_DETAIL_ID, detail.getOrderDetailId());
         fieldValues.put(MMConstants.PickListLine.PICK_STATUS_CODE_CD, pickStatusCodes);
-        Collection<PickListLine> pickLines = KNSServiceLocator.getBusinessObjectService().findMatching(PickListLine.class, fieldValues);
+        Collection<PickListLine> pickLines = KRADServiceLocator.getBusinessObjectService().findMatching(PickListLine.class, fieldValues);
         
         Integer qty = 0;
         for(PickListLine line : pickLines) {

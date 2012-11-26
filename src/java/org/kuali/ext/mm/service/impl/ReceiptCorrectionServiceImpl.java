@@ -3,22 +3,7 @@
  */
 package org.kuali.ext.mm.service.impl;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import org.kuali.ext.mm.businessobject.CheckinDetail;
-import org.kuali.ext.mm.businessobject.OrderDetail;
-import org.kuali.ext.mm.businessobject.Rental;
-import org.kuali.ext.mm.businessobject.StagingRental;
-import org.kuali.ext.mm.businessobject.StockBalance;
-import org.kuali.ext.mm.businessobject.StockHistory;
-import org.kuali.ext.mm.businessobject.StoresPersistableBusinessObject;
-import org.kuali.ext.mm.businessobject.Warehouse;
+import org.kuali.ext.mm.businessobject.*;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.dataaccess.CheckinOrderDAO;
@@ -33,8 +18,10 @@ import org.kuali.ext.mm.service.ReceiptCorrectionService;
 import org.kuali.ext.mm.service.StockService;
 import org.kuali.ext.mm.util.MMDecimal;
 import org.kuali.ext.mm.util.MMUtil;
-import org.kuali.rice.kns.service.BusinessObjectService;
+import org.kuali.rice.krad.service.BusinessObjectService;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.*;
 
 
 /**
@@ -183,8 +170,8 @@ public class ReceiptCorrectionServiceImpl implements ReceiptCorrectionService {
     private boolean isEligibleForCorrection(CheckinDetail cdetail) {
         return cdetail.getAcceptedItemQty() > 0 
             && (cdetail.getCheckinDoc().isFinalInd() 
-                    || cdetail.getCheckinDoc().getDocumentHeader().getWorkflowDocument().stateIsDisapproved()
-                    || cdetail.getCheckinDoc().getDocumentHeader().getWorkflowDocument().stateIsCanceled());
+                    || cdetail.getCheckinDoc().getDocumentHeader().getWorkflowDocument().isDisapproved()
+                    || cdetail.getCheckinDoc().getDocumentHeader().getWorkflowDocument().isCanceled());
     }
 
     /**

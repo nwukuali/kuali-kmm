@@ -2,24 +2,13 @@ package org.kuali.ext.mm.businessobject;
 
 // Generated May 19, 2009 9:29:05 AM by Hibernate Tools 3.2.4.GA
 
-import java.sql.Timestamp;
-import java.util.LinkedHashMap;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Transient;
-
 import org.apache.commons.lang.StringUtils;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.document.WorksheetCountDocument;
 import org.kuali.ext.mm.util.MMDecimal;
+
+import javax.persistence.*;
+import java.sql.Timestamp;
 
 
 /**
@@ -411,16 +400,6 @@ public class StockCount extends MMPersistableBusinessObjectBase implements java.
         this.worksheetCountLookable = worksheetCountLookable;
     }
 
-    /**
-     * toStringMapper
-     * 
-     * @return LinkedHashMap
-     */
-    @Override
-    public LinkedHashMap toStringMapper() {
-        LinkedHashMap propMap = new LinkedHashMap();
-        return propMap;
-    }
 
     /**
      * Gets the snapshotQty property

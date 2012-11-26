@@ -16,18 +16,17 @@
 
 package org.kuali.ext.mm.integration.vnd.businessobject;
 
-import java.sql.Date;
-import java.util.LinkedHashMap;
-
 import org.kuali.ext.mm.integration.FinancialSystemComponent;
-import org.kuali.rice.kns.bo.ExternalizableBusinessObject;
-import org.kuali.rice.kns.bo.TransientBusinessObjectBase;
-import org.kuali.rice.kns.util.KualiDecimal;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+import org.kuali.rice.krad.bo.ExternalizableBusinessObject;
+import org.kuali.rice.krad.bo.TransientBusinessObjectBase;
+
+import java.sql.Date;
 
 /**
  */
 public class FinancialVendorContract extends TransientBusinessObjectBase implements
-        ExternalizableBusinessObject, FinancialSystemComponent {
+	ExternalizableBusinessObject, FinancialSystemComponent {
     /**
      *
      */
@@ -378,14 +377,6 @@ public class FinancialVendorContract extends TransientBusinessObjectBase impleme
         this.poId = poId;
     }
 
-    /**
-     * @see org.kuali.rice.kns.bo.BusinessObjectBase#toStringMapper()
-     */
-    @Override
-    protected LinkedHashMap<String, String> toStringMapper() {
-        // TODO Auto-generated method stub
-        return null;
-    }
 
     /**
      * Gets the totalUsedAmt property

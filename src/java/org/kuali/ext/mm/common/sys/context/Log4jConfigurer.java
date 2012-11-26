@@ -15,15 +15,15 @@
  */
 package org.kuali.ext.mm.common.sys.context;
 
-import java.io.IOException;
-import java.net.URL;
-import java.net.URLClassLoader;
-
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.kuali.ext.mm.common.sys.MMConstants;
-import org.kuali.rice.core.config.ConfigContext;
-import org.kuali.rice.core.config.SimpleConfig;
+import org.kuali.rice.core.api.config.property.ConfigContext;
+import org.kuali.rice.core.framework.config.property.SimpleConfig;
+
+import java.io.IOException;
+import java.net.URL;
+import java.net.URLClassLoader;
 
 
 public class Log4jConfigurer {

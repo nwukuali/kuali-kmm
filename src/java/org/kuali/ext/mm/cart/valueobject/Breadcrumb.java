@@ -1,13 +1,13 @@
 package org.kuali.ext.mm.cart.valueobject;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.kuali.ext.mm.businessobject.CatalogGroup;
 import org.kuali.ext.mm.businessobject.CatalogSubgroup;
-import org.kuali.rice.kns.util.ObjectUtils;
+import org.kuali.rice.krad.util.ObjectUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Breadcrumb {

@@ -1,10 +1,9 @@
 package org.kuali.ext.mm.businessobject;
-	
-import java.sql.Timestamp;
-import java.util.LinkedHashMap;
 
 import org.kuali.ext.mm.document.MassUpdateDocument;
 import org.kuali.ext.mm.util.MMDecimal;
+
+import java.sql.Timestamp;
 	
 public class MassUpdateDetail extends StoresPersistableBusinessObject {
 
@@ -85,14 +84,5 @@ public class MassUpdateDetail extends StoresPersistableBusinessObject {
     public void setStock(Stock stock) {
         this.stock = stock;
     }
-	
-    @Override
-    protected LinkedHashMap toStringMapper() {
-        LinkedHashMap<String, String> propMap = new LinkedHashMap<String, String>();
-        propMap.put("massUpdateDocument", massUpdateDocumentNumber);
-        propMap.put("stockId", stockId);
-        propMap.put("stockCost", stockCost.toString());
-        propMap.put("cycleCountCode", cycleCountCode);
-        return propMap;
-    }
+
 }

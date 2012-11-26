@@ -7,7 +7,7 @@ import javax.xml.namespace.QName;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.integration.FinancialSystemConfiguration;
 import org.kuali.ext.mm.integration.ServiceNameInfo;
-import org.kuali.rice.core.resourceloader.GlobalResourceLoader;
+import org.kuali.rice.core.api.resourceloader.GlobalResourceLoader;
 
 
 

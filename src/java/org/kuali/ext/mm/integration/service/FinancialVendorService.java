@@ -16,13 +16,13 @@
 
 package org.kuali.ext.mm.integration.service;
 
-import java.util.List;
-
 import org.kuali.ext.mm.integration.vnd.businessobject.FinancialPaymentTermType;
 import org.kuali.ext.mm.integration.vnd.businessobject.FinancialVendorAddress;
 import org.kuali.ext.mm.integration.vnd.businessobject.FinancialVendorContract;
 import org.kuali.ext.mm.integration.vnd.businessobject.FinancialVendorDetail;
-import org.kuali.rice.kns.util.KualiDecimal;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+
+import java.util.List;
 
 /**
  * @author harsha07

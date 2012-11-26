@@ -3,25 +3,9 @@
  */
 package org.kuali.ext.mm.integration.service.impl.kfs;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.math.BigDecimal;
-import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-
-import javax.xml.XMLConstants;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Marshaller;
-import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.kuali.ext.mm.b2b.cxml.kfs.types.CXML;
+import org.kuali.ext.mm.b2b.cxml.kfs.types.*;
 import org.kuali.ext.mm.b2b.cxml.kfs.types.CXML.Header;
 import org.kuali.ext.mm.b2b.cxml.kfs.types.CXML.Header.From;
 import org.kuali.ext.mm.b2b.cxml.kfs.types.CXML.Header.Sender;
@@ -40,29 +24,12 @@ import org.kuali.ext.mm.b2b.cxml.kfs.types.CXML.Request.InvoiceDetailRequest.Inv
 import org.kuali.ext.mm.b2b.cxml.kfs.types.CXML.Request.InvoiceDetailRequest.InvoiceDetailSummary.DueAmount;
 import org.kuali.ext.mm.b2b.cxml.kfs.types.CXML.Request.InvoiceDetailRequest.InvoiceDetailSummary.ShippingAmount;
 import org.kuali.ext.mm.b2b.cxml.kfs.types.CXML.Request.InvoiceDetailRequest.InvoiceDetailSummary.SpecialHandlingAmount;
-import org.kuali.ext.mm.b2b.cxml.kfs.types.Contact;
-import org.kuali.ext.mm.b2b.cxml.kfs.types.Credential;
-import org.kuali.ext.mm.b2b.cxml.kfs.types.Description;
-import org.kuali.ext.mm.b2b.cxml.kfs.types.GrossAmount;
-import org.kuali.ext.mm.b2b.cxml.kfs.types.InvoiceDetailDiscount;
-import org.kuali.ext.mm.b2b.cxml.kfs.types.InvoiceDetailItem;
 import org.kuali.ext.mm.b2b.cxml.kfs.types.InvoiceDetailItem.InvoiceDetailItemReference;
 import org.kuali.ext.mm.b2b.cxml.kfs.types.InvoiceDetailItem.InvoiceDetailItemReference.ItemID;
-import org.kuali.ext.mm.b2b.cxml.kfs.types.InvoiceDetailShipping;
-import org.kuali.ext.mm.b2b.cxml.kfs.types.Money;
-import org.kuali.ext.mm.b2b.cxml.kfs.types.Name;
-import org.kuali.ext.mm.b2b.cxml.kfs.types.NetAmount;
-import org.kuali.ext.mm.b2b.cxml.kfs.types.ObjectFactory;
-import org.kuali.ext.mm.b2b.cxml.kfs.types.OrderReference;
 import org.kuali.ext.mm.b2b.cxml.kfs.types.OrderReference.DocumentReference;
-import org.kuali.ext.mm.b2b.cxml.kfs.types.Phone;
 import org.kuali.ext.mm.b2b.cxml.kfs.types.Phone.TelephoneNumber;
 import org.kuali.ext.mm.b2b.cxml.kfs.types.Phone.TelephoneNumber.CountryCode;
-import org.kuali.ext.mm.b2b.cxml.kfs.types.PostalAddress;
 import org.kuali.ext.mm.b2b.cxml.kfs.types.PostalAddress.Country;
-import org.kuali.ext.mm.b2b.cxml.kfs.types.SubtotalAmount;
-import org.kuali.ext.mm.b2b.cxml.kfs.types.Tax;
-import org.kuali.ext.mm.b2b.cxml.kfs.types.UnitPrice;
 import org.kuali.ext.mm.businessobject.Address;
 import org.kuali.ext.mm.businessobject.CatalogItem;
 import org.kuali.ext.mm.businessobject.CheckinDetail;
@@ -79,10 +46,25 @@ import org.kuali.ext.mm.integration.vnd.businessobject.FinancialVendorAddress;
 import org.kuali.ext.mm.integration.vnd.businessobject.FinancialVendorDetail;
 import org.kuali.ext.mm.service.impl.CheckinOrderServiceImpl;
 import org.kuali.ext.mm.util.MMDecimal;
-import org.kuali.rice.kns.service.DateTimeService;
-import org.kuali.rice.kns.service.KualiConfigurationService;
-import org.kuali.rice.kns.util.KualiDecimal;
-import org.kuali.rice.kns.util.ObjectUtils;
+import org.kuali.rice.core.api.config.property.ConfigurationService;
+import org.kuali.rice.core.api.datetime.DateTimeService;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+import org.kuali.rice.krad.util.ObjectUtils;
+
+import javax.xml.XMLConstants;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Marshaller;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.math.BigDecimal;
+import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 
 
 /**
@@ -380,8 +362,8 @@ public class KfsElectronicInvoiceService implements FinancialElectronicInvoiceSe
             // end InvoiceDetailOrder
             Schema schema = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI)
                     .newSchema(
-                            new URL(SpringContext.getBean(KualiConfigurationService.class)
-                                    .getPropertyString(MMPropertyConstants.FINANCE_SYSTEM_URL)
+                            new URL(SpringContext.getBean(ConfigurationService.class)
+                                    .getPropertyValueAsString(MMPropertyConstants.FINANCE_SYSTEM_URL)
                                     + PURAP_ELECTRONIC_INVOICE_XSD));
             Marshaller marshaller = context.createMarshaller();
             marshaller.setSchema(schema);

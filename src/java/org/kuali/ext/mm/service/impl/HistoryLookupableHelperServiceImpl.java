@@ -1,20 +1,15 @@
 package org.kuali.ext.mm.service.impl;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-
 import org.kuali.ext.mm.businessobject.StockHistory;
-import org.kuali.rice.kns.bo.BusinessObject;
 import org.kuali.rice.kns.lookup.HtmlData;
 import org.kuali.rice.kns.lookup.HtmlData.AnchorHtmlData;
 import org.kuali.rice.kns.lookup.KualiLookupableHelperServiceImpl;
-import org.kuali.rice.kns.util.KNSConstants;
-import org.kuali.rice.kns.util.ObjectUtils;
-import org.kuali.rice.kns.util.UrlFactory;
+import org.kuali.rice.krad.bo.BusinessObject;
+import org.kuali.rice.krad.util.KRADConstants;
+import org.kuali.rice.krad.util.ObjectUtils;
+import org.kuali.rice.krad.util.UrlFactory;
+
+import java.util.*;
 
 public class HistoryLookupableHelperServiceImpl extends KualiLookupableHelperServiceImpl {
     private static final long serialVersionUID = -7848259047868378853L;
@@ -33,8 +28,8 @@ public class HistoryLookupableHelperServiceImpl extends KualiLookupableHelperSer
         Properties params = new Properties();
         params.setProperty("stockId", stockHistory.getStockId());
 
-        String href = getKualiConfigurationService().getPropertyString(
-                KNSConstants.APPLICATION_URL_KEY)
+        String href = getKualiConfigurationService().getPropertyValueAsString(
+                KRADConstants.APPLICATION_URL_KEY)
                 + "/" + UrlFactory.parameterizeUrl("stockHistoryLookup.do", params);
 
         AnchorHtmlData anchorHtmlData = new AnchorHtmlData(href, "", "Stock History");

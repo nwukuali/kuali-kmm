@@ -7,9 +7,9 @@ import org.kuali.ext.mm.document.MassUpdateDocument;
 import org.kuali.ext.mm.service.MMServiceLocator;
 import org.kuali.ext.mm.service.StockService;
 import org.kuali.ext.mm.util.MMUtil;
-import org.kuali.rice.kns.document.Document;
-import org.kuali.rice.kns.rules.DocumentRuleBase;
-import org.kuali.rice.kns.util.GlobalVariables;
+import org.kuali.rice.krad.document.Document;
+import org.kuali.rice.krad.rules.DocumentRuleBase;
+import org.kuali.rice.krad.util.GlobalVariables;
 
 
 public class MassUpdateDocumentRule extends DocumentRuleBase {
@@ -33,7 +33,7 @@ public class MassUpdateDocumentRule extends DocumentRuleBase {
 //        }
         if(!stockService.isAgreementNumberValid(updateDocument.getNewAgreementNumber())) {
             String nAgreementLabel = getDataDictionaryService().getAttributeErrorLabel(MassUpdateDocument.class, MMConstants.MassUpdateDocument.NEW_AGREEMENT_NUMBER);
-            GlobalVariables.getMessageMap().putError(MMConstants.DOCUMENT + "." + MMConstants.MassUpdateDocument.NEW_AGREEMENT_NUMBER, 
+            GlobalVariables.getMessageMap().putError(MMConstants.DOCUMENT + "." + MMConstants.MassUpdateDocument.NEW_AGREEMENT_NUMBER,
                     MMKeyConstants.AgreementMassMaintenance.ERROR_AGREEMENT_NBR_INVALID,
                     nAgreementLabel,
                     updateDocument.getNewAgreementNumber());

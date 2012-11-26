@@ -1,21 +1,21 @@
 package org.kuali.ext.mm.service.impl;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.commons.lang.StringUtils;
 import org.kuali.ext.mm.businessobject.Accounts;
 import org.kuali.ext.mm.businessobject.Rental;
 import org.kuali.ext.mm.common.sys.MMConstants;
-import org.kuali.rice.kns.bo.BusinessObject;
-import org.kuali.rice.kns.bo.DocumentHeader;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
 import org.kuali.rice.kns.document.MaintenanceDocument;
 import org.kuali.rice.kns.maintenance.KualiMaintainableImpl;
 import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.util.KualiDecimal;
-import org.kuali.rice.kns.util.ObjectUtils;
+import org.kuali.rice.krad.bo.BusinessObject;
+import org.kuali.rice.krad.bo.DocumentHeader;
+import org.kuali.rice.krad.util.ObjectUtils;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 
 public class RentalMaintainableImpl extends KualiMaintainableImpl  {
@@ -137,7 +137,7 @@ public class RentalMaintainableImpl extends KualiMaintainableImpl  {
      * @see org.kuali.ext.mm.gl.GeneralLedgerPostable#getDocumentNumber()
      */
     public String getDocumentNumber() {
-        return this.documentNumber;
+        return getDocumentNumber();
     }
 
     /**

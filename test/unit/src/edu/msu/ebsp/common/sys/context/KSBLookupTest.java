@@ -3,12 +3,12 @@
  */
 package edu.msu.ebsp.common.sys.context;
 
+import edu.msu.ebsp.mm.service.dto.OrderInfoDto;
+import org.kuali.ext.mm.integration.service.impl.mm.OrderQueryServiceImpl;
+import org.kuali.rice.core.api.resourceloader.GlobalResourceLoader;
+
 import javax.xml.namespace.QName;
 
-import org.kuali.rice.core.resourceloader.GlobalResourceLoader;
-
-import edu.msu.ebsp.mm.service.OrderQueryService;
-import edu.msu.ebsp.mm.service.dto.OrderInfoDto;
 
 /**
  * @author harsha07
@@ -24,7 +24,7 @@ public class KSBLookupTest extends MmTestBase {
 
     public void testKSBLookup() throws Exception {
         QName serviceName = new QName("http://kuali.org/kmm", "kmmOrderQueryService");
-        OrderQueryService service = (OrderQueryService) GlobalResourceLoader
+        OrderQueryServiceImpl service = (OrderQueryServiceImpl) GlobalResourceLoader
                 .getService(serviceName);
         OrderInfoDto order = service.findOrderInfoById(5013l);
     }

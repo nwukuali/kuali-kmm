@@ -16,16 +16,14 @@
 
 package org.kuali.ext.mm.integration.vnd.businessobject;
 
-import java.util.LinkedHashMap;
-
 import org.kuali.ext.mm.integration.FinancialSystemComponent;
-import org.kuali.rice.kns.bo.ExternalizableBusinessObject;
-import org.kuali.rice.kns.bo.TransientBusinessObjectBase;
+import org.kuali.rice.krad.bo.ExternalizableBusinessObject;
+import org.kuali.rice.krad.bo.TransientBusinessObjectBase;
 
 /**
  */
 public class FinancialVendorAddress extends TransientBusinessObjectBase implements
-        ExternalizableBusinessObject, FinancialSystemComponent {
+	ExternalizableBusinessObject, FinancialSystemComponent {
     /**
      *
      */
@@ -355,13 +353,5 @@ public class FinancialVendorAddress extends TransientBusinessObjectBase implemen
         this.active = active;
     }
 
-    /**
-     * @see org.kuali.rice.kns.bo.BusinessObjectBase#toStringMapper()
-     */
-    @Override
-    protected LinkedHashMap<String, String> toStringMapper() {
-        // TODO Auto-generated method stub
-        return null;
-    }
 
 }

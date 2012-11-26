@@ -3,19 +3,17 @@
  */
 package org.kuali.ext.mm.document.web.struts;
 
-import java.sql.Timestamp;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.document.DeliveryLogDocument;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.util.KNSConstants;
+import org.kuali.rice.kew.api.WorkflowDocument;
 import org.kuali.rice.kns.web.struts.form.KualiTransactionalDocumentFormBase;
 import org.kuali.rice.kns.web.ui.ExtraButton;
-import org.kuali.rice.kns.workflow.service.KualiWorkflowDocument;
+import org.kuali.rice.krad.service.KRADServiceLocator;
+import org.kuali.rice.krad.util.KRADConstants;
 
+import javax.servlet.http.HttpServletRequest;
+import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * @author rshrivas
@@ -159,7 +157,7 @@ public class DeliveryLogForm extends KualiTransactionalDocumentFormBase {
     @Override
     public void addRequiredNonEditableProperties() {
         super.addRequiredNonEditableProperties();
-        registerRequiredNonEditableProperty(KNSConstants.LOOKUP_RESULTS_SEQUENCE_NUMBER);
+        registerRequiredNonEditableProperty(KRADConstants.LOOKUP_RESULTS_SEQUENCE_NUMBER);
     }
     
 
@@ -191,9 +189,9 @@ public class DeliveryLogForm extends KualiTransactionalDocumentFormBase {
     
     public List<ExtraButton> getExtraButtons() {        
         extraButtons.clear();
-        KualiWorkflowDocument workflowDoc = this.getDeliveryLogDocument().getDocumentHeader().getWorkflowDocument();
-        String imageUrl = KNSServiceLocator.getKualiConfigurationService().getPropertyString(MMConstants.EXTERNALIZABLE_IMAGES_URL_KEY);
-        if(workflowDoc.stateIsApproved() || workflowDoc.stateIsEnroute() || workflowDoc.stateIsProcessed() || workflowDoc.stateIsFinal()) {
+        WorkflowDocument workflowDoc = this.getDeliveryLogDocument().getDocumentHeader().getWorkflowDocument();
+        String imageUrl = KRADServiceLocator.getKualiConfigurationService().getPropertyValueAsString(MMConstants.EXTERNALIZABLE_IMAGES_URL_KEY);
+        if(workflowDoc.isApproved() || workflowDoc.isEnroute() || workflowDoc.isProcessed() || workflowDoc.isFinal()) {
              extraButtons.add(createPrintButton(imageUrl));
         }   
         return extraButtons;

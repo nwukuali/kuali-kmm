@@ -1,20 +1,20 @@
 package org.kuali.ext.mm.document.authorization;
 
-import java.util.Set;
-
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.document.ReturnDocument;
 import org.kuali.ext.mm.service.MMServiceLocator;
-import org.kuali.rice.kns.document.Document;
 import org.kuali.rice.kns.document.authorization.TransactionalDocumentPresentationControllerBase;
-import org.kuali.rice.kns.util.KNSConstants;
+import org.kuali.rice.krad.document.Document;
+import org.kuali.rice.krad.util.KRADConstants;
+
+import java.util.Set;
 
 
 public class ReturnDocumentPresentationController extends
 		TransactionalDocumentPresentationControllerBase {
 
 	@Override
-	protected boolean canSendAdhocRequests(Document document) {
+	public boolean canSendAdhocRequests(Document document) {
 		return false;
 	}
 
@@ -24,12 +24,12 @@ public class ReturnDocumentPresentationController extends
 
 		ReturnDocument returnDoc = (ReturnDocument) document;
 
-		if(returnDoc.getDocumentHeader().getWorkflowDocument().stateIsInitiated() ||
-		        returnDoc.getDocumentHeader().getWorkflowDocument().stateIsSaved()){
+		if(returnDoc.getDocumentHeader().getWorkflowDocument().isInitiated() ||
+		        returnDoc.getDocumentHeader().getWorkflowDocument().isSaved()){
 
-		        if(!editModes.contains(KNSConstants.KUALI_ACTION_CAN_SAVE))
+		        if(!editModes.contains(KRADConstants.KUALI_ACTION_CAN_SAVE))
     	            editModes
-                    .add(KNSConstants.KUALI_ACTION_CAN_SAVE);
+                    .add(KRADConstants.KUALI_ACTION_CAN_SAVE);
 
 		}else{
 		if (MMServiceLocator.getMMDocumentUtilService().isDocInMyActionList(document.getDocumentNumber()))
@@ -43,7 +43,7 @@ public class ReturnDocumentPresentationController extends
 		if(returnDoc.isCurrDocVendorReturnDoc())
 		    editModes.add(MMConstants.ReturnDocEditMode.DOC_RETURN_DOC_TO_VENDOR);
 
-		if(returnDoc.getDocumentHeader().getWorkflowDocument().stateIsFinal()){
+		if(returnDoc.getDocumentHeader().getWorkflowDocument().isFinal()){
 		    editModes.add(MMConstants.ReturnDocEditMode.DOC_IN_FINAL_STATE);
 		}
 

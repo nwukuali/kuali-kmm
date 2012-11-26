@@ -6,9 +6,11 @@ package org.kuali.ext.mm.service.impl;
 import org.kuali.ext.mm.businessobject.ShoppingFrontPage;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.service.ShoppingFrontPageService;
-import org.kuali.rice.kns.bo.DocumentHeader;
+import org.kuali.rice.kew.api.WorkflowDocument;
 import org.kuali.rice.kns.maintenance.KualiMaintainableImpl;
-import org.kuali.rice.kns.workflow.service.KualiWorkflowDocument;
+import org.kuali.rice.krad.bo.DocumentHeader;
+
+//import org.kuali.rice.krad.bo.DocumentHeader;
 
 /**
  * @author schneppd
@@ -23,9 +25,9 @@ public class ShoppingFrontPageMaintainableImpl extends KualiMaintainableImpl {
 
     @Override
     public void doRouteStatusChange(DocumentHeader documentHeader) {
-        KualiWorkflowDocument document = documentHeader.getWorkflowDocument();
+        WorkflowDocument document = documentHeader.getWorkflowDocument();
         ShoppingFrontPage frontPage = (ShoppingFrontPage)this.getBusinessObject();
-        if(document.stateIsProcessed()) {
+        if(document.isProcessed()) {
             if(frontPage.isCurrent()) {
                 SpringContext.getBean(ShoppingFrontPageService.class).setAsCurrentFrontPage(frontPage);
             }

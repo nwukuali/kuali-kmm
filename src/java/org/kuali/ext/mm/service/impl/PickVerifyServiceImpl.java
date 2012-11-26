@@ -1,28 +1,7 @@
 package org.kuali.ext.mm.service.impl;
 
-import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.apache.commons.lang.StringUtils;
-import org.kuali.ext.mm.businessobject.BackOrder;
-import org.kuali.ext.mm.businessobject.Bin;
-import org.kuali.ext.mm.businessobject.MMCapitalAssetInformation;
-import org.kuali.ext.mm.businessobject.MMCapitalAssetInformationDetail;
-import org.kuali.ext.mm.businessobject.OrderDetail;
-import org.kuali.ext.mm.businessobject.PackListAnnouncement;
-import org.kuali.ext.mm.businessobject.PickListLine;
-import org.kuali.ext.mm.businessobject.PickTicket;
-import org.kuali.ext.mm.businessobject.Rental;
-import org.kuali.ext.mm.businessobject.StockBalance;
-import org.kuali.ext.mm.businessobject.Warehouse;
-import org.kuali.ext.mm.businessobject.WarehouseAccounts;
+import org.kuali.ext.mm.businessobject.*;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.document.PickVerifyDocument;
@@ -37,21 +16,17 @@ import org.kuali.ext.mm.integration.fp.businessobject.FinancialCapitalAssetInfor
 import org.kuali.ext.mm.integration.fp.businessobject.FinancialCapitalAssetInformationDetail;
 import org.kuali.ext.mm.integration.fp.businessobject.FinancialInternalBillingItem;
 import org.kuali.ext.mm.integration.sys.businessobject.FinancialAccountingLine;
-import org.kuali.ext.mm.service.BackOrderService;
-import org.kuali.ext.mm.service.MMServiceLocator;
-import org.kuali.ext.mm.service.OrderService;
-import org.kuali.ext.mm.service.PackListPdfService;
-import org.kuali.ext.mm.service.PickListService;
-import org.kuali.ext.mm.service.PickVerifyService;
-import org.kuali.ext.mm.service.RentalService;
-import org.kuali.ext.mm.service.StockService;
+import org.kuali.ext.mm.service.*;
 import org.kuali.ext.mm.util.MMDecimal;
-import org.kuali.rice.kns.bo.DocumentHeader;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.util.KualiDecimal;
-import org.kuali.rice.kns.util.ObjectUtils;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+import org.kuali.rice.krad.bo.DocumentHeader;
+import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.service.KRADServiceLocator;
+import org.kuali.rice.krad.util.ObjectUtils;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.io.ByteArrayOutputStream;
+import java.util.*;
 
 
 /**
@@ -106,12 +81,12 @@ public class PickVerifyServiceImpl implements PickVerifyService {
                 StockBalance stockBalance = stockService.retrieveStockBalance(line.getBinId());
                 StockBalance stockBalanceAfter = stockService.adjustStockQuantityOnHand(
                         stockBalance, -line.getPickStockQty());
-                KNSServiceLocator.getBusinessObjectService().save(stockBalanceAfter);
+                KRADServiceLocator.getBusinessObjectService().save(stockBalanceAfter);
                 lockingService.deleteLocks(documentNumber);
                 stockService
                         .postSaleToStockHistory(stockBalance, stockBalanceAfter, documentNumber);
                 if(MMConstants.OrderType.TRUE_BUYOUT.equals(line.getOrderDetail().getOrderDocument().getOrderTypeCode())) {
-                    KNSServiceLocator.getBusinessObjectService().delete(stockBalanceAfter);
+                    KRADServiceLocator.getBusinessObjectService().delete(stockBalanceAfter);
                 }
             }
 
@@ -279,7 +254,7 @@ public class PickVerifyServiceImpl implements PickVerifyService {
         fieldValues.put(MMConstants.PackListAnnouncement.PACK_LIST_ANNOUNCEMENT_CD,
                 MMConstants.PackListAnnouncement.DEFAULT_CODE);
         fieldValues.put(MMConstants.MMPersistableBusinessObject.ACTIVE, "Y");
-        Collection results = KNSServiceLocator.getBusinessObjectService().findMatching(
+        Collection results = KRADServiceLocator.getBusinessObjectService().findMatching(
                 PackListAnnouncement.class, fieldValues);
         Iterator<PackListAnnouncement> itAnnouncement = results.iterator();
         while (itAnnouncement.hasNext())
@@ -581,7 +556,7 @@ public class PickVerifyServiceImpl implements PickVerifyService {
         for (OrderDetail detail : pickService.getOrderDetailsFromPickTicket(pickTicket)) {
             if (orderService.isOrderDetailComplete(detail.getOrderDetailId())) {
                 detail.setOrderStatusCd(MMConstants.OrderStatus.ORDER_LINE_COMPLETE);
-                KNSServiceLocator.getBusinessObjectService().save(detail);
+                KRADServiceLocator.getBusinessObjectService().save(detail);
                 orderDocs.add(detail.getOrderDocumentNbr());
             }
         }

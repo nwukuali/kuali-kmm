@@ -3,21 +3,8 @@
  */
 package org.kuali.ext.mm.service.impl;
 
-import java.sql.Date;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.log4j.Logger;
-import org.kuali.ext.mm.businessobject.Accounts;
-import org.kuali.ext.mm.businessobject.Catalog;
-import org.kuali.ext.mm.businessobject.CatalogItem;
-import org.kuali.ext.mm.businessobject.OrderDetail;
-import org.kuali.ext.mm.businessobject.RecurringOrder;
+import org.kuali.ext.mm.businessobject.*;
 import org.kuali.ext.mm.cart.service.ShopCartCatalogService;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
@@ -27,15 +14,20 @@ import org.kuali.ext.mm.document.OrderDocument;
 import org.kuali.ext.mm.service.CatalogService;
 import org.kuali.ext.mm.service.RecurringOrderService;
 import org.kuali.ext.mm.util.MMDecimal;
-import org.kuali.rice.kew.exception.WorkflowException;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.util.KualiDecimal;
+import org.kuali.rice.core.api.CoreApiServiceLocator;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+import org.kuali.rice.kew.api.exception.WorkflowException;
+import org.kuali.rice.krad.bo.AdHocRouteRecipient;
+import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.service.KRADServiceLocatorWeb;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
+
+import java.sql.Date;
+import java.util.*;
 
 
 /**
@@ -71,7 +63,7 @@ public class RecurringOrderServiceImpl implements RecurringOrderService {
 	 * @see org.kuali.ext.mm.service.RecurringOrderService#process()
 	 */
 	public void process() {
-		Date currentDate = KNSServiceLocator.getDateTimeService().getCurrentSqlDate();
+		Date currentDate = CoreApiServiceLocator.getDateTimeService().getCurrentSqlDate();
 		Collection<RecurringOrder> recurringOrdersDateMatches = getRecurringOrdersByDate(currentDate);
 		
 		for(RecurringOrder recOrder : recurringOrdersDateMatches) {
@@ -83,7 +75,7 @@ public class RecurringOrderServiceImpl implements RecurringOrderService {
     		    if(recOrder.getNextRecurringDt() == null)
     		        recOrder.setActive(false);
 			    OrderDocument newDocument = createNewOrderDocumentFromRecurringOrder(recOrder);
-				KNSServiceLocator.getDocumentService().routeDocument(newDocument, "", new ArrayList<Object>());
+				KRADServiceLocatorWeb.getDocumentService().routeDocument(newDocument, "", new ArrayList<AdHocRouteRecipient>());
 				//commit here
 				txManager.commit(tx);
 			}
@@ -105,13 +97,13 @@ public class RecurringOrderServiceImpl implements RecurringOrderService {
 		OrderDocument orderDoc = recurringOrder.getOrdersCreated().get(0);
 		OrderDocument newOrder;
 		try {
-		    newOrder = (OrderDocument)KNSServiceLocator.getDocumentService().getByDocumentHeaderId(orderDoc.getDocumentNumber());
+		    newOrder = (OrderDocument)KRADServiceLocatorWeb.getDocumentService().getByDocumentHeaderId(orderDoc.getDocumentNumber());
             newOrder.toCopy();
 //            newOrder.setOrderId(KNSServiceLocator.getSequenceAccessorService().getNextAvailableSequenceNumber(ShopCartConstants.Sequence.ORDER_ID_SEQ));
             newOrder.setOrderId(null);
             newOrder.getDocumentHeader().setDocumentDescription(String.valueOf(newOrder.getOrderId()));         
             newOrder.setOrderStatusCd(MMConstants.OrderStatus.INITIATED);
-            newOrder.setCreationDate(KNSServiceLocator.getDateTimeService().getCurrentTimestamp());
+            newOrder.setCreationDate(CoreApiServiceLocator.getDateTimeService().getCurrentTimestamp());
             newOrder.setLastUpdateDate(null);
             newOrder.setVersionNumber(1L);
             newOrder.setObjectId(null);

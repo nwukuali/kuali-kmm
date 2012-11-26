@@ -1,18 +1,18 @@
 package org.kuali.ext.mm.service.impl;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.kuali.ext.mm.businessobject.CatalogItem;
 import org.kuali.ext.mm.businessobject.PunchOutVendor;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.service.B2BPunchOutService;
 import org.kuali.ext.mm.service.MMServiceLocator;
 import org.kuali.ext.mm.service.PunchOutVendorService;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.util.ObjectUtils;
-import org.kuali.rice.kns.util.TransactionalServiceUtils;
+import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.util.ObjectUtils;
+import org.kuali.rice.krad.util.TransactionalServiceUtils;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 
 

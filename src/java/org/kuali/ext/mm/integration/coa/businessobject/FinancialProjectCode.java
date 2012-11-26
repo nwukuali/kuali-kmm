@@ -16,14 +16,12 @@
 
 package org.kuali.ext.mm.integration.coa.businessobject;
 
-import java.util.LinkedHashMap;
-
 import org.kuali.ext.mm.integration.FinancialSystemComponent;
-import org.kuali.rice.kns.bo.ExternalizableBusinessObject;
-import org.kuali.rice.kns.bo.TransientBusinessObjectBase;
+import org.kuali.rice.krad.bo.ExternalizableBusinessObject;
+import org.kuali.rice.krad.bo.TransientBusinessObjectBase;
 
 public class FinancialProjectCode extends TransientBusinessObjectBase implements
-        ExternalizableBusinessObject, FinancialSystemComponent {
+	ExternalizableBusinessObject, FinancialSystemComponent {
 
     private static final long serialVersionUID = 4948895196195929372L;
     private String code;
@@ -90,13 +88,5 @@ public class FinancialProjectCode extends TransientBusinessObjectBase implements
         this.active = active;
     }
 
-
-    /**
-     * @see org.kuali.rice.kns.bo.BusinessObjectBase#toStringMapper()
-     */
-    @Override
-    protected LinkedHashMap<String, Object> toStringMapper() {
-        return null;
-    }
 
 }

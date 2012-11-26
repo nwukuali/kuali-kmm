@@ -1,12 +1,5 @@
 package org.kuali.ext.mm.cart.service.impl;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-
 import org.kuali.ext.mm.businessobject.Catalog;
 import org.kuali.ext.mm.businessobject.CatalogItem;
 import org.kuali.ext.mm.businessobject.Profile;
@@ -20,7 +13,9 @@ import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.dataaccess.QueryElement;
 import org.kuali.ext.mm.service.StockService;
 import org.kuali.ext.mm.service.impl.CatalogServiceImpl;
-import org.kuali.rice.kns.util.ObjectUtils;
+import org.kuali.rice.krad.util.ObjectUtils;
+
+import java.util.*;
 
 
 /**

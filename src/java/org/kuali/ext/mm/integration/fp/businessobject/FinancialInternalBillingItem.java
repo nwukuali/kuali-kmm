@@ -16,10 +16,10 @@
 
 package org.kuali.ext.mm.integration.fp.businessobject;
 
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+
 import java.io.Serializable;
 import java.sql.Timestamp;
-
-import org.kuali.rice.kns.util.KualiDecimal;
 
 /**
  * @author harsha07

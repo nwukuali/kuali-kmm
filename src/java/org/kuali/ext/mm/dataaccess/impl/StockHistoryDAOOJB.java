@@ -3,30 +3,11 @@
  */
 package org.kuali.ext.mm.dataaccess.impl;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.QueryFactory;
 import org.apache.ojb.broker.query.ReportQueryByCriteria;
-import org.kuali.ext.mm.businessobject.BackOrder;
-import org.kuali.ext.mm.businessobject.CheckinDetail;
-import org.kuali.ext.mm.businessobject.CurrentStockHistoryInformation;
-import org.kuali.ext.mm.businessobject.OrderDetail;
-import org.kuali.ext.mm.businessobject.PurchaseHistory;
-import org.kuali.ext.mm.businessobject.SalesHistory;
-import org.kuali.ext.mm.businessobject.Stock;
-import org.kuali.ext.mm.businessobject.StockHistory;
-import org.kuali.ext.mm.businessobject.StoresPersistableBusinessObject;
+import org.kuali.ext.mm.businessobject.*;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.dataaccess.MMBusinessObjectDao;
@@ -39,10 +20,13 @@ import org.kuali.ext.mm.service.StockService;
 import org.kuali.ext.mm.sys.service.impl.FiscalYear;
 import org.kuali.ext.mm.util.MMDecimal;
 import org.kuali.ext.mm.util.MMUtil;
-import org.kuali.rice.kns.dao.impl.PlatformAwareDaoBaseOjb;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.util.KualiDecimal;
-import org.kuali.rice.kns.util.ObjectUtils;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+import org.kuali.rice.core.framework.persistence.ojb.dao.PlatformAwareDaoBaseOjb;
+import org.kuali.rice.krad.service.KRADServiceLocator;
+import org.kuali.rice.krad.util.ObjectUtils;
+
+import java.sql.Timestamp;
+import java.util.*;
 
 
 /**
@@ -96,7 +80,7 @@ public class StockHistoryDAOOJB extends PlatformAwareDaoBaseOjb implements Stock
         
         String sortField = MMConstants.OrderDocument.ORDER_CREATE_DATE;
         
-        Collection<OrderDocument> results = KNSServiceLocator.getBusinessObjectService().findMatchingOrderBy(OrderDocument.class, fieldValues, sortField, false);
+        Collection<OrderDocument> results = KRADServiceLocator.getBusinessObjectService().findMatchingOrderBy(OrderDocument.class, fieldValues, sortField, false);
         Date orderDate = null;
         if(results.iterator().hasNext()) {
             orderDate = results.iterator().next().getCreationDate();

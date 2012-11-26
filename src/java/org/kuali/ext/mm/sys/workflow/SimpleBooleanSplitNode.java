@@ -15,10 +15,6 @@
  */
 package org.kuali.ext.mm.sys.workflow;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.kuali.ext.mm.businessobject.StoresTransactionalDocumentBase;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.service.impl.StoresMaintainableImpl;
@@ -26,9 +22,13 @@ import org.kuali.rice.kew.engine.RouteContext;
 import org.kuali.rice.kew.engine.RouteHelper;
 import org.kuali.rice.kew.engine.node.SplitNode;
 import org.kuali.rice.kew.engine.node.SplitResult;
-import org.kuali.rice.kns.document.Document;
 import org.kuali.rice.kns.document.MaintenanceDocument;
-import org.kuali.rice.kns.service.DocumentService;
+import org.kuali.rice.krad.document.Document;
+import org.kuali.rice.krad.service.DocumentService;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class SimpleBooleanSplitNode implements SplitNode, Serializable {
@@ -41,7 +41,8 @@ public class SimpleBooleanSplitNode implements SplitNode, Serializable {
      */
     public SplitResult process(RouteContext context, RouteHelper helper) throws Exception {
         SplitResult result = null;
-        String documentID = context.getDocument().getRouteHeaderId().toString();
+				//TODO: NWU Determine if same behaviour as before
+        String documentID = context.getDocument().getDocumentId();
         Document document = SpringContext.getBean(DocumentService.class).getByDocumentHeaderId(
                 documentID);
         String nodeName = context.getNodeInstance().getRouteNode().getRouteNodeName();

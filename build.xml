@@ -25,7 +25,7 @@
 
 	<target name="dist-web" depends="init">
 		<copy todir="${build.web.directory}">
-			<fileset dir="${web.directory}" 
+			<fileset dir="${web.directory}"
 				includes="
 				**/*.jsp,
 				**/*.tag,
@@ -41,7 +41,7 @@
 	</target>
 
 	<target name="make-source" depends="init,conf-expand-properties-project,conf-expand-context-file">
-		<javac destdir="${build.classes.directory}" srcdir="${source.classes.directory}" debug="true" nowarn="true" optimize="true" fork="true" memoryinitialsize="${compile.min.memory}" memorymaximumsize="${compile.max.memory}">
+		<javac destdir="${build.classes.directory}" srcdir="${source.classes.directory}" debug="true" nowarn="true" optimize="true" fork="true" memoryinitialsize="${compile.min.memory}" memorymaximumsize="${compile.max.memory}" encoding="iso-8859-1">
 			<classpath refid="compile.source.classpath" />
 		</javac>
 		<copy todir="${build.classes.directory}">
@@ -71,6 +71,7 @@
 	</target>
 
 	<target name="unzip-rice" depends="init" unless="dont.unzip.rice">
+		<echo message="${rice.web.file.directory}"/>
 		<unzip dest="${build.web.directory}" src="${rice.web.file.directory}/${rice.web.file}" >
 			<patternset>
 				<exclude name="META-INF/**"/>
@@ -88,7 +89,7 @@
 		<mkdir dir="${build.classes.directory}"/>
 		<mkdir dir="${build.lib.directory}"/>
 		<copy todir="${build.web.directory}">
-			<fileset dir="${web.directory}" 
+			<fileset dir="${web.directory}"
 				excludes="**/${web.file},**/**.class"/>
 		</copy>
 		<copy todir="${build.classes.directory}">
@@ -263,7 +264,7 @@
 		<echo file="${build.classes.directory}/${configuration.file}" message="${configuration}" />
 		<echo file="${build.webinf.directory}/${jboss.web.file}" message="${jboss.web}" />
 	</target>
-	
+
 	<target name="conf-expand-context-file" if="requires.context.file" depends="init,setup-build-directory">
 		<echo file="${build.metainf.directory}/${context.file}" message="${context}" />
 	</target>
@@ -325,16 +326,13 @@
 		</delete>
 		<echo message="Rice Jar files timestamp should be after ${noolderthan}" />
 
-		<copy tofile="${web.lib.directory}/${rice.api.jar}" overwrite="true">
-			<fileset file="${rice.jars.directory}/${rice.api.jar}">
-				<date  datetime="${noolderthan}" when="after" pattern="${dateformat}" />
+		<copy todir="${web.lib.directory}/" overwrite="true">
+			<fileset dir="${rice.jars.directory}">
+				<include name="**/*rice-*" />
+				<!--<date datetime="${noolderthan}" when="after" pattern="${dateformat}" />-->
 			</fileset>
 		</copy>
-		<copy tofile="${web.lib.directory}/${rice.impl.jar}" overwrite="true">
-			<fileset file="${rice.jars.directory}/${rice.impl.jar}">
-				<date  datetime="${noolderthan}" when="after" pattern="${dateformat}" />
-			</fileset>
-		</copy>
+
 	</target>
 
 	<target name="kmm-batch-client-jar" depends="make-source">

@@ -3,23 +3,10 @@
  */
 package org.kuali.ext.mm.document.web.struts;
 
-import java.io.ByteArrayOutputStream;
-import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.lowagie.text.*;
+import com.lowagie.text.pdf.PdfPCell;
+import com.lowagie.text.pdf.PdfPTable;
+import com.lowagie.text.pdf.PdfWriter;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -31,21 +18,19 @@ import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.document.DeliveryLabelDocumentLines;
 import org.kuali.ext.mm.document.DeliveryLogDocument;
 import org.kuali.ext.mm.sys.service.SegmentedLookupResultsService;
-import org.kuali.rice.kns.bo.PersistableBusinessObject;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.service.DocumentService;
-import org.kuali.rice.kns.util.GlobalVariables;
 import org.kuali.rice.kns.util.WebUtils;
 import org.kuali.rice.kns.web.struts.action.KualiTransactionalDocumentActionBase;
+import org.kuali.rice.krad.bo.PersistableBusinessObject;
+import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.service.DocumentService;
+import org.kuali.rice.krad.util.GlobalVariables;
 
-import com.lowagie.text.Document;
-import com.lowagie.text.Element;
-import com.lowagie.text.Font;
-import com.lowagie.text.PageSize;
-import com.lowagie.text.Paragraph;
-import com.lowagie.text.pdf.PdfPCell;
-import com.lowagie.text.pdf.PdfPTable;
-import com.lowagie.text.pdf.PdfWriter;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayOutputStream;
+import java.text.DateFormat;
+import java.util.*;
+import java.util.List;
 
 
 /**
@@ -91,7 +76,7 @@ public class DeliveryLogAction extends KualiTransactionalDocumentActionBase{
         DeliveryLogForm dlForm = (DeliveryLogForm) form;
         String documentNumber = dlForm.getDocument().getDocumentNumber();        
         dlForm.getDocument().getDocumentHeader().setDocumentDescription("Driver Log Number: " +  documentNumber);               
-        if (dlForm.getDocument().getDocumentHeader().getWorkflowDocument().stateIsFinal()) {            
+        if (dlForm.getDocument().getDocumentHeader().getWorkflowDocument().isFinal()) {
             DocumentService dOS = SpringContext.getBean(DocumentService.class);
             DeliveryLogDocument dLDoc = (DeliveryLogDocument) dOS.getByDocumentHeaderIdSessionless(documentNumber);
             List<DeliveryLabelDocumentLines> dLs = dLDoc.getDeliveryLabelLines();

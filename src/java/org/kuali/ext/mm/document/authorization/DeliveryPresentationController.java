@@ -3,22 +3,22 @@
  */
 package org.kuali.ext.mm.document.authorization;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
-
 import org.apache.commons.lang.StringUtils;
 import org.kuali.ext.mm.businessobject.Delivery;
 import org.kuali.ext.mm.businessobject.DeliveryLine;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.document.DeliveryLabelDocumentLines;
-import org.kuali.rice.kns.bo.BusinessObject;
-import org.kuali.rice.kns.document.Document;
+import org.kuali.rice.kew.api.WorkflowDocument;
 import org.kuali.rice.kns.document.MaintenanceDocument;
 import org.kuali.rice.kns.document.authorization.MaintenanceDocumentPresentationControllerBase;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.workflow.service.KualiWorkflowDocument;
+import org.kuali.rice.krad.bo.BusinessObject;
+import org.kuali.rice.krad.document.Document;
+import org.kuali.rice.krad.service.BusinessObjectService;
+
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -27,18 +27,18 @@ import org.kuali.rice.kns.workflow.service.KualiWorkflowDocument;
  */
 public class DeliveryPresentationController extends MaintenanceDocumentPresentationControllerBase{
     
-    protected boolean canSendAdhocRequests(Document document) {
+    public boolean canSendAdhocRequests(Document document) {
         return false;
     }
 
-    protected boolean canReload(Document document){
+    public boolean canReload(Document document){
         return false;
     }
     
-    protected boolean canEdit(Document document){
+    public boolean canEdit(Document document){
         boolean canEdit = false;
-        KualiWorkflowDocument workflowDocument = document.getDocumentHeader().getWorkflowDocument();
-        if (workflowDocument.stateIsInitiated() || workflowDocument.stateIsSaved() || workflowDocument.stateIsException()) {
+        WorkflowDocument workflowDocument = document.getDocumentHeader().getWorkflowDocument();
+        if (workflowDocument.isInitiated() || workflowDocument.isSaved() || workflowDocument.isException()) {
             canEdit = true; 
         }        
         return canEdit;

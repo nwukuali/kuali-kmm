@@ -3,21 +3,13 @@
  */
 package org.kuali.ext.mm.document;
 
-import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
 import org.kuali.ext.mm.businessobject.DeliveryLine;
 import org.kuali.ext.mm.businessobject.Route;
 import org.kuali.ext.mm.businessobject.StoresTransactionalDocumentBase;
-import org.kuali.rice.kns.util.TypedArrayList;
+import org.springframework.util.AutoPopulatingList;
+
+import javax.persistence.*;
+import java.util.List;
 
 /**
  * @author rshrivas
@@ -46,8 +38,8 @@ public class DeliveryLogDocument extends StoresTransactionalDocumentBase{
     
     public DeliveryLogDocument() {
         super();
-        this.setDeliveryLines(new TypedArrayList(DeliveryLine.class));      
-        this.setDeliveryLabelLines(new TypedArrayList(DeliveryLabelDocumentLines.class));       
+        this.setDeliveryLines(new AutoPopulatingList(DeliveryLine.class));
+        this.setDeliveryLabelLines(new AutoPopulatingList(DeliveryLabelDocumentLines.class));
     }
 
     /**

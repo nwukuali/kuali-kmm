@@ -1,18 +1,19 @@
 package org.kuali.ext.mm.sys.service.impl;
 
+import org.kuali.ext.mm.integration.FinancialSystemComponent;
+import org.kuali.ext.mm.integration.FinancialSystemConfiguration;
+import org.kuali.rice.kns.service.KNSServiceLocator;
+import org.kuali.rice.krad.bo.ExternalizableBusinessObject;
+import org.kuali.rice.krad.service.KRADServiceLocator;
+import org.kuali.rice.krad.service.impl.ModuleServiceBase;
+import org.kuali.rice.krad.util.KRADConstants;
+import org.kuali.rice.krad.util.UrlFactory;
+
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-
-import org.kuali.ext.mm.integration.FinancialSystemComponent;
-import org.kuali.ext.mm.integration.FinancialSystemConfiguration;
-import org.kuali.rice.kns.bo.ExternalizableBusinessObject;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.service.impl.ModuleServiceBase;
-import org.kuali.rice.kns.util.KNSConstants;
-import org.kuali.rice.kns.util.UrlFactory;
 
 /**
  * MM Implementation of {@link ModuleServiceBase} this will help in invoking financial system specific lookups, inquiry and services
@@ -66,7 +67,7 @@ public class MmModuleServiceImpl extends ModuleServiceBase {
 
             return new ArrayList();
         }
-        return KNSServiceLocator.getPersistenceStructureService().listPrimaryKeyFieldNames(clazz);
+        return KRADServiceLocator.getPersistenceStructureService().listPrimaryKeyFieldNames(clazz);
     }
 
 
@@ -83,24 +84,24 @@ public class MmModuleServiceImpl extends ModuleServiceBase {
         }
 
         Properties urlParameters = new Properties();
-        String baseUrl = KNSServiceLocator.getKualiConfigurationService().getPropertyString(
-                KNSConstants.KUALI_RICE_URL_KEY);
+        String baseUrl = KRADServiceLocator.getKualiConfigurationService().getPropertyValueAsString(
+                KRADConstants.KUALI_RICE_URL_KEY);
         String lookupUrl = baseUrl;
         if (!lookupUrl.endsWith("/")) {
             lookupUrl = lookupUrl + "/";
         }
-        if (parameters.containsKey(KNSConstants.MULTIPLE_VALUE)) {
-            lookupUrl = lookupUrl + KNSConstants.MULTIPLE_VALUE_LOOKUP_ACTION;
+        if (parameters.containsKey(KRADConstants.MULTIPLE_VALUE)) {
+            lookupUrl = lookupUrl + KRADConstants.MULTIPLE_VALUE_LOOKUP_ACTION;
         }
         else {
-            lookupUrl = lookupUrl + KNSConstants.LOOKUP_ACTION;
+            lookupUrl = lookupUrl + KRADConstants.LOOKUP_ACTION;
         }
         for (String paramName : parameters.keySet()) {
             urlParameters.put(paramName, parameters.get(paramName));
         }
 
         Class clazz = getExternalizableBusinessObjectImplementation(inquiryBusinessObjectClass);
-        urlParameters.put(KNSConstants.BUSINESS_OBJECT_CLASS_ATTRIBUTE, clazz == null ? "" : clazz
+        urlParameters.put(KRADConstants.BUSINESS_OBJECT_CLASS_ATTRIBUTE, clazz == null ? "" : clazz
                 .getName());
 
         return UrlFactory.parameterizeUrl(lookupUrl, urlParameters);

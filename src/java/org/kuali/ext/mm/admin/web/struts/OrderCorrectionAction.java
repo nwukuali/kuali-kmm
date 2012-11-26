@@ -17,12 +17,13 @@ import org.kuali.ext.mm.document.OrderDocument;
 import org.kuali.ext.mm.integration.FinancialSystemAdaptorFactory;
 import org.kuali.ext.mm.integration.purap.document.FinancialRequisitionDocument;
 import org.kuali.ext.mm.service.OrderService;
-import org.kuali.rice.core.util.RiceConstants;
-import org.kuali.rice.kew.util.KEWConstants;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.util.GlobalVariables;
-import org.kuali.rice.kns.util.KNSConstants;
-import org.kuali.rice.kns.util.ObjectUtils;
+import org.kuali.rice.core.api.util.RiceConstants;
+import org.kuali.rice.kew.api.KewApiConstants;
+import org.kuali.rice.kns.util.KNSGlobalVariables;
+import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.util.GlobalVariables;
+import org.kuali.rice.krad.util.KRADConstants;
+import org.kuali.rice.krad.util.ObjectUtils;
 import org.kuali.rice.kns.web.struts.action.KualiAction;
 
 
@@ -93,9 +94,9 @@ public class OrderCorrectionAction extends KualiAction {
             FinancialRequisitionDocument requisition = factory.getFinancialRequisitionService()
                     .getRequisitionById(docFromForm.getReqsId());
             if (requisition == null
-                    || KEWConstants.ROUTE_HEADER_CANCEL_CD.equals(requisition
+                    || KewApiConstants.ROUTE_HEADER_CANCEL_CD.equals(requisition
                             .getWorkflowStatusCode())
-                    || KEWConstants.ROUTE_HEADER_DISAPPROVED_CD.equals(requisition
+                    || KewApiConstants.ROUTE_HEADER_DISAPPROVED_CD.equals(requisition
                             .getWorkflowStatusCode())) {
                 GlobalVariables.getMessageMap().putError("orderDocument.reqsId",
                         MMKeyConstants.ERROR_ORDER_CORRECTION_REQS);
@@ -106,13 +107,13 @@ public class OrderCorrectionAction extends KualiAction {
                 docFromForm.getOrderStatusCd().toUpperCase());
         docFromDb.setReqsId(docFromForm.getReqsId());
         boService.save(docFromDb);
-        GlobalVariables.getMessageList().add(MMKeyConstants.INFO_ORDER_CORRECTION_SAVED);
+        KNSGlobalVariables.getMessageList().add(MMKeyConstants.INFO_ORDER_CORRECTION_SAVED);
         correctionForm.setReadOnly(true);
         return mapping.findForward(RiceConstants.MAPPING_BASIC);
     }
 
     public ActionForward cancel(ActionMapping mapping, ActionForm form, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
-        return mapping.findForward(KNSConstants.MAPPING_PORTAL);
+        return mapping.findForward(KRADConstants.MAPPING_PORTAL);
     }
 }

@@ -15,25 +15,18 @@
  */
 package org.kuali.ext.mm.common.sys.context;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.kuali.rice.core.config.ConfigContext;
-import org.kuali.rice.core.resourceloader.GlobalResourceLoader;
-import org.kuali.rice.core.resourceloader.RiceResourceLoaderFactory;
-import org.kuali.rice.kns.util.cache.MethodCacheInterceptor;
+import org.kuali.rice.core.api.config.property.ConfigContext;
+import org.kuali.rice.core.api.resourceloader.GlobalResourceLoader;
+import org.kuali.rice.core.framework.resourceloader.SpringResourceLoader;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
 import uk.ltd.getahead.dwr.create.SpringCreator;
+
+import javax.xml.namespace.QName;
+import java.util.*;
 
 @SuppressWarnings("unchecked")
 public class SpringContext {
@@ -194,12 +187,6 @@ public class SpringContext {
         return false;
     }
 
-    public static List<MethodCacheInterceptor> getMethodCacheInterceptors() {
-        List<MethodCacheInterceptor> methodCacheInterceptors = new ArrayList<MethodCacheInterceptor>();
-        methodCacheInterceptors.add(getBean(MethodCacheInterceptor.class));
-        return methodCacheInterceptors;
-    }
-
     public static Object getBean(String beanName) {
         return getBean(Object.class, beanName);
     }
@@ -236,7 +223,11 @@ public class SpringContext {
         // use the base config file to bootstrap the real application context started by Rice
         new ClassPathXmlApplicationContext(riceInitializationSpringFile);
         // pull the Rice application context into here for further use and efficiency
-        applicationContext = RiceResourceLoaderFactory.getSpringResourceLoader().getContext();
+
+				//TODO: NWU - Evaluate validity of MM spring resource loader
+				SpringResourceLoader mainSpringResourceLoader = (SpringResourceLoader)GlobalResourceLoader.getResourceLoader( new QName("MM", "MM_RICE_SPRING_RESOURCE_LOADER_NAME") );
+        applicationContext = mainSpringResourceLoader.getContext();
+
         LOG.info("Completed Spring context initialization");
         SpringCreator.setOverrideBeanFactory(applicationContext.getBeanFactory());
     }

@@ -1,29 +1,10 @@
 package org.kuali.ext.mm.cart.service.impl;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.apache.commons.lang.StringUtils;
 import org.kuali.ext.mm.b2b.cxml.types.CXML;
-import org.kuali.ext.mm.businessobject.Agreement;
-import org.kuali.ext.mm.businessobject.Catalog;
-import org.kuali.ext.mm.businessobject.CatalogItem;
-import org.kuali.ext.mm.businessobject.Profile;
-import org.kuali.ext.mm.businessobject.PunchOutVendor;
-import org.kuali.ext.mm.businessobject.ShopCartDetail;
-import org.kuali.ext.mm.businessobject.ShoppingCart;
+import org.kuali.ext.mm.businessobject.*;
 import org.kuali.ext.mm.cart.ShopCartConstants;
-import org.kuali.ext.mm.cart.service.ShopCartCatalogService;
-import org.kuali.ext.mm.cart.service.ShopCartOrderService;
-import org.kuali.ext.mm.cart.service.ShopCartProfileService;
-import org.kuali.ext.mm.cart.service.ShopCartService;
-import org.kuali.ext.mm.cart.service.ShopCartServiceLocator;
+import org.kuali.ext.mm.cart.service.*;
 import org.kuali.ext.mm.cart.valueobject.DirectEntry;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
@@ -32,13 +13,15 @@ import org.kuali.ext.mm.document.TrueBuyoutDocument;
 import org.kuali.ext.mm.service.MMServiceLocator;
 import org.kuali.ext.mm.service.TrueBuyoutService;
 import org.kuali.ext.mm.util.MMDecimal;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.service.DictionaryValidationService;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.util.KualiDecimal;
-import org.kuali.rice.kns.util.ObjectUtils;
-import org.kuali.rice.kns.util.TypedArrayList;
+import org.kuali.rice.core.api.util.type.KualiDecimal;
+import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.service.DictionaryValidationService;
+import org.kuali.rice.krad.service.KRADServiceLocatorWeb;
+import org.kuali.rice.krad.util.ObjectUtils;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.AutoPopulatingList;
+
+import java.util.*;
 
 
 /**
@@ -493,7 +476,7 @@ public class ShopCartServiceImpl implements ShopCartService {
                             .add(detail);
                 }
                 else {
-                    List<ShopCartDetail> detailList = new TypedArrayList(ShopCartDetail.class);
+                    List<ShopCartDetail> detailList = new AutoPopulatingList(ShopCartDetail.class);
                     detailList.add(detail);
                     detailMapByVendor.put(vendorKey, detailList);
                 }
@@ -574,7 +557,7 @@ public class ShopCartServiceImpl implements ShopCartService {
      */
     public boolean validateNewShoppingCart(ShoppingCart cart) {
         boolean isValid = true;
-        DictionaryValidationService validationService = KNSServiceLocator
+        DictionaryValidationService validationService = KRADServiceLocatorWeb
                 .getDictionaryValidationService();
         isValid = validationService.isBusinessObjectValid(cart);
         

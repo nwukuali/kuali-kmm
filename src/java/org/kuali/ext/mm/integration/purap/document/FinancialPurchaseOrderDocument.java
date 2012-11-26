@@ -16,19 +16,18 @@
 
 package org.kuali.ext.mm.integration.purap.document;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-
 import org.kuali.ext.mm.integration.FinancialSystemComponent;
-import org.kuali.rice.kns.bo.ExternalizableBusinessObject;
-import org.kuali.rice.kns.bo.TransientBusinessObjectBase;
+import org.kuali.rice.krad.bo.ExternalizableBusinessObject;
+import org.kuali.rice.krad.bo.TransientBusinessObjectBase;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author harsha07
  */
 public class FinancialPurchaseOrderDocument extends TransientBusinessObjectBase implements
-        ExternalizableBusinessObject, FinancialSystemComponent {
+	ExternalizableBusinessObject, FinancialSystemComponent {
     private static final long serialVersionUID = -5247353248244774364L;
     private Integer vendorHeaderGeneratedId;
     private Integer vendorDetailAssignedId;
@@ -175,14 +174,6 @@ public class FinancialPurchaseOrderDocument extends TransientBusinessObjectBase 
         this.reqsId = reqsId;
     }
 
-    /**
-     * @see org.kuali.rice.kns.bo.BusinessObjectBase#toStringMapper()
-     */
-    @Override
-    protected LinkedHashMap<String, String> toStringMapper() {
-        // TODO Auto-generated method stub
-        return null;
-    }
 
     /**
      * Gets the orderDetails property

@@ -3,10 +3,10 @@
  */
 package org.kuali.ext.mm.sys.batch.dataaccess.jdbc;
 
-import java.util.List;
-
 import org.kuali.ext.mm.sys.batch.dataaccess.B2bInvoiceDao;
-import org.kuali.rice.kns.dao.jdbc.PlatformAwareDaoBaseJdbc;
+import org.kuali.rice.core.framework.persistence.jdbc.dao.PlatformAwareDaoBaseJdbc;
+
+import java.util.List;
 
 /**
  * @author harsha

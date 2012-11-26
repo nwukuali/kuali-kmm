@@ -15,29 +15,22 @@
  */
 package org.kuali.ext.mm.service.impl;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
-
+import com.lowagie.text.pdf.PdfCopy;
+import com.lowagie.text.pdf.PdfImportedPage;
+import com.lowagie.text.pdf.PdfReader;
+import com.lowagie.text.pdf.SimpleBookmark;
 import net.sf.jasperreports.engine.JRParameter;
-
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.MMConstants.ReportGeneration;
 import org.kuali.ext.mm.report.ReportInfo;
 import org.kuali.ext.mm.service.CountWorksheetReportService;
 import org.kuali.ext.mm.sys.service.ReportGenerationService;
-import org.kuali.rice.kns.service.DateTimeService;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.util.Guid;
+import org.kuali.rice.core.api.datetime.DateTimeService;
+import org.kuali.rice.krad.service.KRADServiceLocator;
 
-import com.lowagie.text.pdf.PdfCopy;
-import com.lowagie.text.pdf.PdfImportedPage;
-import com.lowagie.text.pdf.PdfReader;
-import com.lowagie.text.pdf.SimpleBookmark;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.util.*;
 
 
 public class CountWorksheetReportServiceImpl implements CountWorksheetReportService {
@@ -214,7 +207,7 @@ public class CountWorksheetReportServiceImpl implements CountWorksheetReportServ
     }
 
     public String getReportFileName() {
-        String tag = new Guid().toString();
+        String tag = UUID.randomUUID().toString();
         String fileName = MMConstants.WorksheetCountDocument.REPORT_ZIP_FILE_NAME + tag + ".pdf";
         return fileName;
     }
@@ -244,8 +237,8 @@ public class CountWorksheetReportServiceImpl implements CountWorksheetReportServ
      * @return
      */
     private String buildSubReportDirectory(String subReportTemplateClassPath) {
-        return KNSServiceLocator.getKualiConfigurationService().getPropertyString(
-                MMConstants.ReportGeneration.EXTERNAL_REPORTS_DIR)
+        return KRADServiceLocator.getKualiConfigurationService().getPropertyValueAsString(
+					MMConstants.ReportGeneration.EXTERNAL_REPORTS_DIR)
                 + File.separator + subReportTemplateClassPath.replace('\\', File.separatorChar);
     }
 

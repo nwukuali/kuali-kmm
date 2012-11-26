@@ -3,16 +3,16 @@
  */
 package org.kuali.ext.mm.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.kuali.ext.mm.businessobject.Catalog;
 import org.kuali.ext.mm.businessobject.CatalogItem;
 import org.kuali.ext.mm.common.sys.MMConstants;
-import org.kuali.rice.kns.bo.BusinessObject;
 import org.kuali.rice.kns.lookup.HtmlData;
 import org.kuali.rice.kns.lookup.KualiLookupableHelperServiceImpl;
-import org.kuali.rice.kns.util.KNSConstants;
+import org.kuali.rice.krad.bo.BusinessObject;
+import org.kuali.rice.krad.util.KRADConstants;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author rshrivas
@@ -40,10 +40,10 @@ public class CatalogItemLookupableHelperServiceImpl extends KualiLookupableHelpe
         if (catalog != null && MMConstants.CatalogType.WAREHOUSE.equalsIgnoreCase(catalog.getCatalogTypeCd())
                 || MMConstants.CatalogType.HOSTED.equalsIgnoreCase(catalog.getCatalogTypeCd())) {
             if (allowsMaintenanceEditAction(businessObject)) {
-                htmlDataList.add(getUrlData(businessObject, KNSConstants.MAINTENANCE_EDIT_METHOD_TO_CALL, pkNames));
+                htmlDataList.add(getUrlData(businessObject, KRADConstants.MAINTENANCE_EDIT_METHOD_TO_CALL, pkNames));
             }
            
-            htmlDataList.add(getUrlData(businessObject, KNSConstants.MAINTENANCE_COPY_METHOD_TO_CALL, pkNames));
+            htmlDataList.add(getUrlData(businessObject, KRADConstants.MAINTENANCE_COPY_METHOD_TO_CALL, pkNames));
         }
         return htmlDataList;
     }

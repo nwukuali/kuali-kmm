@@ -4,11 +4,11 @@ import org.apache.commons.lang.StringUtils;
 import org.kuali.ext.mm.businessobject.ShoppingFrontPage;
 import org.kuali.ext.mm.common.sys.MMKeyConstants;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
-import org.kuali.rice.core.util.RiceConstants;
-import org.kuali.rice.kns.document.Document;
+import org.kuali.rice.core.api.config.property.ConfigurationService;
+import org.kuali.rice.core.api.util.RiceConstants;
 import org.kuali.rice.kns.document.MaintenanceDocumentBase;
 import org.kuali.rice.kns.rules.PromptBeforeValidationBase;
-import org.kuali.rice.kns.service.KualiConfigurationService;
+import org.kuali.rice.krad.document.Document;
 
 public class ShoppingFrontPagePreRules extends PromptBeforeValidationBase {
 
@@ -36,8 +36,8 @@ public class ShoppingFrontPagePreRules extends PromptBeforeValidationBase {
 	 * @return True if the user wants to proceed with canceling the backorder
 	 */
 	private boolean isOkUrlPrecedence() {
-        KualiConfigurationService kualiConfiguration = SpringContext.getBean(KualiConfigurationService.class);
-        String warningMessage = kualiConfiguration.getPropertyString(MMKeyConstants.ShoppingFrontPage.URL_PRECEDENCE_QUESTION);
+        ConfigurationService kualiConfiguration = SpringContext.getBean(ConfigurationService.class);
+        String warningMessage = kualiConfiguration.getPropertyValueAsString(MMKeyConstants.ShoppingFrontPage.URL_PRECEDENCE_QUESTION);
         return super.askOrAnalyzeYesNoQuestion(MMKeyConstants.ShoppingFrontPage.URL_PRECEDENCE_QUESTION, warningMessage);
 	}
 

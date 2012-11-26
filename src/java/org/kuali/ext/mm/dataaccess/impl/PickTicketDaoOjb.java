@@ -1,15 +1,15 @@
 package org.kuali.ext.mm.dataaccess.impl;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Map;
-
 import org.apache.ojb.broker.query.Criteria;
 import org.apache.ojb.broker.query.QueryByCriteria;
 import org.apache.ojb.broker.query.QueryFactory;
 import org.kuali.ext.mm.dataaccess.PickTicketDao;
 import org.kuali.rice.kns.dao.impl.BusinessObjectDaoOjb;
-import org.kuali.rice.kns.service.PersistenceStructureService;
+import org.kuali.rice.krad.service.PersistenceStructureService;
+
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Map;
 
 public class PickTicketDaoOjb extends BusinessObjectDaoOjb implements PickTicketDao {
 

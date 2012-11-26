@@ -1,14 +1,5 @@
 package org.kuali.ext.mm.cart.service.impl;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.apache.commons.lang.StringUtils;
 import org.kuali.ext.mm.businessobject.OrderDetail;
 import org.kuali.ext.mm.businessobject.Profile;
@@ -25,12 +16,17 @@ import org.kuali.ext.mm.integration.FinancialSystemAdaptorFactory;
 import org.kuali.ext.mm.integration.coa.businessobject.FinancialOrganization;
 import org.kuali.ext.mm.service.B2BPunchOutService;
 import org.kuali.ext.mm.service.MMServiceLocator;
-import org.kuali.rice.kew.exception.WorkflowException;
-import org.kuali.rice.kns.service.BusinessObjectService;
-import org.kuali.rice.kns.service.DocumentService;
-import org.kuali.rice.kns.service.KNSServiceLocator;
-import org.kuali.rice.kns.util.ObjectUtils;
+import org.kuali.rice.core.api.CoreApiServiceLocator;
+import org.kuali.rice.kew.api.exception.WorkflowException;
+import org.kuali.rice.krad.bo.AdHocRouteRecipient;
+import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.service.DocumentService;
+import org.kuali.rice.krad.service.KRADServiceLocator;
+import org.kuali.rice.krad.util.ObjectUtils;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.sql.Timestamp;
+import java.util.*;
 
 
 @Transactional
@@ -58,7 +54,7 @@ public class ShopCartOrderServiceImpl implements ShopCartOrderService {
 			else
 				throw new RuntimeException("Error instantiating OrderDocument. No Order Type Code for Catalog Type Code: " + catalogTypeCode);
 
-			doc.setOrderId(KNSServiceLocator.getSequenceAccessorService().getNextAvailableSequenceNumber(ShopCartConstants.Sequence.ORDER_ID_SEQ));
+			doc.setOrderId(KRADServiceLocator.getSequenceAccessorService().getNextAvailableSequenceNumber(ShopCartConstants.Sequence.ORDER_ID_SEQ));
 			doc.getDocumentHeader().setDocumentDescription(String.valueOf(doc.getOrderId()));
 
 			doc.setOrderStatusCd(MMConstants.OrderStatus.INITIATED);
@@ -92,7 +88,7 @@ public class ShopCartOrderServiceImpl implements ShopCartOrderService {
 			doc.setVendorDetailAssignedId(doc.getOrderDetails().get(0).getVendorDetailAssignedId());
 			doc.setVendorHeaderGeneratedId(doc.getOrderDetails().get(0).getVendorHeaderGeneratedId());
 			doc.setVendorNm(doc.getOrderDetails().get(0).getVendorNm());
-			doc.setCreationDate(KNSServiceLocator.getDateTimeService().getCurrentTimestamp());
+			doc.setCreationDate(CoreApiServiceLocator.getDateTimeService().getCurrentTimestamp());
 
 			if(customerProfile.isPersonalUseIndicator())
 				doc.setProfileTypeCode(MMConstants.OrderDocument.PROFILE_TYPE_PERSONAL);
@@ -133,7 +129,7 @@ public class ShopCartOrderServiceImpl implements ShopCartOrderService {
 	 */
 	public void routeOrderDocument(OrderDocument document) {
 		try {
-			documentService.routeDocument(document, "", new ArrayList<Object>());
+			documentService.routeDocument(document, "", new ArrayList<AdHocRouteRecipient>());
 		}
 		catch (WorkflowException e) {
 			throw new RuntimeException("Error Routing OrderDocument", e);
