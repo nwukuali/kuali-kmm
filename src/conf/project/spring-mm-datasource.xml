@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
 <beans>
-	<bean id="serverDataSource" class="org.kuali.rice.core.database.XAPoolDataSource" abstract="true">
+
+	<bean id="serverDataSource" class="org.kuali.rice.core.framework.persistence.jdbc.datasource.XAPoolDataSource" abstract="true">
 		<property name="transactionManager" ref="jotm" />
 		<property name="driverClassName" value="${datasource.driver.name}" />
 		<property name="maxSize" value="${datasource.pool.maxSize}" />

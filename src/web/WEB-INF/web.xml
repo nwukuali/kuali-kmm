@@ -2,7 +2,7 @@
 <web-app xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	version="2.4"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee   http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
-	<display-name>${ant.project.name}</display-name>
+	<display-name>kmm</display-name>
 
 	<context-param>
 		<param-name>environment</param-name>
@@ -11,10 +11,10 @@
 
 
 	<!-- Change this if you want to use a different Spring file -->
-	<context-param>
-		<param-name>default.spring.file</param-name>
-		<param-value>${default.spring.file}</param-value>
-	</context-param>
+	  <context-param>
+	    <param-name>web.bootstrap.spring.file</param-name>
+	    <param-value>classpath:spring-mm-rice-startup.xml</param-value>
+	  </context-param>
 	<context-param>
 		<param-name>shop.guest.user</param-name>
 		<param-value>${shop.guest.user}</param-value>
@@ -22,7 +22,7 @@
 
 	<filter>
 		<filter-name>HideWebInfFilter</filter-name>
-		<filter-class>org.kuali.rice.kns.web.filter.HideWebInfFilter</filter-class>
+		<filter-class>org.kuali.rice.krad.web.filter.HideWebInfFilter</filter-class>
 	</filter>
 	
 	<filter>
@@ -30,7 +30,7 @@
 		<filter-class>org.kuali.ext.mm.web.PublicAccessFilter</filter-class>
 		<init-param>
 			<param-name>shopping.url</param-name>
-			<param-value>/${ant.project.name}-${build.environment}/mm</param-value>
+			<param-value>/kmm-${build.environment}/mm</param-value>
 		</init-param>
 		<init-param>
 			<param-name>shop.guest.user</param-name>
@@ -42,7 +42,7 @@
 	
 	<filter>
 		<filter-name>SessionFilter</filter-name>
-		<filter-class>org.kuali.rice.kns.web.filter.SessionFilter</filter-class>
+		<filter-class>org.kuali.rice.krad.web.filter.SessionFilter</filter-class>
 	</filter>
 	<filter>
 		<filter-name>ResponseOverrideFilter</filter-name>
@@ -50,7 +50,7 @@
 	</filter>
 	<filter>
 		<filter-name>SetResponseBufferSizeFilter</filter-name>
-		<filter-class>org.kuali.rice.kns.web.filter.SetResponseBufferSizeFilter</filter-class>
+		<filter-class>org.kuali.rice.krad.web.filter.SetResponseBufferSizeFilter</filter-class>
 		<init-param>
 			<param-name>bufferSize</param-name>
 			<param-value>128000</param-value>
@@ -93,22 +93,24 @@
 		<servlet-name>action</servlet-name>
 	</filter-mapping>
 
-	<filter-mapping>
-		<filter-name>UserLoginFilter</filter-name>
-		<servlet-name>notification</servlet-name>
-	</filter-mapping>
+	<!--TODO: NWU - Notification servlet does not seem to be used anymore-->
+	<!--<filter-mapping>-->
+		<!--<filter-name>UserLoginFilter</filter-name>-->
+		<!--<servlet-name>notification</servlet-name>-->
+	<!--</filter-mapping>-->
 
-	<filter-mapping>
-		<filter-name>UserLoginFilter</filter-name>
-		<servlet-name>edoclite</servlet-name>
-	</filter-mapping>
+	<!--TODO: NWU - Edoc servlet does not seem to be used anymore-->
+	<!--<filter-mapping>-->
+		<!--<filter-name>UserLoginFilter</filter-name>-->
+		<!--<servlet-name>edoclite</servlet-name>-->
+	<!--</filter-mapping>-->
 
 	<listener>
 		<listener-class>org.kuali.ext.mm.common.sys.context.WebApplicationInitListener</listener-class>
 	</listener>
 
 	<listener>
-		<listener-class>org.kuali.rice.kns.web.listener.KualiHttpSessionListener</listener-class>
+		<listener-class>org.kuali.rice.krad.web.listener.KualiHttpSessionListener</listener-class>
 	</listener>
 
 	<servlet>
@@ -155,7 +157,8 @@
 
 	<servlet>
 		<servlet-name>dwr-invoker</servlet-name>
-		<servlet-class>org.kuali.rice.kns.web.servlet.KualiDWRServlet</servlet-class>
+		<!--TODO: NWU - KualiDWRServlet no longer exists-->
+		<servlet-class>org.directwebremoting.servlet.DwrServlet</servlet-class>
 		<init-param>
 			<param-name>debug</param-name>
 			<param-value>true</param-value>
@@ -176,7 +179,8 @@
 
 	<servlet>
 		<servlet-name>export</servlet-name>
-		<servlet-class>org.kuali.rice.kew.export.web.ExportServlet</servlet-class>
+		<!--TODO: NWU - Not sure if this is the KEW ExportServlet-->
+		<servlet-class>org.kuali.rice.core.web.impex.ExportServlet</servlet-class>
 	</servlet>
 
 	<servlet>
@@ -189,10 +193,13 @@
 		<servlet-class>org.kuali.rice.kew.notes.web.AttachmentServlet</servlet-class>
 	</servlet>
 
+	<!--TODO: NWU - Find alternative-->
+	<!--
 	<servlet>
 		<servlet-name>edoclite</servlet-name>
-		<servlet-class>org.kuali.rice.kew.edl.EDLServlet</servlet-class>
+		<servlet-class>EDLServlet</servlet-class>
 	</servlet>
+	-->
 
 	<servlet-mapping>
 		<servlet-name>remoting</servlet-name>
@@ -224,10 +231,10 @@
 		<url-pattern>/en/attachment/*</url-pattern>
 	</servlet-mapping>
 
-	<servlet-mapping>
-		<servlet-name>edoclite</servlet-name>
-		<url-pattern>/en/EDocLite</url-pattern>
-	</servlet-mapping>
+	<!--<servlet-mapping>-->
+		<!--<servlet-name>edoclite</servlet-name>-->
+		<!--<url-pattern>/en/EDocLite</url-pattern>-->
+	<!--</servlet-mapping>-->
 
 	<session-config>
 		<session-timeout>60</session-timeout>
