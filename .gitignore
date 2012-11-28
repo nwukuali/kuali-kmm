@@ -8,5 +8,5 @@
 **build/*
 **/classes/*
 **/*kfs-mm.jar
-**/target/*
+**target/
 src/web/WEB-INF/classes/*
