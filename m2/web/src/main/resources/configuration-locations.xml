@@ -1,0 +1,7 @@
+<config>
+	<param name="config.location">classpath:META-INF/common-config-defaults.xml</param>
+	<param name="config.location">classpath:META-INF/server-workflow.xml</param>	
+	<param name="config.location">classpath:${configuration.file}</param>
+	<param name="config.location">file:${external.security.directory}/${security.file}</param>
+	<param name="config.location">file:${external.configuration.directory}/${configuration.file}</param>
+</config>
