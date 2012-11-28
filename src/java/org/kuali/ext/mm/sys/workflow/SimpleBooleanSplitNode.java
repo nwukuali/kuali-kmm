@@ -41,7 +41,6 @@ public class SimpleBooleanSplitNode implements SplitNode, Serializable {
      */
     public SplitResult process(RouteContext context, RouteHelper helper) throws Exception {
         SplitResult result = null;
-				//TODO: NWU Determine if same behaviour as before
         String documentID = context.getDocument().getDocumentId();
         Document document = SpringContext.getBean(DocumentService.class).getByDocumentHeaderId(
                 documentID);

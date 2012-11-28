@@ -27,6 +27,7 @@ import org.kuali.rice.krad.bo.BusinessObject;
 import org.kuali.rice.krad.document.Document;
 import org.kuali.rice.krad.util.GlobalVariables;
 import org.kuali.rice.krad.util.KRADConstants;
+import org.kuali.rice.krad.util.KRADUtils;
 import org.kuali.rice.krad.util.UrlFactory;
 
 import java.util.*;
@@ -108,9 +109,7 @@ public class WorksheetcountDocLookableHelperServiceImpl extends KualiLookupableH
         permissionDetails.put("documentTypeName", "SWKC"); // document type name
         permissionDetails.put("routeNodeName", "CycleCountWorksheetPrint"); // route node = PreRoute
         permissionDetails.put("namespaceCode", MMConstants.MM_NAMESPACE);
-				//TODO: NWU - Find a workaround to add namespace & simple name
-//        permissionDetails.putAll(KimCommonUtils.getNamespaceAndComponentSimpleName(document
-//                .getClass()));
+        permissionDetails.putAll(KRADUtils.getNamespaceAndComponentSimpleName(document.getClass()));
         return permissionDetails;
         // permissionDetails.put(KfsKimAttributes.PROPERTY_NAME, "sourceAccountingLines"); // property = sourceAccountingLines
     }

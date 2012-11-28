@@ -20,7 +20,7 @@ import org.kuali.ext.mm.ConfigureContext;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.suite.AnnotationTestSuite;
 import org.kuali.ext.mm.suite.PreCommitSuite;
-import org.springframework.aop.framework.AopProxyUtils;
+import org.springframework.aop.support.AopUtils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -119,8 +119,7 @@ public class TransactionalAnnotationTest extends KualiTestBase {
             if (bean != null) {
                 Class<? extends Object> beanClass = bean.getClass();
                 if (beanClass.getName().startsWith("$Proxy")) {
-										//TODO: NWU - Same behaviour as before?
-                    beanClass = AopProxyUtils.ultimateTargetClass(bean);
+                    beanClass = AopUtils.getTargetClass(bean);
                 }
                 if (beanClass.getName().startsWith("org.kuali")
                         && !Modifier.isAbstract(beanClass.getModifiers())
