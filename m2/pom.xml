@@ -27,7 +27,7 @@
 	<modules>
 		<module>api</module>
 		<module>b2b</module>
-		<!--<module>web</module>-->
+		<module>web</module>
 	</modules>
 	<ciManagement>
 		<url>http://v-kuali-jira-lnx1.nwu.ac.za:8083/</url>
