@@ -26,7 +26,7 @@
 		<property name="properties" ref="configProperties" />
 	</bean>
 
-	<bean id="config" class="org.kuali.rice.core.config.spring.ConfigFactoryBean">
+	<bean id="config" class="org.kuali.rice.core.impl.config.property.ConfigFactoryBean">
 		<property name="configLocations">
 			<list>
 				<value>classpath:configuration-locations.xml</value>
@@ -39,60 +39,103 @@
 		<property name="targetObject" ref="config" />
 		<property name="targetMethod" value="getProperties" />
 	</bean>
-	
-	<bean id="rice" class="org.kuali.rice.core.config.RiceConfigurer">
+
+
+
+	<bean id="coreConfigurer" class="org.kuali.rice.core.impl.config.module.CoreConfigurer">
 		<property name="dataSource" ref="kmmDataSource" />
 		<property name="serverDataSource" ref="riceDataSource" />
 		<property name="nonTransactionalDataSource" ref="riceNonTransactionalDataSource" />
 		<property name="transactionManager" ref="transactionManager" />
 		<property name="userTransaction" ref="userTransaction" />
-		<property name="serviceNamespace" value="MM" />
-		<property name="environment" value="${build.environment}" />
-		<property name="ksbConfigurer">
-			<bean class="org.kuali.rice.ksb.messaging.config.KSBConfigurer">
-				<property name="messageDataSource" ref="ksbDataSource" />
-				<property name="registryDataSource" ref="ksbDataSource" />
-				<property name="nonTransactionalMessageDataSource" ref="ksbDataSource" />
-				<property name="serviceServletUrl" value="${ksb.server.url}/remoting" />			
-				<!--
-					<property name="exceptionMessagingScheduler" ref="scheduler" />
-				-->
-			</bean>
-		</property>
-		<property name="kewConfigurer">
-			<bean class="org.kuali.rice.kew.config.KEWConfigurer">
-				<property name="clientProtocol" value="local" />
-				<property name="dataSource" ref="riceDataSource" />
-			</bean>
-		</property>
-		<property name="knsConfigurer">
-			<bean class="org.kuali.rice.kns.config.KNSConfigurer">
-				<property name="loadDataDictionary" value="true" />
-				<property name="validateDataDictionary" value="${data.dictionary.validate}" />
-			</bean>
-		</property>
-		<property name="kimConfigurer">
-			<bean class="org.kuali.rice.kim.config.KIMConfigurer" />
-		</property>
-		<property name="kcbConfigurer">
-            <bean class="org.kuali.rice.kcb.config.KCBConfigurer" />
-        </property>
-		<property name="modules">
-			<list>
-				<bean class="org.kuali.ext.mm.common.sys.context.MMConfigurer">
-					<property name="springFileLocations">
-						<value>${spring.source.files}</value>
-					</property>
-					<property name="applicationDataSource" ref="kmmDataSource" />
-				</bean>
-				
-			</list>
-		</property>
-		<property name="additionalSpringFiles">
-			<list>
-				<value>FinancialSystemConfiguration.xml</value>
-			</list>
-		</property>
+		<!--<property name="serviceNamespace" value="MM" />-->
+		<!--<property name="environment" value="${build.environment}" />-->
 	</bean>
+
+	<bean id="ksbConfigurer" class="org.kuali.rice.ksb.messaging.config.KSBConfigurer">
+			<property name="messageDataSource" ref="kmmDataSource" />
+			<property name="registryDataSource" ref="kmmDataSource" />
+			<property name="nonTransactionalMessageDataSource" ref="kmmDataSource" />
+			<property name="serviceServletUrl" value="${ksb.server.url}/remoting" />
+			<property name="bamDataSource" ref="riceDataSource" />
+	</bean>
+
+	<bean id="kradConfigurer" class="org.kuali.rice.krad.config.KRADConfigurer">
+		<property name="applicationDataSource" ref="dataSource" />
+		<property name="includeKnsSpringBeans" value="true" />
+	</bean>
+
+	<bean id="coreServiceConfigurer"
+		class="org.kuali.rice.coreservice.impl.config.CoreServiceConfigurer" />
+
+	<bean id="kimConfigurer" class="org.kuali.rice.kim.config.KIMConfigurer" />
+
+	<bean id="kewConfigurer" class="org.kuali.rice.kew.config.KEWConfigurer">
+		<property name="dataSource" ref="riceDataSource" />
+	</bean>
+	<!-- <bean id="kenConfigurer" class="org.kuali.rice.ken.impl.config.KENConfigurer"/>
+		<bean id="edlConfigurer" class="org.kuali.rice.edl.impl.config.EDLConfigurer"/>
+		<bean id="krmsConfigurer" class="org.kuali.rice.krms.config.KRMSConfigurer"/> -->
+	<bean id="locationConfigurer" class="org.kuali.rice.location.impl.config.LocationConfigurer" />
+
+
+
+
+
+
+	<!--<bean id="rice" class="org.kuali.rice.core.config.RiceConfigurer">-->
+		<!--<property name="dataSource" ref="kmmDataSource" />-->
+		<!--<property name="serverDataSource" ref="riceDataSource" />-->
+		<!--<property name="nonTransactionalDataSource" ref="riceNonTransactionalDataSource" />-->
+		<!--<property name="transactionManager" ref="transactionManager" />-->
+		<!--<property name="userTransaction" ref="userTransaction" />-->
+		<!--<property name="serviceNamespace" value="MM" />-->
+		<!--<property name="environment" value="${build.environment}" />-->
+		<!--<property name="ksbConfigurer">-->
+			<!--<bean class="org.kuali.rice.ksb.messaging.config.KSBConfigurer">-->
+				<!--<property name="messageDataSource" ref="ksbDataSource" />-->
+				<!--<property name="registryDataSource" ref="ksbDataSource" />-->
+				<!--<property name="nonTransactionalMessageDataSource" ref="ksbDataSource" />-->
+				<!--<property name="serviceServletUrl" value="${ksb.server.url}/remoting" />			-->
+				<!--&lt;!&ndash;-->
+					<!--<property name="exceptionMessagingScheduler" ref="scheduler" />-->
+				<!--&ndash;&gt;-->
+			<!--</bean>-->
+		<!--</property>-->
+		<!--<property name="kewConfigurer">-->
+			<!--<bean class="org.kuali.rice.kew.config.KEWConfigurer">-->
+				<!--<property name="clientProtocol" value="local" />-->
+				<!--<property name="dataSource" ref="riceDataSource" />-->
+			<!--</bean>-->
+		<!--</property>-->
+		<!--<property name="knsConfigurer">-->
+			<!--<bean class="org.kuali.rice.kns.config.KNSConfigurer">-->
+				<!--<property name="loadDataDictionary" value="true" />-->
+				<!--<property name="validateDataDictionary" value="${data.dictionary.validate}" />-->
+			<!--</bean>-->
+		<!--</property>-->
+		<!--<property name="kimConfigurer">-->
+			<!--<bean class="org.kuali.rice.kim.config.KIMConfigurer" />-->
+		<!--</property>-->
+		<!--<property name="kcbConfigurer">-->
+            <!--<bean class="org.kuali.rice.kcb.config.KCBConfigurer" />-->
+        <!--</property>-->
+		<!--<property name="modules">-->
+			<!--<list>-->
+				<!--<bean class="org.kuali.ext.mm.common.sys.context.MMConfigurer">-->
+					<!--<property name="springFileLocations">-->
+						<!--<value>${spring.source.files}</value>-->
+					<!--</property>-->
+					<!--<property name="applicationDataSource" ref="kmmDataSource" />-->
+				<!--</bean>-->
+				<!---->
+			<!--</list>-->
+		<!--</property>-->
+		<!--<property name="additionalSpringFiles">-->
+			<!--<list>-->
+				<!--<value>FinancialSystemConfiguration.xml</value>-->
+			<!--</list>-->
+		<!--</property>-->
+	<!--</bean>-->
 
 </beans>

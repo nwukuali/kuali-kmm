@@ -4,3 +4,9 @@
 *.jar
 *.war
 *.ear
+
+**build/*
+**/classes/*
+**/*kfs-mm.jar
+**/target/*
+src/web/WEB-INF/classes/*

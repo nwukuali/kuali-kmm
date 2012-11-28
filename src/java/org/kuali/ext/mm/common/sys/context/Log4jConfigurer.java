@@ -18,10 +18,9 @@ package org.kuali.ext.mm.common.sys.context;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.kuali.ext.mm.common.sys.MMConstants;
-import org.kuali.rice.core.api.config.property.ConfigContext;
-import org.kuali.rice.core.framework.config.property.SimpleConfig;
+import org.kuali.kfs.sys.KFSConstants;
+import org.kuali.kfs.sys.context.PropertyLoadingFactoryBean;
 
-import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
 
@@ -30,18 +29,8 @@ public class Log4jConfigurer {
     private static final long MILLISECONDS_CONVERSION_MULTIPLIER = 60 * 1000;
 
     public static final void configureLogging() {
-        SimpleConfig config = new SimpleConfig("classpath:"
-                + ContextConstants.CONFIGURATION_LOCATIONS_FILE);
-        try {
-            config.parseConfig();
-        }
-        catch (IOException e1) {
-            e1.printStackTrace();
-        }
-        String settingsFile = ConfigContext.getCurrentContextConfig().getProperty(
-                ContextConstants.LOG4J_SETTINGS_FILE_KEY);
-        String reloadMinutes = ConfigContext.getCurrentContextConfig().getProperty(
-                ContextConstants.LOG4J_RELOAD_MINUTES_KEY);
+				String settingsFile = PropertyLoadingFactoryBean.getBaseProperty(KFSConstants.LOG4J_SETTINGS_FILE_KEY);
+        String reloadMinutes = PropertyLoadingFactoryBean.getBaseProperty(KFSConstants.LOG4J_RELOAD_MINUTES_KEY);
         long reloadMilliseconds = 5 * MILLISECONDS_CONVERSION_MULTIPLIER;
         try {
             reloadMilliseconds = Long.parseLong(reloadMinutes) * MILLISECONDS_CONVERSION_MULTIPLIER;
