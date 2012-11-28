@@ -19,8 +19,11 @@
                            http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
                            http://www.springframework.org/schema/aop
                            http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">	
-	<import resource="${spring.mm.rice.jta.xml}" />
-	<import resource="${spring.mm.datasource.xml}" />
+	<!--<import resource="${spring.mm.rice.jta.xml}" />-->
+	<!--<import resource="${spring.mm.datasource.xml}" />-->
+	<!--TODO: NWU - Hardcode imports for now-->
+	<import resource="classpath:spring-mm-rice-jta.xml" />
+	<import resource="classpath:spring-mm-datasource.xml" />
 
 	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="properties" ref="configProperties" />
