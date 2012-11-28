@@ -125,7 +125,6 @@ public class CountWorksheetPrintAction extends KualiAction {
 
         params.put("numOfCounters", String.valueOf(numCount));
         params.put("numOfCopies", String.valueOf(numOfCopies));
-				//TODO: NWU - Confirm getAppBaUrl returns the same result as getBasePath()
         String basePath = getApplicationBaseUrl();
         String methodToCallPrintPDF = "printStatementPDF";
         String methodToCallStart = "start";

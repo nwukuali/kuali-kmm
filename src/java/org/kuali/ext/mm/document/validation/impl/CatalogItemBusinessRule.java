@@ -9,8 +9,8 @@ import org.kuali.ext.mm.integration.FinancialSystemAdaptorFactory;
 import org.kuali.ext.mm.integration.sys.businessobject.FinancialUnitOfMeasure;
 import org.kuali.ext.mm.service.BackOrderService;
 import org.kuali.rice.core.api.util.RiceKeyConstants;
-import org.kuali.rice.kns.document.MaintenanceDocument;
-import org.kuali.rice.kns.maintenance.rules.MaintenanceDocumentRuleBase;
+import org.kuali.rice.krad.maintenance.MaintenanceDocument;
+import org.kuali.rice.krad.rules.MaintenanceDocumentRuleBase;
 import org.kuali.rice.krad.bo.PersistableBusinessObject;
 import org.kuali.rice.krad.maintenance.Maintainable;
 import org.kuali.rice.krad.service.BusinessObjectService;
@@ -70,7 +70,7 @@ public class CatalogItemBusinessRule extends MaintenanceDocumentRuleBase {
     @Override
     protected boolean processCustomSaveDocumentBusinessRules(MaintenanceDocument document) {
         boolean isValid = true;       
-        CatalogItem newCatalogItem = (CatalogItem) document.getNewMaintainableObject().getBusinessObject();
+        CatalogItem newCatalogItem = (CatalogItem) document.getNewMaintainableObject().getDataObject();
         if(ObjectUtils.isNotNull(newCatalogItem.getStock())){
         	PersistableBusinessObject pbObject = KRADServiceLocator.getBusinessObjectService().retrieve(newCatalogItem.getStock());
         	Long pbObjectVerNbr = ObjectUtils.isNull(pbObject) ? null : pbObject.getVersionNumber();
@@ -87,10 +87,8 @@ public class CatalogItemBusinessRule extends MaintenanceDocumentRuleBase {
     protected boolean processCustomRouteDocumentBusinessRules(MaintenanceDocument document) {
 
         BusinessObjectService bOS = SpringContext.getBean(BusinessObjectService.class);
-        Maintainable newMaintaibaleCatalogItem = document.getNewMaintainableObject();
-				//TODO: NWU - Confirm api name change from getBu.. to getData is the same
-        CatalogItem newCatalogItem = (CatalogItem) newMaintaibaleCatalogItem.getDataObject();
-			  //TODO: NWU - Confirm api name change from getBu.. to getData is the same
+        Maintainable newMaintaibaleCatalogItem = document.getNewMaintainableObject();				
+        CatalogItem newCatalogItem = (CatalogItem) newMaintaibaleCatalogItem.getDataObject();			  
         Maintainable oldMaintaibaleCatalogItem = document.getOldMaintainableObject();
         CatalogItem oldCatalogItem = (CatalogItem) oldMaintaibaleCatalogItem.getDataObject();
 

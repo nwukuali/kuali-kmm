@@ -51,7 +51,6 @@ public class AddressToCxml implements CxmlTransformer<Address, org.kuali.ext.mm.
         postalAddress.setState(address.getAddressStateCode());
         postalAddress.setPostalCode(address.getAddressPostalCode());
         Country country = new Country();
-				//TODO: NWU - Not sure if getCountry is the same as findByPrimaryKey
         String countryName = SpringContext.getBean(CountryService.class).getCountry(
                 address.getAddressCountryCode()).getName();
         country.setContent(countryName);

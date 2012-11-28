@@ -1,7 +1,36 @@
 package org.kuali.ext.mm.service.impl;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import org.apache.cxf.common.util.StringUtils;
-import org.kuali.ext.mm.businessobject.*;
+import org.kuali.ext.mm.businessobject.BackOrder;
+import org.kuali.ext.mm.businessobject.Bin;
+import org.kuali.ext.mm.businessobject.BinLookable;
+import org.kuali.ext.mm.businessobject.CatalogItem;
+import org.kuali.ext.mm.businessobject.CheckinDetail;
+import org.kuali.ext.mm.businessobject.CreditMemoExpected;
+import org.kuali.ext.mm.businessobject.OrderDetail;
+import org.kuali.ext.mm.businessobject.Rental;
+import org.kuali.ext.mm.businessobject.ReturnDetail;
+import org.kuali.ext.mm.businessobject.StagingRental;
+import org.kuali.ext.mm.businessobject.Stock;
+import org.kuali.ext.mm.businessobject.StockBalance;
+import org.kuali.ext.mm.businessobject.StockCost;
+import org.kuali.ext.mm.businessobject.StockHistory;
+import org.kuali.ext.mm.businessobject.StoresPersistableBusinessObject;
+import org.kuali.ext.mm.businessobject.Warehouse;
 import org.kuali.ext.mm.common.sys.MMConstants;
 import org.kuali.ext.mm.common.sys.MMKeyConstants;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
@@ -19,17 +48,18 @@ import org.kuali.ext.mm.service.StockService;
 import org.kuali.ext.mm.util.MMDecimal;
 import org.kuali.ext.mm.util.MMUtil;
 import org.kuali.rice.core.api.config.property.ConfigurationService;
+import org.kuali.rice.krad.document.Document;
 import org.kuali.rice.krad.service.BusinessObjectService;
+import org.kuali.rice.krad.service.KRADServiceLocator;
+import org.kuali.rice.krad.service.KRADServiceLocatorWeb;
 import org.kuali.rice.krad.util.ObjectUtils;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.io.*;
-import java.util.*;
 
 
 @Transactional
 public class CheckinOrderServiceImpl implements CheckinOrderService {
-    protected static org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(CheckinOrderServiceImpl.class);
+    protected static org.apache.log4j.Logger LOG = org.apache.log4j.Logger
+            .getLogger(CheckinOrderServiceImpl.class);
 
     private CheckinOrderDAO checkinOrderDAO = null;
     private OrderStatusDao orderStatusDao;
@@ -101,7 +131,7 @@ public class CheckinOrderServiceImpl implements CheckinOrderService {
         for (String stockId : stockids) {
             Collection<BackOrder> backOrdersForStock = backOrderService
                     .getUnfilledBackOrdersForStock(stockId);
-            if(backOrdersForStock != null) {
+            if (backOrdersForStock != null) {
                 for (BackOrder backOrder : backOrdersForStock) {
                     backOrderService.relieveBackOrder(backOrder, true);
                 }
@@ -236,8 +266,8 @@ public class CheckinOrderServiceImpl implements CheckinOrderService {
         getOrderDetailWithStock(orderDetail);
 
         if (orderDetail.getCatalogItem().getStock().isPerishableInd()) {
-            Bin emptyBin = this.checkinOrderDAO.getEmptyBin(checkinDoc, orderDetail
-                    .getRemainingItemQuantity());
+            Bin emptyBin = this.checkinOrderDAO.getEmptyBin(checkinDoc,
+                    orderDetail.getRemainingItemQuantity());
             if (emptyBin != null) {
                 bins.add(emptyBin);
             }
@@ -248,7 +278,7 @@ public class CheckinOrderServiceImpl implements CheckinOrderService {
 
         List<CheckinDetail> cdetails = new ArrayList<CheckinDetail>(0);
 
-        if(!MMUtil.isCollectionEmpty(bins)) {
+        if (!MMUtil.isCollectionEmpty(bins)) {
             cdetails = getCheckinDetailsForBins(checkinDoc, orderDetail, bins);
         }
 
@@ -453,8 +483,8 @@ public class CheckinOrderServiceImpl implements CheckinOrderService {
     private CheckinDocument addNewPo(CheckinDocument checkinDoc, OrderDetailVo vo) {
         CatalogItem citem = vo.getCatalogItem();
         OrderDetail odetail = this.createOrderDetail(checkinDoc, vo, citem);
-        List<CheckinDetail> cdetails = this.createNewCheckinDetail(checkinDoc, odetail, vo
-                .getBinId());
+        List<CheckinDetail> cdetails = this.createNewCheckinDetail(checkinDoc, odetail,
+                vo.getBinId());
         CheckinDetail cdetail = cdetails.get(0);
         cdetail.setAcceptedItemQty(vo.getAcceptedItemQuantity());
         cdetail.setInitalAcceptedItemQty(vo.getAcceptedItemQuantity());
@@ -514,8 +544,8 @@ public class CheckinOrderServiceImpl implements CheckinOrderService {
 
 
     /**
-     * Activates all the catalog items in the passed checkin document
-     * and marks all True-Buyout items as obsolete, to prevent future reorders.
+     * Activates all the catalog items in the passed checkin document and marks all True-Buyout items as obsolete, to prevent future
+     * reorders.
      */
     public void activateCatalogItems(CheckinDocument checkinDocument) {
         List<CatalogItem> result = new ArrayList<CatalogItem>(0);
@@ -527,7 +557,8 @@ public class CheckinOrderServiceImpl implements CheckinOrderService {
                 Stock stock = citem.getStock();
                 if (ObjectUtils.isNotNull(stock)) {
                     citem.refreshReferenceObject(MMConstants.CatalogItem.CATALOG);
-                    if(MMConstants.CatalogType.TRUE_BUYOUT.equals(citem.getCatalog().getCatalogTypeCd())) {
+                    if (MMConstants.CatalogType.TRUE_BUYOUT.equals(citem.getCatalog()
+                            .getCatalogTypeCd())) {
                         stock.setObsoleteInd(true);
                     }
                     stock.setActive(true);
@@ -609,13 +640,13 @@ public class CheckinOrderServiceImpl implements CheckinOrderService {
                                     .getOrderItemAdditionalCostAmt() : MMDecimal.ZERO);
 
                     if (isCorrectionDoc)
-                        stockPrices = this.stockService.calculateStockPrices(unitCost, cdetail
-                                .getStock(), (-1 * cdetail.getCorrectedQuantity()), qtyMap
-                                .get(stockId), stockPrices);
+                        stockPrices = this.stockService.calculateStockPrices(unitCost,
+                                cdetail.getStock(), (-1 * cdetail.getCorrectedQuantity()),
+                                qtyMap.get(stockId), stockPrices);
                     else
-                        stockPrices = this.stockService.calculateStockPrices(unitCost, cdetail
-                                .getStock(), cdetail.getAcceptedItemQty(), qtyMap.get(stockId),
-                                stockPrices);
+                        stockPrices = this.stockService.calculateStockPrices(unitCost,
+                                cdetail.getStock(), cdetail.getAcceptedItemQty(),
+                                qtyMap.get(stockId), stockPrices);
 
                     dataMap.put(stockId, stockPrices);
 
@@ -635,8 +666,8 @@ public class CheckinOrderServiceImpl implements CheckinOrderService {
                     cdetail.getStock().setStockPrices(stockPrices);
 
                     this.getBusinessObjectService().save(stockPrices);
-                    cdetail.getOrderDetail().getCatalogItem().setCatalogPrc(
-                            cdetail.getStock().getStockPrice());
+                    cdetail.getOrderDetail().getCatalogItem()
+                            .setCatalogPrc(cdetail.getStock().getStockPrice());
                 }
                 this.getBusinessObjectService().save(cdetail.getOrderDetail().getCatalogItem());
             }
@@ -813,28 +844,26 @@ public class CheckinOrderServiceImpl implements CheckinOrderService {
      * @throws Exception
      */
     private ReturnDocument createReturnDoc(CheckinDocument checkinDoc) throws Exception {
-			  //TODO: NWU - Implement return doc creation...
-				throw new RuntimeException("Unimplemented method.....");
-//        Document dd = KRADServiceLocatorWeb.getDocumentService().getNewDocument(
-//                MMConstants.CHECKIN_VENDOR_RETURNDOC_TYPE);
-//        dd.getDocumentHeader().setDocumentDescription("Return " + dd.getDocumentNumber());
-//        dd.getDocumentHeader().getWorkflowDocument().getRouteHeader().setInitiatorPrincipalId(
-//                GlobalVariables.getUserSession().getPrincipalId());
-//        ReturnDocument rdoc = (ReturnDocument) dd;
-//
-//        rdoc.setReturnOrderId(rdoc.getDocumentNumber());
-//        rdoc.setOrderDocumentNumber(checkinDoc.getOrderDocument().getDocumentNumber());
-//        rdoc.setOrderDocument(checkinDoc.getOrderDocument());
-//        rdoc.setReturnDocumentStatusCode(MMConstants.OrderStatus.INITIATED);
-//        rdoc.setReturnTypeCode(MMConstants.CheckinDocument.VENDOR_RETURN_ORDER_LINE);
-//        rdoc.setCustomerProfileId(checkinDoc.getOrderDocument().getCustomerProfileId());
-//
-//        if (rdoc.getDocumentHeader().getWorkflowDocument().isInitiated())
-//            rdoc = (ReturnDocument) KRADServiceLocatorWeb.getDocumentService().saveDocument(rdoc);
-//
-//        rdoc.setCheckinDocumentNumber(checkinDoc.getDocumentNumber());
-//        checkinDoc.getReturnDocuments().add(rdoc);
-//        return rdoc;
+        Document dd = KRADServiceLocatorWeb.getDocumentService().getNewDocument(
+                MMConstants.CHECKIN_VENDOR_RETURNDOC_TYPE);
+        dd.getDocumentHeader().setDocumentDescription("Return " + dd.getDocumentNumber());
+        // TODO: NWU-Find solution to set the initiator Id.
+        // dd.getDocumentHeader().getWorkflowDocument().getRouteHeader().setInitiatorPrincipalId(
+        // GlobalVariables.getUserSession().getPrincipalId());
+        ReturnDocument rdoc = (ReturnDocument) dd;
+        rdoc.setReturnOrderId(rdoc.getDocumentNumber());
+        rdoc.setOrderDocumentNumber(checkinDoc.getOrderDocument().getDocumentNumber());
+        rdoc.setOrderDocument(checkinDoc.getOrderDocument());
+        rdoc.setReturnDocumentStatusCode(MMConstants.OrderStatus.INITIATED);
+        rdoc.setReturnTypeCode(MMConstants.CheckinDocument.VENDOR_RETURN_ORDER_LINE);
+        rdoc.setCustomerProfileId(checkinDoc.getOrderDocument().getCustomerProfileId());
+
+        if (rdoc.getDocumentHeader().getWorkflowDocument().isInitiated())
+            rdoc = KRADServiceLocator.getBusinessObjectService().save(rdoc);
+
+        rdoc.setCheckinDocumentNumber(checkinDoc.getDocumentNumber());
+        checkinDoc.getReturnDocuments().add(rdoc);
+        return rdoc;
     }
 
     public CatalogItem getCatalogItem(String manufNumber, String distNumber) {

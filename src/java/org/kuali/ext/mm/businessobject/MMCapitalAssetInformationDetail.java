@@ -154,17 +154,6 @@ public class MMCapitalAssetInformationDetail extends PersistableBusinessObjectBa
         this.capitalAssetSerialNumber = capitalAssetSerialNumber;
     }
 
-    /**
-     * Gets the campus attribute.
-     *
-     * @return Returns the campus.
-     */
-		//TODO: NWU - Determine if method is used othewise remove
-    public Campus getCampus() {
-//        return campus = SpringContext.getBean(KualiModuleService.class).getResponsibleModuleService(Campus.class).
-//					retrieveExternalizableBusinessObjectIfNecessary(this, campus, "campus");
-			return null;
-    }
 
     /**
      * Sets the campus attribute value.

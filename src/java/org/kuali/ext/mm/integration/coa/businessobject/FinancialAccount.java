@@ -16,19 +16,22 @@
 
 package org.kuali.ext.mm.integration.coa.businessobject;
 
+import java.sql.Date;
+import java.util.Calendar;
+import java.util.List;
+
 import org.apache.commons.lang.time.DateUtils;
 import org.kuali.ext.mm.common.sys.context.SpringContext;
 import org.kuali.ext.mm.integration.FinancialSystemComponent;
+import org.kuali.kfs.coa.businessobject.IndirectCostRecoveryAccount;
 import org.kuali.rice.core.api.datetime.DateTimeService;
 import org.kuali.rice.krad.bo.ExternalizableBusinessObject;
 import org.kuali.rice.krad.bo.TransientBusinessObjectBase;
 
-import java.sql.Date;
-import java.util.Calendar;
-
 /**
  *
  */
+//TODO: NWU Should this not look more like the KFS coa Account BO? and do a direct copy in KfsAccountServiceAdaptor
 public class FinancialAccount extends TransientBusinessObjectBase implements
 	ExternalizableBusinessObject, FinancialSystemComponent {
     private static final long serialVersionUID = 6650842976182882495L;
@@ -81,9 +84,10 @@ public class FinancialAccount extends TransientBusinessObjectBase implements
     private String contractControlAccountNumber;
     private String incomeStreamFinancialCoaCode;
     private String incomeStreamAccountNumber;
-    private String indirectCostRcvyFinCoaCode;
-    private String indirectCostRecoveryAcctNbr;
+//    private String indirectCostRcvyFinCoaCode;
+//    private String indirectCostRecoveryAcctNbr;
     private Integer contractsAndGrantsAccountResponsibilityId;
+    protected List<IndirectCostRecoveryAccount> indirectCostRecoveryAccounts;
 
 
     public String getChartOfAccountsCode() {
@@ -537,23 +541,42 @@ public class FinancialAccount extends TransientBusinessObjectBase implements
     }
 
 
-    public String getIndirectCostRcvyFinCoaCode() {
-        return indirectCostRcvyFinCoaCode;
+//    public String getIndirectCostRcvyFinCoaCode() {
+//        return indirectCostRcvyFinCoaCode;
+//    }
+//
+//
+//    public void setIndirectCostRcvyFinCoaCode(String indirectCostRcvyFinCoaCode) {
+//        this.indirectCostRcvyFinCoaCode = indirectCostRcvyFinCoaCode;
+//    }
+//
+//
+//    public String getIndirectCostRecoveryAcctNbr() {
+//        return indirectCostRecoveryAcctNbr;
+//    }
+//
+//
+//    public void setIndirectCostRecoveryAcctNbr(String indirectCostRecoveryAcctNbr) {
+//        this.indirectCostRecoveryAcctNbr = indirectCostRecoveryAcctNbr;
+//    }
+
+
+    /**
+     * Gets the indirectCostRecoveryAccounts property
+     * @return Returns the indirectCostRecoveryAccounts
+     */
+    public List<IndirectCostRecoveryAccount> getIndirectCostRecoveryAccounts() {
+        return this.indirectCostRecoveryAccounts;
     }
 
 
-    public void setIndirectCostRcvyFinCoaCode(String indirectCostRcvyFinCoaCode) {
-        this.indirectCostRcvyFinCoaCode = indirectCostRcvyFinCoaCode;
-    }
-
-
-    public String getIndirectCostRecoveryAcctNbr() {
-        return indirectCostRecoveryAcctNbr;
-    }
-
-
-    public void setIndirectCostRecoveryAcctNbr(String indirectCostRecoveryAcctNbr) {
-        this.indirectCostRecoveryAcctNbr = indirectCostRecoveryAcctNbr;
+    /**
+     * Sets the indirectCostRecoveryAccounts property value
+     * @param indirectCostRecoveryAccounts The indirectCostRecoveryAccounts to set
+     */
+    public void setIndirectCostRecoveryAccounts(
+            List<IndirectCostRecoveryAccount> indirectCostRecoveryAccounts) {
+        this.indirectCostRecoveryAccounts = indirectCostRecoveryAccounts;
     }
 
 

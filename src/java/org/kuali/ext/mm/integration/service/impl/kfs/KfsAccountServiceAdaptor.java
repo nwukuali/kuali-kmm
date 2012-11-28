@@ -107,10 +107,12 @@ public class KfsAccountServiceAdaptor extends KfsServiceAdaptor<AccountService> 
         target.setContractControlFinCoaCode(source.getContractControlFinCoaCode());
         target.setContractControlAccountNumber(source.getContractControlAccountNumber());
         target.setIncomeStreamFinancialCoaCode(source.getIncomeStreamFinancialCoaCode());
-        target.setIncomeStreamAccountNumber(source.getIncomeStreamAccountNumber());
-				//TODO: NWU - Find a way of passing list of indirect cost recovery accounts - Currently not used by MM FinancialAccount
-//        target.setIndirectCostRcvyFinCoaCode(source.getIndirectCostRcvyFinCoaCode());
-//        target.setIndirectCostRecoveryAcctNbr(source.getIndirectCostRecoveryAcctNbr());
+        target.setIncomeStreamAccountNumber(source.getIncomeStreamAccountNumber());     
+        // target.setIndirectCostRcvyFinCoaCode(source.getIndirectCostRcvyFinCoaCode());
+        // target.setIndirectCostRecoveryAcctNbr(source.getIndirectCostRecoveryAcctNbr());
+        // TODO: NWU -Removed above. But interim is to refactor MM FinancialAccount to look/work
+        // similarly to KFS Account.
+        target.setIndirectCostRecoveryAccounts(source.getIndirectCostRecoveryAccounts());  
         target.setContractsAndGrantsAccountResponsibilityId(source
                 .getContractsAndGrantsAccountResponsibilityId());
     }
