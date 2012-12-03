@@ -11,4 +11,6 @@
 	<classpathentry kind="lib" path="src/conf/external/jetty/jetty-6.1.5.jar"/>
 	<classpathentry kind="lib" path="src/conf/external/jetty/jetty-util-6.1.5.jar"/>
 	<classpathentry kind="output" path="src/web/WEB-INF/classes"/>
+	<classpathentry exported="true" kind="lib" path="src/conf/external/server/servlet-api.jar"/>
+	<classpathentry exported="true" kind="lib" path="src/conf/external/server/jsp-api.jar"/>
 </classpath>

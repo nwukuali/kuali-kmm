@@ -1,4 +1,8 @@
 package org.kuali.ext.mm.service.impl;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.kuali.ext.mm.businessobject.Rental;
@@ -16,52 +20,47 @@ import org.kuali.rice.kew.api.action.ActionTaken;
 import org.kuali.rice.kim.api.identity.Person;
 import org.kuali.rice.kim.api.identity.PersonService;
 import org.kuali.rice.kim.api.services.KimApiServiceLocator;
+import org.kuali.rice.krad.UserSession;
+import org.kuali.rice.krad.document.Document;
+import org.kuali.rice.krad.service.KRADServiceLocatorWeb;
+import org.kuali.rice.krad.util.GlobalVariables;
 import org.kuali.rice.krad.util.ObjectUtils;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-
 public class ReturnToVendorReturnActionService implements IReturnCommand {
 
-    public void execute(ReturnDocument rdoc, ReturnDetail rdetail) throws Exception {
-				//TODO: NWU - Implement return doc creation...
-			throw new RuntimeException("Unimplemented method.....");
-//        ReturnDocument vdoc = null;
-//        if (rdoc.getVendorReturnDoc() == null && !rdoc.isChildDocsGenerated()) {
-//
-//            UserSession curSession = GlobalVariables.getUserSession();
-//					final Set<Person> priorApprovers = getPriorApprovers(rdoc.getDocumentHeader().getWorkflowDocument());
-//					String name = ObjectUtils.isNull(priorApprovers) ?
-//							KimApiServiceLocator.getIdentityService()
-//                    .getPrincipal(rdoc.getDocumentHeader().getWorkflowDocument()
-//                                    .getInitiatorPrincipalId()).getPrincipalName() : priorApprovers.iterator()
-//                    .next().getPrincipalName();
-//            GlobalVariables.setUserSession(new UserSession(name));
-//
-//            Document dd = KRADServiceLocatorWeb.getDocumentService().getNewDocument(
-//                    MMConstants.CHECKIN_VENDOR_RETURNDOC_TYPE);
-//            dd.getDocumentHeader().setDocumentDescription(
-//                    "Return to Vendor " + dd.getDocumentNumber());
-//            dd.getDocumentHeader().getWorkflowDocument().getInitiatorPrincipalId().getRouteHeader().setInitiatorPrincipalId(
-//                    GlobalVariables.getUserSession().getPrincipalId());
-//            vdoc = (ReturnDocument) dd;
-//
-//            MMServiceLocator.getReturnOrderService().setDocParams(rdoc.getOrderDocument(), vdoc);
-//            rdoc.setVendorReturnDoc(vdoc);
-//            rdoc.setChildDocsGenerated(true);
-//            GlobalVariables.setUserSession(curSession);
-//        }
-//        else {
-//            vdoc = rdoc.getVendorReturnDoc();
-//        }
-//
-//        vdoc.setReturnTypeCode(MMConstants.CheckinDocument.VENDOR_RETURN_ORDER_LINE);
-//        getReturnDetailObject(rdetail, vdoc);
+    public void execute(ReturnDocument rdoc, ReturnDetail rdetail) throws Exception {               
+        /*throw new RuntimeException("Unimplemented method.....");*/
+    ReturnDocument vdoc = null;
+    if (rdoc.getVendorReturnDoc() == null && !rdoc.isChildDocsGenerated()) {
 
+        UserSession curSession = GlobalVariables.getUserSession();
+                final Set<Person> priorApprovers = getPriorApprovers(rdoc.getDocumentHeader().getWorkflowDocument());
+                String name = ObjectUtils.isNull(priorApprovers) ?
+                        KimApiServiceLocator.getIdentityService()
+                .getPrincipal(rdoc.getDocumentHeader().getWorkflowDocument()
+                                .getInitiatorPrincipalId()).getPrincipalName() : priorApprovers.iterator()
+                .next().getPrincipalName();
+        GlobalVariables.setUserSession(new UserSession(name));
+        Document dd =  KRADServiceLocatorWeb.getDocumentService().getNewDocument(MMConstants.CHECKIN_VENDOR_RETURNDOC_TYPE);
+        dd.getDocumentHeader().setDocumentDescription(
+                "Return to Vendor " + dd.getDocumentNumber());
+        //TODO: NWU - Find way to do this. Rest of code looks right.
+        /*dd.getDocumentHeader().getWorkflowDocument().getInitiatorPrincipalId().getRouteHeader().setInitiatorPrincipalId(
+                GlobalVariables.getUserSession().getPrincipalId());*/
+        vdoc = (ReturnDocument) dd;
+
+        MMServiceLocator.getReturnOrderService().setDocParams(rdoc.getOrderDocument(), vdoc);
+        rdoc.setVendorReturnDoc(vdoc);
+        rdoc.setChildDocsGenerated(true);
+        GlobalVariables.setUserSession(curSession);
     }
+    else {
+        vdoc = rdoc.getVendorReturnDoc();
+    }
+
+    vdoc.setReturnTypeCode(MMConstants.CheckinDocument.VENDOR_RETURN_ORDER_LINE);
+    getReturnDetailObject(rdetail, vdoc);
+
+}
 
     private void getReturnDetailObject(ReturnDetail rd, ReturnDocument rdoc) {
         ReturnDetail newObj = rd.clone();

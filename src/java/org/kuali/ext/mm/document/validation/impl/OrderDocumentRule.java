@@ -351,7 +351,6 @@ public class OrderDocumentRule extends DocumentRuleBase {
             return valid;
         }
 
-				//TODO NWU - Determine if same behaviour as before
         Campus campus = SpringContext.getBean(CampusService.class).getCampus(campusCode);
         if (campus == null || !campus.isActive()) {
             valid = false;

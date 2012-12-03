@@ -63,12 +63,12 @@ public class StoresRequestProcessor extends KualiRequestProcessor {
 					Map<String,String> qualification = new HashMap<String,String>();
 					qualification.put( "principalId", principal.getPrincipalId() );
 					// check to see if the given principal is an active principal/entity
-					//TODO: NWU - Check if parameters passed in matches new api
+					//TODO: NWU - Looks like it must be qualification instead of null.
 					if ( KimApiServiceLocator.getPermissionService().isAuthorized(
 							principal.getPrincipalId(),
 							KimConstants.KIM_TYPE_DEFAULT_NAMESPACE,
 							KimConstants.PermissionNames.LOG_IN,
-							null) ) {
+							qualification) ) {
 
 						// This is a temp solution to show KIM AuthN checking existence of Principals.
 						// We may want to move this code to the IdentityService once it is finished.

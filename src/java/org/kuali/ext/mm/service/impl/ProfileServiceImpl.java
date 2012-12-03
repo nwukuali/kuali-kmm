@@ -274,9 +274,6 @@ public class ProfileServiceImpl implements ProfileService {
             return valid;
         }
 
-        BusinessObjectService boService = KRADServiceLocator.getBusinessObjectService();
-//        Campus campus = CampusService boService.findBySinglePrimaryKey(Campus.class, campusCode);
-				//TODO NWU - Determine if same behaviour as before
         Campus campus = SpringContext.getBean(CampusService.class).getCampus(campusCode);
 				if (campus == null || !campus.isActive()) {
             valid = false;

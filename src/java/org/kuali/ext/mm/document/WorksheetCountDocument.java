@@ -346,12 +346,18 @@ public class WorksheetCountDocument extends StoresTransactionalDocumentBase impl
 
         if (workflowDocument.isEnroute()) {
             String docStatusCode = this.getWorksheetStatusCode();
-            KualiDecimal maxToleranceVal = new KualiDecimal(CoreFrameworkServiceLocator
-								//TODO: NWU - Revisit iterator.next()
-                    .getParameterService().getParameterValuesAsString(MMConstants.MM_NAMESPACE,
-                            MMConstants.Parameters.DOCUMENT,
-                            MMConstants.Parameters.MAX_PRICE_TOLERANCE_ALLOWED).iterator().next());
-
+            KualiDecimal maxToleranceVal = new KualiDecimal();
+          //TODO: NWU - This the if you wanted here?
+            if (CoreFrameworkServiceLocator.getParameterService().parameterExists(
+                    MMConstants.MM_NAMESPACE, MMConstants.Parameters.DOCUMENT,
+                    MMConstants.Parameters.MAX_PRICE_TOLERANCE_ALLOWED)) {
+                maxToleranceVal = new KualiDecimal(CoreFrameworkServiceLocator
+                        .getParameterService()
+                        .getParameterValuesAsString(MMConstants.MM_NAMESPACE,
+                                MMConstants.Parameters.DOCUMENT,
+                                MMConstants.Parameters.MAX_PRICE_TOLERANCE_ALLOWED).iterator()
+                        .next());
+            }
             if (!StringUtils.isEmpty(docStatusCode)
                     && docStatusCode
                             .equalsIgnoreCase(MMConstants.WorksheetStatus.WORKSHEET_ENTERED)) {
