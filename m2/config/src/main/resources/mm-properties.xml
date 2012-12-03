@@ -1,0 +1,24 @@
+<config>
+
+		<!-- DATABASE SETTINGS -->
+	<param name="datasource.username">kmmdemo</param>
+	<param name="datasource.password">kmmdemo</param>
+	<param name="datasource.url">jdbc:mysql://localhost:3306/kmmdemo</param>
+
+	<!-- These properties were supposedly removed due to a rice enhancement,
+		but it didn't work without them. -->
+	<param name="datasource.pool.maxWait">30000</param>
+	<param name="datasource.ojb.platform">MySQL</param>
+	<param name="datasource.platform">org.kuali.rice.core.database.platform.MySQLDatabasePlatform</param>
+	<param name="datasource.driver.name">com.mysql.jdbc.Driver</param>
+	<param name="datasource.pool.validationQuery">select 1 from dual</param>
+	<param name="datasource.pool.size">50</param>
+	<param name="rice.datasource.username">kfs5</param>
+	<param name="rice.datasource.password">kfs5</param>
+	<param name="rice.datasource.url">jdbc:mysql://localhost:3306/kfs5</param>
+	<param name="ksb.datasource.username">kfs5</param>
+	<param name="ksb.datasource.password">kfs5</param>
+	<param name="ksb.datasource.url">jdbc:mysql://localhost:3306/kfs5</param>
+
+
+</config>

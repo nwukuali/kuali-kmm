@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+				 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>za.ac.nwu</groupId>
+		<artifactId>kmm</artifactId>
+		<version>5.0-SNAPSHOT</version>
+	</parent>
+	<artifactId>kmm-config</artifactId>
+	<name>Kuali Store Management - External Config</name>
+	<packaging>jar</packaging>
+
+	<properties>
+		<kfs.external.unpack.phase>none</kfs.external.unpack.phase>
+		<kfs.external.package.phase>package</kfs.external.package.phase>
+		<!--<external.config.directory>${kuali.home.setting}/kmm/${build.environment.setting}</external.config.directory>-->
+	</properties>
+
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<excludes>
+					<exclude>rice.keystore</exclude>
+				</excludes>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>false</filtering>
+				<includes>
+					<include>rice.keystore</include>
+				</includes>
+			</resource>
+		</resources>
+	</build>
+
+	<profiles>
+		<profile>
+			<id>distribute</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-assembly-plugin</artifactId>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
+</project>

@@ -24,6 +24,10 @@
 			<artifactId>kmm-b2b</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>za.ac.nwu</groupId>
+			<artifactId>kmm-config</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.kuali.rice</groupId>
 			<artifactId>rice-core-api</artifactId>
 		</dependency>
@@ -80,17 +84,26 @@
 			<artifactId>cas</artifactId>
 		</dependency>
 
-		 <dependency>
-			 <groupId>junit</groupId>
-			 <artifactId>junit</artifactId>
-			 <version>4.0</version>
-			 <scope>test</scope>
-		 </dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.0</version>
+			<scope>test</scope>
+		</dependency>
 
 	</dependencies>
 
 	<build>
 		<finalName>kmm-${build.environment}</finalName>
+
+
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+
 		<plugins>
 
 			<plugin>
@@ -127,18 +140,18 @@
 					</execution>
 
 					<!--<execution>-->
-            <!--<id>add-test-source</id>-->
-            <!--<phase>generate-test-sources</phase>-->
-            <!--<goals>-->
-              <!--<goal>add-test-source</goal>-->
-            <!--</goals>-->
-            <!--<configuration>-->
-              <!--<sources>-->
-                <!--<source>${basedir}/../../test/unit</source>-->
-                <!--<source>${basedir}/../../test/integration</source>-->
-              <!--</sources>-->
-            <!--</configuration>-->
-          <!--</execution>-->
+					<!--<id>add-test-source</id>-->
+					<!--<phase>generate-test-sources</phase>-->
+					<!--<goals>-->
+					<!--<goal>add-test-source</goal>-->
+					<!--</goals>-->
+					<!--<configuration>-->
+					<!--<sources>-->
+					<!--<source>${basedir}/../../test/unit</source>-->
+					<!--<source>${basedir}/../../test/integration</source>-->
+					<!--</sources>-->
+					<!--</configuration>-->
+					<!--</execution>-->
 				</executions>
 			</plugin>
 
@@ -186,4 +199,65 @@
 			</plugin>
 		</plugins>
 	</build>
+
+	<profiles>
+
+		<profile>
+			<id>dev</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-dependency-plugin</artifactId>
+						<executions>
+							<!--<execution>-->
+							<!--<id>unpack-datadictionary-web-classes</id>-->
+							<!--<phase>generate-sources</phase>-->
+							<!--<goals>-->
+							<!--<goal>unpack</goal>-->
+							<!--</goals>-->
+							<!--<configuration>-->
+							<!--<artifactItems>-->
+							<!--<artifactItem>-->
+							<!--<groupId>org.kuali.kfs</groupId>-->
+							<!--<artifactId>kfs-prototype-core</artifactId>-->
+							<!--<type>jar</type>-->
+							<!--<overWrite>false</overWrite>-->
+							<!--<outputDirectory>${project.build.outputDirectory}</outputDirectory>-->
+							<!--<excludes>**/*.class</excludes>-->
+							<!--<includes>**/businessobject/**/*.xml,**/document/datadictionary/**/*.xml,**/OJB-repository.xml,**/OJB.properties</includes>-->
+							<!--</artifactItem>-->
+							<!--</artifactItems>-->
+							<!--</configuration>-->
+							<!--</execution>-->
+
+							<execution>
+								<id>unpack-config</id>
+								<phase>generate-sources</phase>
+								<goals>
+									<goal>unpack</goal>
+								</goals>
+								<configuration>
+									<artifactItems>
+										<artifactItem>
+											<groupId>za.ac.nwu</groupId>
+											<artifactId>kmm-config</artifactId>
+											<overWrite>false</overWrite>
+											<outputDirectory>${project.build.directory}/kuali/kmm/dev/</outputDirectory>
+											<!--<includes>**/*</includes>-->
+										</artifactItem>
+									</artifactItems>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+	</profiles>
+
 </project>
