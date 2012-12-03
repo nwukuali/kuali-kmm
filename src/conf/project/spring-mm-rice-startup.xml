@@ -11,42 +11,65 @@
 		permissions and limitations under the License.
 	-->
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
-	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
-                           http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
-                           http://www.springframework.org/schema/tx
-                           http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
-                           http://www.springframework.org/schema/aop
-                           http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">	
+                           http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 	<!--<import resource="${spring.mm.rice.jta.xml}" />-->
 	<!--<import resource="${spring.mm.datasource.xml}" />-->
 	<!--TODO: NWU - Hardcode imports for now-->
 	<import resource="classpath:spring-mm-rice-jta.xml" />
 	<import resource="classpath:spring-mm-datasource.xml" />
 
+	<!--<import resource="classpath:org/kuali/rice/core/RiceJTASpringBeans.xml"/>-->
+  <!--<import resource="classpath:org/kuali/rice/core/RiceDataSourceSpringBeans.xml"/>-->
+  <!--<import resource="classpath:org/kuali/rice/config/RiceSpringBeans.xml"/>-->
+
+
 	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="properties" ref="configProperties" />
+		<property name="properties" value="#{bootstrapConfig.properties}" />
 	</bean>
 
-	<bean id="config" class="org.kuali.rice.core.impl.config.property.ConfigFactoryBean">
+	<bean id="bootstrapConfig" class="org.kuali.rice.core.impl.config.property.ConfigFactoryBean">
 		<property name="configLocations">
 			<list>
-				<value>classpath:configuration-locations.xml</value>
+				<value>classpath:bootstrap-properties.xml</value>
 			</list>
 		</property>
 	</bean>
 
-	<bean id="configProperties"
-		class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
-		<property name="targetObject" ref="config" />
-		<property name="targetMethod" value="getProperties" />
+	<bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+		<property name="staticMethod" value="org.kuali.rice.core.impl.config.property.ConfigInitializer.initialize" />
+		<property name="arguments">
+			<list><ref bean="bootstrapConfig"/></list>
+		</property>
 	</bean>
 
 
 
+
+
+	<!--<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">-->
+	<!--</bean>-->
+
+
+	<!--<bean id="config" class="org.kuali.rice.core.impl.config.property.ConfigFactoryBean">-->
+		<!--<property name="configLocations">-->
+			<!--<list>-->
+				<!--<value>classpath:configuration-locations.xml</value>-->
+			<!--</list>-->
+		<!--</property>-->
+	<!--</bean>-->
+
+	<!--<bean id="configProperties"-->
+		<!--class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">-->
+		<!--<property name="targetObject" ref="config" />-->
+		<!--<property name="targetMethod" value="getProperties" />-->
+	<!--</bean>-->
+
+
+
 	<bean id="coreConfigurer" class="org.kuali.rice.core.impl.config.module.CoreConfigurer">
-		<property name="dataSource" ref="kmmDataSource" />
+		<property name="dataSource" ref="dataSource" />
 		<property name="serverDataSource" ref="riceDataSource" />
 		<property name="nonTransactionalDataSource" ref="riceNonTransactionalDataSource" />
 		<property name="transactionManager" ref="transactionManager" />
@@ -56,10 +79,9 @@
 	</bean>
 
 	<bean id="ksbConfigurer" class="org.kuali.rice.ksb.messaging.config.KSBConfigurer">
-			<property name="messageDataSource" ref="kmmDataSource" />
-			<property name="registryDataSource" ref="kmmDataSource" />
-			<property name="nonTransactionalMessageDataSource" ref="kmmDataSource" />
-			<property name="serviceServletUrl" value="${ksb.server.url}/remoting" />
+			<property name="messageDataSource" ref="riceDataSource" />
+			<property name="registryDataSource" ref="riceDataSource" />
+			<property name="nonTransactionalMessageDataSource" ref="riceDataSource" />
 			<property name="bamDataSource" ref="riceDataSource" />
 	</bean>
 
@@ -68,8 +90,7 @@
 		<property name="includeKnsSpringBeans" value="true" />
 	</bean>
 
-	<bean id="coreServiceConfigurer"
-		class="org.kuali.rice.coreservice.impl.config.CoreServiceConfigurer" />
+	<bean id="coreServiceConfigurer" class="org.kuali.rice.coreservice.impl.config.CoreServiceConfigurer" />
 
 	<bean id="kimConfigurer" class="org.kuali.rice.kim.config.KIMConfigurer" />
 

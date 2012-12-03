@@ -16,13 +16,11 @@
 <descriptor-repository version="1.0">
 	<jdbc-connection-descriptor 
 		jcd-alias="kmmApplicationDataSource"
-		default-connection="false"
-		driver="oracle.jdbc.driver.OracleDriver"
-		platform="Oracle9i" 
+		default-connection="false" 
+		platform="MySQL" 
 		jdbc-level="3.0"
 		useAutoCommit="0">
         <attribute attribute-name="jdbc.defaultRowPrefetch" attribute-value="100" />
-		<sequence-manager className="org.kuali.rice.core.ojb.ConfigurableSequenceManager" />
-		<object-cache class="org.apache.ojb.broker.cache.ObjectCachePerBrokerImpl" />
+		<sequence-manager className="org.kuali.rice.core.framework.persistence.ojb.ConfigurableSequenceManager" />
 	</jdbc-connection-descriptor>
 </descriptor-repository>

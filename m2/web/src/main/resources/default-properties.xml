@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+
+	<param name="kim.mode">LOCAL</param>
+	<param name="core.mode">LOCAL</param>
+	<param name="kew.mode">LOCAL</param>
+	<param name="kcb.runmode">LOCAL</param>
+	<param name="ken.runmode">LOCAL</param>
+	<param name="krad.mode">LOCAL</param>
+	<param name="kim.mode">LOCAL</param>
+	<param name="kew.mode">LOCAL</param>
+	<param name="coreservice.mode">LOCAL</param>
+	<param name="ksb.mode">LOCAL</param>
+	<param name="location.mode">LOCAL</param>
+
+	<param name="riceapp.url">http://localhost:8080/kmm-dev</param>
+	<param name="rice.ksb.registry.serviceUrl" override="false">${riceapp.url}/remoting/soap/ksb/v2_0/serviceRegistry</param>
+	<param name="rice.ksb.serviceRegistry.security" override="false">true</param>
+	<param name="rice.ksb.config.allowSelfSignedSSL" override="false">false</param>
+
+	<!--<param name="rice.kim.additionalSpringFiles">classpath:edu/iu/uis/rice/resources/IUKimOverrideSpringBeans.xml</param>-->
+	<!--<param name="rice.kew.additionalSpringFiles">classpath:edu/iu/uis/rice/resources/IUKewOverrideSpringBeans.xml</param>-->
+	<!--<param name="rice.location.additionalSpringFiles">classpath:edu/iu/uis/rice/resources/IULocationOverrideSpringBeans.xml</param>-->
+	<!--<param name="rice.coreservice.additionalSpringFiles">classpath:edu/iu/uis/rice/resources/IUCoreServiceOverrideSpringBeans.xml</param>-->
+
+	<!--<param name="application.url">http://localhost:8080/mm</param>-->
+	<param name="secureServiceServletUrl"></param>
+	<param name="serviceServletUrl">http://localhost:8080/kmm-dev/remoting/</param>
+
+
+	<!-- Global Settings -->
+	<param name="app.namespace">KFS</param>
+	<param name="application.id">KMM</param>
+	<param name="version">11/26/2012 02:09 PM</param>
+	<param name="current.year">2012</param>
+	<param name="build.environment">dev</param>
+	<param name="environment">dev</param>
+	<param name="production.environment.code">prd</param>
+	<param name="module.name">mm</param>
+	<param name="application.url">http://localhost:8080/kmm-dev</param>
+	<param name="kmm.url">http://localhost:8080/kmm-dev</param>
+	<param name="rice.server.url">http://localhost:8081/kfs-dev</param>
+	<param name="ksb.server.url">http://localhost:8081/kfs-dev</param>
+	<param name="service.namespace">KFS-MM</param>
+	<param name="spring.source.files">spring-mm.xml,spring-mm-exporter.xml,/org/kuali/ext/mm/cart/spring-mm-cart.xml</param>
+	<param name="default.spring.file">spring-mm-rice-startup.xml</param>
+	<param
+		name="rice.struts.message.resources">KR-ApplicationResources,org.kuali.rice.kew.ApplicationResources,org.kuali.rice.ksb.messaging.ApplicationResources,KIM-ApplicationResources,ApplicationResources
+	</param>
+	<param name="use.quartz.scheduling">false</param>
+	<param name="dev.mode">false</param>
+	<param name="externalizable.images.url">/kmm-dev/images/</param>
+	<param name="kr.externalizable.images.url">/kmm-dev/kr/static/images/</param>
+	<param name="kmm.externalizable.images.url">/kmm-dev/mm/images/</param>
+	<param name="kr.url">http://localhost:8080/kmm-dev/kr</param>
+	<param name="kim.url">http://localhost:8080/kmm-dev/kim</param>
+	<param
+		name="javascript.files">kr/scripts/core.js,kr/scripts/dhtml.js,kr/scripts/my_common.js,kr/scripts/jscalendar-1.0/calendar.js,kr/scripts/jscalendar-1.0/lang/calendar-en.js,kr/scripts/jscalendar-1.0/calendar-setup.js,dwr/engine.js,dwr/util.js,dwr/interface/PersonService.js,kr/scripts/objectInfo.js
+	</param>
+	<param name="css.files">kr/css/kuali.css,kr/scripts/jscalendar-1.0/calendar-win2k-1.css</param>
+	<param name="portal.javascript.files">kr/scripts/my_common.js</param>
+	<param name="portal.css.files">css/portal.css</param>
+	<param name="cart.css.files">mm/css/cart.css,kr/scripts/jscalendar-1.0/calendar-win2k-1.css</param>
+	<param name="property.files">classpath:KR-ApplicationResources.properties,ApplicationResources.properties</param>
+	<!-- Application Settings -->
+	<param name="data.dictionary.validate">true</param>
+	<param name="shopping.url">http://localhost:8080/kmm-dev/mm</param>
+	<param name="rice.portal.logout.redirectUrl">${shopping.url}/logout.do</param>
+	<param name="shopping.portal.logout.redirectUrl">${shopping.url}/logout.do</param>
+	<param name="b2b.company.name">UCDavis</param>
+	<!-- Logging Settings -->
+	<!--TODO: NWU - Hardcodec log4j properties for now-->
+	<!--<param name="log4j.settings.path">target/test-classes/log4j.properties</param>-->
+	<!-- Datasource Settings -->
+	<!-- These are located in security.xml in the external security directory -->
+	<!-- External Configuration Work Settings -->
+	<param name="attachments.directory">target/kuali/kmm/work/dev/kmm/attachments</param>
+	<param name="attachments.pending.directory">target/kuali/kmm/work/dev/kmm/attachments/pending</param>
+	<param name="data.xml.root.location">target/kuali/kmm/work/dev/kmm/staging/workflow</param>
+	<param name="external.temp.directory">target/kuali/kmm/work/dev/kmm/temp</param>
+	<param name="external.reports.directory">target/kuali/kmm/work/dev/kmm/reports</param>
+	<!-- MSU only properties -->
+	<param name="external.carousel.directory">target/kuali/kmm/work/dev/kmm/carousel</param>
+	<param name="external.einvoice.directory">target/kuali/kmm/work/dev/kmm/einvoice</param>
+	<param name="external.famis.directory">target/kuali/kmm/work/dev/kmm/famis</param>
+	<!-- Mail Settings -->
+	<param name="mail.debug">false</param>
+	<param name="mail.relay.server">localhost</param>
+	<param name="mail.smtp.host">localhost</param>
+	<param name="mail.transport.protocol">smtp</param>
+	<param name="MailMessage.from">noreply@ebsp.msu.edu</param>
+	<param name="mail.shopping.from.address">noreply@ebsp.msu.edu</param>
+	<param name="KualiExceptionIncidentServiceImpl.REPORT_MAIL_LIST">schneppd@ais.msu.edu</param>
+	<param name="kr.incident.from.address">noreply@ais.msu.edu</param>
+	<!-- Transaction Manager Settings -->
+	<param name="transaction.timeout">1800</param>
+	<!-- Workflow Settings -->
+	<param name="workflow.url">http://localhost:8081/kfs-dev/kew</param>
+	<param name="keystore.file">target/kuali/kmm/sa_forms/dev/kmm/rice.keystore</param>
+	<param name="keystore.alias">rice</param>
+	<param name="keystore.password">r1c3pw</param>
+	<param name="encryption.key">7IC64w6ksLU</param>
+	<!-- Financial System Configuration -->
+	<param name="finance.system.name">KFS</param>
+	<param name="finance.system.url">http://localhost:8081/kfs-dev</param>
+	<param name="finance.system.rice.app">kr</param>
+	<param name="mm.module.url">http://localhost:8080/kmm-dev/mm</param>
+	<!-- Datasource properties -->
+	<param name="rice.custom.ojb.properties">OJB.properties</param>
+	<param name="datasource.platform">org.kuali.rice.core.database.platform.OraclePlatform</param>
+	<param name="datasource.ojb.platform">Oracle9i</param>
+	<param name="datasource.pool.maxSize">50</param>
+	<!-- APP Server [TOMCAT/JBOSS] -->
+	<param name="server.platform">TOMCAT</param>
+	<param name="jboss.mode">false</param>
+	<!-- JBOSS specific configuration settings -->
+	<!--<param name="transactionManager.jndi.location">java:/TransactionManager</param>-->
+	<!--<param name="userTransaction.jndi.location">UserTransaction</param>-->
+	<!--<param name="java.naming.factory.initial">org.jnp.interfaces.NamingContextFactory</param>-->
+	<!--<param name="java.naming.provider.url">jnp://localhost:8099</param>-->
+	<!--<param name="java.naming.factory.url.pkgs">org.jboss.naming:org.jnp.interfaces</param>-->
+	<!--<param name="rice.datasource.jndiName">java:kfsDsJndi</param>-->
+	<!--<param name="ksb.datasource.jndiName">java:kfsDsJndi</param>-->
+	<!--<param name="kmm.datasource.jndiName">java:kmmDsJndi</param>-->
+	<!-- Quartz Configuration -->
+	<param name="batchEnabled">false</param>
+	<param name="useJdbcJobStore">true</param>
+	<param name="batch.rmi.port">42101</param>
+	<param name="batch.rmi.service">kmmBatchControlService</param>
+	<!-- KSB Quartz properties -->
+	<param name="useQuartzDatabase">false</param>
+	<!-- KSB Message Persistence properties -->
+	<param name="message.persistence">true</param>
+	<param name="message.delivery">async</param>
+	<!-- Catalog Images directory -->
+	<param name="catalog.images.dir">target/kuali/kmm/catalogimages/dev/kmm</param>
+	<!--<param name="staging.directory">${staging.directory}</param>-->
+	<param name="externalizable.static.content.url">http://localhost:8080/kmm-dev/static</param>
+	<param name="datasource.ojb.sequenceManager.className"></param>
+
+	<param name="gl.implementation.type">reportByAccount</param>
+	<param name="kmm.gl.collector.dir">target/kuali/kmm/work/dev/kmm/gl/collector</param>
+	<!-- This property eases switching between JNDI and regular datasource configs -->
+	<!--<param name="spring.mm.datasource.xml">classpath:spring-mm-datasource.xml</param>-->
+	<!--<param name="spring.mm.rice.jta.xml">classpath:spring-mm-rice-jta.xml</param>-->
+	<param name="financial.system.origin.code">46</param>
+	<param name="lucene.index.storage.dir">target/kuali/kmm/work/dev/kmm/lucene/index</param>
+	<param name="enableLuceneIndexing">true</param>
+
+	<param name="datasource.ojb.sequence.manager">org.apache.ojb.broker.platforms.KualiMySQLSequenceManagerImpl</param>
+	<param name="datasource.ojb.sequenceManager.className">org.apache.ojb.broker.platforms.KualiMySQLSequenceManagerImpl</param>
+
+
+</config>

@@ -17,8 +17,8 @@
 <!-- configuration file for KualiConfigurationService -->
 
 <configuration>
-    <properties fileName="KR-ApplicationResources.properties" />    
-    <properties fileName="KIM-ApplicationResources.properties" />
-    <properties allowOverrides="true" fileName="ApplicationResources.properties" />
+	<properties fileName="KR-ApplicationResources.properties"/>
+	<properties fileName="KIM-ApplicationResources.properties"/>
+	<properties allowOverrides="true" fileName="ApplicationResources.properties"/>
 </configuration>
 

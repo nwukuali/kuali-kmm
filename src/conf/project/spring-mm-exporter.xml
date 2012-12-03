@@ -30,7 +30,7 @@
 		<property name="serviceNameSpaceURI" value="http://kuali.org/kmm" />
 		<property name="retryAttempts" value="1" />
 	</bean>
-	<bean class="org.kuali.rice.ksb.messaging.KSBExporter">
+	<bean class="org.kuali.rice.ksb.api.bus.support.ServiceBusExporter">
 		<property name="serviceDefinition">
 			<bean parent="mmJavaService" p:service-ref="orderQueryService" p:localServiceName="kmmOrderQueryService" />
 		</property>

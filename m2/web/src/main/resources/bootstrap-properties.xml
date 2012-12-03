@@ -1,0 +1,16 @@
+<config>
+
+	<param name="rice.logging.configure">true</param>
+	<param name="config.location">classpath:META-INF/common-config-defaults.xml</param>
+	<param name="config.location">classpath:META-INF/common-config-locations.xml</param>
+	<param name="config.location">classpath:default-properties.xml</param>
+	<param name="config.location">${kuali.home.setting}/kmm/dev/mm-properties.xml</param>
+
+
+	<!--<param name="config.location">classpath:configuration.xml</param>-->
+	<!--TODO: NWU - Hardcoded configuration path-->
+	<!--<param name="config.location">/home/dylanv/Projects/kmm/m2/web/target/kuali/kmm/dev/configuration.xml</param>-->
+	<!--TODO: NWU - Disabled external config for dev purposes for now - re-enable if we at the point of wanting overriding behaviour per env-->
+	<!--<param name="config.location">file:${external.security.directory}/${security.file}</param>-->
+	<!--<param name="config.location">file:${external.configuration.directory}/${configuration.file}</param>-->
+</config>

@@ -8,7 +8,7 @@
                            http://www.springframework.org/schema/aop
                            http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
 
-    <bean id="kmmApplicationDataSource" class="org.kuali.rice.core.database.PrimaryDataSourceFactoryBean">
+    <bean id="kmmApplicationDataSource" class="org.kuali.rice.core.framework.persistence.jdbc.datasource.PrimaryDataSourceFactoryBean">
     	<property name="preferredDataSourceParams">
 			<list>
 				<value>kmmDataSource</value>

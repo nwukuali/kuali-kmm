@@ -9,7 +9,7 @@
                            http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
 
     <bean id="mmModuleConfiguration" parent="mmModuleConfiguration-parentBean" />
-    <bean id="mmModuleConfiguration-parentBean" class="org.kuali.rice.kns.bo.ModuleConfiguration" abstract="true">
+    <bean id="mmModuleConfiguration-parentBean" class="org.kuali.rice.krad.bo.ModuleConfiguration" abstract="true">
     	<property name="namespaceCode" value="KFS-MM" />
 		<property name="initializeDataDictionary" value="true" />
         <property name="packagePrefixes">
