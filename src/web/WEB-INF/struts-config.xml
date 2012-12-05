@@ -44,9 +44,9 @@
         <exception type="org.kuali.rice.kns.exception.AuthorizationException" key="meaningless" path="/authorizationException.do" />
         <exception type="org.kuali.rice.kns.exception.DocumentInitiationAuthorizationException" key="meaningless" path="/initiationAuthorizationException.do" />
         -->
-        <exception type="org.kuali.rice.kns.exception.UnknownDocumentIdException" key="error.document.noLongerExistsInKuali" path="/kualiExceptionIncidentReport.do" />
+        <exception type="org.kuali.krad.exception.UnknownDocumentIdException" key="error.document.noLongerExistsInKuali" path="/kualiExceptionIncidentReport.do" />
         <exception type="org.kuali.rice.kns.exception.FileUploadLimitExceededException" key="error.document.attachmentMaximumFileSizeExceeded" path="kualiExceptionIncidentReport.do" />
-        <exception type="java.lang.Throwable" handler="org.kuali.rice.kns.web.struts.pojo.StrutsExceptionIncidentHandler" key="na"/>
+        <exception type="java.lang.Throwable" handler="org.kuali.rice.kns.web.struts.form.pojo.StrutsExceptionIncidentHandler" key="na"/>
        	<!-- End required KNS exceptions -->
     </global-exceptions>  
 
@@ -73,7 +73,7 @@
         <action path="/index" name="KualiForm" type="org.kuali.rice.kns.web.struts.action.KualiSimpleAction">
             <forward name="basic" path="/portal.jsp" />
         </action>
-        <action path="/authorizationException" name="KualiForm" type="org.kuali.rice.kns.web.struts.action.KualiAuthorizationExceptionAction">
+        <action path="/authorizationException" name="KualiForm" type="org.kuali.rice.kns.web.struts.action.AuthorizationExceptionAction">
             <forward name="basic" path="/kr/WEB-INF/jsp/authorizationException.jsp" />
         </action>        
         <action path="/initiationAuthorizationException" name="KualiForm" type="org.kuali.rice.kns.web.struts.action.KualiDocumentInitiationAuthorizationExceptionAction">
@@ -315,6 +315,6 @@
 		
     <controller processorClass="org.kuali.rice.kns.web.struts.action.KualiRequestProcessor" />
     <message-resources factory="org.kuali.rice.kns.web.struts.action.KualiPropertyMessageResourcesFactory" parameter=""/>
-    <plug-in className="org.kuali.rice.kns.web.struts.pojo.PojoPlugin" />
+    <plug-in className="org.kuali.rice.kns.web.struts.form.pojo.PojoPlugin" />
 </struts-config>
 

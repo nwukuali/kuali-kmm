@@ -21,15 +21,15 @@
   <init>
     <creator id="kewCreator" class="org.kuali.rice.kns.web.servlet.dwr.GlobalResourceDelegatingSpringCreator"/>
   </init>
-  <allow>
-      <convert converter="bean" match="org.kuali.rice.kew.doctype.bo.DocumentType">
-        <param name="include" value="documentTypeId,name" />
-      </convert>
-      <create creator="kewCreator" javascript="DocumentTypeService">
-        <param name="beanName" value="enDocumentTypeService" />
-        <include method="findByName" />
-        <include method="findById" />
-        <include method="findByNameCaseInsensitive" />
-      </create>
-  </allow>
+  <!--<allow>-->
+      <!--<convert converter="bean" match="org.kuali.rice.kew.doctype.bo.DocumentType">-->
+        <!--<param name="include" value="documentTypeId,name" />-->
+      <!--</convert>-->
+      <!--<create creator="kewCreator" javascript="DocumentTypeService">-->
+        <!--<param name="beanName" value="enDocumentTypeService" />-->
+        <!--<include method="findByName" />-->
+        <!--<include method="findById" />-->
+        <!--<include method="findByNameCaseInsensitive" />-->
+      <!--</create>-->
+  <!--</allow>-->
 </dwr>
