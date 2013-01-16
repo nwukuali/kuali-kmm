@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
 
-	<param name="kim.mode">LOCAL</param>
 	<param name="core.mode">LOCAL</param>
 	<param name="kew.mode">LOCAL</param>
 	<param name="kcb.runmode">LOCAL</param>
@@ -12,7 +11,7 @@
 	<param name="coreservice.mode">LOCAL</param>
 	<param name="ksb.mode">LOCAL</param>
 	<param name="location.mode">LOCAL</param>
-
+	<param name="mm.mode">LOCAL</param>
 	<param name="riceapp.url">http://localhost:8080/kmm-dev</param>
 	<param name="rice.ksb.registry.serviceUrl" override="false">${riceapp.url}/remoting/soap/ksb/v2_0/serviceRegistry</param>
 	<param name="rice.ksb.serviceRegistry.security" override="false">true</param>
