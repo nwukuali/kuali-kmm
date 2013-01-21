@@ -26,10 +26,10 @@
   </bean>
   <bean id="FinancialRoom-campusCode" parent="FinancialRoom-campusCode-parentBean"/>
 
-  <bean id="FinancialRoom-campusCode-parentBean" abstract="true" parent="Campus-campusCode">
+  <bean id="FinancialRoom-campusCode-parentBean" abstract="true" parent="Campus-code">
   	<property name="forceUppercase" value="true"/>
     <property name="control">
-      <bean parent="SelectControlDefinition" p:valuesFinderClass="org.kuali.rice.kns.lookup.keyvalues.CampusValuesFinder" p:includeKeyInLabel="false"/>
+      <bean parent="SelectControlDefinition" p:valuesFinderClass="org.kuali.rice.location.framework.campus.CampusValuesFinder" p:includeKeyInLabel="false"/>
     </property>
   </bean>
   <bean id="FinancialRoom-buildingCode" parent="FinancialRoom-buildingCode-parentBean"/>

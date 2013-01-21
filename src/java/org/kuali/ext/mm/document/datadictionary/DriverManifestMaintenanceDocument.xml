@@ -52,5 +52,5 @@
  <!-- workflow attributes -->
   <bean id="StoresDriverManifestMaintenanceDocument-workflowAttributes" parent="StoresDriverManifestMaintenanceDocument-workflowAttributes-parentBean" />
 
-  <bean id="StoresDriverManifestMaintenanceDocument-workflowAttributes-parentBean" abstract="true" class="org.kuali.rice.kns.datadictionary.WorkflowAttributes" />
+  <bean id="StoresDriverManifestMaintenanceDocument-workflowAttributes-parentBean" abstract="true" parent="WorkflowAttributes" />
 </beans>

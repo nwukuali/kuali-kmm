@@ -121,7 +121,7 @@
     <property name="control" >
       <bean parent="CheckboxControlDefinition" />
     </property>
-    <property name="formatterClass" value="org.kuali.rice.kns.web.format.BooleanFormatter" />
+    <property name="formatterClass" value="org.kuali.rice.core.web.format.BooleanFormatter" />
   </bean>
 
   <bean id="BackOrder-fromPickListLineId" parent="BackOrder-fromPickListLineId-parentBean" />

@@ -2,42 +2,58 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
 <beans>
 
-	<bean id="serverDataSource" class="org.kuali.rice.core.framework.persistence.jdbc.datasource.XAPoolDataSource" abstract="true">
-		<property name="transactionManager" ref="jotm"/>
-		<property name="driverClassName" value="${datasource.driver.name}"/>
-		<property name="maxSize" value="${datasource.pool.maxSize}"/>
-		<property name="minSize" value="${datasource.pool.minSize}"/>
-		<property name="maxWait" value="${datasource.pool.maxWait}"/>
-		<property name="validationQuery" value="${datasource.pool.validationQuery}"/>
-	</bean>
-	<bean id="riceDataSource" parent="serverDataSource">
-		<property name="url" value="${rice.datasource.url}"/>
-		<property name="username" value="${rice.datasource.username}"/>
-		<property name="password" value="${rice.datasource.password}"/>
+
+	<bean id="kmmDataSourceXAPool" class="org.kuali.rice.core.framework.persistence.jdbc.datasource.XAPoolDataSource">
+		<property name="transactionManager" ref="transactionManagerXAPool" />
+		<property name="driverClassName" value="${kmm.datasource.driver.name}" />
+		<property name="url" value="${kmm.datasource.url}" />
+		<property name="maxSize" value="${kmm.datasource.pool.maxSize}" />
+		<property name="minSize" value="${kmm.datasource.pool.minSize}" />
+		<property name="maxWait" value="${kmm.datasource.pool.maxWait}" />
+		<property name="validationQuery" value="${kmm.datasource.pool.validationQuery}" />
+		<property name="username" value="${kmm.datasource.username}" />
+		<property name="password" value="${kmm.datasource.password}" />
 	</bean>
 
-	<bean id="ksbDataSource" parent="serverDataSource">
-		<property name="url" value="${rice.datasource.url}"/>
-		<property name="username" value="${ksb.datasource.username}"/>
-		<property name="password" value="${ksb.datasource.password}"/>
-	</bean>
+	<alias name="kmmDataSource${connection.pool.impl}" alias="serverDataSource"/>
 
-	<bean id="dataSource" parent="serverDataSource">
-		<property name="url" value="${datasource.url}"/>
-		<property name="username" value="${datasource.username}"/>
-		<property name="password" value="${datasource.password}"/>
-	</bean>
+	<!--<bean id="serverDataSource" class="org.kuali.rice.core.framework.persistence.jdbc.datasource.XAPoolDataSource" abstract="true">-->
+		<!--<property name="transactionManager" ref="jotm"/>-->
+		<!--<property name="driverClassName" value="${datasource.driver.name}"/>-->
+		<!--<property name="maxSize" value="${datasource.pool.maxSize}"/>-->
+		<!--<property name="minSize" value="${datasource.pool.minSize}"/>-->
+		<!--<property name="maxWait" value="${datasource.pool.maxWait}"/>-->
+		<!--<property name="validationQuery" value="${datasource.pool.validationQuery}"/>-->
+	<!--</bean>-->
+	<!---->
+	<!--<bean id="riceDataSource" parent="serverDataSource">-->
+		<!--<property name="url" value="${rice.datasource.url}"/>-->
+		<!--<property name="username" value="${rice.datasource.username}"/>-->
+		<!--<property name="password" value="${rice.datasource.password}"/>-->
+	<!--</bean>-->
 
-	<bean id="riceNonTransactionalDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-		<property name="driverClassName" value="${datasource.driver.name}"/>
-		<property name="url" value="${rice.datasource.url}"/>
-		<property name="maxActive" value="${datasource.pool.maxActive}"/>
-		<property name="minIdle" value="${datasource.minIdle}"/>
-		<property name="initialSize" value="${datasource.initialSize}"/>
-		<property name="validationQuery" value="${datasource.pool.validationQuery}"/>
-		<property name="username" value="${rice.datasource.username}"/>
-		<property name="password" value="${rice.datasource.password}"/>
-		<property name="accessToUnderlyingConnectionAllowed" value="${datasource.accessToUnderlyingConnectionAllowed}"/>
-	</bean>
+	<!--<bean id="ksbDataSource" parent="serverDataSource">-->
+		<!--<property name="url" value="${rice.datasource.url}"/>-->
+		<!--<property name="username" value="${ksb.datasource.username}"/>-->
+		<!--<property name="password" value="${ksb.datasource.password}"/>-->
+	<!--</bean>-->
+
+	<!--<bean id="dataSource" parent="serverDataSource">-->
+		<!--<property name="url" value="${datasource.url}"/>-->
+		<!--<property name="username" value="${datasource.username}"/>-->
+		<!--<property name="password" value="${datasource.password}"/>-->
+	<!--</bean>-->
+
+	<!--<bean id="riceNonTransactionalDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">-->
+		<!--<property name="driverClassName" value="${datasource.driver.name}"/>-->
+		<!--<property name="url" value="${rice.datasource.url}"/>-->
+		<!--<property name="maxActive" value="${datasource.pool.maxActive}"/>-->
+		<!--<property name="minIdle" value="${datasource.minIdle}"/>-->
+		<!--<property name="initialSize" value="${datasource.initialSize}"/>-->
+		<!--<property name="validationQuery" value="${datasource.pool.validationQuery}"/>-->
+		<!--<property name="username" value="${rice.datasource.username}"/>-->
+		<!--<property name="password" value="${rice.datasource.password}"/>-->
+		<!--<property name="accessToUnderlyingConnectionAllowed" value="${datasource.accessToUnderlyingConnectionAllowed}"/>-->
+	<!--</bean>-->
 
 </beans>

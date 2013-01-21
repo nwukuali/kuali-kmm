@@ -236,6 +236,6 @@
         
   <bean id="CatalogPending-workflowAttributes" parent="CatalogPending-workflowAttributes-parentBean" />
 
-  <bean id="CatalogPending-workflowAttributes-parentBean" abstract="true" class="org.kuali.rice.kns.datadictionary.WorkflowAttributes" />
+  <bean id="CatalogPending-workflowAttributes-parentBean" abstract="true" parent="WorkflowAttributes" />
 
 </beans>

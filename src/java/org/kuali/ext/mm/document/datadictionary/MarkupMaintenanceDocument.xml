@@ -112,5 +112,5 @@
  <!-- workflow attributes -->
   <bean id="StoresMarkupMaintenanceDocument-workflowAttributes" parent="StoresMarkupMaintenanceDocument-workflowAttributes-parentBean" />
 
-  <bean id="StoresMarkupMaintenanceDocument-workflowAttributes-parentBean" abstract="true" class="org.kuali.rice.kns.datadictionary.WorkflowAttributes" />
+  <bean id="StoresMarkupMaintenanceDocument-workflowAttributes-parentBean" abstract="true" parent="WorkflowAttributes" />
 </beans>

@@ -53,5 +53,5 @@
  <!-- workflow attributes -->
   <bean id="AdditionalCostTypeMaintenanceDocument-workflowAttributes" parent="AdditionalCostTypeMaintenanceDocument-workflowAttributes-parentBean" />
 
-  <bean id="AdditionalCostTypeMaintenanceDocument-workflowAttributes-parentBean" abstract="true" class="org.kuali.rice.kns.datadictionary.WorkflowAttributes" />
+  <bean id="AdditionalCostTypeMaintenanceDocument-workflowAttributes-parentBean" abstract="true" parent="WorkflowAttributes" />
 </beans>

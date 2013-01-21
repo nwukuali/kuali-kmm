@@ -68,5 +68,5 @@
  <!-- workflow attributes -->
   <bean id="BackOrderMaintenanceDocument-workflowAttributes" parent="BackOrderMaintenanceDocument-workflowAttributes-parentBean" />
 
-  <bean id="BackOrderMaintenanceDocument-workflowAttributes-parentBean" abstract="true" class="org.kuali.rice.kns.datadictionary.WorkflowAttributes" />
+  <bean id="BackOrderMaintenanceDocument-workflowAttributes-parentBean" abstract="true" parent="WorkflowAttributes" />
 </beans>

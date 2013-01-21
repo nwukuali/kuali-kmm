@@ -38,8 +38,8 @@
 	</prerequisites>
 	<properties>
 		<!--DEPENDENCIES-->
-		<rice.version>2.2.0-rc1</rice.version>
-		<kfs-prototype.version>5.0-SNAPSHOT</kfs-prototype.version>
+		<rice.version>2.1.2-NWU-SNAPSHOT</rice.version>
+		<kfs-foundation-core.version>5.0.1-SNAPSHOT</kfs-foundation-core.version>
 		<ojdbc6.version>11.2.0.2</ojdbc6.version>
 		<mysql-connector-java.version>5.1.16</mysql-connector-java.version>
 
@@ -164,9 +164,9 @@
 				<version>${rice.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.kuali.kfs</groupId>
-				<artifactId>kfs-prototype-core</artifactId>
-				<version>${kfs-prototype.version}</version>
+				<groupId>za.ac.nwu</groupId>
+				<artifactId>kfs-foundation-core</artifactId>
+				<version>${kfs-foundation-core.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.lucene</groupId>
@@ -315,6 +315,5 @@
 				<log.dir.setting>[Configure me!!!! eg] {user.home}/kuali/kmm/tst/logs</log.dir.setting>
 			</properties>
 		</profile>
-
 	</profiles>
 </project>

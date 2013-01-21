@@ -109,5 +109,5 @@
  <!-- workflow attributes -->
   <bean id="PunchOutVendorMaintenanceDocument-workflowAttributes" parent="PunchOutVendorMaintenanceDocument-workflowAttributes-parentBean" />
 
-  <bean id="PunchOutVendorMaintenanceDocument-workflowAttributes-parentBean" abstract="true" class="org.kuali.rice.kns.datadictionary.WorkflowAttributes" />
+  <bean id="PunchOutVendorMaintenanceDocument-workflowAttributes-parentBean" abstract="true" parent="WorkflowAttributes" />
 </beans>

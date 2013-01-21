@@ -318,7 +318,7 @@
     <property name="control">
       <bean parent="CheckboxControlDefinition"/>
     </property>
-    <property name="formatterClass" value="org.kuali.rice.kns.web.format.BooleanFormatter"/> 
+    <property name="formatterClass" value="org.kuali.rice.core.web.format.BooleanFormatter"/>
   </bean>
 
 
@@ -411,7 +411,7 @@
             p:valuesFinderClass="org.kuali.ext.mm.businessobject.options.YesNoValuesFinder"
             p:includeKeyInLabel="false" />
     </property>
-    <property name="formatterClass" value="org.kuali.rice.kns.web.format.BooleanFormatter"/>
+    <property name="formatterClass" value="org.kuali.rice.core.web.format.BooleanFormatter"/>
 	</bean>    
 
   <bean id="ReturnDetail-vendorDetailAssignedId" parent="ReturnDetail-vendorDetailAssignedId-parentBean" />
@@ -447,7 +447,7 @@
             p:valuesFinderClass="org.kuali.ext.mm.businessobject.options.YesNoValuesFinder"
             p:includeKeyInLabel="false" />
     </property>
-    <property name="formatterClass" value="org.kuali.rice.kns.web.format.BooleanFormatter"/>
+    <property name="formatterClass" value="org.kuali.rice.core.web.format.BooleanFormatter"/>
 	</bean>    
 
   <bean id="ReturnDetail-departmentCreditInd" parent="ReturnDetail-departmentCreditInd-parentBean" />
@@ -465,7 +465,7 @@
             p:valuesFinderClass="org.kuali.ext.mm.businessobject.options.YesNoValuesFinder"
             p:includeKeyInLabel="false" />
     </property>
-    <property name="formatterClass" value="org.kuali.rice.kns.web.format.BooleanFormatter"/>
+    <property name="formatterClass" value="org.kuali.rice.core.web.format.BooleanFormatter"/>
 	</bean>
 	
 	<bean id="ReturnDetail-departmentCreditStringInd" parent="ReturnDetail-departmentCreditStringInd-parentBean" />
@@ -532,7 +532,7 @@
             p:valuesFinderClass="org.kuali.ext.mm.businessobject.options.YesNoValuesFinder"
             p:includeKeyInLabel="false" />
     </property>
-    <property name="formatterClass" value="org.kuali.rice.kns.web.format.BooleanFormatter"/>
+    <property name="formatterClass" value="org.kuali.rice.core.web.format.BooleanFormatter"/>
 	</bean>    
 
   <bean id="ReturnDetail-versionNumber" parent="ReturnDetail-versionNumber-parentBean" />

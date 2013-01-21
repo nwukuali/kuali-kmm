@@ -18,13 +18,13 @@
 	<class-descriptor class="org.kuali.ext.mm.cart.businessobject.CatalogItemSearch" table="MM_CATALOG_ITEM_SEARCH_T">
 		<field-descriptor name="catalogItemId" column="CATALOG_ITEM_ID" jdbc-type="VARCHAR" primarykey="true" autoincrement="true" sequence-name="MM_CATALOG_ITEM_S"/>
 		<field-descriptor name="distributorNbr" column="DISTRIBUTOR_NBR" jdbc-type="VARCHAR" />
-		<field-descriptor name="catalogPrc" column="CATALOG_PRC" jdbc-type="DECIMAL" conversion="org.kuali.rice.kns.util.OjbKualiDecimalFieldConversion" />
+		<field-descriptor name="catalogPrc" column="CATALOG_PRC" jdbc-type="DECIMAL" conversion="org.kuali.rice.core.framework.persistence.ojb.conversion.OjbKualiDecimalFieldConversion" />
 		<field-descriptor name="catalogDesc" column="CATALOG_DESC" jdbc-type="VARCHAR" />
-		<field-descriptor name="recycledInd" column="RECYCLED_IND" jdbc-type="VARCHAR" conversion="org.kuali.rice.kns.util.OjbCharBooleanConversion" />
+		<field-descriptor name="recycledInd" column="RECYCLED_IND" jdbc-type="VARCHAR" conversion="org.kuali.rice.core.framework.persistence.ojb.conversion.OjbCharBooleanConversion" />
 		<field-descriptor name="catalogId" column="CATALOG_ID" jdbc-type="VARCHAR" />
 		<field-descriptor name="stockId" column="STOCK_ID" jdbc-type="VARCHAR" />
-		<field-descriptor name="displayableInd" column="DISPLAYABLE_IND" jdbc-type="VARCHAR" conversion="org.kuali.rice.kns.util.OjbCharBooleanConversion" />
-		<field-descriptor name="active" column="ACTV_IND" jdbc-type="VARCHAR" conversion="org.kuali.rice.kns.util.OjbCharBooleanConversion" />
+		<field-descriptor name="displayableInd" column="DISPLAYABLE_IND" jdbc-type="VARCHAR" conversion="org.kuali.rice.core.framework.persistence.ojb.conversion.OjbCharBooleanConversion" />
+		<field-descriptor name="active" column="ACTV_IND" jdbc-type="VARCHAR" conversion="org.kuali.rice.core.framework.persistence.ojb.conversion.OjbCharBooleanConversion" />
 		<field-descriptor name="priorityNbr" column="PRIORITY_NBR" jdbc-type="INTEGER" />		
 		<field-descriptor name="priorCatalogSubgroupId" column="PRIOR_CATALOG_SUBGROUP_ID" jdbc-type="VARCHAR" />
 		<field-descriptor name="catalogSubgroupId" column="CATALOG_SUBGROUP_ID" jdbc-type="VARCHAR" />

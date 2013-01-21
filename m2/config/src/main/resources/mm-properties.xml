@@ -13,12 +13,12 @@
 	<param name="datasource.driver.name">com.mysql.jdbc.Driver</param>
 	<param name="datasource.pool.validationQuery">select 1 from dual</param>
 	<param name="datasource.pool.size">50</param>
-	<param name="rice.datasource.username">kfs5</param>
-	<param name="rice.datasource.password">kfs5</param>
-	<param name="rice.datasource.url">jdbc:mysql://localhost:3306/kfs5</param>
-	<param name="ksb.datasource.username">kfs5</param>
-	<param name="ksb.datasource.password">kfs5</param>
-	<param name="ksb.datasource.url">jdbc:mysql://localhost:3306/kfs5</param>
+	<param name="rice.datasource.username">kuldev</param>
+	<param name="rice.datasource.password">kuldev</param>
+	<param name="rice.datasource.url">jdbc:mysql://localhost:3306/kuldev</param>
+	<param name="ksb.datasource.username">kuldev</param>
+	<param name="ksb.datasource.password">kuldev</param>
+	<param name="ksb.datasource.url">jdbc:mysql://localhost:3306/kuldev</param>
 
 
 </config>

@@ -292,7 +292,7 @@
     </property>
   </bean>
 
-  <bean id="RoutingType-RoutingAttribute-ReturnDocStatusCode" class="org.kuali.rice.kns.datadictionary.RoutingTypeDefinition">
+  <bean id="RoutingType-RoutingAttribute-ReturnDocStatusCode" class="org.kuali.rice.krad.datadictionary.RoutingTypeDefinition">
     	<property name="routingAttributes">
     		<list>
 		        <ref bean="ReturnDocument-RoutingAttribute-ReturnDocStatusCode"/>
@@ -306,7 +306,7 @@
     	
     </bean>
 
-	<bean id="RoutingType-RoutingAttribute-ReturnDocStatusCode-1111" class="org.kuali.rice.kns.datadictionary.DocumentValuePathGroup">
+	<bean id="RoutingType-RoutingAttribute-ReturnDocStatusCode-1111" class="org.kuali.rice.krad.datadictionary.DocumentValuePathGroup">
     	<property name="documentValues">
 	   		<list>
 	   			<value>documentNumber</value>
@@ -314,7 +314,7 @@
    		</property>
    	</bean>
 
-	<bean id="ReturnDocument-RoutingAttribute-ReturnDocStatusCode" class="org.kuali.rice.kns.datadictionary.RoutingAttribute">
+	<bean id="ReturnDocument-RoutingAttribute-ReturnDocStatusCode" class="org.kuali.rice.krad.datadictionary.RoutingAttribute">
     	<property name="qualificationAttributeName" value="documentNumber"/>
 	</bean>
 

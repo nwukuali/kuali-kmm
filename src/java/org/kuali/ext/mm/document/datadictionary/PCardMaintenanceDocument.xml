@@ -55,5 +55,5 @@
  <!-- workflow attributes -->
   <bean id="PCardMaintenanceDocument-workflowAttributes" parent="PCardMaintenanceDocument-workflowAttributes-parentBean" />
 
-  <bean id="PCardMaintenanceDocument-workflowAttributes-parentBean" abstract="true" class="org.kuali.rice.kns.datadictionary.WorkflowAttributes" />
+  <bean id="PCardMaintenanceDocument-workflowAttributes-parentBean" abstract="true" parent="WorkflowAttributes" />
 </beans>

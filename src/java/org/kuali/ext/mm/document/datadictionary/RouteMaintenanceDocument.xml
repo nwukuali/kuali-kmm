@@ -102,5 +102,5 @@
  <!-- workflow attributes -->
   <bean id="StoresRouteMaintenanceDocument-workflowAttributes" parent="StoresRouteMaintenanceDocument-workflowAttributes-parentBean" />
 
-  <bean id="StoresRouteMaintenanceDocument-workflowAttributes-parentBean" abstract="true" class="org.kuali.rice.kns.datadictionary.WorkflowAttributes" />
+  <bean id="StoresRouteMaintenanceDocument-workflowAttributes-parentBean" abstract="true" parent="WorkflowAttributes" />
 </beans>

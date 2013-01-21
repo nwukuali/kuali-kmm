@@ -66,5 +66,5 @@
  <!-- workflow attributes -->
   <bean id="CatalogRestrictionMaintenanceDocument-workflowAttributes" parent="CatalogRestrictionMaintenanceDocument-workflowAttributes-parentBean" />
 
-  <bean id="CatalogRestrictionMaintenanceDocument-workflowAttributes-parentBean" abstract="true" class="org.kuali.rice.kns.datadictionary.WorkflowAttributes" />
+  <bean id="CatalogRestrictionMaintenanceDocument-workflowAttributes-parentBean" abstract="true" parent="WorkflowAttributes" />
 </beans>

@@ -528,16 +528,16 @@
         p:required="false" >
   </bean>
   
-  <bean id="RoutingType-RoutingAttribute-OrderStatusCode" class="org.kuali.rice.kns.datadictionary.RoutingTypeDefinition">
+  <bean id="RoutingType-RoutingAttribute-OrderStatusCode" class="org.kuali.rice.krad.datadictionary.RoutingTypeDefinition">
     	<property name="routingAttributes">
     		<list>
-		        <bean class="org.kuali.rice.kns.datadictionary.RoutingAttribute">
+		        <bean class="org.kuali.rice.krad.datadictionary.RoutingAttribute">
                     <property name="qualificationAttributeName" value="orderDocumentStatusCode"/>
                 </bean>
     		</list>
     	</property>
     	<property name="documentValuePathGroups">
-    		<bean class="org.kuali.rice.kns.datadictionary.DocumentValuePathGroup">
+    		<bean class="org.kuali.rice.krad.datadictionary.DocumentValuePathGroup">
                     <property name="documentValues">
                         <list>
                             <value>orderStatusCd</value>
@@ -552,9 +552,9 @@
 	<bean id="OrderDocument-workflowAttributes-parentBean" abstract="true" parent="WorkflowAttributes">
 		<property name="searchingTypeDefinitions">
 			<list>
-				<bean class="org.kuali.rice.kns.datadictionary.SearchingTypeDefinition">
+				<bean class="org.kuali.rice.krad.datadictionary.SearchingTypeDefinition">
 					<property name="searchingAttribute">
-						<bean class="org.kuali.rice.kns.datadictionary.SearchingAttribute">
+						<bean class="org.kuali.rice.krad.datadictionary.SearchingAttribute">
 							<property name="businessObjectClassName" value="org.kuali.ext.mm.document.OrderDocument" />
 							<property name="attributeName" value="orderStatusCd" />
 						</bean>
@@ -578,7 +578,7 @@
 	 		</map>
 	 	</property>
 	</bean>  
-	<bean id="RoutingType-OrderDocument-Organization" class="org.kuali.rice.kns.datadictionary.RoutingTypeDefinition">
+	<bean id="RoutingType-OrderDocument-Organization" class="org.kuali.rice.krad.datadictionary.RoutingTypeDefinition">
 		<property name="routingAttributes">
 			<list>
 				<ref bean="RoutingAttribute-chartOfAccountsCode" />
@@ -587,7 +587,7 @@
 		</property>
 		<property name="documentValuePathGroups">
 			<list>
-				<bean class="org.kuali.rice.kns.datadictionary.DocumentValuePathGroup">
+				<bean class="org.kuali.rice.krad.datadictionary.DocumentValuePathGroup">
 					<property name="documentValues">
 						<list>
 							<value>chartOfAccountsCode</value>
@@ -598,24 +598,24 @@
 			</list>
 		</property>
 	</bean>
-	<bean id="RoutingAttribute-chartOfAccountsCode" class="org.kuali.rice.kns.datadictionary.RoutingAttribute">
+	<bean id="RoutingAttribute-chartOfAccountsCode" class="org.kuali.rice.krad.datadictionary.RoutingAttribute">
 		<property name="qualificationAttributeName" value="chartOfAccountsCode" />
 	</bean>
-	<bean id="RoutingAttribute-organizationCode" class="org.kuali.rice.kns.datadictionary.RoutingAttribute" >
+	<bean id="RoutingAttribute-organizationCode" class="org.kuali.rice.krad.datadictionary.RoutingAttribute" >
 		<property name="qualificationAttributeName" value="organizationCode" />
 	</bean>
-    <bean id="RoutingAttribute-accountNumber" class="org.kuali.rice.kns.datadictionary.RoutingAttribute" >
+    <bean id="RoutingAttribute-accountNumber" class="org.kuali.rice.krad.datadictionary.RoutingAttribute" >
     	<property name="qualificationAttributeName" value="accountNumber" />
     </bean>
-	<bean id="RoutingAttribute-financialDocumentTotalAmount"  class="org.kuali.rice.kns.datadictionary.RoutingAttribute" >
+	<bean id="RoutingAttribute-financialDocumentTotalAmount"  class="org.kuali.rice.krad.datadictionary.RoutingAttribute" >
 		<property name="qualificationAttributeName" value="financialDocumentTotalAmount" />
 	</bean>
-	<bean id="RoutingType-OrderDocument-SubAccount" class="org.kuali.rice.kns.datadictionary.RoutingTypeDefinition">
+	<bean id="RoutingType-OrderDocument-SubAccount" class="org.kuali.rice.krad.datadictionary.RoutingTypeDefinition">
 		<property name="routingAttributes">
 			<list>
 				<ref bean="RoutingAttribute-chartOfAccountsCode" />
 				<ref bean="RoutingAttribute-accountNumber" />
-				<bean class="org.kuali.rice.kns.datadictionary.RoutingAttribute">
+				<bean class="org.kuali.rice.krad.datadictionary.RoutingAttribute">
 					<property name="qualificationAttributeName" value="subAccountNumber" />
 				</bean>
 			</list>
@@ -626,9 +626,9 @@
 			</list>
 		</property>
 	</bean>
-	<bean id="DocumentValuePathGroup-OrderDocument-SubAccount-accountingLines" class="org.kuali.rice.kns.datadictionary.DocumentValuePathGroup">
+	<bean id="DocumentValuePathGroup-OrderDocument-SubAccount-accountingLines" class="org.kuali.rice.krad.datadictionary.DocumentValuePathGroup">
 	<property name="documentCollectionPath">
-		<bean class="org.kuali.rice.kns.datadictionary.DocumentCollectionPath">
+		<bean class="org.kuali.rice.krad.datadictionary.DocumentCollectionPath">
 			<property name="collectionPath" value="accountsForRouting" />
 			<property name="documentValues">
 				<list>
@@ -640,7 +640,7 @@
 		</bean>
 	</property>
 	</bean>
-	<bean id="RoutingType-OrderDocument-Account" class="org.kuali.rice.kns.datadictionary.RoutingTypeDefinition">
+	<bean id="RoutingType-OrderDocument-Account" class="org.kuali.rice.krad.datadictionary.RoutingTypeDefinition">
 		<property name="routingAttributes">
 			<list>
 				<ref
@@ -655,7 +655,7 @@
 			</list>
 		</property>
 	</bean>
-	<bean id="DocumentValuePathGroup-OrderDocument-financialDocumentTotalAmount" class="org.kuali.rice.kns.datadictionary.DocumentValuePathGroup" abstract="true">
+	<bean id="DocumentValuePathGroup-OrderDocument-financialDocumentTotalAmount" class="org.kuali.rice.krad.datadictionary.DocumentValuePathGroup" abstract="true">
 		<property name="documentValues">
 			<list>
 				<value>
@@ -671,7 +671,7 @@
 			</bean>
 		</property>
 	</bean>
-	<bean id="DocumentCollectionPath-AccountingLine-chartAndAccountNumber" class="org.kuali.rice.kns.datadictionary.DocumentCollectionPath" abstract="true">
+	<bean id="DocumentCollectionPath-AccountingLine-chartAndAccountNumber" class="org.kuali.rice.krad.datadictionary.DocumentCollectionPath" abstract="true">
 		<property name="documentValues">
 			<list>
 				<value>finCoaCd</value>
@@ -679,7 +679,7 @@
 			</list>
 		</property>
 	</bean>
-	<bean id="RoutingType-OrderDocument-AccountingOrganizationHierarchy" class="org.kuali.rice.kns.datadictionary.RoutingTypeDefinition">
+	<bean id="RoutingType-OrderDocument-AccountingOrganizationHierarchy" class="org.kuali.rice.krad.datadictionary.RoutingTypeDefinition">
 		<property name="routingAttributes">
 			<list>
 				<ref bean="RoutingAttribute-financialDocumentTotalAmount" />
@@ -696,7 +696,7 @@
 	</bean>
 	<bean id="DocumentValuePathGroup-OrderDocument-AccountingOrganizationHierarchy-accountingLines" parent="DocumentValuePathGroup-OrderDocument-financialDocumentTotalAmount">
 		<property name="documentCollectionPath">
-			<bean class="org.kuali.rice.kns.datadictionary.DocumentCollectionPath">
+			<bean class="org.kuali.rice.krad.datadictionary.DocumentCollectionPath">
 				<property name="collectionPath" value="accountsForRouting" />
 				<property name="documentValues">
 					<list>
@@ -708,29 +708,29 @@
 			</bean>
 		</property>
 	</bean>
-	<bean id="RoutingAttribute-overrideCode" class="org.kuali.rice.kns.datadictionary.RoutingAttribute">
+	<bean id="RoutingAttribute-overrideCode" class="org.kuali.rice.krad.datadictionary.RoutingAttribute">
 		<property name="qualificationAttributeName" value="accountingLineOverrideCode" />
 	</bean>
 	<!-- TODO - I dont think we even need this node  -->
-	<bean id="RoutingType-OrderDocument-Commodity" class="org.kuali.rice.kns.datadictionary.RoutingTypeDefinition">
+	<bean id="RoutingType-OrderDocument-Commodity" class="org.kuali.rice.krad.datadictionary.RoutingTypeDefinition">
 		<property name="routingAttributes">
 			<list>
 				<ref bean="RoutingAttribute-campusCode" />
-				<bean class="org.kuali.rice.kns.datadictionary.RoutingAttribute">
+				<bean class="org.kuali.rice.krad.datadictionary.RoutingAttribute">
 					<property name="qualificationAttributeName" value="purchasingCommodityCode" />
 				</bean>
 			</list>
 		</property>
 		<property name="documentValuePathGroups">
 			<list>
-				<bean class="org.kuali.rice.kns.datadictionary.DocumentValuePathGroup">
+				<bean class="org.kuali.rice.krad.datadictionary.DocumentValuePathGroup">
 					<property name="documentValues">
 						<list>
 							<value>campusCd</value>
 						</list>
 					</property>
 					<property name="documentCollectionPath">
-						<bean class="org.kuali.rice.kns.datadictionary.DocumentCollectionPath">
+						<bean class="org.kuali.rice.krad.datadictionary.DocumentCollectionPath">
 							<property name="collectionPath" value="commodityCodesForRouting" />
 							<property name="documentValues">
 								<list>

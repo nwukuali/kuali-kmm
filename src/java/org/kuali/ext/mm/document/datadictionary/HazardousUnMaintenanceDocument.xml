@@ -55,6 +55,6 @@
  <!-- workflow attributes -->
   <bean id="StoresHazardousUnMaintenanceDocument-workflowAttributes" parent="StoresHazardousUnMaintenanceDocument-workflowAttributes-parentBean" />
 
-  <bean id="StoresHazardousUnMaintenanceDocument-workflowAttributes-parentBean" abstract="true" class="org.kuali.rice.kns.datadictionary.WorkflowAttributes" />
+  <bean id="StoresHazardousUnMaintenanceDocument-workflowAttributes-parentBean" abstract="true" parent="WorkflowAttributes" />
 </beans>
 

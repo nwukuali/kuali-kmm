@@ -131,7 +131,7 @@
   </bean>
 
   <bean id="Profile-campusCode" parent="Profile-campusCode-parentBean" />
-  <bean id="Profile-campusCode-parentBean" parent="Campus-campusCode" abstract="true"
+  <bean id="Profile-campusCode-parentBean" parent="Campus-code" abstract="true"
         p:name="campusCode"
         p:required="false" >
   </bean>

@@ -180,6 +180,6 @@
     </action-mappings>
     
     <controller processorClass="org.kuali.rice.kns.web.struts.action.KualiRequestProcessor" />
-    <plug-in className="org.kuali.rice.kns.web.struts.pojo.PojoPlugin" />
+    <plug-in className="org.kuali.rice.kns.web.struts.form.pojo.PojoPlugin" />
 </struts-config>
 

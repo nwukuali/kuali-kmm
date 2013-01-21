@@ -62,5 +62,5 @@
  <!-- workflow attributes -->
   <bean id="StoresRouteMapMaintenanceDocument-workflowAttributes" parent="StoresRouteMapMaintenanceDocument-workflowAttributes-parentBean" />
 
-  <bean id="StoresRouteMapMaintenanceDocument-workflowAttributes-parentBean" abstract="true" class="org.kuali.rice.kns.datadictionary.WorkflowAttributes" />
+  <bean id="StoresRouteMapMaintenanceDocument-workflowAttributes-parentBean" abstract="true" parent="WorkflowAttributes" />
 </beans>

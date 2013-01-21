@@ -61,5 +61,5 @@
  <!-- workflow attributes -->
   <bean id="CreditMemoExpectedMaintenanceDocument-workflowAttributes" parent="CreditMemoExpectedMaintenanceDocument-workflowAttributes-parentBean" />
 
-  <bean id="CreditMemoExpectedMaintenanceDocument-workflowAttributes-parentBean" abstract="true" class="org.kuali.rice.kns.datadictionary.WorkflowAttributes" />
+  <bean id="CreditMemoExpectedMaintenanceDocument-workflowAttributes-parentBean" abstract="true" parent="WorkflowAttributes" />
 </beans>

@@ -1,0 +1,7 @@
+<config>
+	<param name="rice.logging.configure">true</param>
+	<param name="config.location">classpath:META-INF/common-config-defaults.xml</param>
+	<param name="config.location">classpath:META-INF/common-config-locations.xml</param>
+	<param name="config.location">classpath:META-INF/default-properties.xml</param>
+	<param name="config.location">${kmm.home.dir.setting}/kmm-properties.xml</param>
+</config>
