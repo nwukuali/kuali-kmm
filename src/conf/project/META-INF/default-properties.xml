@@ -1,33 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
 
-	<param name="kim.mode">LOCAL</param>
-	<param name="core.mode">LOCAL</param>
+	<!--Rice Run Modes-->
 	<param name="kew.mode">LOCAL</param>
-	<param name="kcb.runmode">LOCAL</param>
-	<param name="ken.runmode">LOCAL</param>
-	<param name="krad.mode">LOCAL</param>
 	<param name="kim.mode">LOCAL</param>
-	<param name="kew.mode">LOCAL</param>
-	<param name="coreservice.mode">LOCAL</param>
-	<param name="ksb.mode">LOCAL</param>
-	<param name="location.mode">LOCAL</param>
+	<param name="core.mode">${rice.server.mode.setting}</param>
+	<param name="ksb.mode">${rice.server.mode.setting}</param>
+	<param name="krad.mode">${rice.server.mode.setting}</param>
+	<param name="location.mode">${rice.server.mode.setting}</param>
+	<param name="coreservice.mode">${rice.server.mode.setting}</param>
+
+	<!--Application URLS-->
+	<param name="application.url">http://${kmm.server.domain}:${kmm.server.port}${kmm.server.context}</param>
+	<param name="rice.server.url">http://${rice.server.domain}:${rice.server.port}${rice.server.context}</param>
+	<param name="riceapp.url">${rice.server.url}</param>
+	<param name="rice.url">${rice.server.url}</param>
+	<param name="kmm.url">${application.url}</param>
+
+	<param name="kcb.url">${rice.server.url}/kcb</param>
+	<param name="ken.url">${rice.server.url}/ken</param>
+	<param name="kew.url">${application.url}/kew</param>
+	<param name="kim.url">${application.url}/kim</param>
+	<param name="krms.url">${application.url}/krms</param>
+	<param name="ksb.url">${rice.server.url}/ksb</param>
+	<param name="ksb.server.url">${rice.server.url}/ksb</param>
+	<param name="ksb.client.url">${application.url}/ksb</param>
+
+	<param name="externalizable.static.content.url">${application.url}/static</param>
+	<param name="kfs.externalizable.help.url">${application.url}/static/help/</param>
+
+	<param name="shopping.url">${application.url}/mm</param>
+	<param name="rice.portal.logout.redirectUrl">${shopping.url}/logout.do</param>
+	<param name="shopping.portal.logout.redirectUrl">${shopping.url}/logout.do</param>
+	<param name="mm.module.url">${application.url}/mm</param>
+	<param name="finance.system.url">http://${kfs.server.domain}:${kfs.server.port}${kfs.server.context}</param>
 
 	<param name="external.config.directory">${kmm.home.dir.setting}</param>
 
-	<param name="riceapp.url">http://localhost:8080/kmm</param>
-	<param name="rice.ksb.registry.serviceUrl" override="false">${riceapp.url}/remoting/soap/ksb/v2_0/serviceRegistry</param>
+	<!--<param name="rice.ksb.registry.serviceUrl" override="false">${riceapp.url}/remoting/soap/ksb/v2_0/serviceRegistry</param>-->
 	<param name="rice.ksb.serviceRegistry.security" override="false">true</param>
 	<param name="rice.ksb.config.allowSelfSignedSSL" override="false">false</param>
 
-	<!--<param name="rice.kim.additionalSpringFiles">classpath:edu/iu/uis/rice/resources/IUKimOverrideSpringBeans.xml</param>-->
-	<!--<param name="rice.kew.additionalSpringFiles">classpath:edu/iu/uis/rice/resources/IUKewOverrideSpringBeans.xml</param>-->
-	<!--<param name="rice.location.additionalSpringFiles">classpath:edu/iu/uis/rice/resources/IULocationOverrideSpringBeans.xml</param>-->
-	<!--<param name="rice.coreservice.additionalSpringFiles">classpath:edu/iu/uis/rice/resources/IUCoreServiceOverrideSpringBeans.xml</param>-->
-
-	<!--<param name="application.url">http://localhost:8080/mm</param>-->
-	<param name="secureServiceServletUrl"></param>
-	<param name="serviceServletUrl">http://localhost:8080/kmm/remoting/</param>
+	<!--<param name="secureServiceServletUrl"></param>-->
+	<!--<param name="serviceServletUrl">http://localhost:8080/kmm/remoting/</param>-->
 
 
 	<!-- Global Settings -->
@@ -39,10 +54,7 @@
 	<param name="environment">dev</param>
 	<param name="production.environment.code">prd</param>
 	<param name="module.name">mm</param>
-	<param name="application.url">http://localhost:8080/kmm</param>
-	<param name="kmm.url">http://localhost:8080/kmm</param>
-	<param name="rice.server.url">http://localhost:8080/kmm</param>
-	<param name="ksb.server.url">http://localhost:8080/kmm</param>
+
 	<param name="service.namespace">KFS-MM</param>
 	<param name="spring.source.files">spring-mm.xml,spring-mm-exporter.xml,/org/kuali/ext/mm/cart/spring-mm-cart.xml</param>
 	<param name="default.spring.file">spring-mm-rice-startup.xml</param>
@@ -51,11 +63,13 @@
 	</param>
 	<param name="use.quartz.scheduling">false</param>
 	<param name="dev.mode">false</param>
-	<param name="externalizable.images.url">/kmm/images/</param>
-	<param name="kr.externalizable.images.url">/kmm/kr/static/images/</param>
-	<param name="kmm.externalizable.images.url">/kmm/mm/images/</param>
-	<param name="kr.url">http://localhost:8080/kmm/kr</param>
-	<param name="kim.url">http://localhost:8080/kmm/kim</param>
+
+
+	<!--<param name="externalizable.images.url">/kmm/images/</param>-->
+	<!--<param name="kr.externalizable.images.url">/kmm/kr/static/images/</param>-->
+	<!--<param name="kmm.externalizable.images.url">/kmm/mm/images/</param>-->
+	<!--<param name="kr.url">http://localhost:8080/kmm/kr</param>-->
+	<!--<param name="kim.url">http://localhost:8080/kmm/kim</param>-->
 	<param
 		name="javascript.files">kr/scripts/core.js,kr/scripts/dhtml.js,kr/scripts/my_common.js,kr/scripts/jscalendar-1.0/calendar.js,kr/scripts/jscalendar-1.0/lang/calendar-en.js,kr/scripts/jscalendar-1.0/calendar-setup.js,dwr/engine.js,dwr/util.js,dwr/interface/PersonService.js,kr/scripts/objectInfo.js
 	</param>
@@ -66,14 +80,14 @@
 	<param name="property.files">classpath:KR-ApplicationResources.properties,ApplicationResources.properties</param>
 	<!-- Application Settings -->
 	<param name="validate.data.dictionary">false</param>
-	<param name="shopping.url">http://localhost:8080/kmm/mm</param>
-	<param name="rice.portal.logout.redirectUrl">${shopping.url}/logout.do</param>
-	<param name="shopping.portal.logout.redirectUrl">${shopping.url}/logout.do</param>
+
 	<param name="b2b.company.name">UCDavis</param>
+
 	<!-- Logging Settings -->
 	<param name="log4j.settings.file">${external.config.directory}/log4j.properties</param>
 	<param name="log4j.settings.path">${external.config.directory}/log4j.properties</param>
 	<param name="logs.directory">${external.config.directory}/logs</param>
+
 
 	<!-- Datasource Settings -->
 	<!-- These are located in security.xml in the external security directory -->
@@ -89,6 +103,7 @@
 	<param name="external.famis.directory">target/kuali/kmm/work/famis</param>
 	<!-- Mail Settings -->
 	<param name="mail.debug">false</param>
+
 	<param name="mail.relay.server">localhost</param>
 	<param name="mail.smtp.host">localhost</param>
 	<param name="mail.transport.protocol">smtp</param>
@@ -98,17 +113,17 @@
 	<param name="kr.incident.from.address">noreply@ais.msu.edu</param>
 	<!-- Transaction Manager Settings -->
 	<param name="transaction.timeout">1800</param>
+
 	<!-- Workflow Settings -->
-	<param name="workflow.url">http://localhost:8080/kmm/kew</param>
+	<!--<param name="workflow.url">http://localhost:8080/kmm/kew</param>-->
 	<param name="keystore.file">target/kuali/kmm/rice.keystore</param>
 	<param name="keystore.alias">rice</param>
 	<param name="keystore.password">r1c3pw</param>
 	<param name="encryption.key">7IC64w6ksLU</param>
+
 	<!-- Financial System Configuration -->
 	<param name="finance.system.name">KFS</param>
-	<param name="finance.system.url">http://localhost:8081/kfs</param>
 	<param name="finance.system.rice.app">kr</param>
-	<param name="mm.module.url">http://localhost:8080/kmm/mm</param>
 	<!-- Datasource properties -->
 	<param name="rice.custom.ojb.properties">OJB.properties</param>
 
